@@ -23,6 +23,6 @@ From then on it opens from the home screen and works with no connection.
 
 ## Good to know
 
-- Your progress is saved on each device separately. Use the backup option in the app's ⋮ menu to move it between devices.
+- **Sync between devices:** open ⋮ → *Sync between devices*, follow the link to create a GitHub token with only "gist" ticked, paste it and tap *Connect GitHub sync*. Do the same on every device with the same token. Progress is kept in a private gist called `language-drills-sync.json` in your GitHub account. It syncs when the app opens, about every 20–30 seconds while you drill, and when you leave the app. Offline changes sync later. Without sync, use the backup option in ⋮ to move progress by hand.
 - **When you change files later**, open `sw.js`, raise `const VERSION='v1'` to `'v2'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
 - `.nojekyll` tells GitHub to serve the files exactly as they are, so keep it.

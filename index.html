@@ -81,6 +81,7 @@ main{flex:1;min-height:0;position:relative}
 .bk textarea{width:100%;min-height:110px;margin:8px 0;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);font:12px/1.4 ui-monospace,monospace;padding:8px}
 .bk .msg{min-height:1.4em;font-weight:600;color:var(--accent)}.bk .msg.err{color:#b4442f}
 .bk .meta{font-size:.8rem;color:var(--muted)}
+.bk #ghTok{width:100%;box-sizing:border-box;min-height:46px;margin:8px 0 0;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);font:14px ui-monospace,monospace;padding:8px 10px}.bk .gh-steps{margin:6px 0;padding-left:20px;color:var(--muted);font-size:.9rem;line-height:1.45}.bk .gh-steps a{color:var(--accent);font-weight:600}
 .menu{position:relative}.menu .sy-dot{position:absolute;top:5px;right:4px;width:7px;height:7px}
 .sy-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#9aa5a0;flex:none}
 .sy-dot[data-s="ok"]{background:#2e9a62}.sy-dot[data-s="busy"]{background:#d6a21e}.sy-dot[data-s="wait"]{background:#d6a21e}.sy-dot[data-s="err"]{background:#c4462f}
@@ -155,6 +156,15 @@ html.dp-eink{--bg:#f2f4f0;--bar:#ffffff;--fg:#1c2421;--muted:#3a4440;--line:#555
   <h2 id="bkTitle">Sync &amp; full screen</h2>
   <p class="sy-line"><span class="sy-dot" id="syDot2" aria-hidden="true"></span><span id="syState">Checking sync…</span></p>
   <div class="row"><button class="b" type="button" id="fsBtn">⛶ Full screen</button><button class="b g" type="button" id="syNow">Sync now</button><button class="b g" type="button" id="einkBtn" aria-pressed="false">E-ink mode (Boox): off</button><button class="b g" type="button" id="nightBtn" aria-pressed="false">Night mode (black): off</button></div>
+  <div id="ghBox" hidden>
+  <h2 style="margin-top:16px">Sync between devices</h2>
+  <div id="ghOff"><p>Your progress can sync through a private gist in your GitHub account. Do this once on each device, using the same token:</p>
+  <ol class="gh-steps"><li><a href="https://github.com/settings/tokens/new?scopes=gist&amp;description=Language%20Drills%20sync" target="_blank" rel="noopener">Create a GitHub token</a>. Only “gist” is ticked. Pick an expiry (“No expiration” is fine), tap <i>Generate token</i> and copy it.</li><li>Paste it here and tap Connect. Keep the token somewhere safe for your other devices.</li></ol>
+  <input id="ghTok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste token (ghp_…)">
+  <div class="row"><button class="b" type="button" id="ghGo">Connect GitHub sync</button></div></div>
+  <div id="ghOn" hidden><p id="ghWho"></p><div class="row"><button class="b w" type="button" id="ghOut">Disconnect this device</button></div></div>
+  <p class="msg" id="ghMsg" role="status"></p>
+  </div>
   <details><summary>Make it look like a standalone program</summary><p><b>PC (Chrome/Edge):</b> ⋮ menu → Cast, save and share → <i>Install page as app</i> (Edge: ⋯ → Apps → <i>Install this site as an app</i>). It opens in its own window and can be pinned to the taskbar. F11 = quick full screen.</p><p><b>Android (Chrome):</b> ⋮ → <i>Add to home screen</i>, then open it from that icon.</p></details>
   <h2 style="margin-top:16px">Backup &amp; restore</h2>
   <p>One file with the progress of every drill in this bundle: scores, mistakes, settings and where you left off.</p>
@@ -400,7 +410,48 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;\nfunction SH(){try{for(var w=wind
   var state='off',lastOk=0,col=null,ready=false,queue={},busy=false,lastUp={};
   function setState(s,txt){state=s;if(dot)dot.dataset.s=s;var d2=document.getElementById('syDot2');if(d2)d2.dataset.s=s;if(st)st.textContent=txt;
     var m=document.getElementById('menu');if(m)m.title='Sync, backup & full screen — '+txt}
-  function okText(){var d=new Date(lastOk);return 'Synced with your Claude account · '+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+  var SRC='your Claude account';
+  function okText(){var d=new Date(lastOk);return 'Synced with '+SRC+' · '+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+  /* ---------- GitHub gist storage (for copies hosted outside Claude) ---------- */
+  var GHK='dpsync:gh',GHFILE='language-drills-sync.json';
+  function ghCfg(){try{var c=JSON.parse(lsg(GHK)||'null');return c&&c.token&&c.id?c:null}catch(e){return null}}
+  function ghE(c){var e=new Error(c);e.code=c;return e}
+  async function ghFetch(token,path,opt){opt=opt||{};var h={'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'};
+    if(opt.body)h['Content-Type']='application/json';var r;
+    try{r=await fetch('https://api.github.com'+path,{method:opt.method||'GET',headers:h,body:opt.body,cache:'no-store'})}catch(e){throw ghE('unavailable')}
+    if(r.status===401)throw ghE('not_granted');
+    if(r.status===403||r.status===429){if(r.headers.get('x-ratelimit-remaining')==='0'||r.status===429)throw ghE('unavailable');throw ghE('not_granted')}
+    if(r.status===404)throw ghE('not_found');
+    if(r.status===422)throw ghE('invalid_argument');
+    if(!r.ok)throw ghE('unavailable');return r}
+  function ghCol(cfg){
+    var last='',subs=[],timer=null;
+    async function read(){var j=await (await ghFetch(cfg.token,'/gists/'+cfg.id)).json(),f=j.files&&j.files[GHFILE];if(!f)return {v:1,docs:{}};
+      var txt=f.content;if(f.truncated||txt==null){try{txt=await (await fetch(f.raw_url,{cache:'no-store'})).text()}catch(e){throw ghE('unavailable')}}
+      try{var o=JSON.parse(txt||'{}');if(!o.docs)o.docs={};return o}catch(e){return {v:1,docs:{}}}}
+    function snap(o){return {metadata:{},docs:Object.keys(o.docs).map(function(id){return {id:id,data:function(){return o.docs[id]}}})}}
+    function emit(o){var s=JSON.stringify(o.docs);if(s===last)return;last=s;subs.forEach(function(f){try{f(snap(o))}catch(e){}})}
+    var col={
+      get:async function(){var o=await read();last=JSON.stringify(o.docs);return snap(o)},
+      /* write many entries at once; never overwrite something newer from another device */
+      batch:async function(items){var o=await read(),newer=false;
+        items.forEach(function(x){var cur=o.docs[x.id];if(cur&&(+cur.t||0)>x.b.t){newer=true;return}o.docs[x.id]=x.b;
+          Object.keys(o.docs).forEach(function(id){if(o.docs[id]&&o.docs[id].of===x.id)delete o.docs[id]})});
+        o.v=1;o.saved=new Date().toISOString();
+        var files={};files[GHFILE]={content:JSON.stringify(o)};
+        await ghFetch(cfg.token,'/gists/'+cfg.id,{method:'PATCH',body:JSON.stringify({files:files})});
+        if(newer)emit(o);else last=JSON.stringify(o.docs)},
+      onSnapshot:function(cb,err){subs.push(cb);
+        async function check(){if(document.visibilityState==='hidden')return;try{emit(await read())}catch(e){if(e.code==='not_granted'||e.code==='not_found')err(e)}}
+        timer=setInterval(check,30000);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')check()});addEventListener('focus',check);addEventListener('online',check)}
+    };return col}
+  async function ghConnect(token){
+    var me=await (await ghFetch(token,'/user')).json(),id=null;
+    for(var page=1;page<=5&&!id;page++){var list=await (await ghFetch(token,'/gists?per_page=100&page='+page)).json();
+      list.forEach(function(g){if(!id&&g.files&&g.files[GHFILE])id=g.id});if(list.length<100)break}
+    if(!id){var files={};files[GHFILE]={content:JSON.stringify({v:1,docs:{}})};
+      var g=await (await ghFetch(token,'/gists',{method:'POST',body:JSON.stringify({description:'Language Drills progress (sync file, do not edit)',public:false,files:files})})).json();id=g.id}
+    lss(GHK,JSON.stringify({token:token,id:id,login:me.login||''}));return me.login||''}
   /* ---------- full screen ---------- */
   var de=document.documentElement,canFs=!!(de.requestFullscreen||de.webkitRequestFullscreen);
   function inFs(){return !!(document.fullscreenElement||document.webkitFullscreenElement)}
@@ -444,7 +495,7 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;\nfunction SH(){try{for(var w=wind
   function askConflicts(cs){return new Promise(function(res){
     var drills={};cs.forEach(function(c){drills[NAMES[fidOf(c.r.k)]||fidOf(c.r.k)]=1});
     var back=document.createElement('div');back.className='bk-back';back.innerHTML='<div class="bk" role="dialog" aria-modal="true" aria-labelledby="syq"><h2 id="syq">Turn on sync</h2>'+
-      '<p>Your Claude account already has progress from another device, and this device has different progress for: <b></b>.</p><p>Which should be kept?</p>'+
+      '<p>'+SRC.charAt(0).toUpperCase()+SRC.slice(1)+' already has progress from another device, and this device has different progress for: <b></b>.</p><p>Which should be kept?</p>'+
       '<div class="row"><button class="b" type="button" data-c="more">Keep whichever has more progress (recommended)</button><button class="b g" type="button" data-c="acc">Use the account’s progress</button><button class="b g" type="button" data-c="dev">Use this device’s progress</button></div></div>';
     back.querySelector('b').textContent=Object.keys(drills).join(', ');document.body.appendChild(back);
     back.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(!b)return;back.remove();res(b.dataset.c)})})}
@@ -453,7 +504,19 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;\nfunction SH(){try{for(var w=wind
     localKeys().forEach(function(k){seen[k]=1;var h=hash(lsg(k)),m=meta[k];if(!m||m.h!==h){meta[k]={t:Date.now(),h:h,p:1};queue[k]=1}});
     Object.keys(meta).forEach(function(k){if(!seen[k]&&meta[k].h!==NULLH&&k.indexOf(PFX)===0&&!skip(k)){meta[k]={t:Date.now(),h:NULLH,p:1};queue[k]=1}});
     saveMeta();pump(false)}
-  function pump(force){if(busy||!col)return;var now=Date.now(),k=null;
+  var lastPush=0,pushT=null;
+  function pumpBatch(force){var now=Date.now(),keys=Object.keys(queue);
+    if(!keys.length){if(state!=='err')setState('ok',okText());return}
+    if(!force&&now-lastPush<20000){if(!pushT)pushT=setTimeout(function(){pushT=null;pump(false)},20000-(now-lastPush)+50);if(state!=='wait')setState('busy','Saved here · syncing shortly…');return}
+    busy=true;setState('busy','Syncing…');queue={};lastPush=now;
+    var items=keys.map(function(k){var m=meta[k]||{t:now};return {k:k,t:m.t,id:enc(k),b:{k:k,v:lsg(k),t:m.t,d:dev}}});
+    col.batch(items).then(function(){busy=false;lastOk=Date.now();items.forEach(function(x){if(meta[x.k]&&meta[x.k].t===x.t)delete meta[x.k].p});saveMeta();
+        if(Object.keys(queue).length)pump(false);else setState('ok',okText())},
+      function(e){busy=false;items.forEach(function(x){queue[x.k]=1});var c=e&&e.code;
+        if(c==='not_granted'||c==='not_found'){col=null;setState('off',c==='not_found'?'The sync gist was deleted. Disconnect and connect again below.':'GitHub refused the token (expired or missing “gist”). Disconnect and connect again below.')}
+        else if(c==='invalid_argument'){setState('err','Sync problem: GitHub would not save the data')}
+        else{setState('wait','Offline — changes are kept and will sync later');setTimeout(function(){pump(true)},20000+Math.random()*5000)}})}
+  function pump(force){if(busy||!col)return;if(col.batch)return pumpBatch(force);var now=Date.now(),k=null;
     Object.keys(queue).some(function(x){if(force||!lastUp[x]||now-lastUp[x]>8000){k=x;return true}return false});
     if(!k){if(!Object.keys(queue).length&&state!=='err')setState('ok',okText());return}
     busy=true;setState('busy','Syncing…');delete queue[k];lastUp[k]=now;
@@ -469,13 +532,17 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;\nfunction SH(){try{for(var w=wind
         else{setState('wait','Offline — changes are kept and will sync later');setTimeout(function(){pump(true)},15000+Math.random()*5000)}})}
   /* ---------- start ---------- */
   async function start(){
-    if(!(window.claude&&window.claude.use)){setState('off','This copy saves on this device only. Open the Claude link to sync between devices.');return}
+    ghUI();
+    if(!(window.claude&&window.claude.use)){var cfg=ghCfg();
+      if(!cfg){setState('off','Saved on this device only. Connect GitHub below to sync between devices.');return}
+      SRC='your GitHub ('+(cfg.login||'gist')+')';setState('busy','Connecting to GitHub…');col=ghCol(cfg)}
+    else{
     setState('busy','Connecting to your Claude account…');
     var db=null,user=null;try{db=await window.claude.use('db');user=await window.claude.use('user')}catch(e){}
     var uid=null;try{uid=user?await user.id():null}catch(e){}
     if(!db||!uid){setState('off','Sync is unavailable here (sign in to Claude and open the page from your account). Progress is saved on this device.');return}
-    col=db.collection('data/users/'+uid);
-    var snap=null;for(var i=0;i<3&&!snap;i++){try{snap=await col.get()}catch(e){var c=e&&e.code;if(c!=='unavailable'){setState('off','Sync is unavailable here — progress is saved on this device.');col=null;return}await new Promise(function(r){setTimeout(r,1500)})}}
+    col=db.collection('data/users/'+uid);}
+    var snap=null;for(var i=0;i<3&&!snap;i++){try{snap=await col.get()}catch(e){var c=e&&e.code;if(c!=='unavailable'){setState('off',col&&col.batch?(c==='not_found'?'The sync gist was deleted. Disconnect and connect again below.':'GitHub refused the token (expired or missing “gist”). Disconnect and connect again below.'):'Sync is unavailable here — progress is saved on this device.');col=null;return}await new Promise(function(r){setTimeout(r,1500)})}}
     if(!snap){setState('wait','Offline — will try again');setTimeout(start,30000);col=null;return}
     var res=merge(assemble(snap.docs),true);
     if(res.conflicts.length){var how=await askConflicts(res.conflicts),ch={};
@@ -492,6 +559,20 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;\nfunction SH(){try{for(var w=wind
     document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')flush()});
     addEventListener('pagehide',flush);
   }
+  /* ---------- GitHub connect / disconnect ---------- */
+  function ghUI(){var box=document.getElementById('ghBox');if(!box)return;
+    if(window.claude&&window.claude.use){box.hidden=true;return}
+    box.hidden=false;var cfg=ghCfg();document.getElementById('ghOff').hidden=!!cfg;document.getElementById('ghOn').hidden=!cfg;
+    if(cfg)document.getElementById('ghWho').textContent='Connected to GitHub'+(cfg.login?' as '+cfg.login:'')+'. Your progress is kept in a private gist, and every device connected with the same token shares it.'}
+  var ghGo=document.getElementById('ghGo'),ghOut=document.getElementById('ghOut');
+  if(ghGo)ghGo.addEventListener('click',async function(){var inp=document.getElementById('ghTok'),m=document.getElementById('ghMsg'),t=(inp.value||'').trim();
+    function msg(x,err){m.textContent=x;m.className='msg'+(err?' err':'')}
+    if(!t){msg('Paste your token first.',1);return}
+    ghGo.disabled=true;msg('Connecting…');
+    try{var who=await ghConnect(t);inp.value='';msg('Connected'+(who?' as '+who:'')+'. Syncing…');ready=false;await start();msg('')}
+    catch(e){var c=e&&e.code;msg(c==='not_granted'?'GitHub did not accept this token. Check that you copied all of it and that “gist” was ticked.':c==='unavailable'?'Could not reach GitHub. Check your connection and try again.':'Something went wrong ('+(c||e.message)+'). Try again.',1)}
+    finally{ghGo.disabled=false}});
+  if(ghOut)ghOut.addEventListener('click',function(){try{localStorage.removeItem(GHK)}catch(e){}location.reload()});
   if(syNow)syNow.addEventListener('click',function(){if(ready){poll();pump(true)}else start()});
   start();
 })();
