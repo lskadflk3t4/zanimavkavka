@@ -1,6 +1,6 @@
 /* Language Drills service worker.
    When you upload changed files, raise VERSION (v1 -> v2 ...) so installed copies update. */
-const VERSION='v2';
+const VERSION='v3';
 const CORE='core-'+VERSION, AUDIO='audio-v1';
 const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png"];
 const AUDIO_FILES=[
