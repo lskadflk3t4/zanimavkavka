@@ -1,14 +1,16 @@
 # Language Drills
 
-An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus the Mandarin listening course (136 parts with audio). After the first visit it works fully offline.
+An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus two Mandarin listening courses with audio: Listening 1 (136 parts) and Listening 2 (174 parts). After the first visit it works fully offline.
 
 ## Put it on GitHub Pages
 
 1. Create a new **public** repository on GitHub (for example `language-drills`).
 2. Click **Add file → Upload files** and upload the contents of this folder in three goes, because GitHub's web uploader takes at most 100 files at a time:
-   - all the loose files at the top (`index.html`, `listening-data.json`, `sw.js`, `manifest.webmanifest`, `README.md`, `.nojekyll`) together with the `icons` folder;
+   - all the loose files at the top (`index.html`, `listening-data.json`, `listening2-data.json`, `listening2-lex.json`, `sw.js`, `manifest.webmanifest`, `README.md`, `.nojekyll`) together with the `icons` folder;
    - the `audio-1` folder;
-   - the `audio-2` folder.
+   - the `audio-2` folder;
+   - the `audio-3` folder;
+   - the `audio-4` folder.
    Commit after each upload. (With git you can push everything in one go.)
 3. Go to **Settings → Pages**, set *Source* to **Deploy from a branch**, and choose `main` and `/ (root)`. Save.
 4. After a minute the site is live at `https://<your-username>.github.io/<repo-name>/`.
@@ -16,7 +18,7 @@ An installable web app (PWA) with Russian, German, Chinese (HSK), French and Eng
 ## Install on your phone
 
 1. Open that address in Chrome on Android while you're online.
-2. Leave it open for a moment. The audio (about 53 MB) downloads in the background.
+2. Leave it open for a moment. The audio (about 115 MB) downloads in the background.
 3. Use the menu **⋮ → Add to Home screen / Install app**.
 
 From then on it opens from the home screen and works with no connection.
