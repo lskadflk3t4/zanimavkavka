@@ -1,9 +1,26 @@
 /* Language Drills service worker.
    When you upload changed files, raise VERSION (v1 -> v2 ...) so installed copies update. */
-const VERSION='v15';
+const VERSION='v16';
 const CORE='core-'+VERSION, AUDIO='audio-v1';
-const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "drills/by.js", "drills/cu.js", "drills/zhv.js", "drills/deirr.js", "drills/derek.js"];
+const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "drills/by.js", "drills/cu.js", "drills/zhv.js", "drills/deirr.js", "drills/derek.js", "drills/dehoer.js", "dehoer-data.json"];
 const AUDIO_FILES=[
+"audio-de/01.webm",
+"audio-de/02.webm",
+"audio-de/03.webm",
+"audio-de/04.webm",
+"audio-de/05.webm",
+"audio-de/06.webm",
+"audio-de/07.webm",
+"audio-de/08.webm",
+"audio-de/09.webm",
+"audio-de/10.webm",
+"audio-de/11.webm",
+"audio-de/12.webm",
+"audio-de/13.webm",
+"audio-de/14.webm",
+"audio-de/15.webm",
+"audio-de/16.webm",
+"audio-de/17.webm",
 "audio-1/001.webm",
 "audio-1/002.webm",
 "audio-1/003.webm",
@@ -339,7 +356,7 @@ async function rangeFrom(resp,range){const buf=await resp.arrayBuffer(),size=buf
 
 self.addEventListener('fetch',e=>{const req=e.request;if(req.method!=='GET')return;
   const url=new URL(req.url);if(url.origin!==location.origin)return;
-  if(/\/audio-[1-4]\/\d{3}\.webm$/.test(url.pathname)){e.respondWith((async()=>{
+  if(/\/audio-([1-4]\/\d{3}|de\/\d{2})\.webm$/.test(url.pathname)){e.respondWith((async()=>{
     const key=url.origin+url.pathname,c=await caches.open(AUDIO);let r=await c.match(key);
     if(!r){try{const full=await fetch(key);if(full.ok){await c.put(key,full.clone());r=full}else return full}catch(x){return new Response('',{status:504})}}
     return req.headers.get('range')?rangeFrom(r,req.headers.get('range')):r})());return}
