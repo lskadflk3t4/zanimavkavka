@@ -1,6 +1,6 @@
 /* Language Drills service worker.
    When you upload changed files, raise VERSION (v1 -> v2 ...) so installed copies update. */
-const VERSION='v18';
+const VERSION='v19';
 const CORE='core-'+VERSION, AUDIO='audio-v1';
 const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "drills/by.js", "drills/cu.js", "drills/zhv.js", "drills/deirr.js", "drills/derek.js", "drills/dehoer.js", "drills/dekarten.js", "drills/zhkarten.js", "dehoer-data.json"];
 const AUDIO_FILES=[
@@ -20,7 +20,7 @@ const AUDIO_FILES=[
 "audio-de/14.webm",
 "audio-de/15.webm",
 "audio-de/16.webm",
-"audio-de/17.webm", "audio-de/t02.webm", "audio-de/t03.webm", "audio-de/t04.webm", "audio-de/t05.webm", "audio-de/t06.webm", "audio-de/t07.webm", "audio-de/t08.webm", "audio-de/t09.webm", "audio-de/t10.webm", "audio-de/t11.webm", "audio-de/t12.webm", "audio-de/t13.webm",
+"audio-de/17.webm", "audio-de/t02.webm", "audio-de/t03.webm", "audio-de/t04.webm", "audio-de/t05.webm", "audio-de/t06.webm", "audio-de/t07.webm", "audio-de/t08.webm", "audio-de/t09.webm", "audio-de/t10.webm", "audio-de/t11.webm", "audio-de/t12.webm", "audio-de/t13.webm", "audio-de/a02.webm", "audio-de/a05.webm", "audio-de/a08.webm", "audio-de/a09.webm", "audio-de/a10.webm", "audio-de/a11.webm", "audio-de/a12.webm", "audio-de/a13.webm", "audio-de/m11.webm", "audio-de/m12.webm", "audio-de/m13.webm", "audio-de/m14.webm", "audio-de/m31.webm", "audio-de/m32.webm", "audio-de/m33.webm", "audio-de/m34.webm", "audio-de/m51.webm", "audio-de/m52.webm", "audio-de/m53.webm", "audio-de/m54.webm",
 "audio-1/001.webm",
 "audio-1/002.webm",
 "audio-1/003.webm",
@@ -356,7 +356,7 @@ async function rangeFrom(resp,range){const buf=await resp.arrayBuffer(),size=buf
 
 self.addEventListener('fetch',e=>{const req=e.request;if(req.method!=='GET')return;
   const url=new URL(req.url);if(url.origin!==location.origin)return;
-  if(/\/audio-([1-4]\/\d{3}|de\/t?\d{2})\.webm$/.test(url.pathname)){e.respondWith((async()=>{
+  if(/\/audio-([1-4]\/\d{3}|de\/[a-z]?\d{2})\.webm$/.test(url.pathname)){e.respondWith((async()=>{
     const key=url.origin+url.pathname,c=await caches.open(AUDIO);let r=await c.match(key);
     if(!r){try{const full=await fetch(key);if(full.ok){await c.put(key,full.clone());r=full}else return full}catch(x){return new Response('',{status:504})}}
     return req.headers.get('range')?rangeFrom(r,req.headers.get('range')):r})());return}
