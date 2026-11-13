@@ -1,6 +1,6 @@
 # Language Drills
 
-An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus two Mandarin listening courses with audio: Listening 1 (136 parts) and Listening 2 (174 parts), and a German listening course (Deutsch → Hören: Goethe-Zertifikat B2, 17 recordings with transcripts, tap-a-word dictionary, true/false/not-mentioned and open questions). After the first visit it works fully offline.
+An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus two Mandarin listening courses with audio: Listening 1 (136 parts) and Listening 2 (174 parts), and a German listening course (Deutsch → Hören: Goethe-Zertifikat B2, 17 recordings, and TestDaF, 12 recordings of the listening and speaking sections; transcripts, tap-a-word dictionary, word cards, and gap-fill, multiple-choice, true/false/not-mentioned, find-the-errors and open questions). After the first visit it works fully offline.
 
 ## Put it on GitHub Pages
 
@@ -19,7 +19,7 @@ An installable web app (PWA) with Russian, German, Chinese (HSK), French and Eng
 ## Install on your phone
 
 1. Open that address in Chrome on Android while you're online.
-2. Leave it open for a moment. The audio (about 135 MB) downloads in the background.
+2. Leave it open for a moment. The audio (about 145 MB) downloads in the background.
 3. Use the menu **⋮ → Add to Home screen / Install app**.
 
 From then on it opens from the home screen and works with no connection.
