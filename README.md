@@ -1,6 +1,6 @@
 # Language Drills
 
-An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus two Mandarin listening courses with audio: Listening 1 (136 parts) and Listening 2 (174 parts), and a German listening course (Deutsch → Hören: Goethe-Zertifikat B2, 17 recordings, and TestDaF: the digital-format training (12 recordings), three complete model exams (Musterprüfungen 1, 3, 5: listening and speaking) and extracts from a TestDaF training CD; transcripts, tap-a-word dictionary, word cards, and gap-fill, multiple-choice, true/false/not-mentioned, find-the-errors and open questions). After the first visit it works fully offline.
+An installable web app (PWA) with Russian, German, Chinese (HSK), French and English drills, plus two Mandarin listening courses with audio: Listening 1 (136 parts) and Listening 2 (174 parts), and a German listening course (Deutsch → Hören: Goethe-Zertifikat B2, 17 recordings, and TestDaF: the digital-format training (12 recordings), three complete model exams (Musterprüfungen 1, 3, 5: listening and speaking) and extracts from the Training TestDaF CDs (Langenscheidt); transcripts, tap-a-word dictionary, word cards, and gap-fill, multiple-choice, true/false/not-mentioned, find-the-errors and open questions). After the first visit it works fully offline.
 
 ## Put it on GitHub Pages
 
