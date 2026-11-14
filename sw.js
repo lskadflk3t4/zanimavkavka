@@ -1,6 +1,6 @@
 /* Language Drills service worker.
    When you upload changed files, raise VERSION (v1 -> v2 ...) so installed copies update. */
-const VERSION='v21';
+const VERSION='v22';
 const CORE='core-'+VERSION, AUDIO='audio-v1';
 const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "drills/by.js", "drills/cu.js", "drills/zhv.js", "drills/deirr.js", "drills/derek.js", "drills/dehoer.js", "drills/dekarten.js", "drills/zhkarten.js", "dehoer-data.json"];
 const AUDIO_FILES=[
