@@ -28,6 +28,24 @@
  ],
  "shortcuts": [
   {
+   "name": "Deutsch German",
+   "short_name": "Deutsch",
+   "description": "Grammatik · Satzbau · Verben · Hören · Karten",
+   "url": "./index.html?open=g-de",
+   "icons": [
+    {
+     "src": "icons/sc/de-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/de-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
    "name": "中文 Chinese",
    "short_name": "中文",
    "description": "造句 · 听力 · 生词卡 · 看图 · 介词",
@@ -58,24 +76,6 @@
     },
     {
      "src": "icons/sc/ru-192.png",
-     "sizes": "192x192",
-     "type": "image/png"
-    }
-   ]
-  },
-  {
-   "name": "Deutsch German",
-   "short_name": "Deutsch",
-   "description": "Grammatik · Satzbau · Verben · Hören · Karten",
-   "url": "./index.html?open=g-de",
-   "icons": [
-    {
-     "src": "icons/sc/de-96.png",
-     "sizes": "96x96",
-     "type": "image/png"
-    },
-    {
-     "src": "icons/sc/de-192.png",
      "sizes": "192x192",
      "type": "image/png"
     }
