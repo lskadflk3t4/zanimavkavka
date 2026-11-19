@@ -355,6 +355,12 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;window.__dpFID=FID;\nfunction SH()
 })();
 </script>
 <script>
+/* App shortcuts (manifest "shortcuts", long-press the app icon): index.html?open=<group or drill id> opens that language section */
+(function(){var id=null;try{id=new URLSearchParams(location.search).get('open')}catch(e){}if(!id)return;
+  var b=document.getElementById('t-'+id);if(b)b.click();
+  try{history.replaceState(history.state,'',location.pathname)}catch(e){}})();
+</script>
+<script>
 /* Review button: appears when the open drill has 50+ mistakes; opens that drill's own mistakes tab and starts its review. */
 (function(){
   var LIMIT=50,btn=document.getElementById('rv'),stage=document.getElementById('stage');
