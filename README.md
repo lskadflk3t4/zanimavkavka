@@ -27,5 +27,6 @@ From then on it opens from the home screen and works with no connection.
 ## Good to know
 
 - **Sync between devices:** open ⋮ → *Sync between devices*, follow the link to create a GitHub token with only "gist" ticked, paste it and tap *Connect GitHub sync*. Do the same on every device with the same token. Progress is kept in a private gist called `language-drills-sync.json` in your GitHub account. It syncs when the app opens, about every 20–30 seconds while you drill, and when you leave the app. Offline changes sync later. Without sync, use the backup option in ⋮ to move progress by hand.
+- **Flashcards** (听力 / 听力 2 “My words”, 生词卡, Hören “Meine Wörter”, Meine Wörter · Karten): choose how many cards per round (10, 20, 30, 50, all, or type your own number). New or missed cards need “knew it” three times — they come back in the same round — and then return tomorrow, in 3 days, 7, 14, 30, 60 and 120 days.
 - **When you change files later**, open `sw.js`, raise `const VERSION='v1'` to `'v2'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
 - `.nojekyll` tells GitHub to serve the files exactly as they are, so keep it.
