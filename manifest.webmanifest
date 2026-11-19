@@ -25,5 +25,133 @@
    "type": "image/png",
    "purpose": "maskable"
   }
+ ],
+ "shortcuts": [
+  {
+   "name": "中文 Chinese",
+   "short_name": "中文",
+   "description": "造句 · 听力 · 生词卡 · 看图 · 介词",
+   "url": "./index.html?open=g-zh",
+   "icons": [
+    {
+     "src": "icons/sc/zh-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/zh-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Русский Russian",
+   "short_name": "Русский",
+   "description": "Грамматика · Предлоги RU↔DE",
+   "url": "./index.html?open=g-ru",
+   "icons": [
+    {
+     "src": "icons/sc/ru-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/ru-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Deutsch German",
+   "short_name": "Deutsch",
+   "description": "Grammatik · Satzbau · Verben · Hören · Karten",
+   "url": "./index.html?open=g-de",
+   "icons": [
+    {
+     "src": "icons/sc/de-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/de-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Français French",
+   "short_name": "Français",
+   "description": "Grammaire",
+   "url": "./index.html?open=fr",
+   "icons": [
+    {
+     "src": "icons/sc/fr-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/fr-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "English C2",
+   "short_name": "English",
+   "description": "Grammar drill",
+   "url": "./index.html?open=en",
+   "icons": [
+    {
+     "src": "icons/sc/en-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/en-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Беларуская Belarusian",
+   "short_name": "Беларуская",
+   "description": "Belarusian drill",
+   "url": "./index.html?open=by",
+   "icons": [
+    {
+     "src": "icons/sc/by-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/by-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Словѣньскъ Old Church Slavonic",
+   "short_name": "Словѣньскъ",
+   "description": "Old Church Slavonic drill",
+   "url": "./index.html?open=cu",
+   "icons": [
+    {
+     "src": "icons/sc/cu-96.png",
+     "sizes": "96x96",
+     "type": "image/png"
+    },
+    {
+     "src": "icons/sc/cu-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  }
  ]
 }
