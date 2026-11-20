@@ -31,3 +31,7 @@ From then on it opens from the home screen and works with no connection.
 - **Flashcards** (听力 / 听力 2 / 神秘的电话 “My words”, 生词卡, Hören “Meine Wörter”, Meine Wörter · Karten): choose how many cards per round (10, 20, 30, 50, all, or type your own number). New or missed cards need “knew it” three times — they come back in the same round — and then return tomorrow, in 3 days, 7, 14, 30, 60 and 120 days.
 - **When you change files later**, open `sw.js`, raise `const VERSION='v1'` to `'v2'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
 - `.nojekyll` tells GitHub to serve the files exactly as they are, so keep it.
+
+## Export flashcards to Anki
+
+Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听力 2 and 神秘的电话 (My words), 生词卡, 看图 (Wörter tab: exports what the filters show), Deutsch Hören (Meine Wörter) and Wortkarten. The file has the columns Front, Back, Tags (HTML: pinyin, meaning, up to two example sentences). In Anki (2.1.55 or newer): File → Import, choose the file; the cards go into the deck named in the file. Choose the note type “Basic (and reversed card)” for both directions.
