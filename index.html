@@ -200,6 +200,7 @@ const SHORT={"en": {"showBtn": "Answer", "checkBtn": "Check", "zeroBtn": "Ø"}, 
 <script src="drills/deirr.js"></script>
 <script src="drills/derek.js"></script>
 <script src="drills/dehoer.js"></script>
+<script src="drills/desatz.js"></script>
 <script src="drills/dekarten.js"></script>
 <script src="drills/zhkarten.js"></script>
 <script src="drills/zhprep.js"></script>
@@ -316,7 +317,7 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;window.__dpFID=FID;\nfunction SH()
   var GROUPS=[
     {id:'g-zh',label:'中文',title:'中文 Chinese — 造句 sentence building · 听力 listening · 听力 2 listening 2 · 句子 sentence drill · 神秘的电话 audiobook · 生词卡 word cards · 看图 picture words · 介词 prepositions',members:[['hsk','造句 Sentence building','造句'],['zhl','听力 Listening','听力'],['zhl2','听力 2 Listening 2','听力2'],['zhsent','句子 Sentence drill (from 听力 1 + 2)','句子'],['zhmy','神秘的电话 The Mysterious Phone Call','电话'],['zhkarten','生词卡 Word cards from listening','生词卡'],['zhv','看图 Picture words','看图'],['zhprep','介词 Prepositions','介词']]},
     {id:'g-ru',label:'Русский',title:'Русский Russian — Грамматика · Предлоги RU↔DE',members:[['ru','Грамматика','Грамм.'],['rudeprep','Предлоги · RU↔DE','RU↔DE']]},
-    {id:'g-de',label:'Deutsch',title:'Deutsch German — Grammatik · Satzbau · unregelmäßige Verben · Verben mit Präpositionen · Hören · Karten · Präpositionen DE↔RU',members:[['de','Grammatik','Grammatik'],['satz','Satzbau','Satzbau'],['deirr','Unregelmäßige Verben','Verben'],['derek','Verb + Präposition · DE↔RU','Präp.'],['dehoer','Hören · Goethe B2 · TestDaF','Hören'],['dekarten','Meine Wörter · Karten','Karten'],['derupre','Präpositionen · DE↔RU','DE↔RU']]}];
+    {id:'g-de',label:'Deutsch',title:'Deutsch German — Grammatik · Satzbau · unregelmäßige Verben · Verben mit Präpositionen · Hören · Sätze nachbauen · Karten · Präpositionen DE↔RU',members:[['de','Grammatik','Grammatik'],['satz','Satzbau','Satzbau'],['deirr','Unregelmäßige Verben','Verben'],['derek','Verb + Präposition · DE↔RU','Präp.'],['dehoer','Hören · Goethe B2 · TestDaF','Hören'],['desatz','Sätze nachbauen · aus den Hörtexten','Sätze'],['dekarten','Meine Wörter · Karten','Karten'],['derupre','Präpositionen · DE↔RU','DE↔RU']]}];
   var tabs=document.getElementById('tabs'),sb=document.getElementById('subbar');if(!tabs||!sb)return;
   var st=document.createElement('style');st.textContent='.grpbar{justify-content:center}.grpbar .seg2 button{font-size:.84rem}@media (min-width:641px){.grpbar{justify-content:flex-start}}';document.head.appendChild(st);
   var bar=document.createElement('div');bar.className='subbar grpbar';bar.id='grpbar';bar.hidden=true;bar.innerHTML='<div class="seg2" role="group" aria-label="Section"></div>';
@@ -324,7 +325,7 @@ const DP_EXTRA="(function(){\nvar FID=__FID__;window.__dpFID=FID;\nfunction SH()
   var seg=bar.firstChild,live=[];
   function T(id){return document.getElementById('t-'+id)}
   /* the picture-vocabulary tab has no icon of its own in the shell */
-  [['zhv','zhl','图'],['deirr','de','V'],['derek','de','P'],['dehoer','de','H'],['dekarten','de','K'],['zhkarten','zhl','卡'],['zhprep','zhl','介'],['zhmy','zhl','话'],['zhsent','zhl','句'],['rudeprep','ru','DE'],['derupre','de','RU']].forEach(function(f){var a=T(f[0]),s=T(f[1]);if(!a||!s)return;var ic=a.querySelector('.ic');ic.innerHTML=s.querySelector('.ic').innerHTML;var bd=ic.querySelector('.bdg');if(!bd){bd=document.createElement('span');bd.className='bdg';ic.appendChild(bd)}bd.textContent=f[2]});
+  [['zhv','zhl','图'],['deirr','de','V'],['derek','de','P'],['dehoer','de','H'],['desatz','de','S'],['dekarten','de','K'],['zhkarten','zhl','卡'],['zhprep','zhl','介'],['zhmy','zhl','话'],['zhsent','zhl','句'],['rudeprep','ru','DE'],['derupre','de','RU']].forEach(function(f){var a=T(f[0]),s=T(f[1]);if(!a||!s)return;var ic=a.querySelector('.ic');ic.innerHTML=s.querySelector('.ic').innerHTML;var bd=ic.querySelector('.bdg');if(!bd){bd=document.createElement('span');bd.className='bdg';ic.appendChild(bd)}bd.textContent=f[2]});
   GROUPS.forEach(function(g){
     var ms=g.members.filter(function(m){return T(m[0])});if(ms.length<2)return;
     var first=T(ms[0][0]),b=document.createElement('button');
