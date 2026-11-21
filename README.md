@@ -35,3 +35,13 @@ From then on it opens from the home screen and works with no connection.
 ## Export flashcards to Anki
 
 Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听力 2 and 神秘的电话 (My words), 生词卡, 看图 (Wörter tab: exports what the filters show), Deutsch Hören (Meine Wörter) and Wortkarten. The file has the columns Front, Back, Tags (HTML: pinyin, meaning, up to two example sentences). In Anki (2.1.55 or newer): File → Import, choose the file; the cards go into the deck named in the file. Choose the note type “Basic (and reversed card)” for both directions.
+
+## Keyboard
+
+With a physical keyboard every tab works without the mouse; press **?** in any drill for the full list.
+Enter checks then goes on, Esc goes back, Alt+→ skips, H / S hint and show, Space or R replays the audio (Shift+Space the whole section), Alt+↑/↓ changes the speed.
+Answers: 1–4 or A–D, R / F / N for true · false · not mentioned; blocks by number or by typing the start of the word (pinyin for Chinese), Backspace takes one back.
+Listening: Space play/pause, ← → line by line, Shift+← → 5 seconds, T / E / P transcript · English · pinyin, M my words. Word cards: Space flips, 1 / 2 (or ← →) again / got it.
+Alt+1…9 language, Alt+[ ] sub-tab, [ ] tab inside a drill, Ctrl+K jump anywhere.
+Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s: give ä ö ü ß in German, and Alt+L lets Latin keys type Cyrillic in the Russian, Belarusian and Church Slavonic drills.
+
