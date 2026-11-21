@@ -45,3 +45,7 @@ Listening: Space play/pause, ← → line by line, Shift+← → 5 seconds, T / 
 Alt+1…9 language, Alt+[ ] sub-tab, [ ] tab inside a drill, Ctrl+K jump anywhere.
 Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s: give ä ö ü ß in German, and Alt+L lets Latin keys type Cyrillic in the Russian, Belarusian and Church Slavonic drills.
 
+## Tones (中文 → 声调)
+
+Real word clips cut from Listening 1 and 2 (`tones-data.json`, about 4,750 words and 1,100 tone-change examples): Tone ID (mark each syllable 1–4 or neutral), minimal pairs, odd one out, tone changes (不, 一, 3 + 3) and a chart of which tones you mix up. Tone ID and Pairs give you more of the tones you mix up. 句子 has a "tones must be right" option for typed pinyin, and 生词卡 has a 🎧 By ear mode (hear the word, mark its tones, then flip). Answers from all three feed the same chart.
+
