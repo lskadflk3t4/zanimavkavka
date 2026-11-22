@@ -290,7 +290,7 @@ html.dp-eink{--bg:#f2f4f0;--bar:#ffffff;--fg:#1c2421;--muted:#3a4440;--line:#555
 <div class="bk-back" id="bkBack" hidden><div class="bk" role="dialog" aria-modal="true" aria-labelledby="bkTitle">
   <h2 id="bkTitle">Sync &amp; full screen</h2>
   <p class="sy-line"><span class="sy-dot" id="syDot2" aria-hidden="true"></span><span id="syState">Checking sync…</span></p>
-  <div class="row"><button class="b" type="button" id="fsBtn">⛶ Full screen</button><button class="b g" type="button" id="syNow">Sync now</button><button class="b g" type="button" id="einkBtn" aria-pressed="false">E-ink mode (Boox): off</button><button class="b g" type="button" id="nightBtn" aria-pressed="false">Night mode (black): off</button></div>
+  <div class="row"><button class="b" type="button" id="fsBtn">⛶ Full screen</button><button class="b g" type="button" id="syNow">Sync now</button><button class="b g" type="button" id="updBtn">Check for updates</button><button class="b g" type="button" id="einkBtn" aria-pressed="false">E-ink mode (Boox): off</button><button class="b g" type="button" id="nightBtn" aria-pressed="false">Night mode (black): off</button></div>
   <div id="ghBox" hidden>
   <h2 style="margin-top:16px">Sync between devices</h2>
   <div id="ghOff"><p>Your progress can sync through a private gist in your GitHub account. Do this once on each device, using the same token:</p>
@@ -858,9 +858,30 @@ try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persisted(
 })();
 </script>
 <script>
-/* installable app: offline cache + update notice */
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(r){
-  r.addEventListener('updatefound',function(){var w=r.installing;if(!w)return;w.addEventListener('statechange',function(){if(w.state==='installed'&&navigator.serviceWorker.controller){var t=document.createElement('div');t.className='sy-toast';t.innerHTML='A new version is ready. <button type="button">Reload</button>';t.querySelector('button').onclick=function(){location.reload()};document.body.appendChild(t)}})})}).catch(function(){})})}
+/* installable app: offline cache + update notice.
+   An installed app is usually resumed from memory rather than reloaded, so it also looks for a new version
+   whenever it comes back on screen (at most every 2 minutes) and every 30 minutes while open.
+   ⋮ → Check for updates shows the version this device is running. */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){(function(){
+  var reg=null,last=0,shown=false,hadCtl=!!navigator.serviceWorker.controller,ver='';
+  function toast(){if(shown)return;shown=true;var t=document.createElement('div');t.className='sy-toast';t.innerHTML='A new version is ready. <button type="button">Reload</button>';t.querySelector('button').onclick=function(){location.reload()};document.body.appendChild(t)}
+  function askVer(){var c=navigator.serviceWorker.controller;if(c)try{c.postMessage('version')}catch(e){}}
+  function paint(msg){var b=document.getElementById('updBtn');if(b)b.textContent=msg||('Check for updates'+(ver?' · '+ver:''))}
+  navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.dpVersion){ver=e.data.dpVersion;paint()}});
+  function watch(r){r.addEventListener('updatefound',function(){var w=r.installing;if(!w)return;w.addEventListener('statechange',function(){if(w.state==='installed'&&navigator.serviceWorker.controller)toast()})})}
+  function check(force){if(!reg)return Promise.resolve();var n=Date.now();if(!force&&n-last<120000)return Promise.resolve();last=n;return reg.update().catch(function(){})}
+  /* skipWaiting + clients.claim: the new version takes over at once, so this is the most reliable moment to offer a reload */
+  navigator.serviceWorker.addEventListener('controllerchange',function(){if(hadCtl)toast();hadCtl=true;askVer()});
+  addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(r){reg=r;watch(r);last=Date.now();askVer();
+    if(r.waiting&&navigator.serviceWorker.controller)toast()}).catch(function(){})});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)check(false)});
+  addEventListener('focus',function(){check(false)});addEventListener('online',function(){check(true)});
+  setInterval(function(){if(!document.hidden)check(true)},30*60000);
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#updBtn');if(!b)return;
+    if(!navigator.onLine){paint('Offline · '+(ver||'?'));return}
+    paint('Checking…');check(true).then(function(){setTimeout(function(){var r=reg;
+      if(r&&(r.installing||r.waiting)){paint('Updating…');return}askVer();paint('Up to date'+(ver?' · '+ver:''));setTimeout(function(){paint()},4000)},1500)})});
+})()}
 </script>
 
 
