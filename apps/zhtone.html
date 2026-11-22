@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>声调 Tones</title>
+<style>
+:root{
+  --bg:#F2F5F3;--surface:#FFFFFF;--ink:#1B2421;--muted:#5D6B66;--line:#D8E0DC;
+  --jade:#2B7A5E;--jade-soft:#E1EFE9;--seal:#B5442F;--seal-soft:#F7E5E0;--gold:#9A6A12;--gold-soft:#F6ECD6;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-han:"Noto Serif SC","Songti SC","PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+button,input,textarea{font:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 90px}
+header.top{padding:22px 0 8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-read);font-weight:600;font-size:clamp(22px,5vw,30px);line-height:1.2;margin:2px 0 4px}
+h1 .zh{font-family:var(--f-han)}
+.lede{color:var(--muted);margin:0 0 6px;max-width:60ch}
+.seg{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:10px 0 14px;overflow-x:auto;scrollbar-width:none}
+.seg button{appearance:none;border:0;background:none;font-weight:600;color:var(--muted);padding:10px 12px 9px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;min-height:44px}
+.seg button[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px;align-items:center}
+.opts .lab{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);min-width:64px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-size:13.5px;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--jade-soft);border-color:var(--jade);color:var(--jade);font-weight:600}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;min-height:44px}
+.btn:hover{border-color:var(--jade)}
+.btn.pri{background:var(--jade);border-color:var(--jade);color:var(--bg)}
+.btn:disabled{opacity:.45;cursor:default}
+h2{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);margin:22px 0 8px;font-weight:700}
+.sets{display:grid;gap:8px}
+.set{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:4px 12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;cursor:pointer;width:100%}
+.set:hover{border-color:var(--jade)}
+.set .no{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted);line-height:1.2}
+.set .no b{display:block;font-family:var(--f-han);font-size:15px;color:var(--jade);font-weight:600}
+.set .t{font-weight:600;line-height:1.3}
+.set .t small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.set .sc{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.set .sc b{color:var(--jade)}
+.bar{grid-column:1/-1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--jade)}
+.special{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 22px -18px rgba(0,0,0,.4)}
+.prog{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.prog .pbar{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog .pbar i{display:block;height:100%;background:var(--jade);transition:width .25s}
+.play{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pb{width:52px;height:52px;border-radius:50%;border:0;background:var(--jade);color:var(--bg);cursor:pointer;display:grid;place-items:center;flex:none}
+.pb svg{width:20px;height:20px;fill:currentColor}
+.pb.on{box-shadow:0 0 0 5px var(--jade-soft)}
+.small{font-size:13px;color:var(--muted)}
+.prompt-en{font-family:var(--f-read);font-size:17px;line-height:1.4}
+.prompt-en.off{color:var(--muted);font-style:italic;font-size:14px;font-family:var(--f-ui)}
+.pyhint{color:var(--jade);font-size:14px}
+.ans{min-height:64px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.ans.empty::before{content:"Tap the blocks in order";color:var(--muted);font-size:13.5px;padding:6px}
+.bank{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.tile{font-family:var(--f-han);font-size:19px;line-height:1.2;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 11px;cursor:pointer;min-height:44px;min-width:44px;user-select:none;box-shadow:0 1px 0 var(--line)}
+.tile:hover{border-color:var(--jade)}
+.tile.used{visibility:hidden}
+.tile.ok{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.tile.bad{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.tile.given{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px 12px;font-family:var(--f-han);font-size:20px;line-height:1.5;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row .sp{flex:1}
+.fb{border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.fb.ok{background:var(--jade-soft)}
+.fb.bad{background:var(--seal-soft)}
+.fb .v{font-weight:700}
+.fb.ok .v{color:var(--jade)}.fb.bad .v{color:var(--seal)}
+.han{font-family:var(--f-han);font-size:20px;line-height:1.55}
+.han .m{color:var(--seal);text-decoration:underline wavy;text-underline-offset:4px}
+.han .x{color:var(--seal);text-decoration:line-through}
+.han .g{color:var(--jade)}
+.fb .py{color:var(--jade);font-size:14px}
+.fb .en{color:var(--muted);font-size:14px}
+.done{text-align:center;padding:26px 10px;display:grid;gap:10px;justify-items:center}
+.done .big{font-family:var(--f-read);font-size:40px;color:var(--jade);line-height:1}
+.mini{display:grid;gap:6px;text-align:left;width:100%;margin-top:8px}
+.mini div{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;font-size:14px}
+.mini .han{font-size:16px}
+.mk{font-weight:700}.mk.g1{color:var(--jade)}.mk.g0{color:var(--seal)}.mk.gh{color:var(--gold)}
+.back{border:0;background:none;color:var(--jade);font-weight:600;cursor:pointer;padding:6px 0;min-height:40px}
+.note{font-size:12.5px;color:var(--muted)}
+.t1{--tc:#C0392B}.t2{--tc:#D68910}.t3{--tc:#1E8449}.t4{--tc:#2E5FA8}.t5{--tc:#7B7D7D}
+.slots{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.slot{display:grid;gap:6px;justify-items:center;padding:8px 8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--bg);min-width:120px}
+.slot.cur{border-color:var(--jade);box-shadow:0 0 0 3px var(--jade-soft)}
+.slot .sy{font-size:20px;font-weight:600;min-height:28px;color:var(--tc,var(--ink))}
+.slot .hz{font-family:var(--f-han);font-size:26px;line-height:1.1;color:var(--tc,var(--ink))}
+.slot .row{gap:4px;justify-content:center}
+.tb{width:40px;height:40px;border-radius:9px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;color:var(--tc);display:grid;place-items:center;padding:0}
+.tb svg{width:24px;height:24px}
+.tb[aria-pressed="true"]{background:var(--tc);color:#fff;border-color:var(--tc)}
+.slot.ok{border-color:var(--jade);background:var(--jade-soft)}.slot.bad{border-color:var(--seal);background:var(--seal-soft)}
+.slot .was{font-size:12.5px;color:var(--muted)}
+.pick{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.pick button{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:12px;cursor:pointer;display:grid;gap:4px;justify-items:center;min-height:64px}
+.pick button:hover{border-color:var(--jade)}
+.pick .hz{font-family:var(--f-han);font-size:26px;line-height:1.15}
+.pick .p{font-size:16px;font-weight:600}
+.pick button.ok{border-color:var(--jade);background:var(--jade-soft)}.pick button.bad{border-color:var(--seal);background:var(--seal-soft)}
+.pick button[disabled]{cursor:default}
+.three{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.three .col{display:grid;gap:8px;justify-items:center}
+.three .pb{width:64px;height:64px}
+.three .pk{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:600;min-height:40px}
+.three .pk.ok{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}.three .pk.bad{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.three .rev{text-align:center;font-size:14px;min-height:40px}.three .rev .hz{font-family:var(--f-han);font-size:20px;display:block}
+.sent{font-family:var(--f-han);font-size:30px;text-align:center;letter-spacing:.04em}
+.sent u{text-decoration:none;border-bottom:3px solid var(--seal);color:var(--seal)}
+.why{font-size:14px;color:var(--muted)}
+.mx{border-collapse:separate;border-spacing:3px;margin:6px auto;font-size:13px}
+.mx th{font-weight:600;color:var(--muted);padding:4px 6px}
+.mx td{width:56px;height:40px;text-align:center;border-radius:6px;font-weight:600}
+.mx td.d{outline:2px solid var(--jade);outline-offset:-2px}
+.tops{display:grid;gap:6px;margin:8px 0}
+.tops div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14.5px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:4px}.legend i{width:10px;height:10px;border-radius:3px;background:var(--tc);display:inline-block}
+
+body.inround header.top{display:none}body.inround .wrap{padding-top:8px}
+.cfg{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:0 0 12px}
+.cfg>summary{cursor:pointer;list-style:none;padding:11px 14px;font-weight:600;min-height:44px}
+.cfg>summary::-webkit-details-marker{display:none}
+.cfg>summary small{font-weight:400;color:var(--muted);margin-left:6px}
+.cfg[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.cfg .opts{padding:0 12px}
+@media (max-width:480px){.tile{font-size:18px;padding:7px 9px}.han{font-size:18px}textarea{font-size:18px}}
+</style></head><body>
+<div class="wrap">
+<header class="top" id="hd">
+  <div class="eyebrow">中文 · from 听力 1 + 2</div>
+  <h1><span class="zh">声调</span> Tones by ear</h1>
+  <p class="lede">Real words and phrases cut from your two listening courses. Train your ear to hear the tones, not to remember them.</p>
+</header>
+<div id="app"></div>
+</div>
+<audio id="au" preload="none"></audio>
+<script>
+/* ---- pinyin + tones (shared by 声调, 句子 and 生词卡) ---- */
+const PYT=(()=>{
+  const I=['','b','p','m','f','d','t','n','l','g','k','h','j','q','x','zh','ch','sh','r','z','c','s','y','w'];
+  const F=['a','o','e','ai','ei','ao','ou','an','en','ang','eng','ong','er','i','ia','ie','iao','iu','ian','in','iang','ing','iong','u','ua','uo','uai','ui','uan','un','uang','ueng','v','ve','van','vn','ue','n','ng','m','hm'];
+  const SYL=new Set();I.forEach(a=>F.forEach(b=>SYL.add(a+b)));
+  const MK={};[['a','āáǎà'],['e','ēéěè'],['i','īíǐì'],['o','ōóǒò'],['u','ūúǔù'],['v','ǖǘǚǜ']].forEach(([b,m])=>[...m].forEach((c,n)=>MK[c]=[b,n+1]));
+  /* letters + tone per position; digits 1-5 after a syllable set its tone */
+  function letters(py){const L=[],T=[];for(const ch of String(py).normalize('NFC').toLowerCase()){
+      if(ch==='ü'){L.push('v');T.push(0)}else if(MK[ch]){L.push(MK[ch][0]);T.push(MK[ch][1])}
+      else if(ch>='a'&&ch<='z'){L.push(ch);T.push(0)}
+      else if(ch>='0'&&ch<='5'){L.push('#'+ch);T.push(0)}
+      else if(ch===':'&&L.length&&L[L.length-1]==='u'){L[L.length-1]='v'}
+      else{L.push('|');T.push(0)}}
+    return {L,T}}
+  /* split into [[syl,tone]]; n = exact syllable count, or null for the fewest syllables */
+  function split(py,n){const {L,T}=letters(py),m=L.length,memo=new Map();
+    function go(i,k){while(i<m&&(L[i]==='|'))i++;if(i===m)return (n==null||k===0)?[]:null;if(n!=null&&k===0)return null;
+      const key=i+','+k;if(memo.has(key))return memo.get(key);let best=null;
+      for(let j=Math.min(m,i+6);j>i;j--){let p='';let bad=false;for(let x=i;x<j;x++){if(L[x].length!==1||L[x]==='|'){bad=true;break}p+=L[x]}
+        if(bad||!SYL.has(p))continue;const ts=T.slice(i,j).filter(Boolean);if(ts.length>1)continue;let t=ts[0]||0,jj=j;
+        if(jj<m&&L[jj][0]==='#'){const d=+L[jj].slice(1);if(t&&d!==t)continue;t=d===0?5:d;jj++}
+        const r=go(jj,n==null?0:k-1);if(r){const cand=[[p,t||5]].concat(r);if(n!=null){best=cand;break}if(!best||cand.length<best.length)best=cand}}
+      memo.set(key,best);return best}
+    return go(0,n==null?0:n)}
+  /* the tones you actually hear inside a run of syllables (3+3, 不, 一) */
+  function surface(sy,chars){const t=sy.map(s=>s[1]);const out=t.slice();
+    for(let j=0;j<t.length-1;j++){
+      if(t[j]===3&&t[j+1]===3&&!(j+2<t.length&&t[j+2]===3))out[j]=2;
+      const ch=chars?chars[j]:'';
+      if((ch==='不'||(!chars&&sy[j][0]==='bu'))&&(t[j]===4||t[j]===2)&&t[j+1]!==5)out[j]=t[j+1]===4?2:4;
+      if(ch==='一'&&t[j+1]!==5)out[j]=t[j+1]===4?2:4;}
+    return out}
+  function mark(syl,t){const s=syl.replace(/v/g,'ü');if(!t||t===5)return s;const lo=s;let i=-1;
+    if(lo.includes('a'))i=lo.indexOf('a');else if(lo.includes('e'))i=lo.indexOf('e');else if(lo.includes('ou'))i=lo.indexOf('o');
+    else for(let k=lo.length-1;k>=0;k--)if('iouü'.includes(lo[k])){i=k;break}
+    if(i<0)return s;const m={a:'āáǎà',e:'ēéěè',i:'īíǐì',o:'ōóǒò',u:'ūúǔù','ü':'ǖǘǚǜ'}[lo[i]];return s.slice(0,i)+m[t-1]+s.slice(i+1)}
+  const NAME={1:'1st',2:'2nd',3:'3rd',4:'4th',5:'neutral'};
+  /* confusion counts live in the 声调 tab's storage so every tab can add to them */
+  const REAL=(()=>{try{for(let w=window;;w=w.parent){if(w.__dpShell)return w.localStorage;if(w===w.parent)break}}catch(e){}try{return window.top.localStorage}catch(e){}return null})();
+  const CK='drillpack:zhtone:conf';
+  function conf(){const st=REAL||localStorage,k=REAL?CK:'conf';try{return JSON.parse(st.getItem(k)||'{}')||{}}catch(e){return {}}}
+  function note(pairs,from){if(!pairs.length)return;const st=REAL||localStorage,k=REAL?CK:'conf';const c=conf();
+    pairs.forEach(([t,h])=>{const key=t+'>'+h;c[key]=(c[key]||0)+1});c.n=(c.n||0)+pairs.length;c.src=c.src||{};c.src[from]=(c.src[from]||0)+pairs.length;
+    try{st.setItem(k,JSON.stringify(c))}catch(e){}}
+  return {split,surface,mark,NAME,conf,note,SYL}})();
+
+const LSK='zhtone-v1';
+const S=(()=>{try{return JSON.parse(localStorage.getItem(LSK))||{}}catch(e){return {}}})();
+S.opt=Object.assign({n:'2',show:'py',weak:true,auto:true,rate:1,ch:'all'},S.opt||{});S.st=S.st||{};S.mode=S.mode||'id';
+function save(){try{localStorage.setItem(LSK,JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let D=null,W=[],BYW={},ROUND=null;
+const SRC=['zhl','zhl2'];
+function url(c){const src=SRC[c[0]],id=c[1];return src==='zhl'?'audio-'+(+id<=68?1:2)+'/'+id+'.webm':'audio-'+(+id<=87?3:4)+'/'+id+'.webm'}
+/* tone contour icons */
+const ICON={1:'M4 7H20',2:'M4 17L20 6',3:'M4 9Q11 22 20 6',4:'M4 5L20 18'};
+function icon(t){return t===5?'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>':`<svg viewBox="0 0 24 24"><path d="${ICON[t]}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`}
+const TN={1:'1',2:'2',3:'3',4:'4',5:'轻'};
+
+/* ---------- audio ---------- */
+const au=$('au');let stopAt=0,cur='',onEnd=null;
+function play(c,btn,rate,then){if(!c)return;const u=url(c);if(cur!==u){au.src=u;cur=u}au.playbackRate=rate||S.opt.rate;onEnd=then||null;
+  const go=()=>{try{au.currentTime=Math.max(0,c[2]-0.04)}catch(e){}stopAt=c[3]+0.06;document.querySelectorAll('.pb.on').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');const p=au.play();if(p&&p.catch)p.catch(()=>{})};
+  if(au.readyState>=1&&au.currentSrc)go();else{au.addEventListener('loadedmetadata',go,{once:true});au.load()}}
+au.addEventListener('timeupdate',()=>{if(stopAt&&au.currentTime>=stopAt){au.pause();stopAt=0;const f=onEnd;onEnd=null;if(f)setTimeout(f,350)}});
+au.addEventListener('pause',()=>document.querySelectorAll('.pb.on').forEach(b=>b.classList.remove('on')));
+const PB='<svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg>';
+
+/* ---------- word data ---------- */
+function prep(){W=D.w.map(r=>{const sy=r[1].split(' ').map(x=>[x.slice(0,-1),+x.slice(-1)]);return {h:r[0],sy,en:r[2],c:r[3],sur:PYT.surface(sy,[...r[0]])}});
+  W.forEach(w=>BYW[w.h]=w)}
+const pyOf=(w,tones)=>w.sy.map((s,i)=>PYT.mark(s[0],(tones||w.sur)[i])).join(' ');
+const bare=w=>w.sy.map(s=>s[0].replace(/v/g,'ü')).join(' ');
+/* how often each tone is misheard (from every tab) → weights */
+function errRate(){const c=PYT.conf(),r={};for(let t=1;t<=5;t++){let tot=0,ok=0;for(let h=1;h<=5;h++){const n=c[t+'>'+h]||0;tot+=n;if(h===t)ok+=n}r[t]=(tot-ok+1)/(tot+4)}return r}
+function weighted(pool,tonesOf){if(!S.opt.weak)return rnd(pool);const er=errRate();let best=null,bw=-1;
+  for(let k=0;k<24;k++){const x=rnd(pool),w=Math.max(...tonesOf(x).map(t=>er[t]))+Math.random()*0.15;if(w>bw){bw=w;best=x}}return best}
+function stat(mode,ok){const s=S.st[mode]||(S.st[mode]={n:0,ok:0});s.n++;if(ok)s.ok++;save()}
+
+/* ---------- screens ---------- */
+const MODES=[['id','听 Tone ID'],['pair','对比 Pairs'],['odd','找不同 Odd one out'],['chg','变调 Tone changes'],['me','📊 My tones']];
+function shell(inner){
+  $('app').innerHTML=`<div class="seg" role="tablist">${MODES.map(([k,l])=>`<button role="tab" data-m="${k}" aria-selected="${S.mode===k}">${l}</button>`).join('')}</div>${inner}`;
+  $('app').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{S.mode=b.dataset.m;save();ROUND=null;au.pause();home()})}
+function optsHTML(rows){const o=S.opt,c=(k,v,l)=>`<button class="chip" type="button" data-o="${k}" data-v="${v}" aria-pressed="${String(o[k])===String(v)}">${l}</button>`;
+  return `<details class="cfg" id="cfg"${S.cfgOpen?' open':''}><summary>⚙︎ Settings</summary>${rows.map(r=>`<div class="opts"><span class="lab">${r[0]}</span>${r[1].map(x=>c(...x)).join('')}</div>`).join('')}</details>`}
+function bindOpts(){const cf=$('cfg');if(cf)cf.addEventListener('toggle',()=>{S.cfgOpen=cf.open;save()});
+  $('app').querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{let v=b.dataset.v;if(v==='true')v=true;else if(v==='false')v=false;else if(v!==''&&!isNaN(+v)&&b.dataset.o!=='n')v=+v;S.opt[b.dataset.o]=v;save();home()})}
+const AUD=[['Audio',[['auto',true,'Autoplay'],['auto',false,'Tap to play'],['rate',1,'1×'],['rate',0.75,'0.75×'],['rate',0.6,'0.6×']]]];
+const WEAK=[['Focus',[['weak',true,'More of the tones I mix up'],['weak',false,'Random']]]];
+function intro(t){const s=S.st[S.mode];return `<p class="lede" style="margin:4px 0 12px">${t}${s&&s.n?` <b>${Math.round(100*s.ok/s.n)}%</b> right so far (${s.n}).`:''}</p>`}
+function home(){document.body.classList.remove('inround');
+  if(!D){$('app').innerHTML='<p class="note">Loading…</p>';return}
+  const m=S.mode;let h='';
+  if(m==='id')h=intro('Hear a word, then mark the tone of each syllable (keys 1–5, 5 = neutral).')+optsHTML([['Length',[['n','1','1 syllable'],['n','2','2 syllables'],['n','3','3+'],['n','mix','Mixed']]],['Show',[['show','py','Pinyin without tones'],['show','hz','Characters'],['show','none','Nothing']]]].concat(WEAK,AUD));
+  if(m==='pair')h=intro('Two words that differ only in tone. Which one did you hear? (keys 1 / 2)')+optsHTML(WEAK.concat(AUD));
+  if(m==='odd')h=intro('Three words: two have the same tones, one doesn’t. Find the odd one (keys 1–3).')+optsHTML(AUD);
+  if(m==='chg')h=intro('Tones change in real speech: 不 before a 4th tone, 一 before other syllables, and a 3rd tone before another 3rd. Which tone do you actually hear?')+optsHTML([['Which',[['ch','all','All'],['ch','bu','不'],['ch','yi','一'],['ch','33','3 + 3']]]].concat(AUD));
+  if(m==='me')return mine();
+  h+=`<div class="special" style="margin-top:6px"><button class="btn pri" id="go" type="button">Start · 10 items</button></div>`;
+  shell(h);bindOpts();$('go').onclick=()=>startRound(m);
+}
+function startRound(m){ROUND={m,k:0,n:10,log:[]};document.body.classList.add('inround');nextItem()}
+function frame(body,acts){const r=ROUND;return `<button class="back" type="button" id="bk">← ${MODES.find(x=>x[0]===r.m)[1]}</button>
+  <div class="card"><div class="prog"><span>${r.k+1} / ${r.n}</span><span class="pbar"><i style="width:${Math.round(100*r.k/r.n)}%"></i></span></div>${body}<div id="fb"></div><div class="row" id="acts">${acts}</div></div>`}
+function nextItem(){const r=ROUND;if(r.k>=r.n)return summary();({id:itemId,pair:itemPair,odd:itemOdd,chg:itemChg})[r.m]()}
+function after(ok,fbHTML,nextLabel){const r=ROUND;r.log.push(ok);stat(r.m,ok);
+  $('fb').innerHTML=fbHTML;$('acts').innerHTML=`<span class="sp"></span><button class="btn pri" id="nx" type="button">${r.k+1<r.n?'Next →':'Finish'}</button>`;
+  $('nx').onclick=()=>{r.k++;nextItem()};setTimeout(()=>{try{$('nx').focus({preventScroll:true})}catch(e){}},30)}
+function bindCommon(){$('bk').onclick=()=>{ROUND=null;au.pause();home()}}
+
+/* ---- 1. tone ID ---- */
+function poolId(){const n=S.opt.n;return W.filter(w=>{const L=w.sy.length;return n==='1'?L===1:n==='2'?L===2:n==='3'?L>=3&&L<=4:L<=4})}
+function itemId(){const w=weighted(poolId(),x=>x.sur);const c=rnd(w.c);const L=w.sy.length;const ans=new Array(L).fill(0);let k=0,done=false;
+  const slot=i=>`<div class="slot${i===0?' cur':''}" data-i="${i}">${S.opt.show==='hz'?`<span class="hz">${esc(w.h[i])}</span>`:S.opt.show==='py'?`<span class="sy">${esc(w.sy[i][0].replace(/v/g,'ü'))}</span>`:`<span class="sy">·</span>`}
+     <div class="row">${[1,2,3,4,5].map(t=>`<button class="tb t${t}" type="button" data-t="${t}" aria-label="tone ${t}" aria-pressed="false">${icon(t)}</button>`).join('')}</div><span class="was"></span></div>`;
+  $('app').innerHTML=frame(`<div class="play"><button class="pb" id="pl" type="button" aria-label="Play">${PB}</button><div class="small">Mark the tone of each syllable. Tap ▶ as often as you like.</div></div><div class="slots">${w.sy.map((s,i)=>slot(i)).join('')}</div>`,
+    `<button class="btn pri" id="ck" type="button">Check</button><button class="btn" id="slow" type="button">🐢 Slower</button><button class="btn" id="sh" type="button">Show</button>`);
+  bindCommon();const pl=$('pl');pl.onclick=()=>play(c,pl);$('slow').onclick=()=>play(c,pl,0.6);
+  const paint=()=>{document.querySelectorAll('.slot').forEach((el,i)=>{el.classList.toggle('cur',i===k&&!done);el.querySelectorAll('.tb').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.t===ans[i])))})};
+  const set=(i,t)=>{if(done)return;ans[i]=t;k=ans.findIndex(x=>!x);if(k<0){k=L;check()}paint()};
+  document.querySelectorAll('.slot').forEach((el,i)=>{el.querySelectorAll('.tb').forEach(b=>b.onclick=()=>set(i,+b.dataset.t));el.addEventListener('click',e=>{if(!e.target.closest('.tb')&&!done){k=i;paint()}})});
+  function check(){if(done||ans.some(x=>!x))return;done=true;let all=true;const pairs=[];
+    document.querySelectorAll('.slot').forEach((el,i)=>{const sur=w.sur[i],dic=w.sy[i][1],a=ans[i],ok=a===sur||a===dic;if(!ok)all=false;pairs.push([sur,a]);
+      el.classList.add(ok?'ok':'bad');el.querySelector('.was').innerHTML=ok?(a!==sur?'written '+PYT.NAME[dic]+', said '+PYT.NAME[sur]:'✓'):`you: ${PYT.NAME[a]}`;
+      const top=el.querySelector('.sy,.hz');top.outerHTML=`<span class="sy t${sur}">${esc(PYT.mark(w.sy[i][0],sur))}</span><span class="hz t${sur}">${esc(w.h[i])}</span>`});
+    PYT.note(pairs,'id');
+    const changed=w.sur.some((t,i)=>t!==w.sy[i][1]);
+    after(all,`<div class="fb ${all?'ok':'bad'}"><span class="v">${all?'✓ Right':'Not quite'}</span><div class="han">${esc(w.h)} <span class="py">${esc(pyOf(w))}</span></div>${changed?`<div class="small">Dictionary: ${esc(pyOf(w,w.sy.map(s=>s[1])))} – in speech the tone changes.</div>`:''}<div class="en">${esc(w.en)}</div></div>`);
+    $('acts').insertAdjacentHTML('afterbegin',`<button class="btn" id="again" type="button">🔊 Again</button><button class="btn" id="slow2" type="button">🐢 Slower</button>`);
+    $('again').onclick=()=>play(c,pl);$('slow2').onclick=()=>play(c,pl,0.6);play(c,pl)}
+  $('ck').onclick=check;$('sh').onclick=()=>{if(done)return;done=true;check2()};
+  function check2(){/* show without scoring as right */let pairs=[];document.querySelectorAll('.slot').forEach((el,i)=>{const sur=w.sur[i];el.classList.add('bad');el.querySelector('.was').textContent=PYT.NAME[sur];const top=el.querySelector('.sy,.hz');top.outerHTML=`<span class="sy t${sur}">${esc(PYT.mark(w.sy[i][0],sur))}</span><span class="hz t${sur}">${esc(w.h[i])}</span>`});
+    after(false,`<div class="fb bad"><span class="v">Here it is</span><div class="han">${esc(w.h)} <span class="py">${esc(pyOf(w))}</span></div><div class="en">${esc(w.en)}</div></div>`);
+    $('acts').insertAdjacentHTML('afterbegin',`<button class="btn" id="again" type="button">🔊 Again</button>`);$('again').onclick=()=>play(c,pl);play(c,pl)}
+  ROUND.key=e=>{if(done)return false;if(/^[1-5]$/.test(e.key)){set(k<L?k:L-1,+e.key);return true}if(e.key==='Backspace'){const j=Math.max(0,(k<L?k:L)-1);ans[j]=0;k=j;paint();return true}
+    if(e.key==='ArrowLeft'){k=Math.max(0,k-1);paint();return true}if(e.key==='ArrowRight'){k=Math.min(L-1,k+1);paint();return true}return false};
+  if(S.opt.auto)setTimeout(()=>play(c,pl),250)}
+
+/* ---- 2. minimal pairs ---- */
+let PAIRS=null;
+function buildPairs(){const g={};W.forEach(w=>{if(w.sy.length>2)return;const k=w.sy.map(s=>s[0]).join(' ');(g[k]=g[k]||[]).push(w)});
+  PAIRS=[];for(const k in g){const L=g[k];const pats={};L.forEach(w=>{const p=w.sur.join('');if(!pats[p])pats[p]=w});const ws=Object.values(pats);
+    for(let i=0;i<ws.length;i++)for(let j=i+1;j<ws.length;j++)PAIRS.push([ws[i],ws[j]])}}
+function itemPair(){if(!PAIRS)buildPairs();const pr=weighted(PAIRS,p=>p[0].sur.filter((t,i)=>t!==p[1].sur[i]).concat(p[1].sur.filter((t,i)=>t!==p[0].sur[i])));
+  const two=shuffle(pr),pick=Math.random()<.5?0:1,target=two[pick],c=rnd(target.c);
+  $('app').innerHTML=frame(`<div class="play"><button class="pb" id="pl" type="button" aria-label="Play">${PB}</button><div class="small">Which word is it?</div></div>
+    <div class="pick">${two.map((w,i)=>`<button type="button" data-i="${i}"><span class="hz">${esc(w.h)}</span><span class="p">${esc(pyOf(w))}</span><span class="small">${esc(w.en)}</span></button>`).join('')}</div>`,
+    `<button class="btn" id="slow" type="button">🐢 Slower</button>`);
+  bindCommon();const pl=$('pl');pl.onclick=()=>play(c,pl);$('slow').onclick=()=>play(c,pl,0.6);let done=false;
+  const choose=i=>{if(done)return;done=true;const ok=i===pick;const B=document.querySelectorAll('.pick button');B.forEach((b,j)=>{b.disabled=true;if(j===pick)b.classList.add('ok');else if(j===i)b.classList.add('bad')});
+    const other=two[1-pick],pairs=[];target.sur.forEach((t,j)=>{if(t!==other.sur[j])pairs.push([t,ok?t:other.sur[j]])});PYT.note(pairs,'pair');
+    after(ok,`<div class="fb ${ok?'ok':'bad'}"><span class="v">${ok?'✓ Right':'It was the other one'}</span><div class="small">You heard <b>${esc(target.h)}</b> ${esc(pyOf(target))}. Tap a word to hear it.</div></div>`);
+    B.forEach((b,j)=>{b.disabled=false;b.onclick=()=>play(rnd(two[j].c),pl)})};
+  document.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>choose(+b.dataset.i));
+  ROUND.key=e=>{if(!done&&(e.key==='1'||e.key==='2')){choose(+e.key-1);return true}return false};
+  if(S.opt.auto)setTimeout(()=>play(c,pl),250)}
+
+/* ---- 3. odd one out ---- */
+function itemOdd(){let a,b,odd;for(let g=0;g<200;g++){const L=Math.random()<.75?2:1;const pool=W.filter(w=>w.sy.length===L);a=rnd(pool);const pat=a.sur.join('');
+    const same=pool.filter(w=>w!==a&&w.sur.join('')===pat&&w.sy.map(s=>s[0]).join()!==a.sy.map(s=>s[0]).join());
+    const diff=pool.filter(w=>{let d=0;w.sur.forEach((t,i)=>{if(t!==a.sur[i])d++});return d===1});if(same.length&&diff.length){b=rnd(same);odd=rnd(diff);break}}
+  const three=shuffle([a,b,odd]),oi=three.indexOf(odd),cs=three.map(w=>rnd(w.c));
+  $('app').innerHTML=frame(`<div class="small" style="text-align:center">Listen to all three. Which one has different tones?</div>
+    <div class="three">${three.map((w,i)=>`<div class="col"><button class="pb" type="button" data-p="${i}" aria-label="Play ${i+1}">${PB}</button><button class="pk" type="button" data-i="${i}">${i+1} is different</button><div class="rev" data-r="${i}"></div></div>`).join('')}</div>`,
+    `<button class="btn" id="all" type="button">🔊 Play all three</button>`);
+  bindCommon();const P=document.querySelectorAll('.three .pb');P.forEach((b,i)=>b.onclick=()=>play(cs[i],b));
+  const seq=(i=0)=>{if(i<3)play(cs[i],P[i],null,()=>seq(i+1))};$('all').onclick=()=>seq(0);let done=false;
+  const choose=i=>{if(done)return;done=true;const ok=i===oi;document.querySelectorAll('.pk').forEach((b,j)=>{b.disabled=true;if(j===oi)b.classList.add('ok');else if(j===i)b.classList.add('bad')});
+    three.forEach((w,j)=>{document.querySelector(`[data-r="${j}"]`).innerHTML=`<span class="hz">${esc(w.h)}</span>${w.sur.map((t,k)=>`<span class="t${t}" style="color:var(--tc)">${esc(PYT.mark(w.sy[k][0],t))}</span>`).join(' ')}`});
+    after(ok,`<div class="fb ${ok?'ok':'bad'}"><span class="v">${ok?'✓ Right':'Not this time'}</span><div class="small">The odd one is <b>${oi+1}</b>. Play them again to compare.</div></div>`)};
+  document.querySelectorAll('.pk').forEach(b=>b.onclick=()=>choose(+b.dataset.i));
+  ROUND.key=e=>{if(!done&&/^[1-3]$/.test(e.key)){choose(+e.key-1);return true}if(e.key==='p'){seq(0);return true}return false};
+  if(S.opt.auto)setTimeout(()=>seq(0),250)}
+
+/* ---- 5. tone changes ---- */
+const WHY={bu:'不 is 4th tone (bù), but before another 4th tone it becomes 2nd (bú).',yi:'一 on its own is 1st (yī). Before a 4th tone it becomes 2nd (yí); before 1st, 2nd or 3rd it becomes 4th (yì).',
+  '33':'Two 3rd tones in a row: the first one rises like a 2nd tone. Before other tones a 3rd tone stays low.'};
+function itemChg(){const k=S.opt.ch==='all'?rnd(['bu','bu','yi','33','33']):S.opt.ch;const it=rnd(D.c[k]);const [text,idx,opts,ans,clip,py]=it;
+  const sy=py.split(' ').map(x=>[x.slice(0,-1),+x.slice(-1)]),base=sy[idx][0];
+  const sent=[...text].map((ch,i)=>i===idx?`<u>${esc(ch)}</u>`:esc(ch)).join('');
+  $('app').innerHTML=frame(`<div class="play"><button class="pb" id="pl" type="button" aria-label="Play">${PB}</button><div class="small">Which tone do you hear on the underlined syllable?</div></div>
+    <div class="sent">${sent}</div><div class="pick">${opts.map((t,i)=>`<button type="button" data-t="${t}" class="t${t}"><span class="p" style="color:var(--tc)">${esc(PYT.mark(base,t))}</span><span class="small">${PYT.NAME[t]} tone</span></button>`).join('')}</div>`,
+    `<button class="btn" id="slow" type="button">🐢 Slower</button>`);
+  bindCommon();const pl=$('pl');pl.onclick=()=>play(clip,pl);$('slow').onclick=()=>play(clip,pl,0.6);let done=false;
+  const choose=t=>{if(done)return;done=true;const ok=t===ans;document.querySelectorAll('.pick button').forEach(b=>{b.disabled=true;const v=+b.dataset.t;if(v===ans)b.classList.add('ok');else if(v===t)b.classList.add('bad')});
+    PYT.note([[ans,t]],'chg');const full=sy.map((s,i)=>i===idx?PYT.mark(s[0],ans):PYT.mark(s[0],s[1])).join(' ');
+    after(ok,`<div class="fb ${ok?'ok':'bad'}"><span class="v">${ok?'✓ Right':'Not quite'}</span><div class="han">${esc(text)} <span class="py">${esc(full)}</span></div><div class="why">${WHY[k]}</div></div>`);
+    $('acts').insertAdjacentHTML('afterbegin',`<button class="btn" id="again" type="button">🔊 Again</button>`);$('again').onclick=()=>play(clip,pl)};
+  document.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>choose(+b.dataset.t));
+  ROUND.key=e=>{if(!done&&/^[1-3]$/.test(e.key)&&opts[+e.key-1]){choose(opts[+e.key-1]);return true}return false};
+  if(S.opt.auto)setTimeout(()=>play(clip,pl),250)}
+
+function summary(){const r=ROUND,ok=r.log.filter(Boolean).length;
+  $('app').innerHTML=`<button class="back" type="button" id="bk">← ${MODES.find(x=>x[0]===r.m)[1]}</button><div class="card"><div class="done"><div class="big">${ok}/${r.log.length}</div><div>right this round</div>
+    <div class="row" style="justify-content:center"><button class="btn pri" id="again" type="button">Another 10</button><button class="btn" id="me" type="button">📊 My tones</button></div></div></div>`;
+  bindCommon();$('again').onclick=()=>startRound(r.m);$('me').onclick=()=>{S.mode='me';save();ROUND=null;home()}}
+
+/* ---- 10. my tones: which tones you mix up ---- */
+function mine(){document.body.classList.remove('inround');const c=PYT.conf();
+  let h=intro('Every tone you answer here, in 句子 (type mode, tones on) and in 生词卡 (by ear) is counted.');
+  const row=t=>{let tot=0;for(let x=1;x<=5;x++)tot+=c[t+'>'+x]||0;return tot};
+  if(!c.n){h+='<p class="note">Nothing yet — do a round of Tone ID first.</p>';shell(h);return}
+  h+='<table class="mx"><tr><th>heard as →</th>'+[1,2,3,4,5].map(x=>`<th class="t${x}" style="color:var(--tc)">${x===5?'轻':x}</th>`).join('')+'<th></th></tr>';
+  for(let t=1;t<=5;t++){const tot=row(t);h+=`<tr><th class="t${t}" style="color:var(--tc)">${PYT.NAME[t]}</th>`;
+    for(let x=1;x<=5;x++){const n=c[t+'>'+x]||0,p=tot?n/tot:0;const bg=x===t?`rgba(43,122,94,${0.12+0.6*p})`:`rgba(181,68,47,${p?0.12+0.9*p:0})`;
+      h+=`<td class="${x===t?'d':''}" style="background:${bg}" title="${n} of ${tot}">${tot?Math.round(100*p)+'%':''}</td>`}
+    h+=`<td class="small">${tot}</td></tr>`}
+  h+='</table><p class="note" style="text-align:center">Rows: the real tone. Green diagonal = heard right.</p>';
+  const mix=[];for(let t=1;t<=5;t++){const tot=row(t);for(let x=1;x<=5;x++)if(x!==t&&c[t+'>'+x])mix.push([c[t+'>'+x]/tot,t,x,c[t+'>'+x],tot])}
+  mix.sort((a,b)=>b[0]-a[0]);
+  h+='<h2>Your most common mix-ups</h2><div class="tops">'+(mix.slice(0,3).map(([p,t,x,n,tot])=>`<div>You hear a <b class="t${t}" style="color:var(--tc)">${PYT.NAME[t]} tone</b> as a <b class="t${x}" style="color:var(--tc)">${PYT.NAME[x]}</b> ${Math.round(100*p)}% of the time (${n} of ${tot}).</div>`).join('')||'<div>No mix-ups yet.</div>')+'</div>';
+  h+=`<p class="note">With “More of the tones I mix up” on, Tone ID and Pairs give you more words with these tones. ${c.n} answers counted${c.src?' — '+Object.entries(c.src).map(([k,v])=>({id:'Tone ID',pair:'Pairs',chg:'Tone changes',sent:'句子',card:'生词卡'}[k]||k)+' '+v).join(', '):''}.</p>
+    <div class="row"><button class="btn" id="rs" type="button">Reset the counts</button></div>`;
+  shell(h);$('rs').onclick=()=>{if(confirm('Reset all tone counts?')){try{const R=PYT.conf;localStorage.removeItem('conf')}catch(e){}try{window.top.localStorage.removeItem('drillpack:zhtone:conf')}catch(e){}mine()}}}
+
+document.addEventListener('keydown',e=>{if(!ROUND||!ROUND.key||e.ctrlKey||e.altKey||e.metaKey)return;if(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(ROUND.key(e))e.preventDefault()});
+fetch('tones-data.json').then(r=>r.json()).then(d=>{D=d;prep();home()}).catch(()=>{$('app').innerHTML='<p class="note">Could not load the tone data. Open the app online once; after that it works offline.</p>'});
+home();
+</script>
+</body></html>

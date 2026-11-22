@@ -1,8 +1,12 @@
 /* Language Drills service worker.
-   When you upload changed files, raise VERSION (v1 -> v2 ...) so installed copies update. */
-const VERSION='v43';
-const CORE='core-'+VERSION, AUDIO='audio-v1';
-const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/sc/zh-96.png", "icons/sc/ru-96.png", "icons/sc/de-96.png", "icons/sc/fr-96.png", "icons/sc/en-96.png", "icons/sc/by-96.png", "icons/sc/cu-96.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "drills/by.js", "drills/cu.js", "drills/zhv.js", "drills/deirr.js", "drills/derek.js", "drills/dehoer.js", "drills/desatz.js", "drills/dekarten.js", "drills/zhkarten.js", "drills/zhprep.js", "drills/rudeprep.js", "dehoer-data.json", "drills/zhmy.js", "drills/zhsent.js", "drills/zhtone.js", "drills/ruconn.js", "drills/deconn.js", "drills/frconn.js", "drills/enconn.js", "drills/zhconn.js", "tones-data.json", "story-data.json", "story-lex.json"];
+   Raise VERSION (v44 -> v45 ...) when you upload changed files, so installed copies update.
+   Several apps live on the same web address and share one cache store in the browser. This one only
+   ever touches caches whose names start with "drills-", so the other apps keep their offline files. */
+const VERSION='v44';
+const CORE='drills-core-'+VERSION, AUDIO='drills-audio-v1';
+const LEGACY_AUDIO='audio-v1';                          /* name used up to v43: its files are moved over, not downloaded again */
+const isOld=k=>(k.startsWith('drills-')&&k!==CORE&&k!==AUDIO)||/^core-v\d+$/.test(k);   /* only this app's own old caches */
+const CORE_FILES=["index.html", "manifest.webmanifest", "listening-data.json", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/sc/zh-96.png", "icons/sc/ru-96.png", "icons/sc/de-96.png", "icons/sc/fr-96.png", "icons/sc/en-96.png", "icons/sc/by-96.png", "icons/sc/cu-96.png", "listening-lex.json", "listening2-data.json", "listening2-lex.json", "dehoer-data.json", "tones-data.json", "story-data.json", "story-lex.json", "apps/ru.html", "apps/de.html", "apps/satz.html", "apps/hsk.html", "apps/fr.html", "apps/en.html", "apps/wf.html", "apps/case.html", "apps/zhl.html", "apps/zhl2.html", "apps/by.html", "apps/cu.html", "apps/zhv.html", "apps/deirr.html", "apps/derek.html", "apps/dehoer.html", "apps/desatz.html", "apps/dekarten.html", "apps/zhkarten.html", "apps/zhprep.html", "apps/zhmy.html", "apps/zhsent.html", "apps/zhtone.html", "apps/ruconn.html", "apps/deconn.html", "apps/frconn.html", "apps/enconn.html", "apps/zhconn.html", "apps/rudeprep.html", "fonts/caveat-ea9ad85a.woff2", "fonts/caveat-afe89756.woff2", "fonts/caveat-5b59be73.woff2", "fonts/caveat-8a01467a.woff2", "fonts/literata-3a540963.woff2", "fonts/literata-6fcebb59.woff2", "fonts/literata-73bca12f.woff2", "fonts/literata-41df91de.woff2", "fonts/manrope-5d8e0798.woff2", "fonts/manrope-d8fc94bf.woff2", "fonts/manrope-1f62546f.woff2", "fonts/manrope-b4295101.woff2", "fonts/gloock-7247c68b.woff2", "fonts/gloock-6d30574b.woff2", "fonts/gloock-a2ca3226.woff2", "fonts/figtree-a310474d.woff2", "fonts/figtree-57fd1acf.woff2", "fonts/bricolage-grotesque-094ba9c3.woff2", "fonts/bricolage-grotesque-11f6ab2d.woff2", "fonts/source-sans-3-d37f02e3.woff2", "fonts/source-sans-3-a65c3b53.woff2", "fonts/source-sans-3-ea449cc6.woff2", "fonts/source-sans-3-114a0e5e.woff2", "fonts/newsreader-a40c6200.woff2", "fonts/newsreader-5d70b133.woff2", "fonts/newsreader-ee0be582.woff2", "fonts/newsreader-3e7cd790.woff2", "fonts/ibm-plex-sans-condensed-83696d50.woff2", "fonts/ibm-plex-sans-condensed-7c943d3a.woff2", "fonts/ibm-plex-sans-condensed-e78f94e2.woff2", "fonts/ibm-plex-sans-condensed-0352a661.woff2", "fonts/ibm-plex-sans-condensed-b40f24a1.woff2", "fonts/ibm-plex-sans-condensed-0d1197be.woff2", "fonts/ibm-plex-sans-condensed-924b8b74.woff2", "fonts/ibm-plex-sans-condensed-9cd3677a.woff2", "fonts/ibm-plex-sans-condensed-3b6cf2bb.woff2", "fonts/noto-serif-sc-58c9219d.woff2", "fonts/noto-serif-sc-ca0866e3.woff2", "fonts/libre-caslon-text-ce4653dc.woff2", "fonts/libre-caslon-text-f9fcb1b0.woff2", "fonts/libre-caslon-text-3ddbe223.woff2", "fonts/libre-caslon-display-e2536aff.woff2", "fonts/ibm-plex-sans-24828974.woff2", "fonts/ibm-plex-sans-4d42c785.woff2", "fonts/ibm-plex-sans-90d9c226.woff2", "fonts/ibm-plex-mono-bb87500e.woff2", "fonts/ibm-plex-mono-d32f0e07.woff2"];
 const AUDIO_FILES=[
 "audio-de/01.webm",
 "audio-de/02.webm",
@@ -336,14 +340,21 @@ const AUDIO_FILES=[
 
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CORE).then(c=>c.addAll(CORE_FILES.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{
-  for(const k of await caches.keys())if(k!==CORE&&k!==AUDIO)await caches.delete(k);
+  for(const k of await caches.keys())if(isOld(k))await caches.delete(k);
   await self.clients.claim();
   fillAudio();                       /* download all audio in the background for offline use */
 })())});
 
+/* move the audio saved under the old cache name, one file at a time (safe if interrupted) */
+async function moveLegacyAudio(){if(!(await caches.has(LEGACY_AUDIO)))return;
+  const old=await caches.open(LEGACY_AUDIO),c=await caches.open(AUDIO);
+  for(const req of await old.keys()){if(!(await c.match(req))){const r=await old.match(req);if(r)await c.put(req,r)}await old.delete(req)}
+  await caches.delete(LEGACY_AUDIO)}
+
 let filling=false;
 async function fillAudio(){if(filling)return;filling=true;
-  try{const c=await caches.open(AUDIO);
+  try{try{await moveLegacyAudio()}catch(e){}
+    const c=await caches.open(AUDIO);
     for(const f of AUDIO_FILES){const url=new URL(f,self.registration.scope).href;
       if(await c.match(url))continue;
       try{const r=await fetch(url,{cache:'no-cache'});if(r.ok)await c.put(url,r)}catch(e){break}}
@@ -355,13 +366,16 @@ async function rangeFrom(resp,range){const buf=await resp.arrayBuffer(),size=buf
   const m=/bytes=(\d*)-(\d*)/.exec(range||'');let s=m&&m[1]?+m[1]:0,end=m&&m[2]?+m[2]:size-1;if(end>=size)end=size-1;
   return new Response(buf.slice(s,end+1),{status:206,statusText:'Partial Content',headers:{'Content-Type':resp.headers.get('Content-Type')||'audio/webm','Content-Range':`bytes ${s}-${end}/${size}`,'Content-Length':String(end-s+1),'Accept-Ranges':'bytes'}})}
 
+async function own(req,opt){const a=await (await caches.open(CORE)).match(req,opt);if(a)return a;return (await caches.open(AUDIO)).match(req,opt)}
 self.addEventListener('fetch',e=>{const req=e.request;if(req.method!=='GET')return;
   const url=new URL(req.url);if(url.origin!==location.origin)return;
+  if(!url.pathname.startsWith(new URL(self.registration.scope).pathname))return;   /* another app's files: not ours to answer */
   if(/\/audio-([1-5]\/\d{3}|de\/[a-z]?\d{2})\.webm$/.test(url.pathname)){e.respondWith((async()=>{
     const key=url.origin+url.pathname,c=await caches.open(AUDIO);let r=await c.match(key);
+    if(!r&&await caches.has(LEGACY_AUDIO))r=await (await caches.open(LEGACY_AUDIO)).match(key);
     if(!r){try{const full=await fetch(key);if(full.ok){await c.put(key,full.clone());r=full}else return full}catch(x){return new Response('',{status:504})}}
     return req.headers.get('range')?rangeFrom(r,req.headers.get('range')):r})());return}
-  e.respondWith((async()=>{const hit=await caches.match(req,{ignoreSearch:true});if(hit)return hit;
+  e.respondWith((async()=>{const hit=await own(req,{ignoreSearch:true});if(hit)return hit;
     try{const r=await fetch(req);if(r.ok&&!req.url.includes('sw.js')){const c=await caches.open(CORE);c.put(req,r.clone())}return r}
-    catch(x){if(req.mode==='navigate')return caches.match('index.html');return new Response('',{status:504})}})());
+    catch(x){if(req.mode==='navigate')return (await caches.open(CORE)).match('index.html');return new Response('',{status:504})}})());
 });

@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prepositions + case</title>
+<style>
+/* Layout: one centred practice column — language switcher, inner tabs, settings, the exercise card. HSK 4 Trainer palette. */
+:root{
+  --bg:#f2f4f0;--surface:#ffffff;--fg:#1c2421;--muted:#5d6b65;--line:#d5ddd8;--grid:#e3e9e5;
+  --accent:#2f7a5f;--accent-ink:#ffffff;--soft:#e2efe9;
+  --ok:#2f7a4a;--ok-bg:#e3f2e7;--bad:#b4442f;--bad-bg:#f8e6e1;--gold:#9a6a12;--gold-soft:#f6ecd6;
+  --f-display:"Literata",Georgia,"Times New Roman",serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141a18;--surface:#1c2422;--fg:#e6ece8;--muted:#97a6a0;--line:#2f3b37;--grid:#25302c;
+  --accent:#6cc4a0;--accent-ink:#0f1a15;--soft:#1d3029;
+  --ok:#7fd49a;--ok-bg:#1d3326;--bad:#f08f78;--bad-bg:#3a221d;--gold:#e0b45e;--gold-soft:#2f2717;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a18;--surface:#1c2422;--fg:#e6ece8;--muted:#97a6a0;--line:#2f3b37;--grid:#25302c;
+  --accent:#6cc4a0;--accent-ink:#0f1a15;--soft:#1d3029;
+  --ok:#7fd49a;--ok-bg:#1d3326;--bad:#f08f78;--bad-bg:#3a221d;--gold:#e0b45e;--gold-soft:#2f2717;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--f-body);
+  padding:20px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+button,input,summary{font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap}
+h1{margin:0;font:700 clamp(1.6rem,4vw,2.15rem)/1.1 var(--f-display);letter-spacing:-.01em}
+h1 span{color:var(--accent)}
+.sub{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.stats{display:flex;gap:18px;font-variant-numeric:tabular-nums}
+.stats div{display:flex;flex-direction:column;align-items:flex-end}
+.stats b{font:700 1.25rem/1.15 var(--f-body)}
+.stats span{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+/* languages */
+.langs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lang{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--fg);text-align:left;min-height:56px;min-width:0}
+.lang svg{flex:none;width:30px;height:20px;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+.lang .lt{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.lang .lt b{font-weight:700;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lang .lt small{color:var(--muted);font-size:.72rem}
+.lang[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent);background:var(--soft)}
+/* inner tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tab{appearance:none;border:0;background:none;color:var(--muted);padding:10px 14px 9px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;font-weight:700;display:flex;align-items:center;gap:7px;min-height:46px}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .cnt{font-size:.7rem;font-weight:700;background:var(--bad);color:#fff;border-radius:999px;padding:1px 7px;min-width:1.6em;text-align:center}
+.tab .cnt:empty{display:none}
+/* settings */
+.settings{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.settings summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:700;min-height:48px}
+.settings summary::-webkit-details-marker{display:none}
+.settings summary .st{flex:1;min-width:0;color:var(--muted);font-weight:500;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.settings summary::after{content:"▾";color:var(--muted)}
+.settings[open] summary::after{content:"▴"}
+.sbody{padding:0 16px 14px;display:flex;flex-direction:column;gap:12px}
+.grp{display:flex;flex-direction:column;gap:7px}
+.grp h3{margin:0;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--fg);padding:6px 11px;border-radius:999px;cursor:pointer;font-size:.84rem;font-weight:600;min-height:36px}
+.chip small{color:var(--muted);font-weight:500;margin-left:3px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] small{color:var(--accent-ink);opacity:.8}
+.quick{display:flex;gap:12px;font-size:.8rem}
+.quick button{border:0;background:none;color:var(--accent);padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;align-self:flex-start}
+.seg button{border:0;background:var(--surface);color:var(--fg);font-weight:600;font-size:.85rem;padding:7px 14px;cursor:pointer;min-height:36px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* card */
+.bar{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:8px 10px 8px 14px;border-radius:10px;background:var(--gold-soft);font-size:.9rem}
+.bar b{color:var(--gold)}.bar .sp{flex:1}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.meta .mf{display:inline-flex;align-items:center;gap:6px}
+.meta svg{width:18px;height:12px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+.ins{margin:0;color:var(--muted);font-size:.88rem;font-style:italic}
+.sent{margin:0;font:500 clamp(1.2rem,3.4vw,1.55rem)/1.5 var(--f-display);overflow-wrap:anywhere}
+.gap{display:inline-block;min-width:4.2em;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:700;text-align:center;padding:0 4px;line-height:1.25}
+.gap.ok{color:var(--ok);border-color:var(--ok)}.gap.bad{color:var(--bad);border-color:var(--bad)}
+.base{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.base .bw{font:700 1.05rem var(--f-display);letter-spacing:.06em;background:var(--soft);color:var(--accent);border-radius:8px;padding:5px 12px}
+.base .ar{color:var(--muted);font-size:.85rem}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input.ans{flex:1 1 240px;min-width:0;font:500 1.25rem var(--f-display);padding:10px 13px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+input.ans:focus{border-color:var(--accent);outline:none}
+input.ans.ok{border-color:var(--ok);background:var(--ok-bg)}input.ans.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.opt{display:flex;align-items:center;gap:10px;text-align:left;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;padding:10px 12px;cursor:pointer;font:500 1.08rem var(--f-display);min-height:50px;overflow-wrap:anywhere}
+.opt kbd{flex:none;font:700 .72rem var(--f-body);color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;background:var(--surface)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg);color:var(--bad);text-decoration:line-through}
+.opt:disabled{cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border-radius:10px;padding:10px 16px;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700;min-height:44px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.warn{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:default}
+.hint{margin:0;font:500 1rem var(--f-display);color:var(--gold);letter-spacing:.06em}
+.fb{border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:7px}
+.fb.ok{background:var(--ok-bg)}.fb.bad{background:var(--bad-bg)}
+.verdict{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-weight:700}
+.fb.ok .verdict{color:var(--ok)}.fb.bad .verdict{color:var(--bad)}
+.trap{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);border:1px solid var(--gold);border-radius:999px;padding:1px 9px}
+.right{font:700 1.15rem var(--f-display)}
+.right .alt{font:500 .88rem var(--f-body);color:var(--muted)}
+.yours{font-size:.92rem}.yours s{font-family:var(--f-display);color:var(--bad)}
+.exp{margin:0;font-size:.95rem;max-width:68ch}
+.note{margin:0;font-size:.85rem;color:var(--muted)}
+.done{text-align:center;padding:20px 8px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.done h2{margin:0;font:700 1.6rem var(--f-display)}
+.empty{color:var(--muted);margin:0}
+.foot{font-size:.8rem;color:var(--muted)}
+kbd.k{font:600 .74rem var(--f-body);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:var(--surface)}
+/* mistakes & overview */
+.ph h2{margin:0;font:700 1.45rem var(--f-display)}
+.ph p{margin:4px 0 0;color:var(--muted);max-width:66ch}
+.howto{margin:0;font-size:.9rem;background:var(--soft);border-radius:10px;padding:10px 14px;max-width:72ch}
+.sect{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sect h3{margin:0;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.mlist{display:flex;flex-direction:column}
+.mrow{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px dashed var(--line)}
+.mrow svg{flex:none;width:22px;height:15px;margin-top:4px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+.mm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mt{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.ms{font-family:var(--f-display);font-size:1.02rem;overflow-wrap:anywhere}
+.ms b{color:var(--ok)}
+.my{font-size:.86rem;color:var(--muted)}.my s{color:var(--bad);font-family:var(--f-display)}
+.mx{flex:none;font-weight:700;color:var(--bad);font-variant-numeric:tabular-nums}
+.ov{width:100%;border-collapse:collapse;font-size:.9rem}
+.ov th,.ov td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+.ov th{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ov td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mbar{height:8px;border-radius:999px;background:var(--grid);overflow:hidden;display:flex;min-width:70px}
+.mbar i{display:block;height:100%}.mbar .g{background:var(--ok)}.mbar .r{background:var(--bad)}
+@media (prefers-reduced-motion:no-preference){.fb{animation:in .2s ease-out}@keyframes in{from{opacity:.3;transform:translateY(-3px)}}}
+.sml{display:none}
+@media (max-width:640px){
+  .card{display:flex;flex-direction:column}
+  #fb{order:5}
+  #acts{order:10;position:sticky;bottom:0;z-index:5;flex-wrap:nowrap;gap:6px;margin:2px -14px -16px;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);border-radius:0 0 14px 14px;
+    box-shadow:0 -10px 14px -12px rgba(0,0,0,.28)}
+  #acts .btn{flex:1 1 0;min-width:0;padding:10px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lgl{display:none}.sml{display:inline}
+  body{padding-top:12px}
+  .wrap{gap:12px}
+  header{flex-direction:column;align-items:stretch;gap:10px}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .stats div{align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 2px}
+  .stats b{font-size:1.1rem}.stats span{font-size:.6rem;letter-spacing:.04em}
+  .langs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card{padding:16px 14px}
+  .opts{grid-template-columns:minmax(0,1fr)}
+  input.ans{flex-basis:100%;min-height:52px}
+  .actions .btn{flex:1 1 0;min-width:0;min-height:50px}
+  .tab{flex:1 1 0;justify-content:center;padding:10px 6px 9px}
+  .ov .hide-s{display:none}
+}
+
+/* translation tab (added) */
+.grp[hidden]{display:none}
+.trsrc{display:flex;align-items:baseline;gap:10px;margin:0;font:500 clamp(1.15rem,3.2vw,1.45rem)/1.45 var(--f-display);overflow-wrap:anywhere;min-width:0}
+.trsrc>span:last-child,.trsrc .sent{min-width:0;flex:1}
+.trsrc b{color:var(--accent)}
+.lb{flex:none;align-self:center;font:700 .68rem/1 var(--f-body);letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:4px 7px;background:var(--bg)}
+.trtgt .lb{color:var(--accent);border-color:var(--accent)}
+/* preposition drill additions */
+.task{display:flex;flex-wrap:wrap;align-items:center;gap:8px 8px;margin:2px 0}
+.pp{font:700 1.25rem var(--f-display);background:var(--accent);color:var(--accent-ink);border-radius:9px;padding:4px 12px}
+.plus{color:var(--muted);font-weight:700}
+.wd{font:600 1.15rem var(--f-display);background:var(--soft);color:var(--fg);border:1px solid var(--line);border-radius:9px;padding:4px 11px}
+.badge{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 10px;border:1px solid var(--gold);color:var(--gold);background:var(--gold-soft)}
+.cue{font:700 1rem var(--f-display);color:var(--bad);background:var(--bad-bg);border-radius:999px;padding:3px 12px}
+.ghint{font-size:.85rem;color:var(--muted)}
+.casechip{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:var(--soft);border-radius:999px;padding:2px 10px}
+.exl{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:.95rem}
+.exl b{color:var(--fg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1 id="ttl"></h1><p class="sub" id="subt"></p></div>
+    <div class="stats" id="stats"></div>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" data-mode="practice">Practice</button>
+    <button class="tab" role="tab" data-mode="tr" title="Translate RU ⇄ DE">Translate</button>
+    <button class="tab" role="tab" data-mode="miss">Mistakes <span class="cnt" id="mcnt"></span></button>
+    <button class="tab" role="tab" data-mode="over">Overview</button>
+  </div>
+  <section id="p-practice" role="tabpanel">
+    <details class="settings" id="settings">
+      <summary>Settings <span class="st" id="sumtxt"></span></summary>
+      <div class="sbody">
+        <div class="grp" data-for="tr"><h3>Direction</h3><div class="seg" id="dirseg"><button type="button" data-v="rd">RU → DE</button><button type="button" data-v="dr">DE → RU</button><button type="button" data-v="mix">Both</button></div></div>
+        <div class="grp" data-for="tr"><h3>What to translate</h3><div class="chips" id="trk"></div>
+          <div class="quick"><button type="button" data-q="trk" data-v="all">All</button><button type="button" data-q="trk" data-v="none">None</button></div></div>
+        <div class="grp" data-for="tr"><h3>Word hints</h3><div class="seg" id="hintseg"><button type="button" data-v="on">Show</button><button type="button" data-v="off">Hide</button></div></div>
+        <div class="grp" data-for="decl"><h3>What to decline</h3><div class="chips" id="types"></div>
+          <div class="quick"><button type="button" data-q="types" data-v="all">All</button><button type="button" data-q="types" data-v="none">None</button></div></div>
+        <div class="grp" data-for="decl"><h3>Cases</h3><div class="chips" id="cases"></div>
+          <div class="quick"><button type="button" data-q="cases" data-v="all">All</button><button type="button" data-q="cases" data-v="none">None</button></div></div>
+        <div class="grp"><h3>Number</h3><div class="seg" id="numseg"><button type="button" data-v="sg">Singular</button><button type="button" data-v="pl">Plural</button><button type="button" data-v="mix">Both</button></div></div>
+        <div class="grp"><h3>Adjective in the phrase</h3><div class="seg" id="adjseg"><button type="button" data-v="no">Never</button><button type="button" data-v="yes">Always</button><button type="button" data-v="mix">Sometimes</button></div></div>
+        <div class="grp"><h3>Answer by</h3><div class="seg" id="modeseg"><button type="button" data-v="type">Typing</button><button type="button" data-v="choose">Choosing from 4</button></div></div>
+        <div class="grp"><h3>Round length</h3><div class="seg" id="lenseg"><button type="button" data-v="10">10</button><button type="button" data-v="20">20</button><button type="button" data-v="50">50</button></div></div>
+      </div>
+    </details>
+    <div id="rvbar"></div>
+    <div class="card" id="card" style="margin-top:12px"></div>
+    <p class="foot"><kbd class="k">Enter</kbd> checks and moves on · <kbd class="k">1</kbd>–<kbd class="k">4</kbd> pick an option · the case is revealed after you answer.</p>
+  </section>
+  <section id="p-miss" role="tabpanel" hidden></section>
+  <section id="p-over" role="tabpanel" hidden></section>
+</div>
+<script>
+/* German: preposition + (article / demonstrative / possessive / interrogative / relative / adjective) + noun */
+const GEN_DE=(()=>{
+const CN={N:'Nominativ',A:'Akkusativ',D:'Dativ',G:'Genitiv'},CI={N:0,A:1,D:2,G:3};
+const CASES=[['A','Akkusativ'],['D','Dativ'],['G','Genitiv'],['W','Wechselpräpositionen (Wo? / Wohin?)']];
+const TYPES=[['art','Article (der / ein / kein)'],['dem','Demonstrative (dieser / jener / jeder)'],['poss','Possessive (mein / unser …)'],['int','Interrogative (welcher / wer / was)'],['rel','Relative pronoun'],['adj','Adjective + noun, no article']];
+function N(n,g,pl,gs,t,o){return Object.assign({n,g,pl,gs,t},o||{})}
+const NOUNS=[
+ N('Freund','m','Freunde','es','P'),N('Mann','m','Männer','es','P'),N('Arzt','m','Ärzte','es','P'),N('Lehrer','m','Lehrer','s','P'),N('Bruder','m','Brüder','s','P'),
+ N('Kollege','m','Kollegen','','P',{nd:'Kollegen'}),N('Student','m','Studenten','','P',{nd:'Studenten'}),N('Junge','m','Jungen','','P',{nd:'Jungen'}),
+ N('Nachbar','m','Nachbarn','','P',{nd:'Nachbarn'}),N('Herr','m','Herren','','P',{nd:'Herrn'}),N('Kunde','m','Kunden','','P',{nd:'Kunden'}),N('Kunde','m','Kunden','','P',{nd:'Kunden'}),
+ N('Tisch','m','Tische','es','TU'),N('Schrank','m','Schränke','es','TC'),N('Brief','m','Briefe','es','T'),N('Computer','m','Computer','s','T'),N('Wagen','m','Wagen','s','T'),
+ N('Garten','m','Gärten','s','L'),N('Bahnhof','m','Bahnhöfe','s','L'),N('Park','m','Parks','s','L'),N('Platz','m','Plätze','es','L'),
+ N('Film','m','Filme','s','E'),N('Krieg','m','Kriege','es','E'),N('Unterricht','m',null,'s','E'),N('Sommer','m','Sommer','s','E'),N('Urlaub','m','Urlaube','s','E'),
+ N('Frau','f','Frauen','','P'),N('Freundin','f','Freundinnen','','P'),N('Mutter','f','Mütter','','P'),N('Lehrerin','f','Lehrerinnen','','P'),N('Schwester','f','Schwestern','','P'),
+ N('Stadt','f','Städte','','L'),N('Straße','f','Straßen','','L'),N('Schule','f','Schulen','','L'),N('Wohnung','f','Wohnungen','','LC'),N('Kirche','f','Kirchen','','L'),N('Brücke','f','Brücken','','L'),
+ N('Tür','f','Türen','','T'),N('Lampe','f','Lampen','','T'),N('Tasche','f','Taschen','','TC'),N('Wand','f','Wände','','T'),N('Kiste','f','Kisten','','TC'),
+ N('Reise','f','Reisen','','E'),N('Pause','f','Pausen','','E'),N('Woche','f','Wochen','','E'),N('Prüfung','f','Prüfungen','','E'),N('Feier','f','Feiern','','E'),
+ N('Kind','n','Kinder','es','P'),N('Mädchen','n','Mädchen','s','P'),
+ N('Haus','n','Häuser','es','LU'),N('Zimmer','n','Zimmer','s','LC'),N('Hotel','n','Hotels','s','L'),N('Museum','n','Museen','s','L'),N('Restaurant','n','Restaurants','s','L'),N('Dorf','n','Dörfer','es','L'),N('Kino','n','Kinos','s','L'),
+ N('Buch','n','Bücher','es','T'),N('Auto','n','Autos','s','TU'),N('Fenster','n','Fenster','s','T'),N('Bett','n','Betten','es','TU'),N('Geschenk','n','Geschenke','es','T'),N('Regal','n','Regale','s','TC'),
+ N('Konzert','n','Konzerte','es','E'),N('Spiel','n','Spiele','es','E'),N('Gewitter','n','Gewitter','s','EX'),N('Fest','n','Feste','es','E'),
+ N('Tee','m',null,'s','D'),N('Kaffee','m',null,'s','D'),N('Wein','m',null,'es','D'),N('Regen','m',null,'s','EX'),N('Wasser','n',null,'s','D'),N('Wetter','n',null,'s','X'),N('Milch','f',null,'','D'),N('Musik','f',null,'','U2'),
+ N('Tag','m','Tage','es','Z'),N('Abend','m','Abende','s','Z'),N('Morgen','m','Morgen','s','Z'),N('Nachmittag','m','Nachmittage','s','Z'),N('Wochenende','n','Wochenenden','s','Z'),N('Montag','m','Montage','s','Z'),
+ N('Café','n','Cafés','s','L'),N('Baum','m','Bäume','es','TU'),N('Berg','m','Berge','es','L'),N('Fluss','m','Flüsse','es','L'),N('Wald','m','Wälder','es','L'),
+ N('Kollegin','f','Kolleginnen','','P'),N('Gast','m','Gäste','es','P'),N('Zeitung','f','Zeitungen','','T'),N('Unfall','m','Unfälle','es','EX'),N('Streik','m','Streiks','es','EX'),N('Besuch','m','Besuche','es','E')
+].filter((x,i,a)=>a.findIndex(y=>y.n===x.n)===i);
+NOUNS.forEach(n=>{n.mass=!n.pl&&/D|U2|X/.test(n.t)});
+const ADJ=[{b:'alt',t:'PLTU'},{b:'neu',t:'PLTUE'},{b:'jung',t:'P'},{b:'klein',t:'PLTCU'},{b:'groß',t:'PLTCU'},{b:'schön',t:'LTUE'},{b:'gut',t:'PEDU2'},
+ {b:'nett',t:'P'},{b:'freundlich',t:'P'},{b:'interessant',t:'E'},{b:'lang',t:'E'},{b:'kurz',t:'E'},{b:'wichtig',t:'EP'},{b:'rot',t:'TCU'},
+ {b:'hoch',s:'hoh',t:'LTU'},{b:'dunkel',s:'dunkl',t:'LTCU'},{b:'teuer',s:'teur',t:'LTU'},{b:'modern',t:'LTU'},
+ {b:'heiß',t:'D'},{b:'kalt',t:'DX'},{b:'frisch',t:'D'},{b:'laut',t:'U2'},{b:'stark',t:'X'},{b:'schlecht',t:'XE'},
+ {b:'letzt',t:'EZ'},{b:'nächst',t:'EZ'},{b:'schwierig',t:'E'},{b:'blau',t:'TCU'},{b:'russisch',t:'PE'},{b:'klug',t:'P'},{b:'lieb',t:'P'},{b:'schwer',t:'XE'},{b:'ruhig',t:'LZ'},{b:'breit',t:'L'},{b:'tief',t:'L'}];
+/* prepositions: c = A/D/G or W (two-way); t = noun tags allowed */
+const PREPS=[
+ {p:'durch',c:'A',t:'L'},{p:'für',c:'A',t:'PT'},{p:'gegen',c:'A',t:'PT'},{p:'ohne',c:'A',t:'PTDU2'},{p:'um',c:'A',t:'LU'},
+ {p:'aus',c:'D',t:'LC'},{p:'bei',c:'D',t:'PX'},{p:'mit',c:'D',t:'PTDU2'},{p:'nach',c:'D',t:'E'},{p:'seit',c:'D',t:'EZ'},{p:'von',c:'D',t:'PL'},{p:'zu',c:'D',t:'PL'},{p:'außer',c:'D',t:'P'},
+ {p:'wegen',c:'G',t:'EPX'},{p:'trotz',c:'G',t:'EX'},{p:'während',c:'G',t:'EZ'},{p:'statt',c:'G',t:'PT'},{p:'innerhalb',c:'G',t:'LE'},{p:'außerhalb',c:'G',t:'L'},
+ {p:'in',c:'W',t:'LC'},{p:'an',c:'W',t:'T'},{p:'auf',c:'W',t:'TU'},{p:'über',c:'W',t:'LT'},{p:'unter',c:'W',t:'TU'},{p:'vor',c:'W',t:'LTU'},{p:'hinter',c:'W',t:'LTU'},{p:'neben',c:'W',t:'PLTU'},
+ {p:'vor',c:'D',t:'EZ',cue:'Wann?'},{p:'in',c:'D',t:'E',cue:'Wann?'},
+ /* added */
+ {p:'zwischen',c:'W',t:'PLTU',pl:1,note:'<b>zwischen</b> needs two or more things — here a plural.'},
+ {p:'gegenüber',c:'D',t:'LP',note:'With a personal pronoun <b>gegenüber</b> usually follows it: <i>mir gegenüber</i>.'},
+ {p:'ab',c:'D',t:'Z',cue:'Ab wann?',sg:1},{p:'an',c:'D',t:'Z',cue:'Wann?',note:'Days and parts of the day take <b>an</b>: am Montag, am Abend.'},
+ {p:'bis zu',c:'D',t:'L',note:'<b>bis</b> alone takes no article (bis Berlin); with an article it becomes <b>bis zu</b> + Dativ.'},
+ {p:'dank',c:'G',t:'PX',alt:['D'],note:'<b>dank</b> takes the Genitiv; the Dativ is common too, so both are accepted.'},
+ {p:'anstatt',c:'G',t:'PT'},{p:'jenseits',c:'G',t:'L'},{p:'oberhalb',c:'G',t:'L'},{p:'unterhalb',c:'G',t:'L'},{p:'inmitten',c:'G',t:'L'},{p:'unweit',c:'G',t:'L'},
+ {p:'infolge',c:'G',t:'X'},{p:'aufgrund',c:'G',t:'EX'},{p:'anlässlich',c:'G',t:'E'},{p:'bezüglich',c:'G',t:'E'},{p:'mithilfe',c:'G',t:'P'},
+ {p:'samt',c:'D',t:'P'}
+];
+const DETS={def:{g:'art',l:'der/die/das',k:'def'},ein:{g:'art',l:'ein',k:'ein',stem:'ein',sg:1},kein:{g:'art',l:'kein',k:'ein',stem:'kein'},
+ dieser:{g:'dem',l:'dieser',k:'der',stem:'dies'},jener:{g:'dem',l:'jener',k:'der',stem:'jen'},jeder:{g:'dem',l:'jeder',k:'der',stem:'jed',sg:1},
+ mein:{g:'poss',l:'mein',k:'ein',stem:'mein'},dein:{g:'poss',l:'dein',k:'ein',stem:'dein'},sein:{g:'poss',l:'sein',k:'ein',stem:'sein'},ihr:{g:'poss',l:'ihr',k:'ein',stem:'ihr'},
+ unser:{g:'poss',l:'unser',k:'ein',stem:'unser'},euer:{g:'poss',l:'euer',k:'ein',stem:'euer'},
+ welcher:{g:'int',l:'welcher',k:'der',stem:'welch'},none:{g:'adj',l:'—',k:'none'}};
+const DEF={m:['der','den','dem','des'],f:['die','die','der','der'],n:['das','das','dem','des'],pl:['die','die','den','der']};
+const DER={m:['er','en','em','es'],f:['e','e','er','er'],n:['es','es','em','es'],pl:['e','e','en','er']};
+const EIN={m:['','en','em','es'],f:['e','e','er','er'],n:['','','em','es'],pl:['e','e','en','er']};
+const AW={N:{m:'e',f:'e',n:'e',pl:'en'},A:{m:'en',f:'e',n:'e',pl:'en'},D:{m:'en',f:'en',n:'en',pl:'en'},G:{m:'en',f:'en',n:'en',pl:'en'}};
+const AM={N:{m:'er',f:'e',n:'es',pl:'en'},A:{m:'en',f:'e',n:'es',pl:'en'},D:{m:'en',f:'en',n:'en',pl:'en'},G:{m:'en',f:'en',n:'en',pl:'en'}};
+const AS={N:{m:'er',f:'e',n:'es',pl:'e'},A:{m:'en',f:'e',n:'es',pl:'e'},D:{m:'em',f:'er',n:'em',pl:'en'},G:{m:'en',f:'er',n:'en',pl:'er'}};
+const GN={m:'masculine',f:'feminine',n:'neuter',pl:'plural'};
+const CONTR={'bis zu|dem':'bis zum','bis zu|der':'bis zur','in|dem':'im','in|das':'ins','an|dem':'am','an|das':'ans','zu|dem':'zum','zu|der':'zur','von|dem':'vom','bei|dem':'beim'};
+const COLL={'auf|das':'aufs','für|das':'fürs','durch|das':'durchs','um|das':'ums','über|das':'übers','unter|das':'unters','vor|das':'vors','hinter|das':'hinters','unter|dem':'unterm','über|dem':'überm','vor|dem':'vorm','hinter|dem':'hinterm'};
+const sib=w=>/(s|ß|x|z|sch|tz)$/.test(w);
+/* forms (each returns an array of acceptable variants, first = main) */
+function detF(dk,gk,c){const d=DETS[dk],i=CI[c];if(d.k==='none')return [''];if(d.k==='def')return [DEF[gk][i]];
+ if(d.k==='der')return [d.stem+DER[gk][i]];
+ const e=EIN[gk][i];if(dk==='euer')return e?['eur'+e,'euer'+e]:['euer'];return [d.stem+e]}
+function adjSet(dk){const k=DETS[dk].k;return k==='none'?AS:k==='ein'?AM:AW}
+function adjF(a,dk,gk,c){return [(a.s||a.b)+adjSet(dk)[c][gk]]}
+function nounF(n,c,num){if(num==='pl'){const p=n.pl;return [c==='D'&&!/[ns]$/.test(p)?p+'n':p]}
+ if(n.nd){if(c==='N')return [n.n];if(n.n==='Herr')return ['Herrn'];return [n.nd]}
+ if(c==='G'&&n.g!=='f'){if(n.gs==='es')return sib(n.n)?[n.n+'es']:[n.n+'es',n.n+'s'];return [n.n+'s']}
+ return [n.n]}
+function cart(lists){return lists.reduce((acc,l)=>{const o=[];acc.forEach(a=>l.forEach(x=>o.push(a.concat([x]))));return o},[[]])}
+function phrase(prep,dk,adj,noun,num,c){
+ const gk=num==='pl'?'pl':noun.g;const det=detF(dk,gk,c),aj=adj?adjF(adj,dk,gk,c):[null],nn=nounF(noun,c,num);
+ const out=[];
+ cart([det,aj,nn]).forEach(([d,a,n])=>{const rest=[a,n].filter(Boolean).join(' ');
+  const key=prep.p+'|'+d;const full=[prep.p,d,rest].filter(Boolean).join(' ');
+  if(dk==='def'&&CONTR[key]){out.push([CONTR[key],rest].join(' '));out.push(full)}
+  else if(dk==='def'&&COLL[key]){out.push(full);out.push([COLL[key],rest].join(' '))}
+  else out.push(full)});
+ return [...new Set(out)]}
+/* explanation */
+function explain(prep,dk,adj,noun,num,c,cue){const L=[],gk=num==='pl'?'pl':noun.g,d=DETS[dk];
+ if(prep.c==='W')L.push(`<b>${prep.p}</b> is a two-way preposition: <b>${cue}</b> → ${cue==='Wohin?'?'direction → <b>Akkusativ</b>':'location → <b>Dativ</b>'}.`);
+ else if(prep.cue)L.push(`<b>${prep.p}</b> + time (<b>${prep.cue}</b>) takes the <b>${CN[c]}</b>.`);
+ else L.push(`<b>${prep.p}</b> always takes the <b>${CN[c]}</b>.`);
+ if(prep.note)L.push(prep.note);
+ const det=detF(dk,gk,c)[0];
+ if(d.k==='def')L.push(`Definite article, ${GN[gk]} ${CN[c]}: <b>${det}</b>.`);
+ else if(d.k==='der')L.push(`${d.l} declines like the definite article: ${d.stem}- + <b>-${DER[gk][CI[c]]}</b> → <b>${det}</b>.`);
+ else if(d.k==='ein')L.push(`${d.l} is an ein-word: ${EIN[gk][CI[c]]?`ending <b>-${EIN[gk][CI[c]]}</b> → <b>${det}</b>`:`no ending in the ${GN[gk]} ${CN[c]} → <b>${det}</b>`}${dk==='euer'&&EIN[gk][CI[c]]?' (euer loses its e: eur-)':''}.`);
+ if(adj){const e=adjSet(dk)[c][gk],a=(adj.s||adj.b)+e;
+  if(d.k==='none')L.push(`No article, so the adjective carries the case signal itself (strong ending): <b>${a}</b>.`);
+  else if(d.k==='der'||d.k==='def')L.push(`After a der-word the adjective takes the weak ending <b>-${e}</b>: <b>${a}</b>.`);
+  else L.push(EIN[gk][CI[c]]===''?`The ein-word has no ending here, so the adjective shows the gender: <b>-${e}</b> → <b>${a}</b>.`:`After an ein-word with an ending the adjective takes <b>-${e}</b>: <b>${a}</b>.`);
+  if(adj.s)L.push(`<b>${adj.b}</b> changes its stem when an ending is added: <b>${adj.s}-</b>.`)}
+ if(noun.nd&&num==='sg'&&c!=='N')L.push(`<b>${noun.n}</b> is an n-noun: it takes <b>-${noun.n==='Herr'?'n':(noun.nd.endsWith('en')?'en':'n')}</b> in every case except the nominative singular.`);
+ if(num==='pl'&&c==='D'&&!/[ns]$/.test(noun.pl))L.push(`Dative plural: the noun adds <b>-n</b> → <b>${noun.pl}n</b>.`);
+ if(num==='sg'&&c==='G'&&noun.g!=='f'&&!noun.nd)L.push(`Genitive singular masculine/neuter nouns add <b>-${noun.gs==='es'?'es':'s'}</b>${noun.gs==='es'&&!sib(noun.n)?' (-s is also correct)':''}.`);
+ if(dk==='def'&&CONTR[prep.p+'|'+det])L.push(`${prep.p} + ${det} normally contracts to <b>${CONTR[prep.p+'|'+det]}</b> (the full form is also accepted).`);
+ if(dk==='def'&&COLL[prep.p+'|'+det])L.push(`The contraction <b>${COLL[prep.p+'|'+det]}</b> is colloquial and also accepted.`);
+ return L}
+/* item builders from a spec */
+const REL={m:['der','den','dem','dessen'],f:['die','die','der','deren'],n:['das','das','dem','dessen'],pl:['die','die','denen','deren']};
+const RFR=[['mit','D','ich jeden Tag arbeite','P'],['bei','D','ich gerade wohne','P'],['von','D','ich dir erzählt habe','PTE'],['zu','D','wir morgen fahren','PL'],['für','A','ich das Geschenk gekauft habe','P'],
+ ['ohne','A','ich nicht leben kann','PT'],['über','A','wir gestern gesprochen haben','PTE'],['an','A','ich oft denke','PE'],['auf','A','ich schon lange warte','PE'],['in','D','ich aufgewachsen bin','L'],
+ ['durch','A','wir gestern gelaufen sind','L'],['neben','D','ich im Kino gesessen habe','P'],['wegen','G','ich hierher gekommen bin','P'],['aus','D','sie gerade kommt','L']];
+const QFR=[['mit','wer','D','Mit wem','___ hast du gestern gesprochen?'],['für','wer','A','Für wen','___ ist das Geschenk?'],['von','wer','D','Von wem','___ hast du das gehört?'],['an','wer','A','An wen','___ denkst du gerade?'],
+ ['bei','wer','D','Bei wem','___ wohnst du in Berlin?'],['zu','wer','D','Zu wem','___ gehst du heute Abend?'],['ohne','wer','A','Ohne wen','___ kannst du nicht leben?'],['gegen','wer','A','Gegen wen','___ spielt ihr am Samstag?'],
+ ['mit','was','D','Womit','___ schreibst du?'],['für','was','A','Wofür','___ interessierst du dich?'],['über','was','A','Worüber','___ habt ihr gesprochen?'],['von','was','D','Wovon','___ träumst du?'],
+ ['an','was','A','Woran','___ denkst du?'],['auf','was','A','Worauf','___ wartest du noch?'],['aus','was','D','Woraus','___ besteht dieser Kuchen?'],['nach','was','D','Wonach','___ suchst du?'],['um','was','A','Worum','___ geht es in dem Film?'],['in','was','D','Worin','___ liegt das Problem?'],['durch','was','A','Wodurch','___ ist der Unfall passiert?']];
+function build(spec){const k=spec[0];
+ if(k==='p'){const [_,pi,dk,ai,ni,num,c,cue]=spec;const prep=PREPS[pi],adj=ai>=0?ADJ[ai]:null,noun=NOUNS[ni];
+  const ans=[...new Set(phrase(prep,dk,adj,noun,num,c).concat(...(prep.alt||[]).map(x=>phrase(prep,dk,adj,noun,num,x))))];
+  const others=['A','D','G'].filter(x=>x!==c&&!(prep.alt||[]).includes(x)).map(x=>phrase(prep,dk,adj,noun,num,x)[0]);
+  if(adj&&DETS[dk].k!=='none'){const wrongSet=DETS[dk].k==='ein'?AW:AS;const gk=num==='pl'?'pl':noun.g;others.push([prep.p,detF(dk,gk,c)[0],(adj.s||adj.b)+wrongSet[c][gk],nounF(noun,c,num)[0]].filter(Boolean).join(' '))}
+  if(num==='pl'&&c==='D')others.push([prep.p,detF(dk,'pl',c)[0],adj?(adj.s||adj.b)+adjSet(dk)[c].pl:'',noun.pl].filter(Boolean).join(' '));
+  if(noun.nd&&num==='sg'&&c!=='N')others.push([prep.p,detF(dk,noun.g,c)[0],adj?(adj.s||adj.b)+adjSet(dk)[c][noun.g]:'',noun.n].filter(Boolean).join(' '));
+  if(adj&&adj.s)others.push(ans[0].replace(adj.s,adj.b));
+  {const gk=num==='pl'?'pl':noun.g,aj=adj?(adj.s||adj.b)+adjSet(dk)[c][gk]:'',nf=nounF(noun,c,num)[0];
+   if(DETS[dk].k==='ein')others.push([prep.p,dk==='euer'?'euer':DETS[dk].stem,aj,nf].filter(Boolean).join(' '));
+   else if(DETS[dk].k!=='none')others.push([prep.p,detF(dk,gk,'N')[0],aj,nf].filter(Boolean).join(' '));
+   else if(adj)others.push([prep.p,(adj.s||adj.b)+'es',nf].join(' '));}
+  ['m','f','n'].filter(g=>num==='pl'||g!==noun.g).forEach(g=>{if(DETS[dk].k==='none'&&!adj)return;others.push([prep.p,detF(dk,g,c)[0],adj?(adj.s||adj.b)+adjSet(dk)[c][g]:'',nounF(noun,c,num)[0]].filter(Boolean).join(' '))});
+  const parts=[{t:'prep',x:prep.p}];if(dk!=='none')parts.push({t:'w',x:DETS[dk].l});if(adj)parts.push({t:'w',x:adj.b});parts.push({t:'w',x:noun.n+(noun.nd||noun.g==='f'||noun.mass?'':'')});
+  const gl=noun.g==='m'?'der':noun.g==='f'?'die':'das';
+  const nom=[prep.p,detF(dk,num==='pl'?'pl':noun.g,'N')[0],adj?(adj.s||adj.b)+adjSet(dk).N[num==='pl'?'pl':noun.g]:'',num==='pl'?noun.pl:noun.n].filter(Boolean).join(' ');
+  return {nom,key:JSON.stringify(spec),type:DETS[dk].g,c:prep.c==='W'?'W':c,cname:CN[c],parts,cue:cue||prep.cue||'',num,hint:`${gl} ${noun.n}${noun.pl?', Pl. '+noun.pl:''}`,
+   answers:ans,wrong:others,expl:explain(prep,dk,adj,noun,num,c,cue),mode:'phrase'}}
+ if(k==='r'){const [_,fi,ni,num]=spec;const f=RFR[fi],n=NOUNS[ni],gk=num==='pl'?'pl':n.g,c=f[1];const rel=REL[gk][CI[c]];
+  const ante=(num==='pl'?'Das sind ':'Das ist ')+DEF[gk][0]+' '+(num==='pl'?n.pl:n.n);
+  const wrong=['N','A','D','G'].filter(x=>x!==c).map(x=>REL[gk][CI[x]]).concat(['der','die','das','dem','den','denen']).filter(x=>x!==rel);
+  return {key:JSON.stringify(spec),type:'rel',c:c,cname:CN[c],sentence:`${ante}, ${f[0]} ___ ${f[2]}.`,parts:[{t:'prep',x:f[0]},{t:'w',x:'der / die / das (Relativpronomen)'}],num,hint:`${DEF[gk][0]} ${num==='pl'?n.pl:n.n}`,
+   answers:[rel],wrong:[...new Set(wrong)],mode:'word',
+   expl:[`<b>${f[0]}</b> takes the <b>${CN[c]}</b>; the relative pronoun takes its <b>gender and number</b> from the antecedent (<b>${num==='pl'?n.pl:n.n}</b>, ${GN[gk]}) and its <b>case</b> from the preposition.`,
+    `Relative pronoun, ${GN[gk]} ${CN[c]}: <b>${rel}</b>.${c==='D'&&gk==='pl'?' Note the dative plural <b>denen</b> (not den).':''}${c==='G'?' Genitive relatives are <b>dessen / deren</b>.':''}`]}}
+ if(k==='q'){const f=QFR[spec[1]];const wo=f[1]==='was';
+  const pron={wer:{N:'wer',A:'wen',D:'wem',G:'wessen'}}[f[1]];
+  let wrong=wo?[`${f[0][0].toUpperCase()+f[0].slice(1)} was`,`${f[0][0].toUpperCase()+f[0].slice(1)} wem`,`Wo${f[0]}`]:['N','A','D'].filter(x=>x!==f[2]).map(x=>`${f[0][0].toUpperCase()+f[0].slice(1)} ${pron[x]}`);
+  const vow=/^[aeiouäöü]/.test(f[0]),woT='Wo'+(vow?'r':'')+f[0],woX='Wo'+(vow?'':'r')+f[0];
+  if(wo)wrong.push(woX);else wrong.push(woT,`${f[0][0].toUpperCase()+f[0].slice(1)} wessen`);
+  wrong=wrong.filter(w=>w.toLowerCase()!==f[3].toLowerCase());
+  return {key:JSON.stringify(spec),type:'int',c:wo?f[2]:f[2],cname:CN[f[2]],sentence:f[4],parts:[{t:'prep',x:f[0]},{t:'w',x:f[1]}],num:'sg',hint:'',answers:[f[3]],wrong,mode:'qword',
+   expl:wo?[`For things, German does not say „${f[0]} was“: it uses <b>wo(r)- + preposition</b> → <b>${f[3]}</b> (wor- before a vowel).`,`For people it would be <b>${f[0]} + ${f[2]==='A'?'wen':'wem'}</b>.`]
+     :[`<b>${f[0]}</b> takes the <b>${CN[f[2]]}</b>: wer → <b>${pron[f[2]]}</b>.`,`For things you would use <b>wo(r)-${f[0]}</b> instead.`]}}
+}
+/* random spec generator honouring filters */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function tagFit(nt,pt){const a=nt.replace('U2','#'),b=pt.replace('U2','#');return [...a].some(ch=>b.includes(ch))}
+function pick(f){ /* f: {types:[], cases:[], num:'sg'|'pl'|'mix', adj:'no'|'yes'|'mix'} */
+ for(let tries=0;tries<200;tries++){const ty=rnd(f.types);
+  if(ty==='rel'){const ok=RFR.map((r,i)=>[r,i]).filter(([r])=>f.cases.includes(r[1]));if(!ok.length)continue;const [r,fi]=rnd(ok);
+   const ns=NOUNS.map((n,i)=>[n,i]).filter(([n])=>!n.mass&&tagFit(n.t,r[3]));const [n,ni]=rnd(ns);const num=f.num==='mix'?(Math.random()<.35?'pl':'sg'):f.num;return ['r',fi,ni,n.pl?num:'sg']}
+  if(ty==='int'&&Math.random()<.4){const ok=QFR.map((q,i)=>i).filter(i=>f.cases.includes(QFR[i][2]));if(!ok.length)continue;return ['q',rnd(ok)]}
+  const ps=PREPS.map((p,i)=>[p,i]).filter(([p])=>f.cases.includes(p.c));if(!ps.length)continue;const [prep,pi]=rnd(ps);
+  const dks=Object.keys(DETS).filter(k=>DETS[k].g===ty);if(!dks.length)continue;const dk=rnd(dks);
+  let num=f.num==='mix'?(Math.random()<.35?'pl':'sg'):f.num;if(DETS[dk].sg)num='sg';
+  if(prep.pl){if(DETS[dk].sg)continue;num='pl'}
+  if(prep.sg){if(dk==='none')continue;num='sg'}
+  let cands=NOUNS.map((n,i)=>[n,i]).filter(([n])=>tagFit(n.t,prep.t));
+  if(dk==='none')cands=cands.filter(([n])=>num==='pl'?!!n.pl:n.mass);else cands=cands.filter(([n])=>!n.mass||dk==='def'||dk==='dieser');
+  if(num==='pl')cands=cands.filter(([n])=>n.pl);
+  if(!cands.length){if(dk==='none'){num=num==='pl'?'sg':'pl';cands=NOUNS.map((n,i)=>[n,i]).filter(([n])=>tagFit(n.t,prep.t)&&(num==='pl'?!!n.pl:n.mass))}if(!cands.length)continue}
+  const [noun,ni]=rnd(cands);if(noun.mass)num='sg';
+  let useAdj=dk==='none'?true:f.adj==='yes'?true:f.adj==='no'?false:Math.random()<.55;
+  let ai=-1;if(useAdj){const as=ADJ.map((a,i)=>[a,i]).filter(([a])=>tagFit(noun.t,a.t));if(as.length)ai=rnd(as)[1];else if(dk==='none')continue}
+  let c=prep.c,cue='';if(c==='W'){c=Math.random()<.5?'A':'D';cue=c==='A'?'Wohin?':'Wo?'}
+  return ['p',pi,dk,ai,ni,num,c,cue]}
+ return null}
+const PREP_LIST=[...new Set(PREPS.map(p=>p.p))];
+return {lang:'de',CASES,TYPES,CN,build,pick,
+ title:'Präpositionen + Kasus',sub:'Decline article, pronoun, adjective and noun after the preposition',level:'A2–C1',
+ ins:'Schreiben Sie die ganze Wortgruppe mit der richtigen Form (Präposition inklusive).',insWord:'Ergänzen Sie die richtige Form.',
+ caseKey:c=>c,stat:{nouns:NOUNS.length,adjs:ADJ.length,preps:PREP_LIST.length},
+ X:{NOUNS,ADJ,PREPS,DETS,phrase,explain,detF,nounF,REL,DEF,CI,CN,GN}}
+})();
+
+/* Russian: предлог + (этот / тот / мой / наш / весь / каждый / какой / чей / который / кто / что) + прилагательное + существительное */
+const GEN_RU=(()=>{
+const CN=['именительный','родительный','дательный','винительный','творительный','предложный'];
+const CE=['nominative','genitive','dative','accusative','instrumental','prepositional'];
+const CASES=[['1','Родительный (genitive)'],['2','Дательный (dative)'],['3','Винительный (accusative)'],['4','Творительный (instrumental)'],['5','Предложный (prepositional)'],['W','в / на / за / под: куда? или где?']];
+const TYPES=[['dem','Указательные: этот / тот'],['poss','Притяжательные: мой / твой / наш / ваш'],['quant','весь / каждый'],['int','Вопросительные: какой / чей / кто / что'],['rel','Относительное: который'],['adj','Прилагательное + существительное']];
+/* nouns: g, animate, tags, sg[N,G,D,A,I,P], pl[...] ; tags: P person, T thing, U under/behind-able, L "в"-place, N "на"-place, O "на"-event, E event, W time span */
+function Nn(g,a,t,sg,pl,note){return {g,a,t,sg:sg.split(' '),pl:pl?pl.split(' '):null,note:note||''}}
+const NOUNS=[
+ Nn('m',0,'TU','стол стола столу стол столом столе','столы столов столам столы столами столах'),
+ Nn('m',0,'LU','дом дома дому дом домом доме','дома домов домам дома домами домах','plural in stressed -а: дома'),
+ Nn('m',0,'L','город города городу город городом городе','города городов городам города городами городах','plural in stressed -а: города'),
+ Nn('m',1,'P','друг друга другу друга другом друге','друзья друзей друзьям друзей друзьями друзьях','irregular plural: друзья, друзей'),
+ Nn('m',1,'P','брат брата брату брата братом брате','братья братьев братьям братьев братьями братьях','irregular plural: братья'),
+ Nn('m',1,'P','врач врача врачу врача врачом враче','врачи врачей врачам врачей врачами врачах','after ч the instrumental ending is stressed -ом and the genitive plural is -ей'),
+ Nn('m',1,'P','учитель учителя учителю учителя учителем учителе','учителя учителей учителям учителей учителями учителях','soft stem: -я, -ю, -ем'),
+ Nn('m',1,'P','студент студента студенту студента студентом студенте','студенты студентов студентам студентов студентами студентах'),
+ Nn('m',1,'P','сосед соседа соседу соседа соседом соседе','соседи соседей соседям соседей соседями соседях','plural on a soft stem: соседи, соседей'),
+ Nn('m',1,'P','человек человека человеку человека человеком человеке','люди людей людям людей людьми людях','suppletive plural: люди, людьми'),
+ Nn('m',1,'P','ребёнок ребёнка ребёнку ребёнка ребёнком ребёнке','дети детей детям детей детьми детях','suppletive plural: дети, детьми'),
+ Nn('m',0,'L','музей музея музею музей музеем музее','музеи музеев музеям музеи музеями музеях','stem in -й: музея, музеем'),
+ Nn('m',0,'N','вокзал вокзала вокзалу вокзал вокзалом вокзале','вокзалы вокзалов вокзалам вокзалы вокзалами вокзалах','на-noun: на вокзал / на вокзале'),
+ Nn('m',0,'OE','концерт концерта концерту концерт концертом концерте','концерты концертов концертам концерты концертами концертах'),
+ Nn('m',0,'OE','урок урока уроку урок уроком уроке','уроки уроков урокам уроки уроками уроках'),
+ Nn('m',0,'OE','экзамен экзамена экзамену экзамен экзаменом экзамене','экзамены экзаменов экзаменам экзамены экзаменами экзаменах'),
+ Nn('m',0,'E','фильм фильма фильму фильм фильмом фильме','фильмы фильмов фильмам фильмы фильмами фильмах'),
+ Nn('m',0,'E','дождь дождя дождю дождь дождём дожде',null,'stressed soft ending: дождя, дождём'),
+ Nn('f',0,'T','книга книги книге книгу книгой книге','книги книг книгам книги книгами книгах','after г write и: книги'),
+ Nn('f',0,'L','школа школы школе школу школой школе','школы школ школам школы школами школах'),
+ Nn('f',1,'P','сестра сестры сестре сестру сестрой сестре','сёстры сестёр сёстрам сестёр сёстрами сёстрах','plural сёстры, genitive plural сестёр'),
+ Nn('f',1,'P','подруга подруги подруге подругу подругой подруге','подруги подруг подругам подруг подругами подругах'),
+ Nn('f',1,'P','мать матери матери мать матерью матери','матери матерей матерям матерей матерями матерях','мать inserts -ер- in every case except nominative/accusative singular'),
+ Nn('f',0,'N','улица улицы улице улицу улицей улице','улицы улиц улицам улицы улицами улицах','after ц unstressed ending -ей: улицей'),
+ Nn('f',0,'L','комната комнаты комнате комнату комнатой комнате','комнаты комнат комнатам комнаты комнатами комнатах'),
+ Nn('f',0,'TU','машина машины машине машину машиной машине','машины машин машинам машины машинами машинах'),
+ Nn('f',0,'N','площадь площади площади площадь площадью площади','площади площадей площадям площади площадями площадях','feminine soft sign: -и in genitive, dative and prepositional; -ью in the instrumental'),
+ Nn('f',0,'T','тетрадь тетради тетради тетрадь тетрадью тетради','тетради тетрадей тетрадям тетради тетрадями тетрадях','feminine soft sign: тетради, тетрадью'),
+ Nn('f',0,'N','станция станции станции станцию станцией станции','станции станций станциям станции станциями станциях','nouns in -ия take -ии in the dative and prepositional'),
+ Nn('f',0,'L','деревня деревни деревне деревню деревней деревне','деревни деревень деревням деревни деревнями деревнях','genitive plural with inserted vowel: деревень'),
+ Nn('f',0,'EW','неделя недели неделе неделю неделей неделе','недели недель неделям недели неделями неделях'),
+ Nn('f',0,'OE','работа работы работе работу работой работе',null,'на-noun: на работу / на работе'),
+ Nn('n',0,'TU','окно окна окну окно окном окне','окна окон окнам окна окнами окнах','genitive plural with inserted vowel: окон'),
+ Nn('n',0,'T','письмо письма письму письмо письмом письме','письма писем письмам письма письмами письмах','genitive plural with inserted vowel: писем'),
+ Nn('n',0,'TU','кресло кресла креслу кресло креслом кресле','кресла кресел креслам кресла креслами креслах','genitive plural with inserted vowel: кресел'),
+ Nn('n',0,'N','озеро озера озеру озеро озером озере','озёра озёр озёрам озёра озёрами озёрах','plural with ё: озёра'),
+ Nn('n',0,'N','море моря морю море морем море','моря морей морям моря морями морях','soft neuter: моря, морем'),
+ Nn('n',0,'LU','здание здания зданию здание зданием здании','здания зданий зданиям здания зданиями зданиях','nouns in -ие take -ии in the prepositional: в здании'),
+ Nn('n',0,'OE','собрание собрания собранию собрание собранием собрании','собрания собраний собраниям собрания собраниями собраниях','nouns in -ие take -ии in the prepositional: на собрании'),
+ Nn('n',0,'TU','дерево дерева дереву дерево деревом дереве','деревья деревьев деревьям деревья деревьями деревьях','irregular plural: деревья'),
+ Nn('n',0,'L','кафе кафе кафе кафе кафе кафе','кафе кафе кафе кафе кафе кафе','кафе is indeclinable — it never changes')
+];
+/* adjective endings by type, A=null → depends on animacy */
+const H={m:['ый','ого','ому',null,'ым','ом'],f:['ая','ой','ой','ую','ой','ой'],n:['ое','ого','ому','ое','ым','ом'],pl:['ые','ых','ым',null,'ыми','ых']};
+const K={m:['ий','ого','ому',null,'им','ом'],f:['ая','ой','ой','ую','ой','ой'],n:['ое','ого','ому','ое','им','ом'],pl:['ие','их','им',null,'ими','их']};
+const SF={m:['ий','его','ему',null,'им','ем'],f:['яя','ей','ей','юю','ей','ей'],n:['ее','его','ему','ее','им','ем'],pl:['ие','их','им',null,'ими','их']};
+const SH={m:['ий','его','ему',null,'им','ем'],f:['ая','ей','ей','ую','ей','ей'],n:['ее','его','ему','ее','им','ем'],pl:['ие','их','им',null,'ими','их']};
+const AT={H,HS:Object.assign({},H,{m:['ой','ого','ому',null,'ым','ом']}),K,KS:Object.assign({},K,{m:['ой','ого','ому',null,'им','ом']}),S:SF,SH,SHS:Object.assign({},K,{m:['ой','ого','ому',null,'им','ом']})};
+const ATN={H:'hard stem',HS:'hard stem, stressed ending -ой',K:'stem in к/г/х: write и instead of ы',KS:'stem in к/г/х with stressed -ой: и instead of ы',S:'soft stem in -н-: я/ю/е/и endings',SH:'stem in ш/ж/ч/щ, unstressed: е instead of о, и instead of ы',SHS:'stem in ш/ж with stressed ending: -ой, but и instead of ы'};
+const ADJ=[{b:'новый',s:'нов',ty:'H',t:'PLTUNOE'},{b:'старый',s:'стар',ty:'H',t:'PLTUN'},{b:'красивый',s:'красив',ty:'H',t:'PLTUN'},{b:'интересный',s:'интересн',ty:'H',t:'PTOE'},
+ {b:'молодой',s:'молод',ty:'HS',t:'P'},{b:'большой',s:'больш',ty:'SHS',t:'LTUNO'},{b:'маленький',s:'маленьк',ty:'K',t:'PLTUN'},{b:'русский',s:'русск',ty:'K',t:'PTE'},
+ {b:'дорогой',s:'дорог',ty:'KS',t:'PTU'},{b:'хороший',s:'хорош',ty:'SH',t:'PLTOE'},{b:'синий',s:'син',ty:'S',t:'TU'},{b:'последний',s:'последн',ty:'S',t:'OEW'},
+ {b:'летний',s:'летн',ty:'S',t:'OEW'},{b:'высокий',s:'высок',ty:'K',t:'PLU'},{b:'добрый',s:'добр',ty:'H',t:'P'},{b:'умный',s:'умн',ty:'H',t:'P'},{b:'трудный',s:'трудн',ty:'H',t:'OEW'},{b:'свежий',s:'свеж',ty:'SH',t:'T'}];
+/* determiners */
+const D=(m,f,n,pl)=>({m:m.split(' ').map(x=>x==='_'?null:x),f:f.split(' '),n:n.split(' '),pl:pl.split(' ').map(x=>x==='_'?null:x)});
+const DETS={
+ этот:{g:'dem',f:D('этот этого этому _ этим этом','эта этой этой эту этой этой','это этого этому это этим этом','эти этих этим _ этими этих')},
+ тот:{g:'dem',f:D('тот того тому _ тем том','та той той ту той той','то того тому то тем том','те тех тем _ теми тех')},
+ мой:{g:'poss',f:D('мой моего моему _ моим моём','моя моей моей мою моей моей','моё моего моему моё моим моём','мои моих моим _ моими моих')},
+ твой:{g:'poss',f:D('твой твоего твоему _ твоим твоём','твоя твоей твоей твою твоей твоей','твоё твоего твоему твоё твоим твоём','твои твоих твоим _ твоими твоих')},
+ наш:{g:'poss',f:D('наш нашего нашему _ нашим нашем','наша нашей нашей нашу нашей нашей','наше нашего нашему наше нашим нашем','наши наших нашим _ нашими наших')},
+ ваш:{g:'poss',f:D('ваш вашего вашему _ вашим вашем','ваша вашей вашей вашу вашей вашей','ваше вашего вашему ваше вашим вашем','ваши ваших вашим _ вашими ваших')},
+ весь:{g:'quant',f:D('весь всего всему _ всем всём','вся всей всей всю всей всей','всё всего всему всё всем всём','все всех всем _ всеми всех'),notP:1},
+ каждый:{g:'quant',adj:{s:'кажд',ty:'H'},sg:1},
+ какой:{g:'int',adj:{s:'как',ty:'KS'}},
+ чей:{g:'int',f:D('чей чьего чьему _ чьим чьём','чья чьей чьей чью чьей чьей','чьё чьего чьему чьё чьим чьём','чьи чьих чьим _ чьими чьих')},
+ none:{g:'adj'}};
+const gkOf=(n,num)=>num==='pl'?'pl':n.g;
+function accIdx(gk,anim,c){return (c===3&&(gk==='m'||gk==='pl'))?(anim?1:0):c}
+function adjForm(st,ty,gk,c,anim){const t=AT[ty][gk];let e=t[c];if(e===null)e=t[anim?1:0];return st+e}
+function detForm(dk,gk,c,anim){const d=DETS[dk];if(!d||dk==='none')return '';if(d.adj)return adjForm(d.adj.s,d.adj.ty,gk,c,anim);const a=d.f[gk];let x=a[c];if(x===null)x=a[anim?1:0];return x}
+function nounForm(n,num,c){return (num==='pl'?n.pl:n.sg)[c]}
+/* preposition alternations */
+const V=/^[аоуэиы]/,CONS='[^аеёиоуыэюяь]';
+function prepAlt(p,next){const w=next.toLowerCase();
+ if(p==='о'){if(/^(всём|всем|всех|мне)$/.test(w))return 'обо';if(V.test(w))return 'об';return 'о'}
+ if(p==='с'){if(/^(вс|мн)/.test(w)||new RegExp('^[сзшжщ]'+CONS).test(w))return 'со';return 'с'}
+ if(p==='к'){if(/^(вс|мн)/.test(w))return 'ко';return 'к'}
+ if(p==='в'){if(/^(вс|мн)/.test(w)||new RegExp('^[вф]'+CONS).test(w))return 'во';return 'в'}
+ if(p==='рядом с'){const x=prepAlt('с',next);return 'рядом '+x}
+ return p}
+/* prepositions: c = case index or 'W' (two-way, w = [acc, other]) */
+const PREPS=[
+ {p:'без',c:1,t:'PT'},{p:'для',c:1,t:'PT'},{p:'до',c:1,t:'LNOE'},{p:'из',c:1,t:'L'},{p:'от',c:1,t:'P'},{p:'у',c:1,t:'P'},{p:'около',c:1,t:'LN'},{p:'после',c:1,t:'OE'},
+ {p:'вокруг',c:1,t:'LN'},{p:'кроме',c:1,t:'P'},{p:'против',c:1,t:'P'},{p:'из-за',c:1,t:'PE'},{p:'мимо',c:1,t:'LN'},{p:'вместо',c:1,t:'PT'},
+ {p:'к',c:2,t:'PLN'},{p:'по',c:2,t:'NL'},{p:'благодаря',c:2,t:'P'},
+ {p:'через',c:3,t:'NW'},{p:'про',c:3,t:'PTOE'},
+ {p:'с',c:4,t:'PT'},{p:'над',c:4,t:'TU'},{p:'перед',c:4,t:'LNOE'},{p:'рядом с',c:4,t:'LNP'},
+ {p:'о',c:5,t:'PTOE'},{p:'при',c:5,t:'P'},
+ {p:'в',c:'W',w:[3,5],t:'L'},{p:'на',c:'W',w:[3,5],t:'NO'},{p:'за',c:'W',w:[3,4],t:'U'},{p:'под',c:'W',w:[3,4],t:'U'},
+ /* added */
+ {p:'во время',c:1,t:'OE'},{p:'среди',c:1,t:'P',pl:1,note:'<b>среди</b> = “among”, so the noun is plural.'},{p:'возле',c:1,t:'LN'},{p:'напротив',c:1,t:'LN'},
+ {p:'внутри',c:1,t:'L'},{p:'вне',c:1,t:'L'},{p:'вдоль',c:1,t:'N'},{p:'насчёт',c:1,t:'OE'},{p:'ради',c:1,t:'P'},{p:'в течение',c:1,t:'W'},
+ {p:'с',c:1,t:'NO',cue:'откуда?',note:'<b>с</b> + родительный = “from, off” a на-place (на вокзал → с вокзала); for в-places use <b>из</b>.'},
+ {p:'навстречу',c:2,t:'P'},{p:'несмотря на',c:3,t:'E'},
+ {p:'между',c:4,t:'PLN',pl:1,note:'<b>между</b> = “between / among” + творительный; here with a plural.'}];
+function phrase(prep,dk,adj,n,num,c){const gk=gkOf(n,num);const words=[];
+ const d=detForm(dk,gk,c,n.a);if(d)words.push(d);if(adj)words.push(adjForm(adj.s,adj.ty,gk,c,n.a));words.push(nounForm(n,num,c));
+ const p=prepAlt(prep.p,words[0]);const main=[p].concat(words).join(' ');const alts=[main];
+ if(prep.p==='из'&&dk==='весь'&&num==='pl'&&c===1)alts.push(['изо'].concat(words).join(' '));
+ return alts}
+function explain(prep,dk,adj,n,num,c,cue){const L=[],gk=gkOf(n,num),GN={m:'masculine',f:'feminine',n:'neuter',pl:'plural'}[gk];
+ if(prep.c==='W')L.push(`<b>${prep.p}</b> + <b>${cue}</b> → ${cue==='куда?'?'direction → <b>винительный</b> (accusative)':`location → <b>${CN[c]}</b> (${CE[c]})`}.`);
+ else if(prep.cue)L.push(`<b>${prep.p}</b> + <b>${prep.cue}</b> → <b>${CN[c]}</b> (${CE[c]}).`);
+ else L.push(`<b>${prep.p}</b> always takes the <b>${CN[c]}</b> case (${CE[c]}).`);
+ if(prep.note)L.push(prep.note);
+ if(c===3&&(gk==='m'||gk==='pl'))L.push(n.a?`The noun is <b>animate</b>, so the accusative ${gk==='pl'?'plural':'masculine'} looks like the <b>genitive</b>.`:`The noun is <b>inanimate</b>, so the accusative ${gk==='pl'?'plural':'masculine'} looks like the <b>nominative</b>.`);
+ const parts=[];const d=detForm(dk,gk,c,n.a);if(d)parts.push(d);
+ if(adj){parts.push(adjForm(adj.s,adj.ty,gk,c,n.a));if(['K','KS','SH','SHS','S','HS'].includes(adj.ty))L.push(`<b>${adj.b}</b>: ${ATN[adj.ty]}.`)}
+ if(dk==='весь')L.push('<b>весь</b> has its own paradigm: всего, всему, всем, всём, вся, всю, все, всех, всеми.');
+ if(dk==='чей')L.push('<b>чей</b> keeps the soft sign in every oblique form: чьего, чьей, чьим.');
+ if(dk==='каждый'||dk==='какой')L.push(`<b>${dk}</b> declines like an adjective${dk==='какой'?' (stem in к: и instead of ы)':''}.`);
+ L.push(`${GN[0].toUpperCase()+GN.slice(1)} ${num==='pl'?'':'singular '}${CE[c]}: <b>${parts.concat([nounForm(n,num,c)]).join(' ')}</b>.`);
+ if(n.note)L.push('Noun: '+n.note+'.');
+ const fp=prepAlt(prep.p,(d||(adj?adjForm(adj.s,adj.ty,gk,c,n.a):nounForm(n,num,c))));
+ if(fp!==prep.p)L.push(`<b>${prep.p}</b> becomes <b>${fp}</b> before ${/об/.test(fp)?'a vowel or всё/все':'a consonant cluster (вс-, мн-, с/з/ш + consonant)'}.`);
+ return L}
+/* relative and interrogative frames */
+const RFR=[['с',4,'я учился в школе','P'],['о',5,'я тебе рассказывал','PTE'],['для',1,'я всё сделаю','P'],['к',2,'я хожу каждую неделю','P'],['у',1,'я жил прошлым летом','P'],
+ ['без',1,'я не могу жить','PT'],['в',5,'я вырос','L'],['на',5,'я живу','N'],['через',3,'мы прошли','N'],['про',3,'все говорят','PTE'],['перед',4,'мы встретились','LN'],['от',1,'я получил письмо','P'],['по',2,'мы гуляли вчера','N']];
+const KOT={s:'котор',ty:'H'};
+const QFR=[['с','кто',4,'С кем','___ ты вчера говорил?'],['о','что',5,'О чём','___ ты думаешь?'],['у','кто',1,'У кого','___ ты был вчера вечером?'],['к','кто',2,'К кому','___ ты идёшь в гости?'],
+ ['для','кто',1,'Для кого','___ этот подарок?'],['без','что',1,'Без чего','___ ты не можешь жить?'],['про','что',3,'Про что','___ этот фильм?'],['над','что',4,'Над чем','___ ты смеёшься?'],
+ ['о','кто',5,'О ком','___ вы говорили?'],['от','кто',1,'От кого','___ это письмо?'],['за','кто',3,'За кого','___ ты болеешь на матче?'],['из-за','что',1,'Из-за чего','___ вы поссорились?'],
+ ['по','кто',2,'По кому','___ ты скучаешь?'],['с','что',1,'С чего','___ мы начнём урок?'],['в','что',3,'Во что','___ ты веришь?'],['на','что',3,'На что','___ ты смотришь?'],['перед','кто',4,'Перед кем','___ тебе стыдно?'],['о','что',5,'О чём','___ этот рассказ?'].slice(0,0)].filter(x=>x.length);
+const PRON={кто:['кто','кого','кому','кого','кем','ком'],что:['что','чего','чему','что','чем','чём']};
+function build(spec){const k=spec[0];
+ if(k==='p'){const [_,pi,dk,ai,ni,num,c,cue]=spec;const prep=PREPS[pi],adj=ai>=0?ADJ[ai]:null,n=NOUNS[ni];
+  const ans=phrase(prep,dk,adj,n,num,c);
+  const wrong=[1,2,3,4,5].filter(x=>x!==c).map(x=>phrase(prep,dk,adj,n,num,x)[0]);
+  if(adj){const alt=adj.ty==='K'||adj.ty==='KS'?Object.assign({},adj,{ty:'H'}):adj.ty==='SH'?Object.assign({},adj,{ty:'K'}):null;if(alt)wrong.push(phrase(prep,dk,alt,n,num,c)[0])}
+  if(c===3&&(n.g==='m'&&num==='sg'||num==='pl'))wrong.push(phrase(prep,dk,adj,Object.assign({},n,{a:n.a?0:1,sg:n.sg.map((x,i)=>i===3?(n.a?n.sg[0]:n.sg[1]):x),pl:n.pl&&n.pl.map((x,i)=>i===3?(n.a?n.pl[0]:n.pl[1]):x)}),num,c)[0]);
+  if(prepAlt(prep.p,ans[0].split(' ').slice(prep.p.split(' ').length)[0]||'')!==prep.p){const rest=ans[0].split(' ').slice(prep.p.split(' ').length);wrong.push([prep.p].concat(rest).join(' '))}
+  const parts=[{t:'prep',x:prep.p}];if(dk!=='none')parts.push({t:'w',x:dk});if(adj)parts.push({t:'w',x:adj.b});parts.push({t:'w',x:n.sg[0]});
+  const nom=[prep.p].concat(phrase(prep,dk,adj,n,num,0)[0].split(' ').slice(prepAlt(prep.p,'x').split(' ').length+(phrase(prep,dk,adj,n,num,0)[0].split(' ')[0]!==prep.p.split(' ')[0]?0:0))).join(' ');
+  return {nom,key:JSON.stringify(spec),type:DETS[dk].g,c:prep.c==='W'?'W':String(c),cname:CN[c]+' ('+CE[c]+')',parts,cue:cue||prep.cue||'',num,hint:'',answers:ans,wrong,expl:explain(prep,dk,adj,n,num,c,cue),mode:'phrase'}}
+ if(k==='r'){const [_,fi,ni,num]=spec;const f=RFR[fi],n=NOUNS[ni],gk=gkOf(n,num),c=f[1];
+  const rel=adjForm(KOT.s,KOT.ty,gk,c,n.a);const ante='Это '+nounForm(n,num,0);
+  const wrong=[0,1,2,3,4,5].filter(x=>x!==c).map(x=>adjForm(KOT.s,KOT.ty,gk,x,n.a)).concat(['m','f','n','pl'].filter(g=>g!==gk).map(g=>adjForm(KOT.s,KOT.ty,g,c,n.a)));
+  const p=f[0]==='о'?prepAlt('о',rel):f[0]==='с'?prepAlt('с',rel):f[0];
+  return {key:JSON.stringify(spec),type:'rel',c:String(c),cname:CN[c]+' ('+CE[c]+')',sentence:`${ante}, ${p} ___ ${f[2]}.`,parts:[{t:'prep',x:f[0]},{t:'w',x:'который'}],num,hint:'',
+   answers:[rel],wrong:[...new Set(wrong)].filter(x=>x!==rel),mode:'word',
+   expl:[`<b>который</b> takes its <b>gender and number</b> from the noun it refers to (<b>${nounForm(n,num,0)}</b>, ${{m:'masculine',f:'feminine',n:'neuter',pl:'plural'}[gk]}) and its <b>case</b> from the preposition: <b>${f[0]}</b> + ${CN[c]}.`,
+    `It declines like a hard adjective: <b>${rel}</b>.${c===3&&(gk==='m'||gk==='pl')?(n.a?' Animate → accusative = genitive.':' Inanimate → accusative = nominative.'):''}`]}}
+ if(k==='q'){const f=QFR[spec[1]];const forms=PRON[f[1]];const P=f[0][0].toUpperCase()+f[0].slice(1);
+  const wrong=[...new Set([0,1,2,3,4,5].filter(x=>x!==f[2]).map(x=>P+' '+forms[x]).concat(f[3].startsWith('Во')?['В что']:[]))].filter(x=>x.toLowerCase()!==f[3].toLowerCase());
+  return {key:JSON.stringify(spec),type:'int',c:String(f[2]),cname:CN[f[2]]+' ('+CE[f[2]]+')',sentence:f[4],parts:[{t:'prep',x:f[0]},{t:'w',x:f[1]}],num:'sg',hint:'',answers:[f[3]],wrong,mode:'qword',
+   expl:[`<b>${f[0]}</b> here takes the <b>${CN[f[2]]}</b> (${CE[f[2]]}): ${f[1]} → <b>${forms[f[2]]}</b>.`].concat(f[3]==='С чего'?['Trap: <b>с + родительный</b> means “from / starting with” (с чего начать), while с + творительный means “with” (с кем).']:[]).concat(f[3]==='Во что'?['Trap: <b>в</b> becomes <b>во</b> before что: во что.']:[]).concat(f[3]==='За кого'?['болеть за + винительный = to support (a team, a player).']:[])}}
+}
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const tagFit=(a,b)=>[...a].some(ch=>b.includes(ch));
+function pick(f){
+ for(let tries=0;tries<200;tries++){const ty=rnd(f.types);
+  if(ty==='rel'){const ok=RFR.map((r,i)=>[r,i]).filter(([r])=>f.cases.includes(String(r[1])));if(!ok.length)continue;const [r,fi]=rnd(ok);
+   const ns=NOUNS.map((n,i)=>[n,i]).filter(([n])=>tagFit(n.t,r[3])&&n.sg[0]!=='кафе');if(!ns.length)continue;const [n,ni]=rnd(ns);let num=f.num==='mix'?(Math.random()<.35?'pl':'sg'):f.num;if(!n.pl)num='sg';return ['r',fi,ni,num]}
+  if(ty==='int'&&Math.random()<.4){const ok=QFR.map((q,i)=>i).filter(i=>f.cases.includes(String(QFR[i][2])));if(!ok.length)continue;return ['q',rnd(ok)]}
+  const ps=PREPS.map((p,i)=>[p,i]).filter(([p])=>f.cases.includes(String(p.c)));if(!ps.length)continue;const [prep,pi]=rnd(ps);
+  const dks=Object.keys(DETS).filter(k=>DETS[k].g===ty);if(!dks.length)continue;const dk=rnd(dks);
+  let num=f.num==='mix'?(Math.random()<.35?'pl':'sg'):f.num;if(DETS[dk].sg)num='sg';
+  if(prep.pl){if(DETS[dk].sg)continue;num='pl'}
+  let cands=NOUNS.map((n,i)=>[n,i]).filter(([n])=>tagFit(n.t,prep.t));
+  if(num==='pl')cands=cands.filter(([n])=>n.pl&&n.sg[0]!=='кафе');
+  if(dk==='весь'&&num==='sg')cands=cands.filter(([n])=>!n.t.includes('P'));
+  if(!cands.length)continue;const [n,ni]=rnd(cands);
+  const useAdj=dk==='none'?true:f.adj==='yes'?true:f.adj==='no'?false:Math.random()<.55;
+  let ai=-1;if(useAdj){const as=ADJ.map((a,i)=>[a,i]).filter(([a])=>tagFit(n.t,a.t));if(as.length)ai=rnd(as)[1];else if(dk==='none')continue}
+  let c=prep.c,cue='';if(c==='W'){const acc=Math.random()<.5;c=acc?prep.w[0]:prep.w[1];cue=acc?'куда?':'где?'}
+  return ['p',pi,dk,ai,ni,num,c,cue]}
+ return null}
+return {lang:'ru',CASES,TYPES,build,pick,title:'Предлоги + падеж',sub:'Decline pronoun, adjective and noun after the preposition',level:'A2–C1',
+ ins:'Напишите всё словосочетание в нужном падеже (вместе с предлогом).',insWord:'Вставьте нужную форму.',stat:{nouns:NOUNS.length,adjs:ADJ.length,preps:PREPS.length},
+ X:{NOUNS,ADJ,PREPS,DETS,phrase,explain,prepAlt,adjForm,nounForm,gkOf,KOT,CN,CE}}
+})();
+
+/* Translation RU ⇄ DE (added): the same prepositional phrases, question words and relative clauses, translated in either direction */
+const GEN_TR=(()=>{
+const R=GEN_RU.X,D=GEN_DE.X;
+const rN=s=>{const n=R.NOUNS.find(x=>x.sg[0]===s);if(!n)throw new Error('ru noun '+s);return n};
+const dN=s=>{const n=D.NOUNS.find(x=>x.n===s);if(!n)throw new Error('de noun '+s);return n};
+const rA=s=>{const a=R.ADJ.find(x=>x.b===s);if(!a)throw new Error('ru adj '+s);return a};
+const dA=s=>{const a=D.ADJ.find(x=>x.b===s);if(!a)throw new Error('de adj '+s);return a};
+const RCN=['именительный','родительный','дательный','винительный','творительный','предложный'];
+const GNE={m:'masculine',f:'feminine',n:'neuter',pl:'plural'};
+const ART={m:'der',f:'die',n:'das'};
+/* nouns: P person, T thing, L в-place, N на-place, E event — append only (saved mistakes use the index) */
+const NC=[['друг','Freund','P'],['брат','Bruder','P'],['врач','Arzt','P'],['учитель','Lehrer','P'],['студент','Student','P'],['сосед','Nachbar','P'],['ребёнок','Kind','P'],
+ ['сестра','Schwester','P'],['подруга','Freundin','P'],['мать','Mutter','P'],
+ ['стол','Tisch','T'],['книга','Buch','T'],['письмо','Brief','T'],['машина','Auto','T'],['окно','Fenster','T'],
+ ['дом','Haus','L'],['город','Stadt','L'],['школа','Schule','L'],['комната','Zimmer','L'],['музей','Museum','L'],['деревня','Dorf','L'],
+ ['вокзал','Bahnhof','N'],['улица','Straße','N'],['площадь','Platz','N'],
+ ['концерт','Konzert','E'],['фильм','Film','E'],['экзамен','Prüfung','E']].map(([r,d,k])=>({r:rN(r),d:dN(d),k}));
+const AC=[['новый','neu','PTLNE'],['старый','alt','PTLN'],['красивый','schön','PTLN'],['интересный','interessant','PTE'],['молодой','jung','P'],['большой','groß','TLN'],
+ ['маленький','klein','PTL'],['хороший','gut','PTLE'],['высокий','hoch','L',['дом']],['добрый','nett','P'],['умный','klug','P'],['русский','russisch','PE'],['дорогой','teuer','T'],
+ ['синий','blau','T'],['последний','letzt','E'],['трудный','schwierig','E']].map(([r,d,k,only])=>({r:rA(r),d:dA(d),k,only}));
+/* determiners: d = accepted German words (first = shown); art = Russian has nothing, German needs der or ein */
+const DC=[{r:'none',art:1,w:4},{r:'этот',d:['dieser']},{r:'тот',d:['jener','def']},{r:'мой',d:['mein']},{r:'твой',d:['dein']},{r:'наш',d:['unser']},{r:'ваш',d:['euer','ihr']},
+ {r:'каждый',d:['jeder'],sg:1},{r:'какой',d:['welcher']}];
+/* preposition pairs: k = noun classes, only = these Russian nouns only, dAlt = other German prepositions also accepted */
+const PC=[
+ {r:'без',rc:1,d:'ohne',dc:'A',k:'PT'},{r:'для',rc:1,d:'für',dc:'A',k:'PT'},{r:'с',rc:4,d:'mit',dc:'D',k:'PT'},
+ {r:'у',rc:1,d:'bei',dc:'D',k:'P',note:'у кого? (at someone’s place) = bei wem?'},{r:'к',rc:2,d:'zu',dc:'D',k:'PN'},{r:'от',rc:1,d:'von',dc:'D',k:'P'},
+ {r:'из',rc:1,d:'aus',dc:'D',k:'L'},{r:'о',rc:5,d:'über',dc:'A',k:'PTE',dAlt:[['von','D']],note:'говорить / думать о + предл. → sprechen über + Akk. (or von + Dat.).'},
+ {r:'после',rc:1,d:'nach',dc:'D',k:'E'},{r:'вместо',rc:1,d:'statt',dc:'G',k:'PT',dAlt:[['anstatt','G']]},{r:'против',rc:1,d:'gegen',dc:'A',k:'P'},
+ {r:'кроме',rc:1,d:'außer',dc:'D',k:'P'},{r:'из-за',rc:1,d:'wegen',dc:'G',k:'EP'},{r:'благодаря',rc:2,d:'dank',dc:'G',k:'P',dAlt:[['dank','D']],note:'dank + Genitiv (Dativ also accepted).'},
+ {r:'во время',rc:1,d:'während',dc:'G',k:'E'},
+ {r:'в',rc:3,d:'in',dc:'A',k:'L',note:'куда? → винительный, just like Wohin? → Akkusativ.'},{r:'в',rc:5,d:'in',dc:'D',k:'L',note:'где? → предложный; Wo? → Dativ.'},
+ {r:'на',rc:3,d:'auf',dc:'A',k:'N',only:['улица','площадь'],note:'на улицу (куда?) → auf die Straße (Wohin? → Akk.).'},{r:'на',rc:5,d:'auf',dc:'D',k:'N',only:['улица','площадь'],note:'на улице (где?) → auf der Straße (Wo? → Dat.).'},
+ {r:'на',rc:3,d:'in',dc:'A',k:'E',only:['концерт'],dAlt:[['zu','D']],note:'на концерт → ins Konzert (zum Konzert also accepted).'},
+ {r:'на',rc:5,d:'in',dc:'D',k:'E',only:['концерт','экзамен'],dAlt:[['bei','D'],['auf','D']],note:'на концерте / на экзамене → im Konzert, bei der Prüfung: German does not use auf here as a rule.'},
+ {r:'за',rc:4,d:'hinter',dc:'D',k:'LT',only:['дом','машина','школа'],note:'за (где?) + творительный = hinter + Dativ.'},{r:'за',rc:3,d:'hinter',dc:'A',k:'LT',only:['дом','машина','школа'],note:'за (куда?) + винительный = hinter + Akkusativ.'},
+ {r:'под',rc:4,d:'unter',dc:'D',k:'T',only:['стол','машина','окно'],note:'под (где?) + творительный = unter + Dativ.'},{r:'под',rc:3,d:'unter',dc:'A',k:'T',only:['стол','машина','окно'],note:'под (куда?) + винительный = unter + Akkusativ.'},
+ {r:'над',rc:4,d:'über',dc:'D',k:'TL',only:['стол','окно','дом','город']},{r:'перед',rc:4,d:'vor',dc:'D',k:'LNE'},{r:'рядом с',rc:4,d:'neben',dc:'D',k:'PLN'},
+ {r:'до',rc:1,d:'bis zu',dc:'D',k:'LN'},{r:'вокруг',rc:1,d:'um',dc:'A',k:'LN',herum:1,note:'вокруг + род. = um + Akk. (… herum also accepted).'},
+ {r:'через',rc:3,d:'durch',dc:'A',k:'L',only:['город','деревня','музей']},{r:'между',rc:4,d:'zwischen',dc:'D',k:'PL',pl:1},
+ {r:'среди',rc:1,d:'unter',dc:'D',k:'P',pl:1,note:'среди друзей = unter Freunden: unter here means “among”.'},{r:'напротив',rc:1,d:'gegenüber',dc:'D',k:'LN',post:1},
+ {r:'внутри',rc:1,d:'innerhalb',dc:'G',k:'L'},{r:'вне',rc:1,d:'außerhalb',dc:'G',k:'L'},
+ {r:'с',rc:1,d:'von',dc:'D',k:'NE',only:['вокзал','улица','площадь','концерт','экзамен'],note:'откуда? from a на-place: с + родительный = von + Dativ (vom Bahnhof).'},
+ {r:'около',rc:1,d:'bei',dc:'D',k:'LN',note:'около = near: bei + Dativ (beim Bahnhof).'}];
+/* question words */
+const TQ=[['___ ты вчера говорил?',['С кем'],'___ hast du gestern gesprochen?',['Mit wem'],'с + твор. = mit + Dat.'],
+ ['___ ты думаешь?',['О чём'],'___ denkst du?',['Woran'],'думать о + предл. = denken an + Akk. → woran (wo(r)- for things).'],
+ ['___ ты думаешь?',['О ком'],'___ denkst du?',['An wen'],'думать о ком = denken an wen (Akk.).'],
+ ['___ этот подарок?',['Для кого'],'___ ist das Geschenk?',['Für wen'],'для + род. = für + Akk.'],
+ ['___ ты был вчера вечером?',['У кого'],'___ warst du gestern Abend?',['Bei wem'],'у + род. = bei + Dat.'],
+ ['___ ты идёшь сегодня вечером?',['К кому'],'___ gehst du heute Abend?',['Zu wem'],'к + дат. = zu + Dat.'],
+ ['___ это письмо?',['От кого'],'___ ist dieser Brief?',['Von wem'],'от + род. = von + Dat.'],
+ ['___ ты не можешь жить?',['Без кого'],'___ kannst du nicht leben?',['Ohne wen'],'без + род. = ohne + Akk.'],
+ ['___ вы говорили?',['О чём'],'___ habt ihr gesprochen?',['Worüber','Wovon'],'говорить о = sprechen über (Akk.) / von (Dat.) → worüber / wovon.'],
+ ['___ ты мечтаешь?',['О чём'],'___ träumst du?',['Wovon'],'мечтать о = träumen von → wovon.'],
+ ['___ ты смеёшься?',['Над чем'],'___ lachst du?',['Worüber'],'смеяться над + твор. = lachen über + Akk. → worüber.'],
+ ['___ вы поссорились?',['Из-за чего'],'___ habt ihr euch gestritten?',['Weswegen','Weshalb','Warum'],'из-за чего = weswegen (wegen + Gen.); weshalb / warum also fit.'],
+ ['___ вы играете в субботу?',['Против кого'],'___ spielt ihr am Samstag?',['Gegen wen'],'против + род. = gegen + Akk.'],
+ ['___ ты интересуешься?',['Чем'],'___ interessierst du dich?',['Wofür'],'Trap: интересоваться + твор. has no preposition, but sich interessieren für → wofür.'],
+ ['___ ты ждёшь?',['Кого'],'___ wartest du?',['Auf wen'],'Trap: ждать + вин./род. without a preposition, but warten auf + Akk. → auf wen.'],
+ ['___ ты боишься?',['Чего'],'___ hast du Angst?',['Wovor'],'Trap: бояться + род. without a preposition, but Angst haben vor + Dat. → wovor.'],
+ ['___ это зависит?',['От чего'],'___ hängt das ab?',['Wovon'],'зависеть от = abhängen von → wovon.'],
+ ['___ ты готовишься?',['К чему'],'___ bereitest du dich vor?',['Worauf'],'готовиться к + дат. = sich vorbereiten auf + Akk. → worauf.'],
+ ['___ ты скучаешь?',['По кому'],'___ vermisst du?',['Wen'],'Trap: скучать по + дат., but vermissen takes a plain Akkusativ → wen.'],
+ ['___ ты веришь?',['Во что'],'___ glaubst du?',['Woran'],'верить в + вин. = glauben an + Akk. → woran. в → во before что.'],
+ ['___ ты сидел в кино?',['Рядом с кем'],'___ hast du im Kino gesessen?',['Neben wem'],'рядом с + твор. = neben + Dat.'],
+ ['___ вы спорите?',['О чём'],'___ streitet ihr?',['Worüber'],'спорить о = streiten über + Akk. → worüber.'],
+ ['___ ты сердишься?',['На кого'],'___ bist du böse?',['Auf wen'],'сердиться на + вин. = böse sein auf + Akk.'],
+ ['___ ты гордишься?',['Кем'],'___ bist du stolz?',['Auf wen'],'Trap: гордиться + твор. without a preposition, but stolz sein auf + Akk.'],
+ ['___ состоит этот торт?',['Из чего'],'___ besteht dieser Kuchen?',['Woraus'],'состоять из = bestehen aus → woraus.'],
+ ['___ речь в этом фильме?',['О чём'],'___ geht es in diesem Film?',['Worum'],'о чём речь = worum geht es (es geht um + Akk.).'],
+ ['___ ты смотришь?',['На что'],'___ schaust du?',['Worauf','Wohin'],'смотреть на + вин. = schauen auf + Akk. → worauf.'],
+ ['___ ты пишешь письмо?',['Кому'],'___ schreibst du den Brief?',['Wem'],'Trap: no preposition in either language — plain dative: кому / wem.'],
+ ['___ ты поедешь в отпуск?',['С кем'],'___ fährst du in den Urlaub?',['Mit wem'],'с + твор. = mit + Dat.'],
+ ['___ ты узнал эту новость?',['От кого'],'___ hast du diese Nachricht erfahren?',['Von wem'],'узнать от = erfahren von + Dat.']];
+/* relative clauses: [ru prep, ru case, ru rest, de prep, de case, de rest, classes, only] */
+const RF=[['с',4,'я работаю','mit','D','ich arbeite','P'],['о',5,'я тебе рассказывал','von','D','ich dir erzählt habe','PT'],['для',1,'я купил подарок','für','A','ich das Geschenk gekauft habe','P'],
+ ['у',1,'я жил прошлым летом','bei','D','ich letzten Sommer gewohnt habe','P'],['без',1,'я не могу жить','ohne','A','ich nicht leben kann','PT'],['от',1,'я получил письмо','von','D','ich einen Brief bekommen habe','P'],
+ ['в',5,'я вырос','in','D','ich aufgewachsen bin','L'],['о',5,'я часто думаю','an','A','ich oft denke','PT'],['из',1,'она приехала','aus','D','sie gekommen ist','L'],
+ ['к',2,'мы идём в гости','zu','D','wir zu Besuch gehen','P'],['про',3,'все говорят','über','A','alle sprechen','PTE'],['рядом с',4,'я сидел в кино','neben','D','ich im Kino gesessen habe','P'],
+ ['после',1,'мы пошли в кафе','nach','D','wir ins Café gegangen sind','E'],['из-за',1,'я опоздал','wegen','G','ich zu spät gekommen bin','EP'],
+ ['на',5,'я был вчера','auf','D','ich gestern war','N',['улица','площадь']],['в',3,'мы идём завтра','in','A','wir morgen gehen','L'],['перед',4,'мы встретились','vor','D','wir uns getroffen haben','LN']];
+const RNOTE={'о|an':'думать о + предл. = denken an + Akk.','о|von':'рассказывать о + предл. = erzählen von + Dat.','про|über':'говорить про + вин. = sprechen über + Akk.'};
+const TYPES=[['tp','Phrases: предлог + слово ⇄ Präposition + Wort'],['tq','Question words: С кем? ⇄ Mit wem?'],['tr','Relative clauses: с которым ⇄ mit dem']];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fits=(k,cls)=>[...cls].some(ch=>k.includes(ch));
+function deDets(dc,num){if(dc.art)return num==='pl'?['def','none']:['def','ein'];return dc.d.filter(k=>!(num==='pl'&&D.DETS[k].sg))}
+function dePh(p,dk,adj,noun,num,c,pc){let o=D.phrase({p},dk,adj,noun,num,c);
+ if(pc&&pc.herum)o=o.concat(o.map(x=>x+' herum'));
+ if(pc&&pc.post)o=o.concat(o.map(x=>x.slice(p.length+1)+' '+p));return o}
+const deLem=(n,num)=>num==='pl'?'die '+n.pl+' (Pl.)':ART[n.g]+' '+n.n;
+function build(sp){const k=sp[0],dir=sp[1],toDe=dir==='rd',src=toDe?'ru':'de',tgt=toDe?'de':'ru';
+ const base={tr:true,dir,srcL:src,tgt,key:JSON.stringify(sp),type:k,c:'T',cue:''};
+ if(k==='tp'){const [,,pi,di,ai,ni,num,sv]=sp;const pc=PC[pi],dc=DC[di],ac=ai>=0?AC[ai]:null,nc=NC[ni];if(!pc||!dc||!nc||(ai>=0&&!ac))return null;
+  const ru=R.phrase({p:pc.r},dc.r,ac?ac.r:null,nc.r,num,pc.rc);
+  const dks=deDets(dc,num),preps=[[pc.d,pc.dc]].concat(pc.dAlt||[]);
+  const de=[...new Set([].concat(...dks.map(dk=>[].concat(...preps.map(([p,c])=>dePh(p,dk,ac?ac.d:null,nc.d,num,c,pc))))))];
+  const sdk=dc.art?(num==='pl'?(sv?'none':'def'):(sv?'ein':'def')):dc.d[0];
+  const deSrc=D.phrase({p:pc.d},sdk,ac?ac.d:null,nc.d,num,pc.dc)[0];
+  const answers=toDe?de:ru,srcTxt=toDe?ru[0]:deSrc;
+  let wrong=[];
+  if(toDe){const dk0=dks[0],okc=preps.map(x=>x[1]);
+   ['A','D','G'].filter(c=>!okc.includes(c)).forEach(c=>wrong.push(D.phrase({p:pc.d},dk0,ac?ac.d:null,nc.d,num,c)[0]));
+   if(num==='sg')['m','f','n'].filter(g=>g!==nc.d.g).forEach(g=>wrong.push(D.phrase({p:pc.d},dk0,ac?ac.d:null,Object.assign({},nc.d,{g}),num,pc.dc)[0]))}
+  else [1,2,3,4,5].filter(c=>c!==pc.rc).forEach(c=>wrong.push(R.phrase({p:pc.r},dc.r,ac?ac.r:null,nc.r,num,c)[0]));
+  const ex=[`RU <b>${pc.r}</b> + ${RCN[pc.rc]} ↔ DE <b>${pc.d}</b> + ${D.CN[pc.dc]}.`];if(pc.note)ex.push(pc.note);
+  let hint;
+  if(toDe){const gr=nc.d.g,rg=nc.r.g;
+   ex.push(`<b>${ART[gr]} ${nc.d.n}</b> is ${GNE[gr]} in German${rg!==gr?` — not ${GNE[rg]} like <b>${nc.r.sg[0]}</b>`:''}.`);
+   if(dc.art)ex.push(num==='pl'?'Russian has no articles: <b>die</b> or no article are both accepted.':'Russian has no articles: <b>der/die/das</b> and <b>ein</b> are both accepted.');
+   ex.push(...D.explain({p:pc.d,c:pc.dc},dks[0],ac?ac.d:null,nc.d,num,pc.dc,'').slice(1));
+   hint=[dc.art?'':D.DETS[dc.d[0]].l,ac?ac.d.b:'',deLem(nc.d,num)].filter(Boolean).join(' · ')}
+  else{ex.push(...R.explain({p:pc.r,c:pc.rc},dc.r,ac?ac.r:null,nc.r,num,pc.rc,'').slice(1));
+   if(dc.art)ex.push('Russian has no articles, so der / ein simply disappear.');
+   hint=[dc.r==='none'?'':dc.r,ac?ac.r.b:'',nc.r.sg[0]+(num==='pl'?' (мн. ч.)':'')].filter(Boolean).join(' · ')}
+  return Object.assign(base,{src:srcTxt,srcHTML:E(srcTxt),answers,wrong,expl:ex,hint,mode:'tr',num,cname:`${RCN[pc.rc]} ↔ ${D.CN[pc.dc]}`,
+   parts:[{t:'prep',x:toDe?pc.d:pc.r},{t:'w',x:toDe?nc.d.n:nc.r.sg[0]}]})}
+ if(k==='tq'){const q=TQ[sp[2]];if(!q)return null;const [rs,ra,ds,da,note]=q;
+  const S0=toDe?rs:ds,A0=toDe?ra:da,tS=toDe?ds:rs,ans=toDe?da:ra;
+  const pool=[...new Set(TQ.map(x=>(toDe?x[3]:x[1])[0]))].filter(x=>!ans.some(a=>a.toLowerCase()===x.toLowerCase()));
+  const fill=S0.replace('___',A0[0]);
+  return Object.assign(base,{src:fill,srcHTML:E(S0).replace('___','<b>'+E(A0[0])+'</b>'),sentence:tS,answers:ans,wrong:pool,expl:[note],hint:'',mode:'tr',num:'sg',cname:'Question word',
+   parts:[{t:'prep',x:ans[0]},{t:'w',x:A0[0]}]})}
+ if(k==='tr'){const [,,ri,ni,num]=sp;const f=RF[ri],nc=NC[ni];if(!f||!nc)return null;const [rp,rc,rt,dp,dc,dt]=f;
+  const rg=R.gkOf(nc.r,num),dg=num==='pl'?'pl':nc.d.g;
+  const rrel=R.adjForm(R.KOT.s,R.KOT.ty,rg,rc,nc.r.a),rpp=rp==='с'||rp==='о'||rp==='рядом с'?R.prepAlt(rp,rrel):rp,ruA=rpp+' '+rrel;
+  const drel=D.REL[dg][D.CI[dc]],deA=dp+' '+drel;
+  const ruS=`Это ${R.nounForm(nc.r,num,0)}, ___ ${rt}.`,deS=`${num==='pl'?'Das sind':'Das ist'} ${D.DEF[dg][0]} ${num==='pl'?nc.d.pl:nc.d.n}, ___ ${dt}.`;
+  const S0=toDe?ruS:deS,A0=toDe?ruA:deA,tS=toDe?deS:ruS;
+  const answers=toDe?[deA].concat(dc==='G'?[]:[dp+' '+'welch'+{m:['er','en','em'],f:['e','e','er'],n:['es','es','em'],pl:['e','e','en']}[dg][D.CI[dc]]]):[ruA];
+  let wrong=[];
+  if(toDe){['A','D','G'].filter(c=>c!==dc).forEach(c=>wrong.push(dp+' '+D.REL[dg][D.CI[c]]));['m','f','n','pl'].filter(g=>g!==dg).forEach(g=>wrong.push(dp+' '+D.REL[g][D.CI[dc]]));
+   if({in:1,an:1,zu:1,von:1,bei:1}[dp]&&drel==='dem')wrong.push({in:'im',an:'am',zu:'zum',von:'vom',bei:'beim'}[dp])}
+  else{[1,2,3,4,5].filter(c=>c!==rc).forEach(c=>{const x=R.adjForm(R.KOT.s,R.KOT.ty,rg,c,nc.r.a);wrong.push(rp+' '+x)});['m','f','n','pl'].filter(g=>g!==rg).forEach(g=>wrong.push(rpp+' '+R.adjForm(R.KOT.s,R.KOT.ty,g,rc,nc.r.a)))}
+  wrong=[...new Set(wrong)].filter(x=>!answers.includes(x));
+  const ex=[`RU <b>${rp}</b> + ${RCN[rc]} ↔ DE <b>${dp}</b> + ${D.CN[dc]}.`];const nk=RNOTE[rp+'|'+dp];if(nk)ex.push(nk);
+  if(toDe){ex.push(`The relative pronoun takes gender and number from <b>${num==='pl'?'die '+nc.d.pl:ART[nc.d.g]+' '+nc.d.n}</b> (${GNE[dg]}) and the case from <b>${dp}</b> → <b>${deA}</b>.`);
+   if(nc.r.g!==nc.d.g&&num!=='pl')ex.push(`Careful: <b>${nc.r.sg[0]}</b> is ${GNE[nc.r.g]} in Russian, but <b>${nc.d.n}</b> is ${GNE[nc.d.g]}.`);
+   if({in:1,an:1,zu:1,von:1,bei:1}[dp])ex.push('Relative pronouns never contract: <b>'+deA+'</b>, not '+({in:'im/ins',an:'am/ans',zu:'zum/zur',von:'vom',bei:'beim'}[dp])+'.');
+   if(dc==='G')ex.push('Genitive relatives are <b>dessen</b> (masc./neut.) and <b>deren</b> (fem./plural).');else ex.push(`<b>${dp} welch-</b> is also possible but rarer — accepted.`)}
+  else{ex.push(`<b>который</b> takes gender and number from <b>${R.nounForm(nc.r,num,0)}</b> (${GNE[rg]}) and the case from <b>${rp}</b> → <b>${ruA}</b>.`);
+   if(rc===3&&(rg==='m'||rg==='pl'))ex.push(nc.r.a?'Animate → accusative = genitive (которого / которых).':'Inanimate → accusative = nominative (который / которые).')}
+  return Object.assign(base,{src:S0.replace('___',A0),srcHTML:E(S0).replace('___','<b>'+E(A0)+'</b>'),sentence:tS,answers,wrong,expl:ex,hint:'',mode:'tr',num,cname:'Relative clause',
+   parts:[{t:'prep',x:toDe?dp:rp},{t:'w',x:toDe?'der / die / das':'который'}]})}
+ return null}
+function pick(f){const kinds=f.trk.length?f.trk:['tp'];
+ for(let tries=0;tries<200;tries++){const k=rnd(kinds),dir=f.dir==='mix'?(Math.random()<.5?'rd':'dr'):f.dir;
+  if(k==='tq')return ['tq',dir,Math.floor(Math.random()*TQ.length)];
+  let num=f.num==='mix'?(Math.random()<.35?'pl':'sg'):f.num;
+  if(k==='tr'){const ri=Math.floor(Math.random()*RF.length),fr=RF[ri];
+   const ns=NC.map((n,i)=>i).filter(i=>{const n=NC[i];return fits(n.k,fr[6])&&(!fr[7]||fr[7].includes(n.r.sg[0]))&&(num==='sg'||(n.r.pl&&n.d.pl))});if(!ns.length)continue;
+   return ['tr',dir,ri,rnd(ns),num]}
+  const pi=Math.floor(Math.random()*PC.length),pc=PC[pi];if(pc.pl)num='pl';
+  const ns=NC.map((n,i)=>i).filter(i=>{const n=NC[i];return pc.k.includes(n.k)&&(!pc.only||pc.only.includes(n.r.sg[0]))&&(num==='sg'||(n.r.pl&&n.d.pl))});if(!ns.length)continue;
+  const ni=rnd(ns),nc=NC[ni];
+  const ds=[];DC.forEach((d,i)=>{if(num==='pl'&&d.sg)return;for(let w=0;w<(d.w||1);w++)ds.push(i)});const di=rnd(ds);
+  const useAdj=f.adj==='yes'?true:f.adj==='no'?false:Math.random()<.55;let ai=-1;
+  if(useAdj){const as=AC.map((a,i)=>i).filter(i=>AC[i].k.includes(nc.k)&&(!AC[i].only||AC[i].only.includes(nc.r.sg[0])));if(as.length)ai=rnd(as)}
+  return ['tp',dir,pi,di,ai,ni,num,Math.random()<.5?1:0]}
+ return null}
+return {TYPES,build,pick,stat:{preps:PC.length,nouns:NC.length,q:TQ.length,rel:RF.length}};
+})();
+
+const G=window.CASE_LANG==='de'?GEN_DE:GEN_RU;const LG=G.lang;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const KEY='case-drill-v1';
+const DEF=()=>({types:G.TYPES.map(t=>t[0]),cases:G.CASES.map(c=>c[0]),trk:GEN_TR.TYPES.map(t=>t[0]),dir:'mix',hints:'on',num:'mix',adj:'mix',mode:'type',len:20,tab:'practice',miss:{},st:{r:0,w:0},byCase:{},byType:{},best:0,sess:null});
+let S=DEF();try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v&&typeof v==='object')S=Object.assign(DEF(),v)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const ITEM=k=>{try{const sp=JSON.parse(k);return /^t[pqr]$/.test(sp[0])?GEN_TR.build(sp):G.build(sp)}catch(e){return null}};
+const kind=()=>S.tab==='tr'?'tr':'decl';let deckKind='decl';
+for(const k of Object.keys(S.miss))if(!ITEM(k))delete S.miss[k];
+S.types=S.types.filter(t=>G.TYPES.some(x=>x[0]===t));S.trk=(S.trk||[]).filter(t=>GEN_TR.TYPES.some(x=>x[0]===t));S.cases=S.cases.filter(c=>G.CASES.some(x=>x[0]===c));
+const TYN=Object.fromEntries(G.TYPES.concat([['tp','Translate · phrase'],['tq','Translate · question word'],['tr','Translate · relative clause']])),CAN=Object.fromEntries(G.CASES);
+const norm=s=>String(s||'').normalize('NFC').replace(/[’ʼ`´]/g,"'").replace(/[‐‑–—]/g,'-').replace(/ё/g,'е').replace(/Ё/g,'Е').replace(/[.,!?;:]+$/,'').replace(/\s+/g,' ').trim().toLowerCase();
+const bare=s=>norm(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss');
+let deck=[],pos=0,review=false,cur=null,answered=false,streak=0,roundR=0,roundW=0,opts=[];
+function filt(){return {types:S.types,cases:S.cases,num:S.num,adj:S.adj}}
+function newDeck(){const f=filt();deck=[];review=false;pos=0;roundR=0;roundW=0;deckKind=kind();const T=deckKind==='tr';
+  if(T?S.trk.length:(S.types.length&&S.cases.length)){const seen=new Set();for(let i=0;i<S.len*6&&deck.length<S.len;i++){const sp=T?GEN_TR.pick({trk:S.trk,dir:S.dir,num:S.num,adj:S.adj}):G.pick(f);if(!sp)continue;const k=JSON.stringify(sp);if(seen.has(k))continue;seen.add(k);deck.push(k)}}
+  renderCard()}
+function startReview(){const ks=shuffle(Object.keys(S.miss)).slice(0,20);if(!ks.length)return;deck=ks;pos=0;review=true;roundR=0;roundW=0;showTab('practice',true);renderCard()}
+function renderHead(){$('#ttl').innerHTML=esc(G.title.split(' ')[0])+' <span>'+esc(G.title.split(' ').slice(1).join(' '))+'</span>';
+  $('#subt').textContent=`${G.sub} · ${G.level} · ${G.stat.preps} prepositions, ${G.stat.nouns} nouns, ${G.stat.adjs} adjectives — thousands of combinations`;
+  document.title=G.title}
+function renderStats(){const st=S.st,n=st.r+st.w;
+  $('#stats').innerHTML=`<div><b>${st.r}</b><span>correct</span></div><div><b>${n}</b><span>answered</span></div><div><b>${n?Math.round(st.r/n*100)+'%':'–'}</b><span>accuracy</span></div><div><b>${streak}</b><span>streak</span></div>`}
+function renderTabs(){const n=Object.keys(S.miss).length;$('#mcnt').textContent=n?String(n):'';document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.mode===S.tab))}
+function showTab(t,keep){S.tab=t;save();renderTabs();const pr=t==='practice'||t==='tr';$('#p-practice').hidden=!pr;$('#p-miss').hidden=t!=='miss';$('#p-over').hidden=t!=='over';
+  if(t==='miss')renderMiss();if(t==='over')renderOver();if(pr){renderSettings();if(!keep&&(!deck.length||(!review&&deckKind!==kind())))newDeck()}}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.mode)));
+function renderSettings(){
+  $('#types').innerHTML=G.TYPES.map(([k,n])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${S.types.includes(k)}">${esc(n)}</button>`).join('');
+  $('#cases').innerHTML=G.CASES.map(([k,n])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${S.cases.includes(k)}">${esc(n)}</button>`).join('');
+  $('#trk').innerHTML=GEN_TR.TYPES.map(([k,n])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${S.trk.includes(k)}">${esc(n)}</button>`).join('');
+  [['#numseg','num'],['#adjseg','adj'],['#modeseg','mode'],['#lenseg','len'],['#dirseg','dir'],['#hintseg','hints']].forEach(([id,k])=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(String(S[k])===b.dataset.v))));
+  const K=kind();document.querySelectorAll('.grp[data-for]').forEach(g=>g.hidden=g.dataset.for!==K);
+  $('#sumtxt').textContent=K==='tr'?`${{rd:'RU → DE',dr:'DE → RU',mix:'RU ⇄ DE'}[S.dir]} · ${S.trk.length}/${GEN_TR.TYPES.length} kinds · ${S.mode==='type'?'typing':'multiple choice'} · ${S.len} per round`
+   :`${S.types.length}/${G.TYPES.length} kinds · ${S.cases.length}/${G.CASES.length} cases · ${S.mode==='type'?'typing':'multiple choice'} · ${S.len} per round`}
+$('#trk').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;S.trk=S.trk.includes(k)?S.trk.filter(x=>x!==k):S.trk.concat(k);save();renderSettings();newDeck()});
+$('#types').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;S.types=S.types.includes(k)?S.types.filter(x=>x!==k):S.types.concat(k);save();renderSettings();newDeck()});
+$('#cases').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;S.cases=S.cases.includes(k)?S.cases.filter(x=>x!==k):S.cases.concat(k);save();renderSettings();newDeck()});
+document.querySelectorAll('.quick button').forEach(b=>b.addEventListener('click',()=>{const q=b.dataset.q,all=b.dataset.v==='all';S[q]=all?(q==='types'?G.TYPES:q==='trk'?GEN_TR.TYPES:G.CASES).map(x=>x[0]):[];save();renderSettings();newDeck()}));
+[['#numseg','num'],['#adjseg','adj'],['#modeseg','mode'],['#lenseg','len'],['#dirseg','dir'],['#hintseg','hints']].forEach(([id,k])=>$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S[k]=k==='len'?+b.dataset.v:b.dataset.v;save();renderSettings();if(k==='mode'||k==='hints'){if(!answered)renderCard()}else newDeck()}));
+function renderRvbar(){$('#rvbar').innerHTML=review?`<div class="bar" style="margin-top:12px"><span><b>Mistake review</b> · ${Math.min(pos+1,deck.length)} / ${deck.length} · two correct answers clear a mistake</span><span class="sp"></span><button class="btn ghost" type="button" id="exitrv" style="min-height:36px;padding:6px 12px">Exit review</button></div>`:'';
+  const x=$('#exitrv');if(x)x.onclick=()=>{review=false;newDeck()}}
+function taskHTML(it){return `<div class="task" lang="${LG}">${it.parts.map((p,i)=>(i===1?'<span class="plus">+</span>':'')+(p.t==='prep'?`<span class="pp">${esc(p.x)}</span>`:`<span class="wd">${esc(p.x)}</span>`)).join(' ')}${it.num==='pl'?' <span class="badge">Plural</span>':''}${it.cue?` <span class="cue">${esc(it.cue)}</span>`:''}</div>`}
+function optionsFor(it){const A=new Set(it.answers.map(norm));const w=[...new Set(it.wrong.filter(x=>x&&!A.has(norm(x))).map(x=>x))];const uniq=[];const seen=new Set();for(const x of shuffle(w)){const n=norm(x);if(!seen.has(n)){seen.add(n);uniq.push(x)}if(uniq.length===3)break}
+  if(uniq.length<3&&it.nom&&!A.has(norm(it.nom))&&!seen.has(norm(it.nom)))uniq.push(it.nom);
+  return shuffle([it.answers[0]].concat(uniq))}
+function renderCard(){renderRvbar();answered=false;const box=$('#card');S.sess={deck,pos,review,kind:deckKind};save();
+  if(!deck.length){box.innerHTML=`<p class="empty">${review?'No mistakes to review.':deckKind==='tr'?'Nothing matches these settings — choose at least one kind to translate.':'Nothing matches these settings — choose at least one kind and one case.'}</p>`;return}
+  if(pos>=deck.length){box.innerHTML=`<div class="done"><h2>${review?'Review finished':'Round complete'}</h2><p class="empty">${roundR} correct · ${roundW} wrong</p><div class="actions" style="justify-content:center"><button class="btn" id="again" type="button">${review?'Back to mistakes':'New round'}</button></div></div>`;
+    $('#again').onclick=()=>{if(review){review=false;deck=[];showTab('miss')}else newDeck()};$('#again').focus();return}
+  const it=ITEM(deck[pos]);if(!it){pos++;return renderCard()}cur=it;const m=S.miss[it.key];const ch=S.mode==='choose';if(ch)opts=optionsFor(it);
+  const word=it.mode!=='phrase',TR=!!it.tr,AL=TR?it.tgt:LG,TL=TR?(it.tgt==='de'?'DE':'RU'):'';
+  const insT=TR?(it.tgt==='de'?(it.sentence?'Übersetzen Sie ins Deutsche — ergänzen Sie die Lücke.':'Übersetzen Sie ins Deutsche.'):(it.sentence?'Переведите на русский — заполните пропуск.':'Переведите на русский.')):(word?G.insWord:G.ins);
+  const gapS=it.sentence?`<p class="sent" id="sent" lang="${AL}">${esc(it.sentence).replace('___','<span class="gap">&nbsp;</span>')}</p>`:'';
+  box.innerHTML=`<div class="meta"><span>${esc(TYN[it.type]||'')}${TR?' · '+(it.srcL==='ru'?'RU → DE':'DE → RU'):''}</span><span>${pos+1} / ${deck.length}${m?` · <span style="color:var(--bad)">missed ×${m.n}</span>`:''}</span></div>
+   <p class="ins" lang="${AL}">${esc(insT)}</p>
+   ${TR?`<div class="trsrc" lang="${it.srcL}"><span class="lb">${it.srcL==='ru'?'RU':'DE'}</span><span>${it.srcHTML}</span></div>${it.sentence?`<div class="trsrc trtgt"><span class="lb">${TL}</span>${gapS}</div>`:''}`:gapS}
+   ${TR?'':taskHTML(it)}${it.hint&&(!TR||S.hints==='on')?`<p class="ghint" lang="${AL}">${esc(it.hint)}</p>`:''}
+   ${ch?`<div class="opts" id="opts" lang="${AL}">${opts.map((t,i)=>`<button type="button" class="opt" data-i="${i}"><kbd>${i+1}</kbd><span>${esc(t)}</span></button>`).join('')}</div>`
+     :`<div class="row"><input class="ans" id="ans" lang="${AL}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="${TR?(it.sentence?'Type the missing words…':(it.tgt==='de'?'Type it in German…':'Type it in Russian…')):word?'Type the missing form…':'Type the whole phrase…'}" aria-label="Your answer"></div>`}
+   <div class="actions" id="acts">${ch?'':'<button class="btn" type="button" id="check">Check</button>'}<button class="btn ghost" type="button" id="show"><span class="lgl">Show answer</span><span class="sml">Answer</span></button><button class="btn ghost" type="button" id="skip">Skip</button></div>
+   <div id="fb"></div>`;
+  if(ch)$('#opts').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b||answered)return;answer(opts[+b.dataset.i],b)});
+  else{$('#check').onclick=()=>answer($('#ans').value);$('#ans').focus({preventScroll:true})}
+  $('#show').onclick=()=>answer(null);$('#skip').onclick=()=>{pos++;renderCard()}}
+function judge(inp,it){const n=norm(inp);if(!n)return null;const hit=it.answers.find(a=>norm(a)===n);if(hit!==undefined)return {ok:true,hit};
+  if(it.mode==='phrase'){const firstPrep=it.parts[0].x;const strip=a=>norm(a).split(' ').slice(firstPrep.split(' ').length).join(' ');const h2=it.answers.find(a=>strip(a)===n);if(h2!==undefined)return {ok:true,hit:h2,noPrep:true}}
+  const near=it.answers.find(a=>bare(a)===bare(inp));return {ok:false,near}}
+function answer(inp,btn){if(answered)return;const it=cur,gave=inp!=null;let r;if(!gave)r={ok:false,shown:true};else{r=judge(inp,it);if(!r){$('#ans')&&$('#ans').focus();return}}
+  answered=true;record(it,r.ok,gave?inp:'—');
+  const shown=r.ok?r.hit:it.answers[0];const sent=$('#sent');if(sent)sent.innerHTML=esc(it.sentence).replace('___',`<span class="gap ${r.ok?'ok':'bad'}">${esc(shown)}</span>`);
+  if(S.mode==='choose')document.querySelectorAll('.opt').forEach((b,i)=>{b.disabled=true;if(opts[i]===it.answers[0])b.classList.add('ok');else if(b===btn)b.classList.add('bad')});
+  else{const a=$('#ans');a.readOnly=true;a.classList.add(r.ok?'ok':'bad')}
+  const seen=new Set([norm(shown)]);const alts=it.answers.filter(a=>{const n=norm(a);if(seen.has(n))return false;seen.add(n);return true});
+  const m=S.miss[it.key];
+  $('#fb').innerHTML=`<div class="fb ${r.ok?'ok':'bad'}"><div class="verdict">${r.ok?'✓ Correct':r.shown?'Answer shown':r.near?'✗ Almost — check the special letters':'✗ Not quite'} <span class="casechip">${esc(it.cname)}</span></div>
+    <div class="right" lang="${it.tgt||LG}">${esc(shown)}${alts.length?` <span class="alt">· also accepted: ${alts.map(esc).join(', ')}</span>`:''}</div>
+    ${!r.ok&&gave?`<div class="yours">Your answer: <s lang="${LG}">${esc(inp)}</s></div>`:''}
+    ${r.noPrep?`<p class="note">Next time include the preposition as well — it can change form (${esc(shown.split(' ')[0])}).</p>`:''}
+    <ul class="exl">${it.expl.map(x=>'<li>'+x+'</li>').join('')}</ul>
+    ${r.ok&&m?`<p class="note">This was in your mistakes — ${m.ok}/2 correct answers to clear it.</p>`:''}</div>`;
+  $('#acts').innerHTML=`<button class="btn" type="button" id="next">${pos+1>=deck.length?'Finish':'Next →'}</button>`;
+  $('#next').onclick=()=>{pos++;renderCard()};$('#next').focus({preventScroll:true});const f=$('#fb');if(f&&f.scrollIntoView)f.scrollIntoView({block:'nearest',behavior:'smooth'})}
+function bump(o,k,ok){const x=o[k]||(o[k]={r:0,w:0});ok?x.r++:x.w++}
+function record(it,ok,ans){const k=it.key;bump(S.byCase,it.c,ok);bump(S.byType,it.type,ok);
+  if(ok){S.st.r++;roundR++;streak++;if(streak>S.best)S.best=streak;const m=S.miss[k];if(m){m.ok=(m.ok||0)+1;if(m.ok>=2)delete S.miss[k]}}
+  else{S.st.w++;roundW++;streak=0;const m=S.miss[k]||{n:0,ok:0};m.n++;m.ok=0;m.a=String(ans).slice(0,80);m.t=Date.now();S.miss[k]=m}
+  save();renderStats();renderTabs()}
+document.addEventListener('keydown',e=>{if((S.tab!=='practice'&&S.tab!=='tr')||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==='Enter'){if(answered){const n=$('#next');if(n){e.preventDefault();n.click()}}else if(S.mode==='type'&&document.activeElement===$('#ans')){e.preventDefault();answer($('#ans').value)}return}
+  if(!answered&&S.mode==='choose'&&/^[1-4]$/.test(e.key)){const b=document.querySelector(`.opt[data-i="${+e.key-1}"]`);if(b){e.preventDefault();b.click()}}});
+function renderMiss(){const p=$('#p-miss'),ks=Object.keys(S.miss).sort((a,b)=>(S.miss[b].t||0)-(S.miss[a].t||0));
+  p.innerHTML=`<div class="ph"><h2>Mistakes</h2><p>Every phrase you got wrong collects here.</p></div>
+  <p class="howto" style="margin-top:12px"><b>How it works:</b> a review round mixes up to 20 of your mistakes. An item leaves the list once you answer it correctly twice.</p>
+  <div class="sect" style="margin-top:12px"><h3>Review</h3>${ks.length?`<div class="actions"><button class="btn" type="button" id="startrv">Start review (${Math.min(20,ks.length)})</button><button class="btn warn" type="button" id="clr">Clear the list</button></div>`:'<p class="empty">No mistakes yet.</p>'}</div>
+  ${ks.length?`<div class="sect" style="margin-top:12px"><h3>${ks.length} item${ks.length>1?'s':''}</h3><div class="mlist">${ks.map(k=>{const it=ITEM(k),m=S.miss[k];if(!it)return '';return `<div class="mrow"><div class="mm"><span class="mt">${esc(it.cname)} · ${esc(TYN[it.type]||'')}${it.cue?' · '+esc(it.cue):''}</span>${it.tr?`<span class="ms" lang="${it.srcL}">${it.srcHTML}</span>`:''}<span class="ms" lang="${it.tgt||LG}">${it.tr?'→ ':''}${it.sentence?esc(it.sentence).replace('___','<b>'+esc(it.answers[0])+'</b>'):'<b>'+esc(it.answers[0])+'</b>'}</span><span class="my">You wrote: <s lang="${LG}">${esc(m.a||'—')}</s>${m.ok?` · ${m.ok}/2 correct since`:''}</span></div><span class="mx">×${m.n}</span></div>`}).join('')}</div></div>`:''}`;
+  const s=p.querySelector('#startrv');if(s)s.onclick=startReview;
+  const c=p.querySelector('#clr');if(c)c.onclick=()=>{if(!c.dataset.armed){c.dataset.armed='1';c.textContent='Sure? Press again';setTimeout(()=>{if(c.isConnected){delete c.dataset.armed;renderMiss()}},3000);return}S.miss={};save();renderTabs();renderMiss()}}
+function bars(list,src){return list.map(([k,n])=>{const x=src[k]||{r:0,w:0},t=x.r+x.w;return `<tr><td>${esc(n)}</td><td class="n">${t}</td><td style="width:38%"><div class="mbar">${t?`<i class="g" style="width:${x.r/t*100}%"></i><i class="r" style="width:${x.w/t*100}%"></i>`:''}</div></td><td class="n">${t?Math.round(x.r/t*100)+'%':'–'}</td></tr>`}).join('')}
+function renderOver(){$('#p-over').innerHTML=`<div class="ph"><h2>Overview</h2><p>Your accuracy by case and by kind of word. Best streak: ${S.best}.</p></div>
+  <div class="sect" style="margin-top:12px"><h3>By case</h3><table class="ov"><thead><tr><th>Case</th><th>Tried</th><th>Right / wrong</th><th>Acc.</th></tr></thead><tbody>${bars(G.CASES.concat(G.lang==='de'?[]:[]),S.byCase)}</tbody></table></div>
+  <div class="sect" style="margin-top:12px"><h3>By kind</h3><table class="ov"><thead><tr><th>Kind</th><th>Tried</th><th>Right / wrong</th><th>Acc.</th></tr></thead><tbody>${bars(G.TYPES,S.byType)}</tbody></table></div>
+  <div class="sect" style="margin-top:12px"><h3>Translate RU ⇄ DE</h3><table class="ov"><thead><tr><th>Kind</th><th>Tried</th><th>Right / wrong</th><th>Acc.</th></tr></thead><tbody>${bars(GEN_TR.TYPES,S.byType)}</tbody></table></div>`}
+addEventListener('storage',e=>{if(!e.key||!e.key.endsWith(KEY))return;try{const v=JSON.parse(e.newValue||'null');if(v){S=Object.assign(DEF(),v);renderTabs();renderStats();if(S.tab==='miss')renderMiss()}}catch(x){}});
+renderHead();renderSettings();renderStats();
+try{const ss=S.sess;if(ss&&Array.isArray(ss.deck)&&ss.deck.length&&ss.deck.every(k=>ITEM(k))&&(ss.review||(ss.kind||'decl')===kind())){deck=ss.deck;pos=Math.max(0,Math.min(ss.pos|0,deck.length));review=!!ss.review;deckKind=ss.kind||'decl'}}catch(e){}
+showTab(S.tab==='miss'||S.tab==='over'||S.tab==='tr'?S.tab:'practice',true);
+if(!deck.length)newDeck();else renderCard();
+</script>
+<style id="mgate-css">
+.mg-back{position:fixed;inset:0;z-index:2147483000;background:rgba(15,20,18,.5);display:grid;place-items:center;padding:16px}
+.mg-card{width:min(400px,100%);background:#fff;color:#1b2421;border-radius:16px;padding:20px 20px 16px;box-shadow:0 18px 50px rgba(0,0,0,.3);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mg-card h2{margin:0 0 6px;font-size:20px;line-height:1.25;font-weight:700;letter-spacing:0;text-transform:none;color:inherit}
+.mg-card p{margin:0 0 6px;color:#4a5752}
+.mg-n{display:inline-block;min-width:1.8em;text-align:center;font-weight:700;color:#b5442f;background:#f7e5e0;border-radius:999px;padding:0 8px;margin-right:4px}
+.mg-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mg-row button{font:600 15px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;border-radius:12px;min-height:46px;padding:0 16px;cursor:pointer;border:1px solid #cfd8d3;background:#fff;color:#1b2421;flex:1 1 auto}
+.mg-row .mg-go{background:#2b7a5e;border-color:#2b7a5e;color:#fff;flex:2 1 auto}
+.mg-row button:focus-visible{outline:3px solid #2b7a5e;outline-offset:2px}
+.mg-small{font-size:12.5px;color:#6b7873;margin-top:10px}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .mg-card{background:#19211f;color:#e3ebe7}html:not([data-theme=light]) .mg-card p{color:#a9b8b1}html:not([data-theme=light]) .mg-row button{background:#19211f;color:#e3ebe7;border-color:#34413c}html:not([data-theme=light]) .mg-row .mg-go{background:#62c39c;border-color:#62c39c;color:#0f1714}html:not([data-theme=light]) .mg-n{background:#3a221d;color:#e58169}}
+</style>
+<script>
+/* Mistake gate (added): once 20 mistakes are waiting, a pop-up offers to redo them
+   before the next new exercise. "Not now" asks again after 5 more mistakes. */
+(function(A){
+  var LIMIT=20,KEY='mgate-snooze',bypass=false,open=null;
+  function n(){try{return A.count()||0}catch(e){return 0}}
+  function sz(){try{return +localStorage.getItem(KEY)||0}catch(e){return 0}}
+  function setSz(v){try{if(v)localStorage.setItem(KEY,String(v));else localStorage.removeItem(KEY)}catch(e){}}
+  function should(){if(bypass||open)return false;try{if(A.inReview())return false}catch(e){return false}
+    var c=n();if(c<LIMIT){if(sz())setSz(0);return false}var s=sz();return !s||c>=s+5}
+  function close(){if(open){open.remove();open=null}}
+  function pop(btn){var c=n();var d=document.createElement('div');d.className='mg-back';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-labelledby','mg-h');
+    d.innerHTML='<div class="mg-card"><h2 id="mg-h">Time to redo your mistakes</h2><p><span class="mg-n">'+c+'</span>mistakes are waiting for you.</p><p>Redo them now, before new exercises. Each one you get right comes off the list.</p><div class="mg-row"><button type="button" class="mg-go">Redo '+Math.min(LIMIT,c)+' mistakes</button><button type="button" class="mg-later">Not now</button></div><p class="mg-small">“Not now” continues with the new exercise. I’ll ask again after 5 more mistakes.</p></div>';
+    document.body.appendChild(d);open=d;
+    d.querySelector('.mg-go').onclick=function(){close();setSz(0);try{A.start()}catch(e){console.error(e)}};
+    d.querySelector('.mg-later').onclick=function(){close();setSz(c);if(btn&&btn.isConnected){bypass=true;try{btn.click()}finally{bypass=false}}};
+    d.addEventListener('click',function(e){if(e.target===d){close()}});
+    d.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){var b=d.querySelectorAll('button'),f=b[0],l=b[b.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}});
+    setTimeout(function(){var g=d.querySelector('.mg-go');if(g)g.focus({preventScroll:true})},30)}
+  addEventListener('click',function(e){if(bypass||open)return;var b=null;try{b=A.isNext(e.target)}catch(x){}if(!b||!should())return;
+    e.preventDefault();e.stopImmediatePropagation();pop(b)},true);
+  ['pointerdown','touchstart','mousedown'].forEach(function(t){addEventListener(t,function(e){if(open&&!open.contains(e.target)){e.stopImmediatePropagation()}},true)});
+  addEventListener('keydown',function(e){if(open){if(!open.contains(e.target)){e.preventDefault();e.stopImmediatePropagation()}return}
+    if(e.key!=='Enter'||e.shiftKey||e.altKey||e.ctrlKey||e.metaKey||e.isComposing)return;var t=e.target;if(t&&t.tagName==='TEXTAREA')return;
+    var b=null;try{b=A.enterNext(e)}catch(x){}if(!b||!should())return;e.preventDefault();e.stopImmediatePropagation();pop(b)},true);
+  window.__mgate={count:n,should:should,open:function(){pop(null)},start:function(){setSz(0);try{A.start()}catch(e){console.error(e)}}};
+})({
+  count:function(){return Object.keys(S.miss).length},
+  inReview:function(){return review===true||(S.tab!=='practice'&&S.tab!=='tr')},
+  isNext:function(t){var b=t.closest&&t.closest('#next,#skip,#again');return b&&!review?b:null},
+  enterNext:function(){if(review)return null;var b=document.getElementById('next');return b&&b.offsetParent?b:null},
+  start:function(){startReview()}
+});
+</script>
+<script>
+/* Russian prepositions + case: every mistake is also sent to the main Russian "Review & mistakes" tab (added). */
+(function(){if(G.lang!=='ru')return;
+  const strip=s=>String(s||'').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+  function pack(k){const it=ITEM(k),m=S.miss[k];if(!it||!m)return null;
+    const pw=it.parts[0].x.split(' ').length;
+    const ans=[...new Set(it.answers.concat(it.mode==='phrase'?it.answers.map(a=>a.split(' ').slice(pw).join(' ')).filter(Boolean):[]))];
+    const w=it.parts.map(p=>p.x).join(' + ')+(it.num==='pl'?' (мн. ч.)':'');
+    return {key:k,n:m.n,you:m.a||'',rec:{m:'case',w,gloss:'',tags:[TYN[it.type]||''].concat(it.cue?[it.cue]:[]).filter(Boolean),
+      note:(it.expl||[]).map(strip).join(' '),p:{t:it.cname,s:it.tr?(it.src+' → '+(it.sentence||(it.tgt==='de'?'Deutsch':'по-русски'))):it.sentence||(it.mode==='phrase'?'whole phrase, with the preposition':G.insWord),a:ans.join('/')}}}}
+  function send(list){list=list.filter(Boolean);if(!list.length)return;const msg={dp:'xmiss',lang:'ru',list};
+    try{if(parent&&parent!==window)parent.postMessage(msg,'*')}catch(e){}}
+  const rec0=record;record=function(it,ok,ans){rec0(it,ok,ans);if(!ok)send([pack(it.key)])};
+  setTimeout(()=>send(Object.keys(S.miss).map(pack)),400);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1412 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>English C2 Grammar Drill</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: a galley proof on the editor's desk. Settings rail left, the proof sheet right with a numbered margin; corrections appear in blue pencil. Stacks to one column on phones. */
+:root{
+  --paper:#eceef2; --sheet:#fafbfc; --ink:#171a21; --muted:#5b6272; --rule:#d3d8e1; --rule-strong:#b6bdca;
+  --accent:#2a46c2; --accent-ink:#ffffff; --accent-soft:#e2e7f8; --margin-line:#c3cdf0;
+  --ok:#1d7347; --ok-soft:#e1f1e8; --bad:#b0281f; --bad-soft:#f8e4e2;
+  --f-display:"Libre Caslon Display","Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --f-text:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --f-ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1117; --sheet:#151922; --ink:#e7e9ef; --muted:#9aa3b5; --rule:#2a313d; --rule-strong:#3c4554;
+  --accent:#8ea4ff; --accent-ink:#0e1117; --accent-soft:#1d2540; --margin-line:#2d3860;
+  --ok:#63c991; --ok-soft:#13281d; --bad:#ff8f86; --bad-soft:#331a1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1117; --sheet:#151922; --ink:#e7e9ef; --muted:#9aa3b5; --rule:#2a313d; --rule-strong:#3c4554;
+  --accent:#8ea4ff; --accent-ink:#0e1117; --accent-soft:#1d2540; --margin-line:#2d3860;
+  --ok:#63c991; --ok-soft:#13281d; --bad:#ff8f86; --bad-soft:#331a1a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 56px}
+.wrap{max-width:1180px;margin-inline:auto}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 32px;padding-bottom:18px;border-bottom:1px solid var(--rule-strong);margin-bottom:24px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,5vw,3.1rem);line-height:1.02;margin:0;letter-spacing:-.005em;text-wrap:balance}
+.sub{margin:8px 0 0;color:var(--muted);font-family:var(--f-text);font-style:italic}
+.stats{display:flex;gap:6px 26px;flex-wrap:wrap}
+.stat{min-width:64px}
+.stat b{display:block;font-family:var(--f-mono);font-weight:500;font-size:1.45rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.layout{display:grid;grid-template-columns:292px minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:880px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+/* rail */
+.rail{background:var(--sheet);border:1px solid var(--rule);border-radius:4px}
+.rail>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:600}
+.rail>summary::-webkit-details-marker{display:none}
+.rail>summary .sc{font-family:var(--f-mono);font-weight:400;font-size:12px;color:var(--muted)}
+.rail[open]>summary{border-bottom:1px solid var(--rule)}
+.rail-body{padding:12px 14px 14px;display:grid;gap:14px}
+.row-tools{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:flex;border:1px solid var(--rule-strong);border-radius:3px;overflow:hidden}
+.seg label{flex:1;text-align:center;padding:6px 8px;font-size:13px;cursor:pointer}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg input:checked+span{color:var(--accent);font-weight:600}
+.seg label:has(input:checked){background:var(--accent-soft)}
+.seg label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:-2px}
+.units{display:grid}
+.unit{border-top:1px solid var(--rule)}
+.unit:first-child{border-top:0}
+.unit-head{display:flex;align-items:center;gap:8px;padding:6px 0}
+.unit-head label{display:flex;gap:8px;align-items:baseline;flex:1;min-width:0;cursor:pointer}
+.sec{font-family:var(--f-mono);font-size:12px;color:var(--accent);min-width:2.4em}
+.uname{min-width:0}
+.ucount{font-family:var(--f-mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;margin:0;flex:none}
+.exp{border:1px solid var(--rule);background:transparent;border-radius:3px;width:24px;height:24px;line-height:1;cursor:pointer;color:var(--muted);flex:none}
+.exlist{display:grid;gap:2px;padding:0 0 8px 23px}
+.exrow{display:flex;gap:8px;align-items:baseline;font-size:13px;cursor:pointer;padding:2px 0}
+.exid{font-family:var(--f-mono);font-size:11px;color:var(--muted);min-width:2.6em}
+.extitle{flex:1;min-width:0}
+
+/* buttons */
+.btn{border:1px solid var(--rule-strong);background:var(--sheet);border-radius:3px;padding:8px 14px;cursor:pointer;font-size:14px;line-height:1.2}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.small{padding:5px 10px;font-size:13px}
+.btn.block{width:100%}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.45;cursor:default}
+
+/* sheet */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:20px 24px 24px}
+.sheet-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.02em}
+.sheet-head b{color:var(--accent);font-weight:500}
+.bar{height:3px;background:var(--rule);margin:10px 0 18px;border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.ex-title{font-family:var(--f-display);font-weight:400;font-size:1.65rem;line-height:1.15;margin:0 0 4px;text-wrap:balance}
+.ins{margin:0 0 18px;color:var(--muted);max-width:68ch}
+.item{display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 18px}
+.margin{border-right:1px solid var(--margin-line);padding-right:12px;text-align:right;font-family:var(--f-mono);font-size:13px;color:var(--muted);display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-top:6px}
+.mark{font-size:18px;line-height:1;font-family:var(--f-text)}
+.mark.ok{color:var(--ok)} .mark.bad{color:var(--bad)}
+.body{min-width:0}
+.prompt{font-family:var(--f-text);font-size:1.22rem;line-height:2.05;margin:0;overflow-wrap:break-word}
+.prompt.src{line-height:1.6;margin-bottom:12px}
+.ctx{font-family:var(--f-text);font-size:1.05rem;line-height:1.6;margin:0 0 10px;color:var(--muted)}
+.keyrow{margin:0 0 10px}
+.key{display:inline-block;font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;border:1px solid var(--accent);color:var(--accent);padding:2px 9px;border-radius:2px}
+.gap{font-family:var(--f-mono);font-size:.82em;border:0;border-bottom:1.5px solid var(--rule-strong);background:var(--accent-soft);border-radius:2px 2px 0 0;padding:1px 5px;margin:0 2px;max-width:100%}
+.gap:focus{outline:none;border-bottom-color:var(--accent)}
+.g{font-family:var(--f-mono);font-size:.82em;padding:0 3px;margin:0 2px;border-radius:2px}
+.g.ok{color:var(--ok);background:var(--ok-soft)}
+.g.bad s{color:var(--bad);text-decoration-thickness:1.5px}
+.g.bad ins{text-decoration:none;color:var(--accent);font-family:var(--f-text);font-style:italic;font-size:1.15em;margin-left:4px}
+.g.bad ins::before{content:"‸";margin-right:1px;font-style:normal}
+.blank{display:inline-block;min-width:4.5em;border-bottom:1.5px solid var(--rule-strong);margin:0 3px;line-height:1.2}
+.ans{width:100%;font-family:var(--f-text);font-size:1.12rem;line-height:1.5;padding:10px 12px;border:1px solid var(--rule-strong);border-radius:3px;background:var(--paper);resize:vertical;min-height:3.4em}
+.ans:focus{outline:none;border-color:var(--accent)}
+.ans[readonly]{opacity:.8}
+.ans.tall{min-height:13em}
+.opts{display:grid;gap:8px;margin-top:6px}
+.opt{display:flex;gap:12px;align-items:baseline;text-align:left;border:1px solid var(--rule-strong);background:var(--sheet);border-radius:3px;padding:10px 14px;cursor:pointer;font-family:var(--f-text);font-size:1.06rem;line-height:1.45}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .ol{font-family:var(--f-mono);font-size:12px;color:var(--muted);flex:none}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.out{opacity:.4}
+.opt:disabled{cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-left:62px}
+.hint{margin:12px 0 0 62px;font-family:var(--f-mono);font-size:13px;color:var(--accent)}
+.fb{margin:18px 0 0 62px;padding-top:14px;border-top:1px dashed var(--rule-strong);display:grid;gap:8px;max-width:72ch}
+.fb p{margin:0}
+.verdict{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+.lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.answer{font-family:var(--f-text);font-style:italic;font-size:1.12rem;color:var(--accent);line-height:1.5}
+.yours s{color:var(--bad);font-family:var(--f-text);text-decoration-thickness:1.5px}
+.also{font-size:13px;color:var(--muted)}
+.note{color:var(--ink);font-size:14px}
+.hunt-list{margin:0;padding-left:1.4em;display:grid;gap:3px;font-size:14px}
+.hunt-list li.found::marker{color:var(--ok)}
+.hunt-list li.found{color:var(--ok)}
+.hunt-list li.missed{color:var(--bad)}
+.hunt-list li span{color:var(--ink)}
+@media (max-width:560px){
+  .sheet{padding:16px 14px 18px}
+  .item{grid-template-columns:28px minmax(0,1fr);gap:0 10px}
+  .margin{padding-right:8px}
+  .actions,.hint,.fb{padding-left:0;margin-left:0}
+  .prompt{font-size:1.1rem}
+}
+
+/* whole-exercise sheet */
+.ws-list{display:grid;gap:24px}
+.item.ws{padding-bottom:22px;border-bottom:1px dashed var(--rule)}
+.item.ws:last-child{border-bottom:0;padding-bottom:0}
+.item.ws .ifb{margin:12px 0 0;padding-top:10px}
+.opt.chosen{border-color:var(--accent);background:var(--accent-soft)}
+.actions.sticky{position:sticky;bottom:0;z-index:3;background:var(--sheet);margin:24px -24px -24px;padding:12px 24px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--rule);border-radius:0 0 4px 4px;align-items:center}
+.ws-score{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.actions.sticky{margin:20px -14px -18px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}.ws-score{margin-left:0;width:100%}}
+
+/* summary + empty */
+.summary h2{font-family:var(--f-display);font-weight:400;font-size:2rem;margin:4px 0}
+.byunit{border-collapse:collapse;margin:14px 0 4px;font-size:14px;width:100%;max-width:420px}
+.byunit td{padding:5px 8px 5px 0;border-bottom:1px solid var(--rule)}
+.byunit td.n{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);font-family:var(--f-text);font-size:1.1rem}
+
+/* rules + log */
+.rules,.log{margin-top:18px;background:var(--sheet);border:1px solid var(--rule);border-radius:4px}
+.rules>summary{cursor:pointer;padding:12px 16px;font-weight:600}
+.rules>summary .sec{margin-right:6px}
+.rules ul{margin:0;padding:4px 16px 14px 34px;display:grid;gap:6px;max-width:80ch}
+.rules li{font-size:14px}
+.rules i,.note i{font-family:var(--f-text)}
+.rules.flash{border-color:var(--accent)}
+.log{padding:12px 16px 14px}
+.log-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.log h3{margin:0;font-size:15px}
+.log .count{font-family:var(--f-mono);color:var(--muted);font-size:12px;margin-left:6px}
+.loglist{list-style:none;margin:10px 0 0;padding:0;display:grid}
+.loglist li{display:grid;grid-template-columns:4.2em minmax(0,1fr);gap:2px 10px;padding:7px 0;border-top:1px solid var(--rule);font-size:13px}
+.lid{font-family:var(--f-mono);color:var(--accent);grid-row:span 2}
+.lq{color:var(--muted);overflow-wrap:anywhere}
+.la{font-family:var(--f-text);font-style:italic;overflow-wrap:anywhere}
+.log-empty{margin:8px 0 0;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<header class="top wrap">
+  <div>
+    <p class="eyebrow">C1 · C2 · Literary English</p>
+    <h1>English C2 Grammar Drill</h1>
+    <p class="sub">16 units and <span id="totalItems">500</span> items from the workbook, checked as you go.</p>
+  </div>
+  <div class="stats" aria-label="This session">
+    <div class="stat"><b id="stCorrect">0</b><span>Correct</span></div>
+    <div class="stat"><b id="stDone">0</b><span>Answered</span></div>
+    <div class="stat"><b id="stAcc">–</b><span>Accuracy</span></div>
+    <div class="stat"><b id="stStreak">0</b><span>Streak</span></div>
+  </div>
+</header>
+
+<div class="layout wrap">
+  <aside>
+    <details class="rail" id="rail">
+      <summary><span>Units and settings</span><span class="sc" id="selCount"></span></summary>
+      <div class="rail-body">
+        <div class="row-tools">
+          <button class="btn small" id="selAll" type="button">Select all</button>
+          <button class="btn small" id="selNone" type="button">Clear</button>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Layout">
+          <label><input type="radio" name="view" id="viewOne" value="single"><span>One at a time</span></label>
+          <label><input type="radio" name="view" id="viewAll" value="sheet"><span>Whole exercise</span></label>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Order">
+          <label><input type="radio" name="order" id="ordIn" value="order"><span>In order</span></label>
+          <label><input type="radio" name="order" id="ordSh" value="shuffle"><span>Shuffled</span></label>
+        </div>
+        <div class="units" id="unitList"></div>
+        <button class="btn primary block" id="startBtn" type="button">Start drill</button>
+      </div>
+    </details>
+  </aside>
+  <main>
+    <section class="sheet" id="sheet"></section>
+    <details class="rules" id="rules" open><summary></summary><ul></ul></details>
+    <section class="log" id="log"></section>
+  </main>
+</div>
+<script>
+/* ============ DATA ============ */
+const G=(q,a,n,x)=>Object.assign({t:`gap`,q,a,n},x||{});
+const M=(q,o,a,n)=>({t:`mc`,q,o,a,n});
+const T=(q,a,n,k)=>({t:`tr`,q,a,n,k});
+const E=(q,a,n,strict)=>({t:`err`,q,a,n,strict:!!strict});
+const O=(q,m,n)=>({t:`open`,q,m,n});
+
+const UNITS=[
+/* ---------- 1 ---------- */
+{n:1,title:`Articles`,rules:[
+`Uncountable and plural nouns used in a general sense take no article: <i>Life is short. Unemployment rose.</i>`,
+`<i>The</i> + singular noun can mean a whole species or type: <i>The tiger is endangered.</i>`,
+`Institutions used for their purpose take no article in British English: <i>in hospital, to prison, at church</i>.`,
+`Unique roles after <i>elect, appoint, become, make</i> take no article: <i>elected chairman</i>.`,
+`<i>The</i> + adjective names a group: <i>the rich, the poor</i>.`,
+`Rivers, plural countries, decades and regions take <i>the</i>; single mountains and most countries do not.`],
+ex:[
+{id:`1.1`,title:`a, an, the or Ø`,zero:true,ins:`Fill each gap with a, an, the or Ø. For the zero article, type Ø or a dash, or leave the gap empty.`,items:[
+G(`__ life is too short to drink __ bad wine.`,[`Ø`,`Ø`],`Both nouns are uncountable and used in a general sense.`),
+G(`She was taken to __ hospital (British English) after __ accident on __ M25.`,[`Ø`,`an`,`the`],`British English treats "hospital" as an institution. Motorway names take "the".`),
+G(`__ Industrial Revolution transformed __ society of __ North of England.`,[`the`,`the`,`the`],`Named historical periods take "the"; the of-phrase specifies "society"; regions such as the North take "the".`),
+G(`He has __ remarkable knowledge of __ Byzantine history.`,[`a`,`Ø`],`"Knowledge" is uncountable but takes "a" when an adjective describes a particular kind of it. Fields of study take no article.`),
+G(`__ tiger is now in danger of extinction across much of its range.`,[`the`],`"The" + singular noun refers to the whole species.`),
+G(`She plays __ cello in __ orchestra her father founded.`,[`the`,`the`],`Instruments take "the" after "play". The relative clause identifies the orchestra.`),
+G(`We had __ lunch with __ Smiths, __ couple we met in __ Peru.`,[`Ø`,`the`,`a`,`Ø`],`Meals take no article; a family name in the plural takes "the"; the description after the comma takes "a".`),
+G(`__ unemployment rose sharply during __ 1930s.`,[`Ø`,`the`],`General uncountable noun: no article. Decades take "the".`),
+G(`What __ extraordinary thing to say!`,[`an`],`"What a/an" + singular countable noun in exclamations.`),
+G(`He was elected __ chairman of __ committee in 2019.`,[`Ø`,`the`],`Unique roles after elect, appoint or become take no article.`),
+G(`It was __ love at first sight.`,[`Ø`],`Abstract noun used generally.`),
+G(`__ rich are getting richer while __ poor are getting poorer.`,[`the`,`the`],`"The" + adjective refers to a group of people.`),
+G(`__ honesty she showed at the inquiry surprised everyone.`,[`the`],`An abstract noun takes "the" when a relative clause specifies it.`),
+G(`I go to __ church every Sunday, but last week I visited __ church in Bath to see its famous windows.`,[`Ø`,`a`],`"Go to church" means attending worship; "a church" is one building, mentioned for the first time.`),
+G(`In mathematics, he is __ Einstein of our department.`,[`the|an`],`A famous name used as a type: "the Einstein of…" or "an Einstein".`)]},
+{id:`1.2`,title:`Error correction`,ins:`Each sentence has one article error: a missing, extra or wrong article. Edit the sentence.`,items:[
+E(`The nature has a way of reclaiming abandoned towns.`,[`Nature has a way of reclaiming abandoned towns.`],`"Nature" in the general sense takes no article.`),
+E(`She is best pianist I have ever heard.`,[`She is the best pianist I have ever heard.`,`She's the best pianist I've ever heard.`],`Superlatives take "the".`),
+E(`He works as engineer for a firm in Sofia.`,[`He works as an engineer for a firm in Sofia.`],`A job after "as" takes a/an.`),
+E(`The Mount Everest was first climbed in 1953.`,[`Mount Everest was first climbed in 1953.`],`Single mountains take no article.`),
+E(`I've always wanted to visit the Netherlands and Philippines.`,[`{I've|I have} always wanted to visit the Netherlands and the Philippines.`],`Plural country names take "the".`),
+E(`What a terrible weather we're having!`,[`What terrible weather {we're|we are} having!`],`"Weather" is uncountable, so there is no "a".`),
+E(`She has an excellent command of the English.`,[`She has an excellent command of English.`,`She has an excellent command of the English language.`],`Languages take no article; "the English" means the people.`),
+E(`The most people agree that the plan is flawed.`,[`Most people agree that the plan is flawed.`],`"Most" meaning "the majority" takes no article.`),
+E(`He was sent to the prison for five years.`,[`He was sent to prison for five years.`],`Prison as an institution: no article.`),
+E(`A Thames flows through Oxford.`,[`The Thames flows through Oxford.`],`Rivers take "the".`),
+E(`They arrived by the train, exhausted.`,[`They arrived by train(,) exhausted.`],`"By" + means of transport takes no article.`),
+E(`It was such a lovely day that we had the picnic by the lake.`,[`It was such a lovely day that we had a picnic by the lake.`],`The picnic is mentioned for the first time.`)]},
+{id:`1.3`,title:`Literary text completion`,zero:true,ins:`Complete the passage with a, an, the or Ø.`,items:[
+G(`In __ autumn of 1847, __ young governess arrived at __ house on the edge of __ moor. __ house was older than __ village itself, and __ silence of its corridors seemed to belong to __ another century. She had __ feeling that she was being watched, though by whom she could not say. __ curiosity, she would later reflect, is __ most dangerous of __ virtues.`,
+[`the`,`a`,`a`,`the|a`,`the`,`the`,`the`,`Ø`,`a|the`,`Ø`,`the`,`the|Ø`],`"Autumn of 1847" is specified; the governess and house are new; the house is then known. "Another" already contains "an". Curiosity in general takes no article.`)]}]},
+
+/* ---------- 2 ---------- */
+{n:2,title:`Tense and aspect`,rules:[
+`The present perfect links the past to now; the past simple places an event in finished time.`,
+`Progressive + <i>always</i> expresses irritation: <i>She's always leaving her keys.</i>`,
+`The past progressive softens a request: <i>I was wondering if…</i>`,
+`A stative verb in the progressive describes temporary behaviour: <i>He's being generous.</i>`,
+`Future in the past: <i>was to, was going to, was about to, would</i>. <i>Was to have done</i> = planned but did not happen.`,
+`Time clauses take a present form, not <i>will</i>: <i>When I have finished…</i>`],
+ex:[
+{id:`2.1`,title:`Choose the better form`,ins:`Choose the form that fits best.`,items:[
+M(`I __ in Plovdiv for ten years before I moved to London.`,[`have lived`,`had lived`],1,`The past perfect covers a period leading up to a past moment.`),
+M(`Look at the state of the kitchen! Who __?`,[`cooked`,`has been cooking`],1,`The present perfect continuous explains visible results of an activity.`),
+M(`She __ her keys in the door. It drives me mad.`,[`always leaves`,`is always leaving`],1,`Progressive + always expresses irritation.`),
+M(`I __ whether you might be free on Friday.`,[`wondered`,`was wondering`],1,`The past progressive makes the request more tentative and polite.`),
+M(`This is the third time you __ me that today.`,[`asked`,`have asked`],1,`"This is the first/second/third time" takes the present perfect.`),
+M(`By the time the ambulance arrived, he __ breathing.`,[`stopped`,`had stopped`],1,`The stopping happened before the arrival.`),
+M(`The meeting __ place on Monday, but it was cancelled.`,[`was to have taken`,`was taking`],0,`"Was to have + past participle" describes a plan that did not happen.`),
+M(`He __ unusually generous this week. I wonder what he wants.`,[`is`,`is being`],1,`"Be" in the progressive describes temporary behaviour.`),
+M(`Shakespeare __ some of the finest sonnets in English.`,[`has written`,`wrote`],1,`The author is dead, so the period is finished.`),
+M(`I __ of moving to Lisbon.`,[`think`,`am thinking`],1,`"Think of/about" meaning "consider" is dynamic.`),
+M(`Little did she know that she __ never see him again.`,[`will`,`would`],1,`Future in the past.`),
+M(`When I __ the report, I'll send it to you.`,[`have finished`,`will have finished`],0,`Time clauses do not take "will".`),
+M(`This time next year, we __ in Canada.`,[`will live`,`will be living`],1,`The future progressive describes a situation in progress at a future time.`),
+M(`By 2030, the company __ for a century.`,[`will operate`,`will have been operating`],1,`Duration up to a future point: future perfect continuous.`),
+M(`She told me she __ working there since 2015.`,[`has been`,`had been`],1,`Normal backshift. "Has been" is possible if she still works there.`)]},
+{id:`2.2`,title:`Transformation`,ins:`Rewrite the sentence using the word in capitals. Keep the meaning.`,items:[
+T(`He became prime minister ten years later, though nobody knew it then.`,[`He was to become prime minister ten years later(, though nobody knew it then).`],`"Was to" + infinitive: destiny seen from the past.`,`WAS`),
+T(`I planned to call you, but I forgot.`,[`I was going to call you(,) but I forgot.`],`"Was going to" for a past plan that did not happen.`,`GOING`),
+T(`We were on the point of leaving when the phone rang.`,[`We were about to leave when the phone rang.`],`"Be about to" = on the point of.`,`ABOUT`),
+T(`She intended to finish the novel, but she died before she could.`,[`She was to have finished the novel(,) but she died before she could.`],`"Was to have done" = planned, but it did not happen.`,`TO HAVE`),
+T(`It's a long time since I last saw her.`,[`{I haven't|I have not} seen her for a long time.`,`{I haven't|I have not} seen her for ages.`],`Present perfect + for.`,`FOR`),
+T(`He started learning Chinese three years ago and he's still learning it.`,[`{He's|He has} been learning Chinese for( the past| the last) three years.`],`Present perfect continuous for an activity still going on.`,`BEEN`),
+T(`This is my first visit to Japan.`,[`{I've|I have} never {been to|visited} Japan( before).`],`"This is my first…" = I have never… before.`,`NEVER`),
+T(`The train's departure time is 6.15 tomorrow.`,[`The train leaves at 6.15 tomorrow.`,`Tomorrow the train leaves at 6.15.`],`The present simple is used for timetables.`,`LEAVES`),
+T(`He came to regret his decision later in life.`,[`He would {later regret his decision|regret his decision later}( in life).`,`Later in life he would regret his decision.`],`"Would" as future in the past.`,`WOULD`),
+T(`Don't phone at eight. We'll be in the middle of dinner.`,[`Don't phone at eight. {We'll|We will} be having dinner( then).`,`{We'll|We will} be having dinner at eight.`],`The future progressive describes an action in progress at a future time.`,`HAVING`)]},
+{id:`2.3`,title:`Explain the difference`,ins:`Explain the difference in meaning or attitude. Then reveal the model answer and mark yourself.`,items:[
+O(`I've lived in Rome. / I lived in Rome.`,`"I've lived" presents the experience as relevant now. "I lived" places it in a finished period, such as my student years.`),
+O(`She's been reading my novel. / She's read my novel.`,`"Has been reading" stresses the activity, which may be unfinished. "Has read" means she has finished it.`),
+O(`He's always complaining. / He always complains.`,`"Is always complaining" expresses irritation or exaggeration. "Always complains" states a neutral habit.`),
+O(`I hoped you'd come. / I was hoping you'd come.`,`"Was hoping" is softer and often hints at disappointment. "Hoped" is a plain past fact.`),
+O(`I'll see him tomorrow. / I'll be seeing him tomorrow.`,`"Will see" sounds like a decision or promise. "Will be seeing" means it will happen in the normal course of events, with no intention implied.`),
+O(`When I arrived, she left. / When I arrived, she had left. / When I arrived, she was leaving.`,`"Left": she left after or as I arrived. "Had left": she was already gone. "Was leaving": she was in the middle of going.`),
+O(`You're being silly. / You're silly.`,`"Are being" describes behaviour right now. "Are" describes character.`)]}]},
+
+/* ---------- 3 ---------- */
+{n:3,title:`Modals`,rules:[
+`<i>must have done</i> = I'm sure it happened; <i>can't / couldn't have done</i> = I'm sure it didn't.`,
+`<i>may / might / could have done</i> = perhaps it happened.`,
+`<i>should have done</i> = it was the right thing, but it didn't happen.`,
+`<i>needn't have done</i> = you did it, but it was unnecessary. <i>didn't need to do</i> = it wasn't necessary, and usually you didn't.`,
+`Hedges make academic claims measured: <i>would appear to, may well, could conceivably, is likely to, it could be argued that</i>.`,
+`Modal <i>need</i> works like <i>must</i> in questions and negatives: <i>Need I remind you? You needn't worry.</i>`],
+ex:[
+{id:`3.1`,title:`Past and present deduction`,ins:`Complete with a modal and the correct form of the verb in brackets.`,items:[
+G(`The streets are wet. It __ (rain) in the night.`,[`must have rained`],`Certain deduction about the past.`),
+G(`She __ (see) me. She walked right past without a word.`,[`can't have seen|couldn't have seen|cannot have seen|could not have seen|can not have seen`],`Negative certainty about the past.`),
+G(`You __ (buy) so much food. We already had plenty in the fridge.`,[`needn't have bought|need not have bought`],`You did buy it, and it was unnecessary. "Didn't need to buy" is common in speech, but this exercise targets the contrast.`),
+G(`I __ (take) a taxi, because Tom offered to drive me.`,[`didn't need to take|did not need to take|didn't have to take|did not have to take`],`It wasn't necessary, so I didn't take one.`),
+G(`He __ (tell) us he'd be late! We waited for an hour.`,[`should have told|might have told|could have told|ought to have told`],`Reproach about the past.`),
+G(`I'm not sure where my phone is. I __ (leave) it on the bus.`,[`may have left|might have left|could have left`],`Possibility in the past.`),
+G(`They __ (arrive) yet. Their flight only took off an hour ago.`,[`can't have arrived|couldn't have arrived|cannot have arrived|could not have arrived`],`Negative certainty.`),
+G(`You __ (be) killed! What were you thinking?`,[`could have been killed|might have been killed`],`Past possibility that did not happen.`),
+G(`She __ (work) late again. The office lights are still on.`,[`must be working`],`A deduction about the present takes a present form.`),
+G(`Strange that Ana isn't here. She __ (forget) about the meeting.`,[`must have forgotten|may have forgotten|might have forgotten|could have forgotten`],`Deduction or possibility about the past.`)]},
+{id:`3.2`,title:`Academic hedging`,ins:`Rewrite the claim more cautiously using the word in capitals. Many answers are possible; use Stet if yours is correct but not listed.`,items:[
+T(`This proves that bilingualism delays dementia.`,[`This {suggests|would appear to suggest|appears to suggest|seems to suggest|would seem to suggest|may suggest|might suggest} that bilingualism {may|might|could|can|may help to|may help} delay dementia.`,`This {suggests|would appear to suggest|appears to suggest|seems to suggest|would seem to suggest|may suggest|might suggest} that bilingualism delays dementia.`],`Replace "proves" with a hedged verb, and soften the claim itself.`,`SUGGEST`),
+T(`The author is wrong.`,[`It {could|might|can|may} be argued that the author is {wrong|mistaken}.`],`An impersonal passive distances the writer from the claim.`,`ARGUED`),
+T(`The results are caused by sampling error.`,[`The results {may|might|could} (well )be attributable to sampling error.`,`The results {are|could be|may be} (partly )attributable to sampling error.`],`"Attributable to" = caused by.`,`ATTRIBUTABLE`),
+T(`Inflation will rise next year.`,[`Inflation is (very |highly |quite )likely to rise next year.`,`It is likely that inflation will rise next year.`],`"Likely to" turns a prediction into a probability.`,`LIKELY`),
+T(`Every critic agrees that this is his best novel.`,[`This is widely {regarded as|considered|considered to be|seen as|thought of as|acknowledged as|agreed to be|held to be|believed to be} his best novel.`,`It is widely {agreed|accepted|held|believed|thought} that this is his best novel.`],`"Widely regarded as" replaces an absolute claim about every critic.`,`WIDELY`),
+T(`The data are unreliable.`,[`The data {would appear|appear|would seem} to be unreliable.`,`It {would appear|appears|would seem} that the data are unreliable.`],`"Would appear to" is a classic academic hedge.`,`APPEAR`),
+T(`This is the reason for the decline.`,[`This {could|might|may} conceivably {account for|explain|be the reason for} the decline.`],`"Conceivably" marks a possibility, not a certainty.`,`CONCEIVABLY`),
+T(`Readers will find the ending unsatisfying.`,[`Readers {may|might|could} well find the ending unsatisfying.`],`"May well" = it is quite possible that.`,`WELL`)]},
+{id:`3.3`,title:`Obligation and necessity`,ins:`Use: mustn't, don't have to, had better, were supposed to, shouldn't, ought, need, needn't.`,items:[
+G(`You __ tell anyone. It's a secret.`,[`mustn't|must not`],`Prohibition.`),
+G(`You __ come if you don't want to.`,[`don't have to|needn't|do not have to|need not`],`No obligation.`),
+G(`We __ leave now, or we'll miss the last train.`,[`had better|'d better`],`Strong advice with a warning.`),
+G(`You __ be here at eight. Why are you so late?`,[`were supposed to`],`An arrangement or expectation that was not met.`),
+G(`You __ have told her; now she's upset.`,[`shouldn't|should not`],`Criticism of a past action.`),
+G(`He __ to have apologised, but pride stopped him.`,[`ought`],`"Ought to have done" = criticism of a past failure.`),
+G(`__ I remind you that this is a library?`,[`need`],`Formal modal "need" in a question, with no "do" and no "to".`),
+G(`You __ have washed up. We have a dishwasher!`,[`needn't|need not`],`You did it, but it was unnecessary.`)]}]},
+
+/* ---------- 4 ---------- */
+{n:4,title:`Conditionals`,rules:[
+`Past cause, present result: <i>If I had studied medicine, I would be a doctor now.</i>`,
+`Present state, past result: <i>If she weren't so stubborn, she would have accepted.</i>`,
+`Formal inversion drops <i>if</i>: <i>Had I known… / Should you need… / Were he to resign…</i>`,
+`Negative inversions never contract: <i>Had it not been for…</i>, not <i>Hadn't it been…</i>`,
+`<i>But for / without</i> + noun; <i>provided (that), as long as, on condition that</i>; <i>unless</i> = if not; <i>otherwise / or else</i> = if not.`],
+ex:[
+{id:`4.1`,title:`Mixed conditionals`,ins:`Complete with the correct form of the verb in brackets.`,items:[
+G(`If I had studied medicine, I __ (be) a doctor now.`,[`would be|'d be`],`Past condition, present result.`),
+G(`If she weren't so stubborn, she __ (accept) their offer last year.`,[`would have accepted|'d have accepted`],`Present state, past result.`),
+G(`If he had saved more when he was young, he __ (not / struggle) now.`,[`wouldn't be struggling|would not be struggling`],`Past condition, present result.`),
+G(`If I spoke Mandarin, I __ (get) the job in Shanghai last spring.`,[`would have got|would have gotten|'d have got|'d have gotten|could have got|could have gotten`],`Present state, past result.`),
+G(`If they hadn't built the motorway, this village __ (still / be) quiet.`,[`would still be|'d still be`],`Past condition, present result.`),
+G(`If you weren't afraid of flying, we __ (go) to Australia last summer.`,[`would have gone|could have gone|'d have gone`],`Present state, past result.`),
+G(`If the letter had been posted on Monday, it __ (arrive) by now.`,[`would have arrived|'d have arrived`],`"By now" looks back from the present: would have arrived.`),
+G(`If I were you, I __ (not / sign) that contract yesterday.`,[`wouldn't have signed|would not have signed`],`"If I were you" + past result.`)]},
+{id:`4.2`,title:`Inverted conditionals`,ins:`Rewrite the sentence starting with the word in capitals.`,items:[
+T(`If I had known about the problem, I would have helped.`,[`Had I known about the problem, {I would|I'd} have helped.`],``,`HAD`),
+T(`If you need any help, call me.`,[`Should you need any help, (please )call me.`],`"Should" + subject for an unlikely or polite condition.`,`SHOULD`),
+T(`If the government raised taxes, there would be protests.`,[`Were the government to raise taxes, there would be protests.`],`"Were + subject + to-infinitive" for a hypothetical future.`,`WERE`),
+T(`If it hadn't been for her support, I would have given up.`,[`Had it not been for her support, {I would|I'd} have given up.`],`No contraction: "Had it not been".`,`HAD`),
+T(`If it weren't for the rain, we could eat outside.`,[`Were it not for the rain, we could eat outside.`],`"Were it not for" = if it weren't for.`,`WERE`),
+T(`If he had not intervened, the deal would have collapsed.`,[`Had he not intervened, the deal would have collapsed.`],``,`HAD`),
+T(`If you happen to see Maria, give her my regards.`,[`Should you (happen to )see Maria, give her my regards.`],``,`SHOULD`),
+T(`If the proposal were accepted, it would change everything.`,[`Were the proposal (to be )accepted, it would change everything.`],``,`WERE`)]},
+{id:`4.3`,title:`Alternatives to "if"`,ins:`Use: but for, or else, provided that, supposing, in case, unless, otherwise, without, on condition that. The last item is a rewrite.`,items:[
+G(`__ your advice, I would have made a terrible mistake.`,[`but for|without`],`"But for / without" + noun = if it hadn't been for.`),
+G(`Hurry up, __ we'll be late.`,[`or else|otherwise|or`],`= if you don't hurry up.`),
+G(`You can borrow the car __ you bring it back by six.`,[`provided that|provided|as long as|so long as|on condition that|providing|providing that`],`A condition that must be met.`),
+G(`__ you won the lottery, what would you do first?`,[`supposing|suppose|imagine`],`"Supposing" introduces a hypothetical.`),
+G(`Take an umbrella __ it rains.`,[`in case`],`"In case" = as a precaution, not "if".`),
+G(`I won't go __ you come with me.`,[`unless`],`"Unless" = if not.`),
+G(`I locked the door; __, the cat would have got out.`,[`otherwise`],`= if I hadn't locked it.`),
+G(`__ water, no life would exist on Earth.`,[`without|but for`],`"Without" + noun as a condition.`),
+G(`He agreed to testify __ his name was kept secret.`,[`on condition that|provided that|provided|as long as|providing|so long as`],`A strict condition.`),
+T(`A wiser man would have stayed silent.`,[`If he had been {wiser|a wiser man}, he would have stayed silent.`,`If he had been wiser, he'd have stayed silent.`],`The subject phrase "a wiser man" hides the condition.`,`IF`)]}]},
+
+/* ---------- 5 ---------- */
+{n:5,title:`Subjunctive`,rules:[
+`After <i>insist, demand, suggest, recommend, it is essential / vital that</i>, use the bare infinitive for every person: <i>that he be, that she not tell</i>.`,
+`British English also uses <i>should</i> + infinitive: <i>that he should see a specialist</i>.`,
+`<i>wish / if only</i> + past = present wish; + past perfect = past regret; + <i>would</i> = annoying behaviour.`,
+`<i>It's (high) time</i> + past; <i>would rather</i> + someone + past.`,
+`Fixed formulas: <i>be that as it may, come what may, suffice it to say, far be it from me, so be it</i>.`],
+ex:[
+{id:`5.1`,title:`Mandative subjunctive`,ins:`Complete with the correct form of the verb in brackets.`,items:[
+G(`The committee recommended that the proposal __ (be) rejected.`,[`be|should be`],``),
+G(`It is vital that every passenger __ (carry) photo ID.`,[`carry|should carry`],`No -s: the subjunctive is the bare infinitive.`),
+G(`She insisted that he __ (not / tell) anyone.`,[`not tell|should not tell|shouldn't tell`],`The negative is "not" + bare infinitive, never "didn't tell".`),
+G(`The judge ordered that the defendant __ (remain) in custody.`,[`remain|should remain`],``),
+G(`It is essential that the report __ (submit) by Friday.`,[`be submitted|should be submitted`],`Passive subjunctive: be + past participle.`),
+G(`They demanded that the minister __ (resign) at once.`,[`resign|should resign`],``),
+G(`I suggest that he __ (see) a specialist.`,[`see|should see`],``),
+G(`It was imperative that nobody __ (leave) the building.`,[`leave|should leave`],`The subjunctive does not backshift.`),
+G(`The doctor advised that she __ (avoid) caffeine.`,[`avoid|should avoid`],``),
+G(`The rules require that each member __ (pay) dues annually.`,[`pay|should pay`],``)]},
+{id:`5.2`,title:`wish, if only, it's time, would rather, as if`,ins:`Complete with the correct form of the verb in brackets.`,items:[
+G(`I wish I __ (know) the answer. Then I could help you.`,[`knew`],`Present wish: past simple.`),
+G(`If only you __ (listen) to me last week!`,[`had listened`],`Past regret: past perfect.`),
+G(`I wish you __ (stop) interrupting me.`,[`would stop|'d stop`],`Annoying behaviour: would.`),
+G(`It's high time the government __ (do) something about housing.`,[`did`],`It's (high) time + past.`),
+G(`I'd rather you __ (not / smoke) in here.`,[`didn't smoke|did not smoke`],`Would rather + someone + past.`),
+G(`He talks as if he __ (own) the place.`,[`owned|owns`],`Unreal: owned. "Owns" is possible if it might be true.`),
+G(`She looked as though she __ (see) a ghost.`,[`had seen`],`Earlier, unreal event.`),
+G(`I'd rather you __ (tell) me yesterday than now.`,[`had told`],`Past: past perfect.`),
+G(`Suppose you __ (lose) your job tomorrow. What would you do?`,[`lost|were to lose`],`Hypothetical future after suppose.`),
+G(`I wish I __ (can) come to your wedding, but I'll be abroad.`,[`could`],`Wish + could.`),
+G(`If only I __ (not / say) that!`,[`hadn't said|had not said`],`Past regret.`),
+G(`It's about time you __ (start) taking your studies seriously.`,[`started`],`It's about time + past.`)]},
+{id:`5.3`,title:`Fixed subjunctive formulas`,ins:`Complete each formula with one word.`,items:[
+G(`Be that __ it may, we must proceed.`,[`as`],`= however that may be.`),
+G(`Come __ may, I will stand by you.`,[`what`],`= whatever happens.`),
+G(`Suffice it __ say that the evening was a disaster.`,[`to`],``),
+G(`Heaven __ that anything should happen to her!`,[`forbid`],``),
+G(`Long __ the King!`,[`live`],``),
+G(`Far __ it from me to criticise, but…`,[`be`],`Ironic: the speaker is about to criticise.`),
+G(`If need __, we can postpone the launch.`,[`be`],`= if necessary.`),
+G(`__ it known that the council has resolved…`,[`be`],`Formal proclamation.`),
+G(`Truth __ told, I never liked him.`,[`be`],`= to tell the truth.`),
+G(`So __ it. If that is your decision, I accept it.`,[`be`],``),
+G(`Woe __ anyone who forgets her birthday.`,[`betide`],`Humorous threat.`),
+G(`God __ his soul. He was a good man.`,[`rest`],``)]}]},
+
+/* ---------- 6 ---------- */
+{n:6,title:`Reported speech`,rules:[
+`Each reporting verb has its own pattern: <i>accuse sb of -ing, blame sb for -ing, warn sb (not) to, deny -ing, apologise for -ing, congratulate sb on -ing</i>.`,
+`<i>suggest</i> takes <i>-ing</i> or <i>that sb (should) do</i>, never <i>sb to do</i>.`,
+`Backshift is optional when the statement is still true or still in the future.`,
+`<i>should, could, would, might, ought to</i>, unreal forms and the past perfect do not change.`,
+`Reported questions use statement word order: <i>She asked where the station was.</i>`,
+`Passive reporting: <i>He is said to be… / is believed to have been…</i>`],
+ex:[
+{id:`6.1`,title:`Reporting verbs`,ins:`Report the sentence using the verb in capitals.`,items:[
+T(`"You stole the money!" she said to him.`,[`She accused him of {stealing|having stolen} the money.`],`accuse sb of -ing`,`ACCUSE`),
+T(`"I'll definitely pay you back," he said to me.`,[`He promised to pay me back.`,`He promised (me )(that )he would (definitely )pay me back.`,`He promised to definitely pay me back.`],`promise to do`,`PROMISE`),
+T(`"Don't touch the wires," the electrician told us.`,[`The electrician warned us not to touch the wires.`],`warn sb not to do`,`WARN`),
+T(`"Why don't we go to the coast?" said Ana.`,[`Ana suggested {going|that we (should )go} to the coast.`],`suggest -ing / that sb (should) do`,`SUGGEST`),
+T(`"Yes, I made a mistake," the minister said.`,[`The minister admitted {making|having made|that he had made|that she had made|that he made|that she made} a mistake.`],`admit -ing / that…`,`ADMIT`),
+T(`"It was Peter who broke it, not me," said the boy.`,[`The boy blamed Peter for {breaking|having broken} it.`,`The boy blamed it on Peter.`],`blame sb for -ing / blame sth on sb`,`BLAME`),
+T(`"Please, please stay for dinner," she said to us.`,[`She begged us to stay for dinner.`],`beg sb to do`,`BEG`),
+T(`"I'm sorry I was rude," he said.`,[`He apologi{s|z}ed for {being|having been} rude.`],`apologise for -ing`,`APOLOGISE`),
+T(`"You really must try the soup," the waiter said to us.`,[`The waiter insisted {that we (should )try|on our trying|on us trying|on our tasting} the soup.`],`insist that sb do / insist on -ing`,`INSIST`),
+T(`"Well done on passing your exams!" Grandma said to me.`,[`Grandma congratulated me on {passing|having passed} my exams.`],`congratulate sb on -ing`,`CONGRATULATE`),
+T(`"I didn't read your diary," she said to me.`,[`She denied {reading|having read} my diary.`,`She denied that she had read my diary.`],`deny -ing`,`DENY`),
+T(`"All right, your argument has some merit," he said to me.`,[`He conceded that my argument {had|has} some merit.`],`concede that…`,`CONCEDE`),
+T(`"Let me carry your bag," he said to me.`,[`He offered to carry my bag.`],`offer to do`,`OFFER`),
+T(`"I won't sign it," she said.`,[`She refused to sign it.`],`refuse to do`,`REFUSE`)]},
+{id:`6.2`,title:`To backshift or not?`,ins:`Decide whether backshift is obligatory, optional or not possible. The last three: report the question.`,items:[
+M(`"The Earth goes round the Sun," said the teacher.`,[`Obligatory`,`Optional`,`Not possible`],1,`Still true, so either: "The teacher said the Earth goes (went) round the Sun."`),
+M(`"I'm leaving tomorrow," he said last month.`,[`Obligatory`,`Optional`,`Not possible`],0,`The plan is in the past, and the time word changes: "He said he was leaving the next day."`),
+M(`"I'm leaving tomorrow," he said an hour ago.`,[`Obligatory`,`Optional`,`Not possible`],1,`It is still in the future: "He said he's (was) leaving tomorrow."`),
+M(`"You should see a doctor," she told me.`,[`Obligatory`,`Optional`,`Not possible`],2,`"Should" does not change: "She told me I should see a doctor."`),
+M(`"If I were rich, I'd travel," he said.`,[`Obligatory`,`Optional`,`Not possible`],2,`Unreal forms stay: "He said that if he were rich, he'd travel."`),
+M(`"I had already eaten," she said.`,[`Obligatory`,`Optional`,`Not possible`],2,`The past perfect stays: "She said she had already eaten."`),
+M(`"I may be late," said Tom.`,[`Obligatory`,`Optional`,`Not possible`],1,`"Tom said he might (may) be late."`),
+T(`"Where is the station?" she asked.`,[`She asked where the station {was|is}.`],`Statement word order: not "where was the station".`),
+T(`"Have you ever been to Sofia?" he asked me.`,[`He asked me {if|whether} {I had|I'd} ever been to Sofia.`],`if/whether + statement order.`),
+T(`"Must I really go?" she asked.`,[`She asked {if|whether} she really had to go.`,`She asked {if|whether} she had to go.`],`"Must" usually becomes "had to".`)]},
+{id:`6.3`,title:`Passive reporting`,ins:`Rewrite starting with the subject of the reported clause, e.g. "He is said to…".`,items:[
+T(`People say that he is the richest man in the country.`,[`He is said to be the richest man in the country.`],`is said to + infinitive`),
+T(`People believe that the painting was stolen in 1990.`,[`The painting is believed to have been stolen in 1990.`],`Earlier event: to have been + past participle.`),
+T(`It is thought that the minister is considering resignation.`,[`The minister is thought to be considering {resignation|resigning}.`],`Ongoing action: to be + -ing.`),
+T(`Reports say that three people were injured.`,[`Three people are reported to have been injured.`,`Three people were reported to have been injured.`],``),
+T(`Experts expect that prices will fall.`,[`Prices are expected to fall.`],`Future: to + infinitive.`),
+T(`It was alleged that he had accepted bribes.`,[`He was alleged to have accepted bribes.`],``),
+T(`They say the castle is haunted.`,[`The castle is said to be haunted.`],``),
+T(`It is understood that the two sides are still talking.`,[`The two sides are understood to {be still|still be} talking.`],``)]}]},
+
+/* ---------- 7 ---------- */
+{n:7,title:`Inversion`,rules:[
+`After a fronted negative or restrictive adverbial, use question word order: <i>Never had I seen… / Only then did we…</i>`,
+`<i>Hardly / Scarcely … when</i>; <i>No sooner … than</i>.`,
+`<i>So</i> + adjective + verb + subject + <i>that</i>; <i>Such</i> + <i>be</i> + noun + <i>that</i>.`,
+`After a place adverbial, an intransitive verb and a noun subject swap: <i>Into the room strode a stranger.</i>`,
+`Pronoun subjects do not invert after place adverbials: <i>Here he comes. Away he ran.</i>`],
+ex:[
+{id:`7.1`,title:`Negative and restrictive adverbials`,ins:`Rewrite starting with the words in capitals.`,items:[
+T(`I had never seen such a beautiful sunset.`,[`Never had I seen such a beautiful sunset.`,`Never before had I seen such a beautiful sunset.`],``,`NEVER`),
+T(`She didn't realise the truth until much later.`,[`Not until much later did she reali{s|z}e the truth.`],`The inversion comes in the main clause, after the "not until" phrase.`,`NOT UNTIL`),
+T(`He had hardly sat down when the phone rang.`,[`Hardly had he sat down when the phone rang.`],``,`HARDLY`),
+T(`As soon as we arrived, it started to rain.`,[`No sooner had we arrived than it started {to rain|raining}.`],`No sooner … than.`,`NO SOONER`),
+T(`They didn't suspect at all that they were being watched.`,[`Little did they suspect that they were being watched.`],``,`LITTLE`),
+T(`You will not be allowed in under any circumstances.`,[`Under no circumstances will you be allowed in.`],``,`UNDER NO`),
+T(`We understood the danger only then.`,[`Only then did we understand the danger.`],``,`ONLY THEN`),
+T(`She not only wrote the novel but also illustrated it.`,[`Not only did she write the novel(,) but she also illustrated it.`,`Not only did she write the novel(,) she also illustrated it.`,`Not only did she write the novel(,) but (she )illustrated it (as well|too).`,`Not only did she write the novel(,) but also illustrated it.`],``,`NOT ONLY`),
+T(`You must not open this door at any time.`,[`At no time {must|should} you open this door.`],``,`AT NO TIME`),
+T(`The noise was so loud that we couldn't sleep.`,[`So loud was the noise that we {couldn't|could not} sleep.`],``,`SO`),
+T(`His anger was so great that he couldn't speak.`,[`Such was his anger that he {couldn't|could not} speak.`],``,`SUCH`),
+T(`I have rarely heard such nonsense.`,[`Rarely have I heard such nonsense.`],``,`RARELY`),
+T(`He didn't say a single word.`,[`Not a (single )word did he say.`],``,`NOT A`),
+T(`We will succeed only if we work together.`,[`Only if we work together will we succeed.`],`The inversion goes in the main clause.`,`ONLY IF`),
+T(`You won't find better coffee anywhere else in the city.`,[`Nowhere else in the city will you find better coffee.`,`Nowhere (else )in the city will you find better coffee.`],``,`NOWHERE`),
+T(`I don't blame you in any way.`,[`In no way do I blame you.`],``,`IN NO WAY`)]},
+{id:`7.2`,title:`Locative, "so" and "as" inversion`,ins:`Rewrite starting with the words in capitals.`,items:[
+T(`A stranger strode into the room.`,[`Into the room strode a stranger.`],``,`INTO`),
+T(`A tiny cottage stood at the end of the lane.`,[`At the end of the lane stood a tiny cottage.`],``,`AT THE END`),
+T(`The bus is coming.`,[`Here comes the bus.`],``,`HERE`),
+T(`The rain came down.`,[`Down came the rain.`],``,`DOWN`),
+T(`A long silence followed.`,[`There followed a long silence.`],``,`THERE`),
+T(`The river flowed beneath the bridge.`,[`Beneath the bridge flowed the river.`],``,`BENEATH`),
+T(`Elena laughed, and her sister laughed too.`,[`Elena laughed, and so did her sister.`],``,`… AND SO`),
+T(`I can't swim, and my brother can't either.`,[`I {can't|cannot} swim, (and )nor can my brother.`,`I {can't|cannot} swim, (and )neither can my brother.`],``,`… NOR`),
+T(`She sings beautifully, like her mother before her.`,[`She sings beautifully, as did her mother( before her).`],``,`… AS DID`),
+T(`He ran away.`,[`Away he ran.`],`A pronoun subject does not invert: "Away ran he" is wrong.`,`AWAY`)]},
+{id:`7.3`,title:`Error correction`,ins:`Each sentence has one inversion error. Edit it.`,items:[
+E(`Never I have been so insulted.`,[`Never have I been so insulted.`],``),
+E(`Only after the meeting I realised my mistake.`,[`Only after the meeting did I reali{s|z}e my mistake.`],``),
+E(`Not only he is rude, but he is also lazy.`,[`Not only is he rude(,) but he is also lazy.`,`Not only is he rude(,) but (he is )also lazy.`],``),
+E(`Hardly had she arrived than the trouble began.`,[`Hardly had she arrived when the trouble began.`,`No sooner had she arrived than the trouble began.`,`Scarcely had she arrived when the trouble began.`],`Hardly … when; No sooner … than.`),
+E(`No sooner had we left when it started snowing.`,[`No sooner had we left than it started {snowing|to snow}.`,`Hardly had we left when it started {snowing|to snow}.`],``),
+E(`Seldom we see such dedication.`,[`Seldom do we see such dedication.`],``),
+E(`Under no circumstances you must touch this.`,[`Under no circumstances {must|should} you touch this.`],``),
+E(`Little did he knew what awaited him.`,[`Little did he know what awaited him.`],`After "did", use the bare infinitive.`),
+E(`So tired she was that she fell asleep at once.`,[`So tired was she that she fell asleep at once.`],``),
+E(`Not until I saw her did I believed it.`,[`Not until I saw her did I believe it.`],``),
+E(`Only by working hard you will succeed.`,[`Only by working hard will you succeed.`],``),
+E(`Here comes he!`,[`Here he comes!`],`Pronoun subjects do not invert.`)]}]},
+
+/* ---------- 8 ---------- */
+{n:8,title:`Cleft sentences`,rules:[
+`It-cleft: <i>It</i> + <i>be</i> + focus + <i>that / who</i> + the rest: <i>It was Maria who found it.</i>`,
+`Wh-cleft: <i>What</i> + clause + <i>be</i> + focus: <i>What I need is a holiday.</i>`,
+`When the focus is an action, use <i>do</i>: <i>What we should do is leave.</i>`,
+`<i>All</i>-cleft means "the only thing": <i>All he wants is to be left alone.</i>`,
+`Clefts are a natural way to correct someone: <i>No, it was Peter who broke it.</i>`],
+ex:[
+{id:`8.1`,title:`It-clefts`,ins:`Rewrite as an it-cleft that focuses on the words in brackets.`,items:[
+T(`[Maria] found the missing file.`,[`It was Maria {who|that} found the missing file.`],``),
+T(`The noise woke me, [not the light].`,[`It was the noise(,) not the light(,) that woke me.`,`It was the noise that woke me(,) not the light.`],``),
+T(`We met [in Venice].`,[`It was in Venice that we met.`],``),
+T(`I only realised the truth [when I read her letter].`,[`It was only when I read her letter that I reali{s|z}ed the truth.`,`It {wasn't|was not} until I read her letter that I reali{s|z}ed the truth.`],``),
+T(`He lost his job [because of his arrogance].`,[`It was because of his arrogance that he lost his job.`,`It was his arrogance that {lost him his job|cost him his job}.`],``),
+T(`[The silence] unnerved her.`,[`It was the silence that unnerved her.`],``),
+T(`They discovered the cure [by accident].`,[`It was by accident that {they discovered the cure|the cure was discovered}.`],``),
+T(`[You], not your brother, should apologise.`,[`{It's|It is} you(,) not your brother(,) {who|that} should apologi{s|z}e.`],``)]},
+{id:`8.2`,title:`Wh-clefts and "all" clefts`,ins:`Rewrite starting with the words in capitals.`,items:[
+T(`I need a long holiday.`,[`What I need is a long holiday.`],``,`WHAT`),
+T(`She hated his dishonesty most of all.`,[`What she hated most( of all) was his dishonesty.`],``,`WHAT`),
+T(`He only wants to be left alone.`,[`All he wants is to be left alone.`],``,`ALL`),
+T(`We should leave immediately.`,[`What we should do is (to )leave immediately.`],`Action in focus: "what we should do is…".`,`WHAT WE`),
+T(`The ending surprised me.`,[`What surprised me was the ending.`],``,`WHAT`),
+T(`I admire her because she never gives up.`,[`The reason (why )I admire her is {that|because} she never gives up.`],``,`THE REASON`),
+T(`We spent the summer in Varna.`,[`The place (where )we spent the summer was Varna.`,`The place we spent the summer in was Varna.`],``,`THE PLACE`),
+T(`He lost his temper.`,[`What happened was (that )he lost his temper.`],``,`WHAT HAPPENED`),
+T(`I'm not criticising you. I'm just asking a question.`,[`All {I'm|I am} doing is {asking|ask} a question.`],``,`ALL I'M`),
+T(`She didn't say anything; she just smiled.`,[`All she did was (to )smile.`],``,`ALL SHE DID`),
+T(`I noticed his voice first.`,[`The first thing I noticed was his voice.`],``,`THE FIRST THING`),
+T(`The government should invest in education.`,[`What the government should do is (to )invest in education.`],``,`WHAT THE GOVERNMENT`)]},
+{id:`8.3`,title:`Correcting with a cleft`,ins:`Reply to A with a cleft sentence that corrects them, using the information in brackets.`,items:[
+T(`A: So John broke the window? B: (Peter)`,[`(No, )it was Peter {who|that} broke {it|the window}.`],``),
+T(`A: Did you two meet in Paris? B: (Rome)`,[`(No, )it was in Rome that we met.`],``),
+T(`A: What you need is more money. B: (time)`,[`{It isn't|It's not|It is not} money (that )I need(,) {it's|it is} time.`,`What I need is time(,) not money.`,`It's time (that )I need(,) not money.`],``),
+T(`A: Was it the price that put you off? B: (the colour)`,[`(No, )it was the colo{u|}r that put me off.`],``),
+T(`A: Did she leave because of the salary? B: (her boss)`,[`(No, )it was because of her boss that she left.`,`(No, )it was her boss that made her leave.`],``),
+T(`A: You look exhausted. Too much work? B: (the baby)`,[`(No, )it's the baby {that's|that is|who's|who is} keeping me awake.`,`(No, )it's the baby {that's|that is} {making me tired|exhausting me}.`],``)]}]},
+
+/* ---------- 9 ---------- */
+{n:9,title:`Participle clauses`,rules:[
+`A participle clause has no subject of its own; its implied subject must be the subject of the main clause.`,
+`<i>Having</i> + past participle shows an earlier action; a past participle alone is passive: <i>Built in 1890, the bridge…</i>`,
+`An absolute clause has its own subject: <i>The day's work done, they rested.</i>`,
+`If the subjects don't match, the participle "dangles": <i>Walking home, the rain began</i> (wrong).`,
+`Fixed expressions are fine: <i>judging by, considering, generally speaking, weather permitting</i>.`],
+ex:[
+{id:`9.1`,title:`Combine with a participle clause`,ins:`Join the two ideas using a participle clause.`,items:[
+T(`She finished the letter. Then she sealed it.`,[`Having finished the letter, she sealed it.`,`After finishing the letter, she sealed it.`],``),
+T(`He was tired from the journey. He went straight to bed.`,[`(Being )tired from the journey, he went straight to bed.`],``),
+T(`The bridge was built in 1890. It is now a listed monument.`,[`Built in 1890, the bridge is now a listed monument.`],``),
+T(`I didn't know what to say, so I kept quiet.`,[`Not knowing what to say, I kept quiet.`],`"Not" goes before the participle.`),
+T(`She had been warned twice. She should have known better.`,[`Having been warned twice, she should have known better.`],``),
+T(`He was walking along the beach. He noticed a bottle in the sand.`,[`(While )walking along the beach, he noticed a bottle in the sand.`],``),
+T(`The letter was written in haste. It was full of errors.`,[`(Having been )written in haste, the letter was full of errors.`],``),
+T(`I had lived abroad for years, so I found the local customs strange.`,[`Having lived abroad for years, I found the local customs strange.`],``),
+T(`They were surrounded by enemies, so they surrendered.`,[`(Being )surrounded by enemies, they surrendered.`],``),
+T(`When you are in doubt, consult the manual.`,[`{When|If} in doubt, consult the manual.`],`Conjunction + reduced clause.`)]},
+{id:`9.2`,title:`Absolute constructions`,ins:`Rewrite using an absolute clause: a clause with its own subject and no finite verb.`,items:[
+T(`When the day's work was done, they rested.`,[`The day's work {done|over|finished|completed}, they rested.`],``),
+T(`Because the weather was fine, we ate outside.`,[`The weather being fine, we ate outside.`],``),
+T(`As there was no bus, we walked.`,[`There being no bus, we walked.`],``),
+T(`He sat by the fire and his dog was asleep at his feet.`,[`He sat by the fire, his dog {asleep|sleeping} at his feet.`],``),
+T(`If the weather permits, the match will go ahead.`,[`Weather permitting, the match will go ahead.`],``),
+T(`When all things are considered, the result was fair.`,[`All things considered, the result was fair.`],``),
+T(`She stood in the doorway and her eyes were full of tears.`,[`She stood in the doorway, her eyes {full of|filled with} tears.`],``),
+T(`After the speech had ended, the guests began to leave.`,[`The speech {over|having ended|ended|finished|having finished}, the guests began to leave.`],``)]},
+{id:`9.3`,title:`Dangling or acceptable?`,ins:`Decide whether the participle dangles. The note shows a correction.`,items:[
+M(`Walking home, the rain began to fall.`,[`Dangling`,`Acceptable`],0,`The rain wasn't walking. Better: "Walking home, I was caught in the rain."`),
+M(`Having eaten lunch, the bus left for the museum.`,[`Dangling`,`Acceptable`],0,`Better: "Having eaten lunch, we boarded the bus for the museum."`),
+M(`Born in a small village, his career began in a factory.`,[`Dangling`,`Acceptable`],0,`His career wasn't born. Better: "Born in a small village, he began his career in a factory."`),
+M(`Looking out of the window, the mountains were stunning.`,[`Dangling`,`Acceptable`],0,`Better: "Looking out of the window, I saw the stunning mountains."`),
+M(`Being a rainy day, we stayed in.`,[`Dangling`,`Acceptable`],0,`We weren't a rainy day. Better: "It being a rainy day, we stayed in."`),
+M(`Having been repaired, I drove the car home.`,[`Dangling`,`Acceptable`],0,`The car was repaired, not I. Better: "Once the car had been repaired, I drove it home."`),
+M(`Exhausted after the climb, a hot meal was all we wanted.`,[`Dangling`,`Acceptable`],0,`Better: "Exhausted after the climb, we wanted nothing but a hot meal."`),
+M(`Reading the report, several errors became obvious.`,[`Dangling`,`Acceptable`],0,`Better: "Reading the report, I noticed several errors."`),
+M(`Judging by his accent, he's from Scotland.`,[`Dangling`,`Acceptable`],1,`"Judging by" is a fixed sentence adverbial.`),
+M(`Considering the cost, the results were disappointing.`,[`Dangling`,`Acceptable`],1,`"Considering" works as a preposition here.`)]}]},
+
+/* ---------- 10 ---------- */
+{n:10,title:`Ellipsis and substitution`,rules:[
+`<i>so / not</i> replace a clause after <i>think, hope, expect, believe, suppose, be afraid</i>: <i>I hope not. I think so.</i>`,
+`An auxiliary can stand for a whole verb phrase: <i>…and he did. …and so can I.</i>`,
+`<i>one(s)</i> replaces a countable noun; <i>that of / those of</i> replace a noun + of in comparisons.`,
+`<i>do so</i> is formal and refers back to an action.`,
+`Literary ellipsis drops a repeated verb: <i>To err is human; to forgive, divine.</i>`],
+ex:[
+{id:`10.1`,title:`Remove the repetition`,ins:`For dialogues, type only the reply. For single sentences, type the whole sentence.`,items:[
+T(`"Will it rain tomorrow?" "I hope it won't rain."`,[`I hope not.`],``),
+T(`"Is she coming?" "I think she is coming."`,[`I think so.`],``),
+T(`I asked him to help, and he helped.`,[`I asked him to help, and he did.`],``),
+T(`She can speak French, and her brother can speak French too.`,[`She can speak French, and so can her brother.`,`She can speak French, and her brother can (too|as well).`],``),
+T(`I'd like a coffee, a strong coffee.`,[`I'd like a coffee(,) a strong one.`],`"one" replaces a countable noun.`),
+T(`The climate of Bulgaria is milder than the climate of Russia.`,[`The climate of Bulgaria is milder than that of Russia.`,`Bulgaria's climate is milder than Russia's.`],`"that of" for a singular noun.`),
+T(`The novels of Dickens are longer than the novels of Austen.`,[`The novels of Dickens are longer than those of Austen.`,`Dickens's novels are longer than Austen's.`],`"those of" for a plural noun.`),
+T(`He said he would finish it, and he has finished it.`,[`He said he would finish it, and he has.`],``),
+T(`"Have you told her?" "No, but I'm going to tell her."`,[`No, but {I'm|I am} going to.`],``),
+T(`She wanted to leave, but she wasn't allowed to leave.`,[`She wanted to leave, but she {wasn't|was not} allowed to.`],``),
+T(`"Are we lost?" "I'm afraid we are lost."`,[`{I'm|I am} afraid so.`],``),
+T(`If you want to borrow my bike, you can borrow my bike.`,[`If you want to borrow my bike, you can.`],``),
+T(`He worked as hard as his father had worked.`,[`He worked as hard as his father (had|did).`,`He worked as hard as did his father.`],``),
+T(`"Did you lock the door?" "I believe I did lock it."`,[`I believe so.`],``)]},
+{id:`10.2`,title:`so, not, do so, it or that?`,ins:`Complete with so, not, do so, it or that.`,items:[
+G(`"Will he win?" "I don't think __."`,[`so`],``),
+G(`"Is it serious?" "I hope __."`,[`not`],``),
+G(`He promised to tidy up, but he hasn't done __ yet.`,[`so|it`],`"Done so" is formal; "done it" is also fine.`),
+G(`"She's resigned." "Who told you __?"`,[`that`],`"that" refers to the piece of news.`),
+G(`If you wish to withdraw, you must __ in writing.`,[`do so`],`Formal reference to the action.`),
+G(`"Can we afford it?" "Apparently __. The bank said no."`,[`not`],``),
+G(`"Are they married?" "I suppose __."`,[`so`],``),
+G(`"I'm sorry I'm late." "Don't worry about __."`,[`it`],``)]},
+{id:`10.3`,title:`Literary ellipsis`,ins:`Write the sentence out in full, restoring the words left out.`,items:[
+T(`Some read for pleasure; others, for instruction.`,[`Some read for pleasure; others read for instruction.`],``),
+T(`To err is human; to forgive, divine.`,[`To err is human; to forgive is divine.`],``),
+T(`"Ready?" "As I'll ever be."`,[`{I'm|I am} as ready as {I'll|I will} ever be.`],``),
+T(`She could have married a duke, and would have, had she wished.`,[`She could have married a duke, and would have married {a duke|one|him}, had she wished( to| to marry {one|a duke|him}).`],``),
+T(`If possible, reply by Friday.`,[`If it is possible, reply by Friday.`,`If {it's|it is} possible, (please )reply by Friday.`],``),
+T(`Though exhausted, he kept walking.`,[`Though he was exhausted, he kept walking.`],``),
+T(`He works harder than most.`,[`He works harder than most people( do| work).`],``),
+T(`I can't help you, much as I'd like to.`,[`I {can't|cannot} help you, much as {I'd|I would} like to help you.`],``)]}]},
+
+/* ---------- 11 ---------- */
+{n:11,title:`Nominalisation`,rules:[
+`Nominalisation turns a verb or adjective into a noun: <i>fail → failure, decide → decision, rise → a rise in</i>.`,
+`The old subject becomes a possessive or an <i>of</i>-phrase: <i>the government's failure, the collapse of the bridge</i>.`,
+`Adverbs become adjectives: <i>analyse carefully → careful analysis</i>.`,
+`Dense noun phrases suit formal writing, but too many make text hard to read; unpack them with verbs.`,
+`Order of modifiers: opinion → size/age → origin/material → purpose: <i>a strict new immigration policy</i>.`],
+ex:[
+{id:`11.1`,title:`Nominalise`,ins:`Rewrite so the underlying clause becomes a noun phrase. Start with the word(s) in capitals.`,items:[
+T(`Because the government failed to act, the crisis worsened.`,[`The government's failure to act {worsened|aggravated|deepened|exacerbated} the crisis.`,`The government's failure to act led to a worsening of the crisis.`],``,`THE GOVERNMENT'S`),
+T(`The company decided to close the factory, and this shocked the town.`,[`The company's decision to close the factory shocked the town.`],``,`THE COMPANY'S`),
+T(`Prices rose rapidly, which led to protests.`,[`The rapid rise in prices led to protests.`],`"rise" takes "in".`,`THE RAPID`),
+T(`When the president arrived, the crowds cheered.`,[`The president's arrival was {greeted|met} with cheers( from the crowd| from the crowds| by the crowds).`,`The president's arrival was cheered by the crowds.`],``,`THE PRESIDENT'S`),
+T(`Because she knew the law thoroughly, she won the case.`,[`Her thorough knowledge of the law {won her the case|helped her (to )win the case|enabled her to win the case}.`],`thoroughly → thorough`,`HER`),
+T(`The bridge collapsed, and this was caused by poor maintenance.`,[`The collapse of the bridge was caused by poor maintenance.`],``,`THE COLLAPSE`),
+T(`Scientists discovered that the virus can mutate, which alarmed doctors.`,[`The discovery that the virus can mutate alarmed doctors.`],``,`THE DISCOVERY`),
+T(`They refused to negotiate, so the strike went on.`,[`Their refusal to negotiate {prolonged the strike|meant (that )the strike went on|kept the strike going}.`],``,`THEIR`),
+T(`The way he responded to criticism was admirable.`,[`His response to criticism was admirable.`],``,`HIS`),
+T(`Because the population is ageing, the pension system is under pressure.`,[`An ag{e|}ing population {is putting|puts} {the pension system under pressure|pressure on the pension system}.`,`An ag{e|}ing population has put the pension system under pressure.`],``,`AN AGEING`),
+T(`Huge numbers of people emigrated, and this weakened the economy.`,[`Mass emigration weakened the economy.`],``,`MASS`),
+T(`If you analyse the data carefully, you will see a pattern.`,[`Careful analysis of the data {reveals|will reveal|shows|will show} a pattern.`],`carefully → careful`,`CAREFUL`)]},
+{id:`11.2`,title:`Unpack it`,ins:`Rewrite the dense sentence in clear, plain English, using verbs instead of abstract nouns. Then compare with the model.`,items:[
+O(`The implementation of the policy resulted in a reduction in waiting times.`,`When the policy was introduced, waiting times fell.`),
+O(`There has been a significant increase in the consumption of sugar among adolescents.`,`Teenagers are eating much more sugar than before.`),
+O(`Failure to comply with these regulations may result in the termination of your contract.`,`If you don't follow these rules, we may end your contract.`),
+O(`The achievement of our objectives requires the cooperation of all departments.`,`We can only reach our goals if all departments cooperate.`),
+O(`A lack of understanding of the causes of the conflict led to the adoption of ineffective measures.`,`Because they didn't understand what caused the conflict, they took steps that didn't work.`),
+O(`The provision of free meals led to an improvement in attendance.`,`Attendance improved after free meals were provided.`)]},
+{id:`11.3`,title:`Build one noun phrase`,ins:`Combine the information into a single noun phrase. Then compare with the model.`,items:[
+O(`a report / published last week / by the ministry / 200 pages long / about rural poverty`,`the ministry's 200-page report on rural poverty published last week`),
+O(`a man / tall / with a grey beard / standing by the door`,`the tall, grey-bearded man (standing) by the door`),
+O(`a museum / modern / made of glass / designed by an award-winning architect`,`a modern glass museum designed by an award-winning architect`),
+O(`a decision / taken by the board / controversial / to cut 300 jobs`,`the board's controversial decision to cut 300 jobs`),
+O(`a policy / the government's / on immigration / new / strict`,`the government's strict new immigration policy`),
+O(`a problem / long-standing / about housing / in cities / affecting young families`,`the long-standing urban housing problem affecting young families`)]}]},
+
+/* ---------- 12 ---------- */
+{n:12,title:`Relative clauses`,rules:[
+`After a preposition, use <i>whom</i> (people) or <i>which</i> (things), never <i>who</i> or <i>that</i>: <i>the woman to whom I spoke</i>.`,
+`Quantifier + <i>of</i> + <i>whom / which</i>: <i>two of whom, none of which, much of which</i>.`,
+`Sentential <i>which</i> refers to a whole clause: <i>He failed, which surprised everyone.</i>`,
+`Non-defining clauses take commas and never <i>that</i>; defining clauses take no commas.`,
+`After <i>all, everything, nothing</i> and superlatives, prefer <i>that</i> or no relative word.`],
+ex:[
+{id:`12.1`,title:`Formal relatives with prepositions`,ins:`Rewrite formally, moving the preposition before the relative pronoun.`,items:[
+T(`That's the woman I was talking to.`,[`{That is|That's} the woman to whom I was talking.`],``),
+T(`This is the house she was born in.`,[`This is the house in which she was born.`],``),
+T(`How far the policy has worked is unclear. (THE EXTENT)`,[`The extent to which the policy has worked is unclear.`],``),
+T(`The committee, which I belong to, meets monthly.`,[`The committee, to which I belong, meets monthly.`],``),
+T(`He's the colleague I rely on most.`,[`{He is|He's} the colleague on whom I rely (the )most.`],``),
+T(`The period we are concerned with is the late Middle Ages.`,[`The period with which we are concerned is the late Middle Ages.`],``),
+T(`The speed the disease spread at alarmed experts.`,[`The speed at which the disease spread alarmed experts.`],``),
+T(`The company I worked for went bankrupt.`,[`The company for which I worked went bankrupt.`],``),
+T(`The issues we disagreed about were minor.`,[`The issues {about|over|on} which we disagreed were minor.`],``),
+T(`The principles she lived by were simple.`,[`The principles by which she lived were simple.`],``)]},
+{id:`12.2`,title:`Quantified, possessive and sentential relatives`,ins:`Join the two sentences with a relative clause.`,items:[
+T(`I have three brothers. Two of them live abroad.`,[`I have three brothers, two of whom live abroad.`],``),
+T(`She wrote ten novels. None of them was a success.`,[`She wrote ten novels, none of which {was|were} a success.`],``),
+T(`He failed the exam. This surprised everyone.`,[`He failed the exam, which surprised everyone.`],`Sentential "which".`),
+T(`We met many students. Most of them spoke English.`,[`We met many students, most of whom spoke English.`],``),
+T(`They offered two solutions. Neither of them was practical.`,[`They offered two solutions, neither of which {was|were} practical.`],``),
+T(`The train was delayed. As a result of this, we missed the ceremony.`,[`The train was delayed, as a result of which we missed the ceremony.`],``),
+T(`She inherited a fortune. She gave much of it to charity.`,[`She inherited a fortune, much of which she gave to charity.`],``),
+T(`He mentioned a book. I can't remember its title.`,[`He mentioned a book whose title I {can't|cannot} remember.`,`He mentioned a book the title of which I {can't|cannot} remember.`],`"whose" also works for things.`),
+T(`I spoke to a woman. Her son is a pilot.`,[`I spoke to a woman whose son is a pilot.`],``),
+T(`It rained all week. That was a pity.`,[`It rained all week, which was a pity.`],``)]},
+{id:`12.3`,title:`Defining, non-defining and punctuation`,ins:`Answer the question, or edit the sentence so the punctuation and relative word are correct.`,items:[
+M(`My brother who lives in Sofia is a doctor. Without commas, how many brothers do I have?`,[`Only one`,`More than one`],1,`The defining clause tells you which brother. With commas, I would have only one.`),
+M(`The students who had studied passed the exam. Did every student pass?`,[`Yes, all of them`,`Only those who had studied`],1,`Defining clause: it selects a subset. With commas, all had studied and all passed.`),
+E(`Varna which is on the Black Sea is popular with tourists.`,[`Varna, which is on the Black Sea, is popular with tourists.`],`A unique name needs a non-defining clause with commas.`,true),
+M(`The book __ you lent me is fascinating. Which option can NOT fill the gap?`,[`that`,`which`,`nothing (no relative word)`,`what`],3,`"What" means "the thing that" and cannot follow a noun. The relative can be dropped because it is the object.`),
+E(`Her latest novel which was published in March has already sold a million copies.`,[`Her latest novel, which was published in March, has already sold a million copies.`],`Extra information about a single, identified novel.`,true),
+M(`The man __ I met yesterday is an architect. Which option can NOT fill the gap?`,[`who`,`whom`,`that`,`which`],3,`"Which" is for things. Who, whom, that or no word are all possible.`),
+E(`He gave me some advice, that I ignored.`,[`He gave me some advice, which I ignored.`],`"That" cannot introduce a non-defining clause.`,true),
+E(`Everything which he said was true.`,[`Everything (that )he said was true.`],`After "everything", prefer "that" or no word.`,true),
+E(`This is the best film which I have ever seen.`,[`This is the best film (that ){I have|I've} ever seen.`],`After a superlative, use "that" or no word.`,true),
+E(`The reason why she left, was never explained.`,[`The reason (why )she left was never explained.`],`Never put a comma between subject and verb.`,true)]}]},
+
+/* ---------- 13 ---------- */
+{n:13,title:`Fronting and concession`,rules:[
+`Adjective / noun / adverb + <i>as</i> or <i>though</i> + subject + verb = although: <i>Strange as it may seem…</i>`,
+`A fronted noun loses its article: <i>Child though he was, he understood.</i>`,
+`<i>Much as I admire her</i> = although I admire her a lot; <i>Try as he might</i> = however hard he tried.`,
+`Fronting an object or verb phrase adds contrast or emphasis: <i>This I cannot accept. …and win he did.</i>`,
+`<i>albeit</i> + adjective, adverb or phrase, not a clause; <i>despite / in spite of</i> + noun or <i>-ing</i>.`],
+ex:[
+{id:`13.1`,title:`Concessive fronting`,ins:`Rewrite starting with the word in capitals.`,items:[
+T(`Although it may seem strange, I enjoy rainy days.`,[`Strange {as|though} it may seem, I enjoy rainy days.`],``,`STRANGE`),
+T(`However hard he tried, he couldn't open the door.`,[`Try as he might, he {couldn't|could not} open the door.`],``,`TRY`),
+T(`Although I admire her, I can't support her plan.`,[`Much as I admire her, I {can't|cannot} support her plan.`],``,`MUCH`),
+T(`Although the hotel was expensive, it was worth it.`,[`Expensive {as|though} the hotel was, it was worth it.`,`Expensive {as|though} it was, the hotel was worth it.`],``,`EXPENSIVE`),
+T(`Although he was only a child, he understood.`,[`Child {though|as} he was, he understood.`],`No article before the fronted noun.`,`CHILD`),
+T(`However much you argue, I won't change my mind.`,[`Argue as you {may|will|might|like}, I {won't|will not} change my mind.`],``,`ARGUE`),
+T(`Although she was tired, she kept going.`,[`Tired {as|though} she was, she kept going.`],`"Tired as she was" can also mean "because she was tired"; context decides.`,`TIRED`),
+T(`Whatever the cost may be, we must finish the project.`,[`Whatever the cost( may be| might be| is), we must finish the project.`],``,`WHATEVER`),
+T(`Despite being poor, they were happy.`,[`Poor {though|as} they were, they were happy.`],``,`POOR`),
+T(`Whether he likes it or not, he'll have to apologise.`,[`Like it or not, {he'll|he will} have to apologi{s|z}e.`],``,`LIKE`)]},
+{id:`13.2`,title:`Fronting for emphasis`,ins:`Rewrite starting with the words in capitals.`,items:[
+T(`I cannot accept this.`,[`This I {cannot|can't} accept.`],``,`THIS`),
+T(`I can forgive his rudeness, but I will never forgive his lies.`,[`His rudeness I can forgive; his lies, never.`,`His rudeness I can forgive, but {his lies I will never forgive|his lies I'll never forgive|his lies never|not his lies|never his lies}.`],``,`HIS RUDENESS`),
+T(`He said he would win, and he won.`,[`He said he would win, and win he did.`],``,`… AND WIN`),
+T(`I'd promised to finish it, and I finished it.`,[`{I'd|I had} promised to finish it, and finish it I did.`],``,`… AND FINISH`),
+T(`Nobody knows what he did with the money.`,[`What he did with the money(,) {nobody|no one|no-one} knows.`],``,`WHAT`),
+T(`His second novel was much better.`,[`Much better was his second novel.`],``,`MUCH BETTER`),
+T(`The final chapter is particularly moving.`,[`Particularly moving is the final chapter.`],``,`PARTICULARLY MOVING`),
+T(`I have never seen such a thing.`,[`Such a thing {I have|I've} never seen.`],``,`SUCH A THING`),
+T(`They call it "progress".`,[`"Progress", they call it.`],``,`"PROGRESS"`),
+T(`The question of funding is equally important.`,[`Equally important is the question of funding.`],``,`EQUALLY`)]},
+{id:`13.3`,title:`Concessive linkers`,ins:`Use: albeit, despite, though, even though, even if, however, whereas, in spite of, nevertheless, if.`,items:[
+G(`The plan was successful, __ at great cost.`,[`albeit`],`"albeit" + phrase.`),
+G(`__ the rain, the match went ahead.`,[`despite|in spite of`],`+ noun.`),
+G(`He's rich. He's unhappy, __.`,[`though`],`"though" at the end = however.`),
+G(`__ I knew it was risky, I agreed.`,[`even though|although|though`],`+ clause.`),
+G(`I'll go __ it rains. Nothing will stop me.`,[`even if`],`= whether or not.`),
+G(`The first draft was poor; the second, __, was excellent.`,[`however`],`Contrast between sentences.`),
+G(`She prefers tea, __ her husband drinks only coffee.`,[`whereas|while|whilst`],`Direct contrast.`),
+G(`__ having trained for months, he failed to finish the race.`,[`in spite of|despite`],`+ -ing.`),
+G(`The evidence was weak. __, the jury convicted him.`,[`nevertheless|nonetheless|even so|however`],``),
+G(`It was a welcome, __ modest, improvement.`,[`if|albeit|though`],`"if" + adjective = although perhaps.`)]}]},
+
+/* ---------- 14 ---------- */
+{n:14,title:`Archaic and formal`,rules:[
+`<i>lest</i> = so that … not, + bare infinitive or <i>should</i>: <i>lest he wake / lest he should wake</i>.`,
+`<i>whereby</i> = by which; <i>therein</i> = in that; <i>wherein</i> = in which; <i>whereupon</i> = immediately after which.`,
+`<i>notwithstanding</i> = despite; <i>insofar as</i> = to the extent that; <i>thereby</i> = by doing that.`,
+`Modal <i>need</i> and <i>dare</i> take no <i>do</i> and no <i>to</i>: <i>Need I say more? He dare not.</i>`,
+`<i>shall</i> in contracts states an obligation: <i>The tenant shall pay…</i>`],
+ex:[
+{id:`14.1`,title:`Formal connectors`,ins:`Use: lest, whereby, therein, were it not for, be it, hence, thereby, whereupon, notwithstanding, insofar as, albeit, wherein.`,items:[
+G(`He spoke quietly __ he wake the baby.`,[`lest`],``),
+G(`They introduced a scheme __ employees could share in the profits.`,[`whereby`],``),
+G(`The plan is simple, and __ lies its strength.`,[`therein`],``),
+G(`__ your generosity, the school would have to close.`,[`were it not for`],``),
+G(`Every decision, __ large or small, must be recorded.`,[`be it`],``),
+G(`The road was blocked; __ the delay.`,[`hence`],``),
+G(`He cut prices, __ increasing sales.`,[`thereby`],``),
+G(`She read the letter, __ she burst into tears.`,[`whereupon`],``),
+G(`__ the bad weather, the ceremony went ahead.`,[`notwithstanding`],``),
+G(`I agree with you __ the facts are concerned.`,[`insofar as`],``),
+G(`He accepted the offer, __ reluctantly.`,[`albeit`],``),
+G(`This is the clause __ the terms of payment are set out.`,[`wherein`],``)]},
+{id:`14.2`,title:`Modal need, dare, shall and ought`,ins:`Rewrite in a more formal or literary style using the word in capitals.`,items:[
+T(`Do I need to say more?`,[`Need I say more?`],``,`NEED`),
+T(`He doesn't dare to contradict her.`,[`He {dare not|daren't|dares not|dared not} contradict her.`],``,`DARE`),
+T(`You don't need to worry.`,[`You {need not|needn't} worry.`],``,`NEED`),
+T(`How do you dare to speak to me like that?`,[`How dare you speak to me like that?`],``,`HOW`),
+T(`The tenant must pay the rent monthly.`,[`The tenant shall pay the rent monthly.`],``,`SHALL`),
+T(`I don't dare to think what might have happened.`,[`I {dare not|daren't} think what might have happened.`],``,`DARE`),
+T(`You should be ashamed of yourself.`,[`You ought to be ashamed of yourself.`],``,`OUGHT`),
+T(`It doesn't need to be done today.`,[`It {need not|needn't} be done today.`],``,`NEED`)]},
+{id:`14.3`,title:`Name the device`,ins:`Name the structure or rhetorical device the sentence uses.`,items:[
+M(`We do not live to eat; we eat to live.`,[`Chiasmus`,`Tricolon`,`Cleft sentence`,`Absolute clause`],0,`The words are reversed across two clauses.`),
+M(`Never before, and never since, had the city known such silence.`,[`Fronted object`,`Negative inversion`,`Subjunctive`,`Ellipsis`],1,`Negative adverbial + "had the city known".`),
+M(`Her task completed, she turned for home.`,[`Dangling participle`,`Absolute clause`,`Relative clause`,`Inverted conditional`],1,`"Her task" is the clause's own subject.`),
+M(`What we lack is not money but will.`,[`It-cleft`,`Wh-cleft`,`Fronting`,`Chiasmus`],1,`"What … is" focuses the contrast.`),
+M(`Long may it continue.`,[`Formulaic subjunctive`,`Negative inversion`,`Ellipsis`,`Mixed conditional`],0,`An optative "may" expressing a wish.`),
+M(`We came, we argued, we prevailed.`,[`Chiasmus`,`Tricolon`,`Absolute clause`,`Wh-cleft`],1,`Three parallel clauses without "and".`),
+M(`This much I know: it was no accident.`,[`Fronted object`,`Inverted conditional`,`It-cleft`,`Tricolon`],0,`"This much" is the object, moved to the front.`),
+M(`Were it not for fear, how much more might we attempt?`,[`Mandative subjunctive`,`Inverted conditional`,`Locative inversion`,`Absolute clause`],1,`"Were it not for" = if it were not for.`)]}]},
+
+/* ---------- 15 ---------- */
+{n:15,title:`Register and style`,rules:[
+`Formal register: full forms, precise verbs, impersonal structures: <i>We regret that we are unable to…</i>`,
+`Given before new: start with what the reader already knows, end with new information.`,
+`End-weight: put long, heavy elements last; use extraposition: <i>It was obvious that…</i>`,
+`Verb patterns are fixed: <i>look forward to -ing, insist on -ing, capable of -ing, used to -ing</i>.`,
+`Commas mark non-defining clauses and separate list items; semicolons separate list items that contain commas.`],
+ex:[
+{id:`15.1`,title:`Register shifts`,ins:`Items 1–6: rewrite formally. Items 7–8: rewrite in a natural, neutral style. Then compare with the model.`,items:[
+O(`We're gonna look into the problem ASAP.`,`We shall investigate the matter as soon as possible.`),
+O(`Loads of people turned up to the meeting.`,`The meeting was very well attended.`),
+O(`Sorry, but we can't give you a refund.`,`We regret that we are unable to offer a refund.`),
+O(`The results were kind of disappointing.`,`The results were somewhat disappointing.`),
+O(`If you've got any questions, just give me a shout.`,`Should you have any questions, please do not hesitate to contact me.`),
+O(`They got rid of the old rules.`,`The old regulations were abolished.`),
+O(`It is incumbent upon all staff to familiarise themselves with the procedures.`,`All staff need to read and understand the procedures.`),
+O(`I should be most grateful were you to pass the salt.`,`Could you pass the salt, please? Extreme formality in a casual setting sounds sarcastic.`)]},
+{id:`15.2`,title:`Information structure`,ins:`Choose the better continuation.`,items:[
+M(`The museum houses a famous painting…`,[`A Dutch master painted it in 1642.`,`It was painted by a Dutch master in 1642.`],1,`The given "it" comes first and the new information last.`),
+M(`Our new manager has made several changes…`,[`A complete reorganisation of the sales team was the most controversial.`,`The most controversial was a complete reorganisation of the sales team.`],1,`The link to "changes" comes first; the long new element goes at the end.`),
+M(`Which is more natural?`,[`That the project would fail was obvious to everyone.`,`It was obvious to everyone that the project would fail.`],1,`Extraposition moves the heavy clause to the end.`),
+M(`The village was founded in 1350…`,[`A powerful earthquake almost destroyed it in 1858.`,`It was almost destroyed by a powerful earthquake in 1858.`],1,`The passive keeps the village as the topic.`),
+M(`Which is more natural?`,[`She gave the man who had helped her carry her suitcases up three flights of stairs a tip.`,`She gave a tip to the man who had helped her carry her suitcases up three flights of stairs.`],1,`End-weight: the long phrase goes last.`),
+M(`Many people blame the government for the crisis…`,[`However, a series of poor decisions by the central bank caused it.`,`However, it was caused by a series of poor decisions by the central bank.`],1,`The crisis ("it") stays the topic; the new cause is in focus at the end.`),
+M(`Which is more natural?`,[`I find it hard to believe that he resigned.`,`I find that he resigned hard to believe.`],0,`"It" extraposition after "find"; the other version is very awkward.`),
+M(`The report makes three recommendations…`,[`Raising the minimum wage is the first.`,`The first is to raise the minimum wage.`],1,`"The first" links back to "three recommendations".`)]},
+{id:`15.3`,title:`Collocation and complementation`,ins:`Each sentence has one collocation or verb-pattern error. Edit it.`,items:[
+E(`She is interested to learn Japanese.`,[`{She is|She's} interested in learning Japanese.`],`interested in -ing`),
+E(`He suggested me to apply for the job.`,[`He suggested (that )I (should )apply for the job.`,`He suggested {my|me} applying for the job.`,`He suggested applying for the job.`],`suggest that sb (should) do / suggest -ing`),
+E(`We need to make a research before we decide.`,[`We need to {do|carry out|conduct} (some )research before we decide.`],`"research" is uncountable and takes do / carry out.`),
+E(`I look forward to hear from you.`,[`I look forward to hearing from you.`],`"to" is a preposition here.`),
+E(`She is capable to do much better.`,[`{She is|She's} capable of doing much better.`],`capable of -ing`),
+E(`The film had a strong impression on me.`,[`The film made a strong impression on me.`,`The film had a strong {impact|effect} on me.`],`make an impression on`),
+E(`They discussed about the problem for hours.`,[`They discussed the problem for hours.`],`"discuss" takes a direct object.`),
+E(`I'm used to work late.`,[`{I'm|I am} used to working late.`],`be used to -ing`),
+E(`She insisted to pay for dinner.`,[`She insisted on paying for dinner.`],`insist on -ing`),
+E(`The price has raised by 10%.`,[`The price has risen by 10%.`,`The price has gone up by 10%.`],`rise (intransitive) / raise (transitive)`),
+E(`He's responsible of the marketing team.`,[`{He's|He is} responsible for the marketing team.`],`responsible for`),
+E(`It's no use to complain.`,[`{It's|It is} no use complaining.`],`It's no use -ing`),
+E(`We need to make a step forward.`,[`We need to take a step forward.`],`take a step`),
+E(`He denied to have taken the money.`,[`He denied {taking|having taken} the money.`],`deny -ing`),
+E(`I'm keen of trying new food.`,[`{I'm|I am} keen on trying new food.`],`keen on -ing`)]},
+{id:`15.4`,title:`Punctuation as grammar`,ins:`Answer the question or edit the punctuation.`,items:[
+M(`"Let's eat Grandma." / "Let's eat, Grandma." In which version is Grandma being invited to eat?`,[`Without the comma`,`With the comma`],1,`Without the comma, Grandma is the meal.`),
+M(`"The students, who failed, will resit." Who will resit?`,[`Only the students who failed`,`All the students, since they all failed`],1,`Commas make the clause non-defining: it describes all of them.`),
+E(`The conference included speakers from Sofia Bulgaria Lyon France and Porto Portugal.`,[`The conference included speakers from Sofia, Bulgaria; Lyon, France(;) and Porto, Portugal.`],`Semicolons separate list items that contain commas.`,true),
+E(`She loves cooking her family and her dog.`,[`She loves cooking, her family(,) and her dog.`],`Without commas, she cooks her family.`,true),
+E(`I have one goal to finish the marathon.`,[`I have one goal: to finish the marathon.`,`I have one goal — to finish the marathon.`],`A colon introduces what the goal is.`,true),
+M(`"My sister, who lives in Paris, is visiting next week." What do the commas tell you?`,[`I have more than one sister`,`I have only one sister`],1,`A non-defining clause adds information about the only sister.`),
+E(`However hard she tried she failed.`,[`However hard she tried, she failed.`],`"However" = no matter how; the comma ends the concessive clause.`,true),
+E(`There was only one person who could help him his mother.`,[`There was only one person who could help him — his mother.`,`There was only one person who could help him: his mother.`],`A dash or colon introduces the reveal.`,true),
+E(`It was late we went home.`,[`It was late, so we went home.`,`It was late; we went home.`,`It was late. We went home.`,`It was late, and we went home.`],`Two clauses need a conjunction, a semicolon or a full stop; a comma alone is a comma splice.`,true),
+O(`A woman without her man is nothing. Punctuate it two ways to give opposite meanings.`,`A woman, without her man, is nothing. / A woman: without her, man is nothing.`)]}]},
+
+/* ---------- 16 ---------- */
+{n:16,title:`Mixed C2 review`,rules:[
+`This unit mixes every structure from §1–§15, as an exam would.`,
+`Key word transformations: use the key word unchanged and 3–8 words in total.`,
+`Check tense, word order and the pattern the key word requires before you write.`,
+`If you get stuck, open the rules of the unit the structure belongs to.`],
+ex:[
+{id:`16.1`,title:`Key word transformations`,ins:`Complete the second sentence so that it means the same as the first. Use the key word unchanged and 3–8 words.`,items:[
+G(`It __ that I realised how serious the situation was.`,[`was not until I saw the photographs|wasn't until I saw the photographs|was only when I saw the photographs`],`It-cleft with "not until".`,{ctx:`I didn't realise how serious the situation was until I saw the photographs.`,k:`WAS`}),
+G(`It __ the country.`,[`is said that she has left|is said that she left|is said that she had left`],`Passive reporting with "it".`,{ctx:`She is said to have left the country.`,k:`THAT`}),
+G(`__ thinking, he would have died.`,[`but for the doctor's quick`],`"But for" + noun = if it hadn't been for.`,{ctx:`If it hadn't been for the doctor's quick thinking, he would have died.`,k:`BUT`}),
+G(`You __ a gift, but thank you.`,[`needn't have brought|need not have brought`],`You did, but it was unnecessary.`,{ctx:`It wasn't necessary for you to bring a gift, but thank you.`,k:`NEEDN'T`}),
+G(`If __ harder at school.`,[`only I had studied|only I'd studied`],`Past regret.`,{ctx:`I regret not studying harder at school.`,k:`ONLY`}),
+G(`Try __ lift the box.`,[`as he might he couldn't|as he might he could not|as he might he was unable to`],`Concessive "Try as he might".`,{ctx:`However hard he tried, he couldn't lift the box.`,k:`MIGHT`}),
+G(`The fact __ the library caused outrage.`,[`that the council decided to close|that the council had decided to close`],``,{ctx:`The council's decision to close the library caused outrage.`,k:`DECIDED`}),
+G(`__ he couldn't speak.`,[`such was his anger that`],`"Such was" inversion.`,{ctx:`He was so angry that he couldn't speak.`,k:`SUCH`}),
+G(`The fire __ started deliberately.`,[`is thought to have been`],`Passive reporting with a past passive infinitive.`,{ctx:`They think the fire was started deliberately.`,k:`THOUGHT`}),
+G(`It's __ revising.`,[`high time you started|high time that you started|high time you began`],`It's high time + past.`,{ctx:`You really ought to start revising now.`,k:`HIGH`}),
+G(`I'd __ this to anyone.`,[`rather you didn't mention|rather you did not mention`],`Would rather + past.`,{ctx:`I'd prefer you not to mention this to anyone.`,k:`RATHER`}),
+G(`No __ the trouble started.`,[`sooner had he arrived than`],`No sooner … than.`,{ctx:`He had only just arrived when the trouble started.`,k:`SOONER`}),
+G(`__ say all evening.`,[`not a single word did she|not one word did she|not a word did she`],`Negative inversion.`,{ctx:`She didn't say a single word all evening.`,k:`NOT`}),
+G(`__ money.`,[`all he cares about is|all that he cares about is`],`All-cleft.`,{ctx:`The only thing he cares about is money.`,k:`ALL`}),
+G(`It is essential that a CV __ applicant.`,[`be submitted by every|be submitted by each|should be submitted by every`],`Passive subjunctive.`,{ctx:`Every applicant must submit a CV; this is essential.`,k:`BE`}),
+G(`__ you, I can't help.`,[`much as I sympathise with|much as I sympathize with`],`Concessive "Much as".`,{ctx:`Although I sympathise with you, I can't help.`,k:`MUCH`}),
+G(`The __, the guests moved to the garden.`,[`meal being over|meal having ended|meal having finished|meal having been eaten|meal having come to an end|meal finished|meal over`],`Absolute clause. "The meal over" is natural but uses only two words.`,{ctx:`When the meal was over, the guests moved to the garden.`,k:`MEAL`}),
+G(`__ mind, let me know.`,[`should you change your`],`Inverted conditional.`,{ctx:`If you change your mind, let me know.`,k:`SHOULD`})]},
+{id:`16.2`,title:`Literary rewrite`,ins:`Rewrite the paragraph in an elevated literary style, using at least six structures from this drill. Then compare with the model.`,items:[
+O(`The storm was over. The old fisherman walked down to the harbour. He had never seen so much damage. Boats were lying on their sides and there were nets everywhere. He didn't know what to do. Although he was old, he started to clear the wreckage. His son only arrived in the evening. The son saw his father working alone, and this made him feel ashamed.`,
+`The storm spent, the old fisherman made his way down to the harbour. Never had he seen such devastation: boats lay on their sides, and nets were strewn everywhere. Not knowing what else to do, and old though he was, he set about clearing the wreckage. It was not until evening that his son arrived, and what he saw, his father toiling alone, filled him with shame.`,
+`The model uses an absolute clause, negative inversion, a participle clause, concessive fronting, an it-cleft and a wh-clause as subject.`)]},
+{id:`16.3`,title:`Error hunt`,ins:`The paragraph contains 12 errors drawn from across the drill. Edit the text, then check.`,items:[
+{t:`hunt`,q:`Hardly had I arrived to the conference when I realised I have left my notes at the hotel. Having rushed back, the taxi got stuck in traffic. It was essential that I gave the keynote at ten, and the organisers, which had been very kind, suggested me to start with questions. Not until the coffee break I managed to retrieve the notes. If I would have checked my bag that morning, none of this would happen. Embarrassed though I was, but the talk went well, albeit the audience was smaller than I had hoped. The most people said they enjoyed it.`,
+errs:[
+{w:`arrived to the conference`,f:`arrived at the conference`},
+{w:`realised i have left`,f:`I realised I had left`},
+{w:`having rushed back the taxi`,f:`As I rushed back, my taxi got stuck (dangling participle)`},
+{w:`essential that i gave`,f:`It was essential that I give (should give)`},
+{w:`organisers which`,f:`the organisers, who had been very kind`},
+{w:`suggested me to`,f:`suggested (that) I start / suggested starting`},
+{w:`break i managed`,f:`Not until the coffee break did I manage`},
+{w:`if i would have`,f:`If I had checked (Had I checked)`},
+{w:`none of this would happen`,f:`none of this would have happened`},
+{w:`i was but the talk`,f:`Embarrassed though I was, the talk went well (no "but")`},
+{w:`albeit the audience was`,f:`although the audience was smaller`},
+{w:`the most people`,f:`Most people`}],
+m:`Hardly had I arrived at the conference when I realised I had left my notes at the hotel. As I rushed back, my taxi got stuck in traffic. It was essential that I give the keynote at ten, and the organisers, who had been very kind, suggested that I start with questions. Not until the coffee break did I manage to retrieve the notes. If I had checked my bag that morning, none of this would have happened. Embarrassed though I was, the talk went well, although the audience was smaller than I had hoped. Most people said they enjoyed it.`}]}]}
+];
+
+/* ============ ENGINE ============ */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- normalisation ---- */
+const ZERO=new Set(['ø','-','0','zero','none','nothing','x','—','–','/','no article']);
+function base(s){return String(s).normalize('NFC').replace(/[’‘`´]/g,"'").replace(/[“”«»„]/g,'"').toLowerCase().replace(/\s+/g,' ').trim();}
+function spelling(s){return s.replace(/\b(\w+?)iz(e|ed|es|ing|ation|ations)\b/g,'$1is$2').replace(/\bcolor/g,'colour').replace(/\baging\b/g,'ageing');}
+function loose(s){let t=spelling(base(s));t=t.replace(/[.,;:!?"()\[\]…—–\-\/]/g,' ');return t.replace(/\s+/g,' ').trim();}
+function strict(s){let t=spelling(base(s));t=t.replace(/"/g,'');t=t.replace(/\s*[—–]\s*/g,' — ').replace(/\s+-\s+/g,' — ');t=t.replace(/\s+([,;:.!?])/g,'$1');t=t.replace(/[.!?]+$/,'');return t.replace(/\s+/g,' ').trim();}
+function gapNorm(v,zero){const b=base(v);if(ZERO.has(b)||(zero&&b===''))return 'ø';return loose(v);}
+
+/* ---- answer patterns: {a|b} alternatives, (x) optional, nesting allowed ---- */
+function splitTop(s){const parts=[];let d=0,cur='';for(const ch of s){if(ch==='{'||ch==='(')d++;else if(ch==='}'||ch===')')d--;if(ch==='|'&&d===0){parts.push(cur);cur='';}else cur+=ch;}parts.push(cur);return parts;}
+function closeAt(s,i){let d=0;for(let j=i;j<s.length;j++){const ch=s[j];if(ch==='{'||ch==='(')d++;else if(ch==='}'||ch===')'){d--;if(d===0)return j;}}return s.length-1;}
+function expand(s){let out=[''];let i=0;while(i<s.length){const c=s[i];if(c==='{'||c==='('){const j=closeAt(s,i);const opts=splitTop(s.slice(i+1,j)).flatMap(expand);if(c==='(')opts.push('');out=out.flatMap(r=>opts.map(o=>r+o));i=j+1;if(out.length>5000)out.length=5000;}else{out=out.map(r=>r+c);i++;}}return out;}
+function canonRaw(s){let out='',i=0;while(i<s.length){const c=s[i];if(c==='{'||c==='('){const j=closeAt(s,i);out+=canonRaw(splitTop(s.slice(i+1,j))[0]);i=j+1;}else{out+=c;i++;}}return out;}
+function canon(s){return canonRaw(s).replace(/\s+/g,' ').replace(/\s+([,;.!?])/g,'$1').trim();}
+const accCache=new Map();
+function accepted(it){if(!accCache.has(it)){const f=it.strict?strict:loose;accCache.set(it,new Set(it.a.flatMap(expand).map(f)));}return accCache.get(it);}
+
+/* ---- storage (per viewer, optional) ---- */
+const KEY='c2drill:';
+const store={get(k,d){try{const v=localStorage.getItem(KEY+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}};
+
+/* ---- index ---- */
+const INDEX={},ORDER=[],EXS={};
+UNITS.forEach(u=>u.ex.forEach(ex=>{EXS[ex.id]={ex,u};ex.items.forEach((it,i)=>{const id=ex.id+'.'+(i+1);INDEX[id]={id,it,ex,u,i};ORDER.push(id);});}));
+const ALL_EX=Object.keys(EXS);
+
+let sel=new Set(store.get('sel',ALL_EX).filter(x=>EXS[x]));
+let order=store.get('order','order')==='shuffle'?'shuffle':'order';
+let view=store.get('view','single')==='sheet'?'sheet':'single';
+let mistakes=store.get('mistakes',{});if(!mistakes||typeof mistakes!=='object')mistakes={};
+const expanded=new Set();
+let booted=false;
+let queue=[],pos=0,mode='normal',sess,results=[],cur=null;
+
+function newSession(){sess={done:0,correct:0,streak:0,best:0};results=[];}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function selItemCount(){return ORDER.filter(id=>sel.has(INDEX[id].ex.id)).length;}
+
+/* ---- rail ---- */
+function renderRail(){
+  const list=$('#unitList');
+  list.innerHTML=UNITS.map(u=>{
+    const ids=u.ex.map(e=>e.id);const on=ids.filter(id=>sel.has(id)).length;
+    const cnt=u.ex.reduce((s,e)=>s+e.items.length,0);const open=expanded.has(u.n);
+    return `<div class="unit"><div class="unit-head"><input type="checkbox" id="u${u.n}" data-unit="${u.n}" ${on===ids.length?'checked':''}><label for="u${u.n}"><span class="sec">§${u.n}</span><span class="uname">${esc(u.title)}</span></label><span class="ucount">${cnt}</span><button type="button" class="exp" data-exp="${u.n}" aria-expanded="${open}" aria-label="${open?'Hide':'Show'} exercises in unit ${u.n}">${open?'−':'+'}</button></div>
+    <div class="exlist" ${open?'':'hidden'}>${u.ex.map(e=>`<label class="exrow"><input type="checkbox" id="x${e.id.replace('.','-')}" data-ex="${e.id}" ${sel.has(e.id)?'checked':''}><span class="exid">${e.id}</span><span class="extitle">${esc(e.title)}</span><span class="ucount">${e.items.length}</span></label>`).join('')}</div></div>`;
+  }).join('');
+  UNITS.forEach(u=>{const ids=u.ex.map(e=>e.id);const on=ids.filter(id=>sel.has(id)).length;const cb=$('#u'+u.n);cb.indeterminate=on>0&&on<ids.length;});
+  const n=selItemCount();
+  $('#selCount').textContent=`${n} items`;
+  const nEx=ALL_EX.filter(x=>sel.has(x)).length;
+  $('#startBtn').textContent=n?(view==='sheet'?`Start drill · ${nEx} exercise${nEx===1?'':'s'}`:`Start drill · ${n} items`):'Select exercises to start';
+  $('#startBtn').disabled=!n;
+  $('#ordIn').checked=order==='order';$('#ordSh').checked=order==='shuffle';
+  $('#viewOne').checked=view==='single';$('#viewAll').checked=view==='sheet';
+}
+function saveSel(){store.set('sel',[...sel]);}
+
+$('#unitList').addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.unit){const u=UNITS.find(x=>x.n==t.dataset.unit);u.ex.forEach(ex=>t.checked?sel.add(ex.id):sel.delete(ex.id));}
+  else if(t.dataset.ex){t.checked?sel.add(t.dataset.ex):sel.delete(t.dataset.ex);}
+  saveSel();renderRail();
+  const again=$('#'+t.id);if(again)again.focus();
+});
+$('#unitList').addEventListener('click',e=>{const b=e.target.closest('[data-exp]');if(!b)return;const n=+b.dataset.exp;expanded.has(n)?expanded.delete(n):expanded.add(n);renderRail();const nb=$(`[data-exp="${n}"]`);if(nb)nb.focus();});
+$('#selAll').onclick=()=>{ALL_EX.forEach(x=>sel.add(x));saveSel();renderRail();};
+$('#selNone').onclick=()=>{sel.clear();saveSel();renderRail();};
+$$('input[name=order]').forEach(r=>r.addEventListener('change',()=>{order=r.value;store.set('order',order);}));
+$$('input[name=view]').forEach(r=>r.addEventListener('change',()=>{view=r.value;store.set('view',view);renderRail();start(mode==='mistakes'?'mistakes':'normal');}));
+$('#startBtn').onclick=()=>{start('normal');if(matchMedia('(max-width:880px)').matches){$('#rail').open=false;$('#sheet').scrollIntoView({behavior:'smooth',block:'start'});}};
+
+/* ---- session ---- */
+function start(m){
+  mode=m||'normal';let ids;
+  if(mode==='mistakes')ids=ORDER.filter(id=>mistakes[id]);
+  else if(mode==='retry')ids=results.filter(r=>!r.ok).map(r=>r.id);
+  else ids=ORDER.filter(id=>sel.has(INDEX[id].ex.id));
+  ids=[...new Set(ids)];
+  if(order==='shuffle')shuffle(ids);
+  if(view==='sheet'){const groups=[],map=new Map();ids.forEach(id=>{const x=INDEX[id].ex.id;if(!map.has(x)){const g={ex:x,ids:[]};map.set(x,g);groups.push(g);}map.get(x).ids.push(id);});ids=groups;}
+  queue=ids;pos=0;newSession();renderStats();renderItem();renderLog();
+}
+function renderStats(){
+  $('#stCorrect').textContent=sess.correct;$('#stDone').textContent=sess.done;
+  $('#stAcc').textContent=sess.done?Math.round(sess.correct/sess.done*100)+'%':'–';
+  $('#stStreak').textContent=sess.streak;
+}
+function record(ok,ans){cur.prevStreak=sess.streak;recordId(cur.id,ok,ans);}
+function recordId(id,ok,ans){
+  sess.done++;
+  if(ok){sess.correct++;sess.streak++;sess.best=Math.max(sess.best,sess.streak);delete mistakes[id];}
+  else{sess.streak=0;mistakes[id]={a:String(ans||'').slice(0,300),t:Date.now()};}
+  store.set('mistakes',mistakes);results.push({id,ok});renderStats();renderLog();
+}
+function stetId(id){
+  const r=[...results].reverse().find(x=>x.id===id&&!x.ok);if(!r)return;
+  r.ok=true;sess.correct++;
+  let s=0;for(let i=results.length-1;i>=0&&results[i].ok;i--)s++;
+  sess.streak=s;sess.best=Math.max(sess.best,s);
+  delete mistakes[id];store.set('mistakes',mistakes);renderStats();renderLog();
+}
+
+/* ---- rules ---- */
+function renderRules(u){
+  $('#rules summary').innerHTML=`<span class="sec">§${u.n}</span>Rules · ${esc(u.title)}`;
+  $('#rules ul').innerHTML=u.rules.map(r=>`<li>${r}</li>`).join('');
+}
+
+/* ---- item rendering ---- */
+function renderItem(){
+  const sheet=$('#sheet');
+  if(!queue.length){
+    sheet.innerHTML=`<p class="eyebrow">${mode==='normal'?'Nothing selected':'Nothing to retry'}</p><p class="empty">${mode==='normal'?'Choose units or exercises under Units and settings, then press Start drill.':'There are no missed items in this set.'}</p><div class="actions" style="padding-left:0"><button class="btn primary" id="emptyAll" type="button">Drill all 16 units</button></div>`;
+    $('#emptyAll').onclick=()=>{ALL_EX.forEach(x=>sel.add(x));saveSel();renderRail();start('normal');};
+    return;
+  }
+  if(pos>=queue.length){renderSummary();return;}
+  if(view==='sheet'){renderSheet();return;}
+  const e=INDEX[queue[pos]];const it=e.it;
+  cur={id:e.id,e,checked:false};
+  renderRules(e.u);
+  sheet.innerHTML=`<div class="sheet-head"><span><b>§${e.u.n}</b> ${esc(e.u.title)} · Exercise ${e.ex.id}</span><span>${mode==='mistakes'?'Mistake review · ':mode==='retry'?'Retry · ':''}${pos+1} / ${queue.length}</span></div>
+  <div class="bar" aria-hidden="true"><i style="width:${(pos/queue.length*100).toFixed(1)}%"></i></div>
+  <h2 class="ex-title">${esc(e.ex.title)}</h2><p class="ins">${esc(e.ex.ins)}</p>
+  <div class="item"><div class="margin"><span>${e.i+1}</span><span class="mark" id="mark" aria-hidden="true"></span></div><div class="body" id="body"></div></div>
+  <p class="hint" id="hint" hidden></p>
+  <div class="actions" id="actions"></div>
+  <div class="fb" id="fb" hidden aria-live="polite"></div>`;
+  const body=$('#body'),acts=$('#actions');
+  const B=(id,label,cls='')=>`<button type="button" class="btn ${cls}" id="${id}">${label}</button>`;
+  if(it.t==='gap'){
+    let h='';
+    if(it.ctx)h+=`<p class="ctx">${esc(it.ctx)}</p>`;
+    if(it.k)h+=`<p class="keyrow"><span class="key">${esc(it.k)}</span></p>`;
+    const w=Math.min(30,Math.max(6,...it.a.flatMap(a=>a.split('|')).map(x=>x.length))+1);
+    const parts=it.q.split('__');
+    h+=`<p class="prompt">`+parts.map((p,i)=>esc(p)+(i<parts.length-1?`<input class="gap" id="gap${i}" data-i="${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" style="width:calc(${w}ch + 10px)" aria-label="Gap ${i+1}">`:'')).join('')+`</p>`;
+    body.innerHTML=h;
+    acts.innerHTML=B('checkBtn','Check ↵','primary')+(e.ex.zero?B('zeroBtn','Insert Ø'):'')+B('hintBtn','Hint')+B('showBtn','Show answer','ghost')+B('skipBtn','Skip','ghost');
+    const gaps=$$('.gap');
+    gaps.forEach((g,i)=>g.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();const next=gaps.slice(i+1).find(x=>!x.value.trim());if(next&&!e.ex.zero)next.focus();else if(i<gaps.length-1&&e.ex.zero)gaps[i+1].focus();else checkGap(false);}}));
+    let lastGap=gaps[0];gaps.forEach(g=>g.addEventListener('focus',()=>{lastGap=g;}));
+    if(e.ex.zero)$('#zeroBtn').onclick=()=>{lastGap.value='Ø';const i=gaps.indexOf(lastGap);(gaps[i+1]||lastGap).focus();};
+    $('#checkBtn').onclick=()=>checkGap(false);$('#showBtn').onclick=()=>checkGap(true);
+    if(booted)gaps[0].focus({preventScroll:true});
+  }else if(it.t==='mc'){
+    const q=esc(it.q).split('__').join('<span class="blank" aria-label="gap"></span>');
+    body.innerHTML=`<p class="prompt src">${q}</p><div class="opts">${it.o.map((x,i)=>`<button type="button" class="opt" data-o="${i}"><span class="ol">${'abcd'[i]}</span><span>${esc(x)}</span></button>`).join('')}</div>`;
+    acts.innerHTML=B('hintBtn','Hint')+B('skipBtn','Skip','ghost');
+    $$('.opt').forEach(b=>b.onclick=()=>checkMc(+b.dataset.o));
+  }else if(it.t==='tr'||it.t==='err'){
+    let h=it.t==='tr'?`<p class="prompt src">${esc(it.q)}</p>`:'';
+    if(it.k)h+=`<p class="keyrow"><span class="key">${esc(it.k)}</span></p>`;
+    h+=`<textarea class="ans" id="ans" rows="2" autocomplete="off" autocapitalize="sentences" spellcheck="false" aria-label="${it.t==='err'?'Edit the sentence':'Your sentence'}" placeholder="${it.t==='err'?'':'Type your sentence'}"></textarea>`;
+    body.innerHTML=h;
+    const ta=$('#ans');if(it.t==='err')ta.value=it.q;
+    acts.innerHTML=B('checkBtn','Check ↵','primary')+B('hintBtn','Hint')+(it.t==='err'?B('resetBtn','Reset'):'')+B('showBtn','Show answer','ghost')+B('skipBtn','Skip','ghost');
+    ta.addEventListener('keydown',ev=>{if(ev.key==='Enter'&&!ev.shiftKey){ev.preventDefault();checkText(false);}});
+    if(it.t==='err')$('#resetBtn').onclick=()=>{ta.value=it.q;ta.focus();};
+    $('#checkBtn').onclick=()=>checkText(false);$('#showBtn').onclick=()=>checkText(true);
+    if(booted)ta.focus({preventScroll:true});
+  }else if(it.t==='open'){
+    body.innerHTML=`<p class="prompt src">${esc(it.q)}</p><textarea class="ans" id="ans" rows="3" aria-label="Your answer" placeholder="Your answer (optional). Ctrl+Enter reveals the model."></textarea>`;
+    acts.innerHTML=B('revealBtn','Reveal model answer','primary')+B('skipBtn','Skip','ghost');
+    $('#ans').addEventListener('keydown',ev=>{if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();revealOpen();}});
+    $('#revealBtn').onclick=revealOpen;
+  }else if(it.t==='hunt'){
+    body.innerHTML=`<textarea class="ans tall" id="ans" spellcheck="false" aria-label="Paragraph to correct"></textarea>`;
+    $('#ans').value=it.q;
+    acts.innerHTML=B('checkBtn','Check','primary')+B('hintBtn','Hint')+B('resetBtn','Reset')+B('showBtn','Show answer','ghost')+B('skipBtn','Skip','ghost');
+    $('#resetBtn').onclick=()=>{$('#ans').value=it.q;};
+    $('#checkBtn').onclick=()=>checkHunt(false);$('#showBtn').onclick=()=>checkHunt(true);
+    $('#ans').addEventListener('keydown',ev=>{if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();checkHunt(false);}});
+  }
+  const hb=$('#hintBtn');if(hb)hb.onclick=hint;
+  $('#skipBtn').onclick=next;
+}
+
+/* ---- hints ---- */
+function hint(){
+  const it=cur.e.it,h=$('#hint');cur.hinted=true;
+  if(it.t==='gap'){h.textContent='Starts with: '+it.a.map(a=>{const f=a.split('|')[0];return f==='Ø'?'Ø':f.slice(0,1)+'…';}).join('  ·  ');h.hidden=false;}
+  else if(it.t==='tr'||it.t==='err'){const words=canon(it.a[0]).split(' ');h.textContent='Begins: '+words.slice(0,Math.min(3,Math.max(1,words.length-2))).join(' ')+' …';h.hidden=false;}
+  else if(it.t==='mc'){
+    const wrong=$$('.opt').filter(b=>+b.dataset.o!==it.a&&!b.disabled);
+    if(it.o.length>2&&wrong.length>1){const b=wrong[Math.floor(Math.random()*wrong.length)];b.disabled=true;b.classList.add('out');h.textContent='One wrong option removed.';}
+    else{const r=$('#rules');r.open=true;r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1600);h.textContent='Check the rules below this sheet.';}
+    h.hidden=false;
+  }else if(it.t==='hunt'){h.textContent='Look for: a preposition, a tense, a dangling participle, the subjunctive, a relative pronoun, a verb pattern, an inversion, two conditional forms, a doubled linker, "albeit" and an article.';h.hidden=false;}
+}
+
+/* ---- feedback ---- */
+function feedback(ok,inner,opts={}){
+  const fb=$('#fb');fb.hidden=false;
+  const note=cur.e.it.n;
+  fb.innerHTML=`<p class="verdict ${ok?'ok':'bad'}" id="verdict">${opts.label||(ok?'Correct':'Not quite')}</p>${inner||''}${note?`<p class="note">${esc(note)}</p>`:''}`;
+  const mk=$('#mark');mk.textContent=ok?'✓':'✗';mk.className='mark '+(ok?'ok':'bad');
+  $('#hint').hidden=true;
+  const acts=$('#actions');
+  acts.innerHTML=`<button type="button" class="btn primary" id="nextBtn">${pos+1<queue.length?'Next item ↵':'See results ↵'}</button>`+(opts.stet&&!ok?`<button type="button" class="btn" id="stetBtn" title="Stet is the proofreader's mark for 'let it stand'.">Stet · count mine as right</button>`:'');
+  $('#nextBtn').onclick=next;
+  const st=$('#stetBtn');if(st)st.onclick=stet;
+  $('#nextBtn').focus({preventScroll:true});
+}
+function stet(){
+  if(!cur||cur.ok)return;cur.ok=true;
+  sess.correct++;sess.streak=(cur.prevStreak||0)+1;sess.best=Math.max(sess.best,sess.streak);
+  delete mistakes[cur.id];store.set('mistakes',mistakes);
+  const r=results[results.length-1];if(r&&r.id===cur.id)r.ok=true;
+  renderStats();renderLog();
+  const v=$('#verdict');v.className='verdict ok';v.textContent='Stet · counted as correct';
+  const mk=$('#mark');mk.textContent='✓';mk.className='mark ok';
+  const sb=$('#stetBtn');if(sb)sb.remove();$('#nextBtn').focus();
+}
+function next(){pos++;renderItem();}
+
+/* ---- checkers ---- */
+function checkGap(reveal){
+  if(cur.checked)return;
+  const it=cur.e.it,zero=!!cur.e.ex.zero,gaps=$$('.gap');
+  const vals=gaps.map(g=>g.value);
+  if(!reveal&&!zero&&vals.every(v=>!v.trim())){$('#hint').hidden=false;$('#hint').textContent='Fill in the gap first, or press Show answer.';gaps[0].focus();return;}
+  const per=it.a.map((alts,i)=>!reveal&&alts.split('|').map(a=>gapNorm(a,false)).includes(gapNorm(vals[i]||'',zero)));
+  const ok=!reveal&&per.every(Boolean);
+  gaps.forEach((g,i)=>{
+    const span=document.createElement('span');const right=it.a[i].split('|')[0];
+    const typed=vals[i].trim();
+    if(per[i]){span.className='g ok';span.textContent=typed||'Ø';}
+    else{span.className='g bad';span.innerHTML=(reveal?'':`<s>${esc(typed||(zero?'blank':'—'))}</s>`)+`<ins>${esc(right)}</ins>`;}
+    g.replaceWith(span);
+  });
+  cur.checked=true;cur.ok=ok;
+  const ans=reveal?'(answer shown)':vals.map(v=>v.trim()||(zero?'Ø':'—')).join(' · ');
+  record(ok,ans);
+  const alts=it.a.map((a,i)=>{const p=a.split('|');return p.length>1?`${it.a.length>1?`gap ${i+1}: `:''}${p.map(esc).join(' / ')}`:null;}).filter(Boolean);
+  feedback(ok,alts.length?`<p class="also"><span class="lbl">Accepted</span>${alts.join('; ')}</p>`:'',{stet:!reveal,label:reveal?'Answer shown':null});
+}
+function checkMc(i){
+  if(cur.checked)return;
+  const it=cur.e.it,ok=i===it.a;
+  $$('.opt').forEach(b=>{b.disabled=true;const o=+b.dataset.o;if(o===it.a)b.classList.add('right');else if(o===i)b.classList.add('wrong');});
+  cur.checked=true;cur.ok=ok;record(ok,it.o[i]);
+  feedback(ok,ok?'':`<p><span class="lbl">Answer</span><span class="answer">${esc(it.o[it.a])}</span></p>`);
+}
+function checkText(reveal){
+  if(cur.checked)return;
+  const it=cur.e.it,ta=$('#ans'),val=ta.value.trim();
+  if(!reveal&&!val){$('#hint').hidden=false;$('#hint').textContent='Type an answer first, or press Show answer.';ta.focus();return;}
+  const f=it.strict?strict:loose;
+  const unchanged=it.t==='err'&&f(val)===f(it.q);
+  const ok=!reveal&&accepted(it).has(f(val));
+  ta.readOnly=true;cur.checked=true;cur.ok=ok;
+  record(ok,reveal?'(answer shown)':val);
+  const others=it.a.slice(1).map(canon).filter((x,i,arr)=>arr.indexOf(x)===i).slice(0,3);
+  let h='';
+  if(!ok&&!reveal)h+=`<p class="yours"><span class="lbl">Yours</span><s>${esc(val)}</s>${unchanged?' <span class="also">(unchanged)</span>':''}</p>`;
+  h+=`<p><span class="lbl">${ok?'Model answer':'Correct version'}</span><span class="answer">${esc(canon(it.a[0]))}</span></p>`;
+  if(others.length)h+=`<p class="also"><span class="lbl">Also accepted</span>${others.map(esc).join(' · ')}</p>`;
+  feedback(ok,h,{stet:!reveal&&!unchanged,label:reveal?'Answer shown':null});
+}
+function revealOpen(){
+  if(cur.checked)return;
+  const it=cur.e.it;cur.checked=true;$('#ans').readOnly=true;
+  const fb=$('#fb');fb.hidden=false;
+  fb.innerHTML=`<p class="verdict" style="color:var(--accent)">Model answer</p><p class="answer">${esc(it.m)}</p>${it.n?`<p class="note">${esc(it.n)}</p>`:''}<p class="also">Compare with yours and mark yourself.</p>`;
+  $('#actions').innerHTML=`<button type="button" class="btn primary" id="gotBtn">I had it</button><button type="button" class="btn" id="notBtn">Not yet</button>`;
+  const self=ok=>{cur.ok=ok;record(ok,$('#ans').value.trim()||'(no answer)');const mk=$('#mark');mk.textContent=ok?'✓':'✗';mk.className='mark '+(ok?'ok':'bad');
+    $('#actions').innerHTML=`<button type="button" class="btn primary" id="nextBtn">${pos+1<queue.length?'Next item ↵':'See results ↵'}</button>`;$('#nextBtn').onclick=next;$('#nextBtn').focus({preventScroll:true});};
+  $('#gotBtn').onclick=()=>self(true);$('#notBtn').onclick=()=>self(false);$('#gotBtn').focus({preventScroll:true});
+}
+function checkHunt(reveal){
+  if(cur.checked)return;
+  const it=cur.e.it,ta=$('#ans'),val=ta.value;
+  const lv=loose(val),lq=loose(it.q);
+  if(!reveal&&lv.length<lq.length*0.7){$('#hint').hidden=false;$('#hint').textContent='Keep the whole paragraph and edit only the errors.';return;}
+  if(!reveal&&lv===lq){$('#hint').hidden=false;$('#hint').textContent='The paragraph is unchanged. Correct the errors first, or press Show answer.';return;}
+  const found=it.errs.map(er=>!reveal&&!lv.includes(loose(er.w)));
+  const n=found.filter(Boolean).length,ok=n===it.errs.length;
+  ta.readOnly=true;cur.checked=true;cur.ok=ok;
+  record(ok,reveal?'(answer shown)':`${n}/${it.errs.length} fixed`);
+  const list=`<ol class="hunt-list">${it.errs.map((er,i)=>`<li class="${found[i]?'found':'missed'}">${found[i]?'Fixed':'Missed'}: <span>${esc(er.f)}</span></li>`).join('')}</ol>`;
+  feedback(ok,`${reveal?'':`<p><span class="lbl">Score</span>You fixed ${n} of ${it.errs.length}.</p>`}${list}<p><span class="lbl">Corrected paragraph</span><span class="answer">${esc(it.m)}</span></p>`,{label:reveal?'Answer shown':(ok?'All 12 fixed':`${n} of ${it.errs.length} fixed`)});
+}
+
+
+/* ---- whole-exercise sheet ---- */
+function wsBody(e){
+  const it=e.it,uid=e.id.replace(/\./g,'-');let h='';
+  const key=it.k?`<p class="keyrow"><span class="key">${esc(it.k)}</span></p>`:'';
+  if(it.t==='gap'){
+    if(it.ctx)h+=`<p class="ctx">${esc(it.ctx)}</p>`;
+    h+=key;
+    const w=Math.min(30,Math.max(6,...it.a.flatMap(a=>a.split('|')).map(x=>x.length))+1);
+    const parts=it.q.split('__');
+    h+=`<p class="prompt">`+parts.map((p,i)=>esc(p)+(i<parts.length-1?`<input class="gap" id="g${uid}-${i}" data-i="${i}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" style="width:calc(${w}ch + 10px)" aria-label="Item ${e.i+1}, gap ${i+1}">`:'')).join('')+`</p>`;
+  }else if(it.t==='mc'){
+    const q=esc(it.q).split('__').join('<span class="blank" aria-label="gap"></span>');
+    h+=`<p class="prompt src">${q}</p><div class="opts">${it.o.map((x,i)=>`<button type="button" class="opt" data-o="${i}" aria-pressed="false"><span class="ol">${'abcd'[i]}</span><span>${esc(x)}</span></button>`).join('')}</div>`;
+  }else if(it.t==='tr'){
+    h+=`<p class="prompt src">${esc(it.q)}</p>${key}<textarea class="ans" id="a${uid}" rows="2" autocomplete="off" spellcheck="false" aria-label="Item ${e.i+1}: your sentence" placeholder="Type your sentence"></textarea>`;
+  }else if(it.t==='err'){
+    h+=`${key}<textarea class="ans" id="a${uid}" rows="2" autocomplete="off" spellcheck="false" aria-label="Item ${e.i+1}: edit the sentence">${esc(it.q)}</textarea>`;
+  }else if(it.t==='open'){
+    h+=`<p class="prompt src">${esc(it.q)}</p><textarea class="ans" id="a${uid}" rows="3" aria-label="Item ${e.i+1}: your answer" placeholder="Your answer (optional)"></textarea>`;
+  }else if(it.t==='hunt'){
+    h+=`<textarea class="ans tall" id="a${uid}" spellcheck="false" aria-label="Paragraph to correct">${esc(it.q)}</textarea>`;
+  }
+  return h;
+}
+function renderSheet(){
+  const g=queue[pos],{ex,u}=EXS[g.ex];renderRules(u);
+  cur={group:g,checked:false};
+  const sheet=$('#sheet');
+  sheet.innerHTML=`<div class="sheet-head"><span><b>§${u.n}</b> ${esc(u.title)} · Exercise ${ex.id}</span><span>${mode==='mistakes'?'Mistake review · ':mode==='retry'?'Retry · ':''}Exercise ${pos+1} / ${queue.length}</span></div>
+  <div class="bar" aria-hidden="true"><i style="width:${(pos/queue.length*100).toFixed(1)}%"></i></div>
+  <h2 class="ex-title">${esc(ex.title)}</h2><p class="ins">${esc(ex.ins)}${g.ids.length<ex.items.length?` <span class="also">(${g.ids.length} of ${ex.items.length} items)</span>`:''}</p>
+  <div class="ws-list">${g.ids.map(id=>{const e=INDEX[id];return `<div class="item ws" data-id="${id}"><div class="margin"><span>${e.i+1}</span><span class="mark" aria-hidden="true"></span></div><div class="body"><div class="ib">${wsBody(e)}</div><div class="ifb fb" hidden aria-live="polite"></div></div></div>`;}).join('')}</div>
+  <div class="actions sticky" id="actions"><button type="button" class="btn primary" id="checkAllBtn">Check all</button>${ex.zero?'<button type="button" class="btn" id="zeroBtn">Insert Ø</button>':''}<button type="button" class="btn ghost" id="showAllBtn">Show all answers</button><button type="button" class="btn ghost" id="skipBtn">Skip exercise</button><span class="ws-score" id="wsScore">${g.ids.length} item${g.ids.length===1?'':'s'}</span></div>`;
+  const fields=$$('#sheet .gap, #sheet textarea.ans');
+  let last=null;fields.forEach(f=>f.addEventListener('focus',()=>{last=f;}));
+  fields.forEach((f,i)=>f.addEventListener('keydown',ev=>{
+    if(ev.key!=='Enter')return;
+    if(ev.ctrlKey||ev.metaKey){ev.preventDefault();if(!cur.checked)checkAll(false);return;}
+    const t=INDEX[f.closest('.item').dataset.id].it.t;
+    if(ev.shiftKey||(f.tagName==='TEXTAREA'&&(t==='open'||t==='hunt')))return;
+    ev.preventDefault();const nx=fields[i+1];if(nx)nx.focus();else{const b=$('#checkAllBtn')||$('#nextBtn');if(b)b.focus();}
+  }));
+  $$('#sheet .opt').forEach(b=>b.onclick=()=>{const blk=b.closest('.item');if(blk.dataset.done)return;blk.querySelectorAll('.opt').forEach(o=>{o.classList.toggle('chosen',o===b);o.setAttribute('aria-pressed',String(o===b));});});
+  if(ex.zero)$('#zeroBtn').onclick=()=>{const t=(last&&last.classList.contains('gap')&&last.isConnected)?last:$('#sheet .gap');if(!t)return;t.value='Ø';const i=fields.indexOf(t);(fields[i+1]||t).focus();};
+  $('#checkAllBtn').onclick=()=>checkAll(false);$('#showAllBtn').onclick=()=>checkAll(true);$('#skipBtn').onclick=next;
+  if(booted&&fields[0])fields[0].focus({preventScroll:true});
+}
+function wsEval(b,reveal){
+  const id=b.dataset.id,e=INDEX[id],it=e.it,zero=!!e.ex.zero;
+  if(it.t==='gap'){
+    const gaps=[...b.querySelectorAll('.gap')],vals=gaps.map(g=>g.value);
+    const per=it.a.map((alts,i)=>!reveal&&alts.split('|').map(a=>gapNorm(a,false)).includes(gapNorm(vals[i]||'',zero)));
+    const ok=!reveal&&per.every(Boolean);
+    gaps.forEach((g,i)=>{const span=document.createElement('span');const right=it.a[i].split('|')[0];const typed=vals[i].trim();
+      if(per[i]){span.className='g ok';span.textContent=typed||'Ø';}
+      else{span.className='g bad';span.innerHTML=(reveal?'':`<s>${esc(typed||(zero?'blank':'—'))}</s>`)+`<ins>${esc(right)}</ins>`;}
+      g.replaceWith(span);});
+    const alts=it.a.map((a,i)=>{const p=a.split('|');return p.length>1?`${it.a.length>1?`gap ${i+1}: `:''}${p.map(esc).join(' / ')}`:null;}).filter(Boolean);
+    return {ok,ans:vals.map(v=>v.trim()||(zero?'Ø':'—')).join(' · '),html:alts.length?`<p class="also"><span class="lbl">Accepted</span>${alts.join('; ')}</p>`:'',stet:!reveal&&vals.some(v=>v.trim())};
+  }
+  if(it.t==='mc'){
+    const ch=b.querySelector('.opt.chosen'),i=ch?+ch.dataset.o:-1,ok=!reveal&&i===it.a;
+    b.querySelectorAll('.opt').forEach(o=>{o.disabled=true;const k=+o.dataset.o;if(k===it.a)o.classList.add('right');else if(k===i)o.classList.add('wrong');o.classList.remove('chosen');});
+    return {ok,ans:i>=0?it.o[i]:'(no answer)',html:ok?'':`${i<0&&!reveal?'<p class="also">No option chosen.</p>':''}<p><span class="lbl">Answer</span><span class="answer">${esc(it.o[it.a])}</span></p>`,stet:false};
+  }
+  if(it.t==='tr'||it.t==='err'){
+    const ta=b.querySelector('textarea'),val=ta.value.trim(),f=it.strict?strict:loose;
+    const unchanged=it.t==='err'&&f(val)===f(it.q);
+    const ok=!reveal&&!!val&&accepted(it).has(f(val));ta.readOnly=true;
+    const others=it.a.slice(1).map(canon).filter((x,k,arr)=>arr.indexOf(x)===k).slice(0,3);
+    let h='';
+    if(!ok&&!reveal)h+=val?`<p class="yours"><span class="lbl">Yours</span><s>${esc(val)}</s>${unchanged?' <span class="also">(unchanged)</span>':''}</p>`:'<p class="also">No answer given.</p>';
+    h+=`<p><span class="lbl">${ok?'Model answer':'Correct version'}</span><span class="answer">${esc(canon(it.a[0]))}</span></p>`;
+    if(others.length)h+=`<p class="also"><span class="lbl">Also accepted</span>${others.map(esc).join(' · ')}</p>`;
+    return {ok,ans:val||'(no answer)',html:h,stet:!reveal&&!!val&&!unchanged};
+  }
+  if(it.t==='hunt'){
+    const ta=b.querySelector('textarea'),lv=loose(ta.value),lq=loose(it.q),short=lv.length<lq.length*0.7;
+    const found=it.errs.map(er=>!reveal&&!short&&!lv.includes(loose(er.w)));
+    const n=found.filter(Boolean).length,ok=n===it.errs.length;ta.readOnly=true;
+    const list=`<ol class="hunt-list">${it.errs.map((er,k)=>`<li class="${found[k]?'found':'missed'}">${found[k]?'Fixed':'Missed'}: <span>${esc(er.f)}</span></li>`).join('')}</ol>`;
+    return {ok,ans:`${n}/${it.errs.length} fixed`,html:`${reveal?'':`<p><span class="lbl">Score</span>You fixed ${n} of ${it.errs.length}.${short?' (Most of the paragraph was deleted.)':''}</p>`}${list}<p><span class="lbl">Corrected paragraph</span><span class="answer">${esc(it.m)}</span></p>`,stet:false};
+  }
+}
+function setWsMark(b,ok){b.dataset.ok=ok?'1':'0';const m=b.querySelector('.mark');m.textContent=ok?'✓':'✗';m.className='mark '+(ok?'ok':'bad');}
+function updateWsScore(){
+  const bl=$$('#sheet .item.ws'),graded=bl.filter(b=>b.dataset.ok!==undefined),ok=graded.filter(b=>b.dataset.ok==='1').length;
+  const pending=bl.filter(b=>b.dataset.done&&b.dataset.ok===undefined).length;
+  const el=$('#wsScore');if(el)el.textContent=(graded.length?`${ok} of ${graded.length} correct`:'')+(pending?`${graded.length?' · ':''}${pending} to mark yourself`:'');
+}
+function checkAll(reveal){
+  if(cur.checked)return;cur.checked=true;
+  $$('#sheet .item.ws').forEach(b=>{
+    if(b.dataset.done)return;b.dataset.done='1';
+    const id=b.dataset.id,it=INDEX[id].it,ifb=b.querySelector('.ifb');ifb.hidden=false;
+    if(it.t==='open'){
+      const ta=b.querySelector('textarea');ta.readOnly=true;
+      ifb.innerHTML=`<p class="verdict" style="color:var(--accent)">Model answer</p><p class="answer">${esc(it.m)}</p>${it.n?`<p class="note">${esc(it.n)}</p>`:''}<div class="row-tools"><button type="button" class="btn small primary" data-self="1">I had it</button><button type="button" class="btn small" data-self="0">Not yet</button></div>`;
+      ifb.querySelectorAll('[data-self]').forEach(btn=>btn.onclick=()=>{const ok=btn.dataset.self==='1';recordId(id,ok,ta.value.trim()||'(no answer)');setWsMark(b,ok);btn.parentElement.remove();updateWsScore();});
+      return;
+    }
+    const r=wsEval(b,reveal);
+    recordId(id,r.ok,reveal?'(answer shown)':r.ans);setWsMark(b,r.ok);
+    ifb.innerHTML=`<p class="verdict ${r.ok?'ok':'bad'}">${reveal?'Answer shown':r.ok?'Correct':'Not quite'}</p>${r.html||''}${it.n?`<p class="note">${esc(it.n)}</p>`:''}${r.stet&&!r.ok?`<div class="row-tools"><button type="button" class="btn small" data-stet title="Stet is the proofreader's mark for 'let it stand'.">Stet · count mine as right</button></div>`:''}`;
+    const sb=ifb.querySelector('[data-stet]');
+    if(sb)sb.onclick=()=>{stetId(id);setWsMark(b,true);const v=ifb.querySelector('.verdict');v.className='verdict ok';v.textContent='Stet · counted as correct';sb.parentElement.remove();updateWsScore();};
+  });
+  $('#actions').innerHTML=`<button type="button" class="btn primary" id="nextBtn">${pos+1<queue.length?'Next exercise':'See results'}</button><span class="ws-score" id="wsScore"></span>`;
+  $('#nextBtn').onclick=next;updateWsScore();
+  const first=$('#sheet .item.ws');if(first&&first.scrollIntoView)first.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---- summary ---- */
+function renderSummary(){
+  const total=results.length,correct=results.filter(r=>r.ok).length,wrong=total-correct;
+  const by={};results.forEach(r=>{const u=INDEX[r.id].u;(by[u.n]=by[u.n]||{u,c:0,t:0});by[u.n].t++;if(r.ok)by[u.n].c++;});
+  const rows=Object.values(by).sort((a,b)=>a.u.n-b.u.n).map(x=>`<tr><td><span class="sec">§${x.u.n}</span>${esc(x.u.title)}</td><td class="n">${x.c} / ${x.t}</td></tr>`).join('');
+  $('#sheet').innerHTML=`<div class="summary"><p class="eyebrow">${mode==='mistakes'?'Mistake review complete':mode==='retry'?'Retry complete':'Session complete'}</p>
+  <h2>${total?`${correct} of ${total} correct`:'No answers recorded'}</h2>
+  <p class="ins">${total?`${Math.round(correct/total*100)}% accuracy · best streak ${sess.best}`:'Every item was skipped.'}</p>
+  ${rows?`<table class="byunit"><tbody>${rows}</tbody></table>`:''}
+  <div class="actions" style="padding-left:0">${wrong?`<button type="button" class="btn primary" id="retryBtn">Retry the ${wrong} I missed</button>`:''}<button type="button" class="btn ${wrong?'':'primary'}" id="againBtn">Start again</button></div></div>`;
+  const r=$('#retryBtn');if(r)r.onclick=()=>start('retry');
+  $('#againBtn').onclick=()=>start(mode==='mistakes'?'mistakes':'normal');
+  (r||$('#againBtn')).focus({preventScroll:true});
+}
+
+/* ---- mistake log ---- */
+function snippet(it){let s=(it.ctx||it.q).replace(/__/g,'……');return s.length>96?s.slice(0,94)+'…':s;}
+function answerText(it){
+  if(it.t==='gap')return it.a.map(a=>a.split('|')[0]).join(' · ');
+  if(it.t==='mc')return it.o[it.a];
+  if(it.t==='tr'||it.t==='err')return canon(it.a[0]);
+  if(it.t==='open')return it.m.length>110?it.m.slice(0,108)+'…':it.m;
+  return '12 corrections';
+}
+function renderLog(){
+  const ids=Object.keys(mistakes).filter(id=>INDEX[id]).sort((a,b)=>mistakes[b].t-mistakes[a].t);
+  const log=$('#log');
+  log.innerHTML=`<div class="log-head"><h3>Mistake log<span class="count">${ids.length}</span></h3>${ids.length?`<div class="row-tools"><button type="button" class="btn small primary" id="drillMis">Drill my mistakes</button><button type="button" class="btn small ghost" id="clearMis">Clear log</button></div>`:''}</div>
+  ${ids.length?`<ol class="loglist">${ids.slice(0,15).map(id=>{const it=INDEX[id].it;return `<li><span class="lid">${id}</span><span class="lq">${esc(snippet(it))}</span><span class="la">→ ${esc(answerText(it))}</span></li>`;}).join('')}</ol>${ids.length>15?`<p class="log-empty">Showing the 15 most recent of ${ids.length}.</p>`:''}`:`<p class="log-empty">Items you miss are listed here and kept in this browser. Answer one correctly later and it leaves the log.</p>`}`;
+  const d=$('#drillMis');if(d)d.onclick=()=>{start('mistakes');$('#sheet').scrollIntoView({behavior:'smooth',block:'start'});};
+  const c=$('#clearMis');if(c)c.onclick=()=>{if(c.dataset.armed){mistakes={};store.set('mistakes',mistakes);renderLog();}else{c.dataset.armed='1';c.textContent='Click again to clear';setTimeout(()=>{if(c.isConnected){delete c.dataset.armed;c.textContent='Clear log';}},3000);}};
+}
+
+/* ---- boot ---- */
+$('#totalItems').textContent=ORDER.length;
+try{$('#rail').open=matchMedia('(min-width:881px)').matches;}catch(e){$('#rail').open=true;}
+renderRail();
+start('normal');
+booted=true;
+
+</script>
+
+<style id="mgate-css">
+.mg-back{position:fixed;inset:0;z-index:2147483000;background:rgba(15,20,18,.5);display:grid;place-items:center;padding:16px}
+.mg-card{width:min(400px,100%);background:#fff;color:#1b2421;border-radius:16px;padding:20px 20px 16px;box-shadow:0 18px 50px rgba(0,0,0,.3);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mg-card h2{margin:0 0 6px;font-size:20px;line-height:1.25;font-weight:700;letter-spacing:0;text-transform:none;color:inherit}
+.mg-card p{margin:0 0 6px;color:#4a5752}
+.mg-n{display:inline-block;min-width:1.8em;text-align:center;font-weight:700;color:#b5442f;background:#f7e5e0;border-radius:999px;padding:0 8px;margin-right:4px}
+.mg-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mg-row button{font:600 15px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;border-radius:12px;min-height:46px;padding:0 16px;cursor:pointer;border:1px solid #cfd8d3;background:#fff;color:#1b2421;flex:1 1 auto}
+.mg-row .mg-go{background:#2b7a5e;border-color:#2b7a5e;color:#fff;flex:2 1 auto}
+.mg-row button:focus-visible{outline:3px solid #2b7a5e;outline-offset:2px}
+.mg-small{font-size:12.5px;color:#6b7873;margin-top:10px}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .mg-card{background:#19211f;color:#e3ebe7}html:not([data-theme=light]) .mg-card p{color:#a9b8b1}html:not([data-theme=light]) .mg-row button{background:#19211f;color:#e3ebe7;border-color:#34413c}html:not([data-theme=light]) .mg-row .mg-go{background:#62c39c;border-color:#62c39c;color:#0f1714}html:not([data-theme=light]) .mg-n{background:#3a221d;color:#e58169}}
+</style>
+<script>
+/* Mistake gate (added): once 20 mistakes are waiting, a pop-up offers to redo them
+   before the next new exercise. "Not now" asks again after 5 more mistakes. */
+(function(A){
+  var LIMIT=20,KEY='mgate-snooze',bypass=false,open=null;
+  function n(){try{return A.count()||0}catch(e){return 0}}
+  function sz(){try{return +localStorage.getItem(KEY)||0}catch(e){return 0}}
+  function setSz(v){try{if(v)localStorage.setItem(KEY,String(v));else localStorage.removeItem(KEY)}catch(e){}}
+  function should(){if(bypass||open)return false;try{if(A.inReview())return false}catch(e){return false}
+    var c=n();if(c<LIMIT){if(sz())setSz(0);return false}var s=sz();return !s||c>=s+5}
+  function close(){if(open){open.remove();open=null}}
+  function pop(btn){var c=n();var d=document.createElement('div');d.className='mg-back';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-labelledby','mg-h');
+    d.innerHTML='<div class="mg-card"><h2 id="mg-h">Time to redo your mistakes</h2><p><span class="mg-n">'+c+'</span>mistakes are waiting for you.</p><p>Redo them now, before new exercises. Each one you get right comes off the list.</p><div class="mg-row"><button type="button" class="mg-go">Redo '+Math.min(LIMIT,c)+' mistakes</button><button type="button" class="mg-later">Not now</button></div><p class="mg-small">“Not now” continues with the new exercise. I’ll ask again after 5 more mistakes.</p></div>';
+    document.body.appendChild(d);open=d;
+    d.querySelector('.mg-go').onclick=function(){close();setSz(0);try{A.start()}catch(e){console.error(e)}};
+    d.querySelector('.mg-later').onclick=function(){close();setSz(c);if(btn&&btn.isConnected){bypass=true;try{btn.click()}finally{bypass=false}}};
+    d.addEventListener('click',function(e){if(e.target===d){close()}});
+    d.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){var b=d.querySelectorAll('button'),f=b[0],l=b[b.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}});
+    setTimeout(function(){var g=d.querySelector('.mg-go');if(g)g.focus({preventScroll:true})},30)}
+  addEventListener('click',function(e){if(bypass||open)return;var b=null;try{b=A.isNext(e.target)}catch(x){}if(!b||!should())return;
+    e.preventDefault();e.stopImmediatePropagation();pop(b)},true);
+  ['pointerdown','touchstart','mousedown'].forEach(function(t){addEventListener(t,function(e){if(open&&!open.contains(e.target)){e.stopImmediatePropagation()}},true)});
+  addEventListener('keydown',function(e){if(open){if(!open.contains(e.target)){e.preventDefault();e.stopImmediatePropagation()}return}
+    if(e.key!=='Enter'||e.shiftKey||e.altKey||e.ctrlKey||e.metaKey||e.isComposing)return;var t=e.target;if(t&&t.tagName==='TEXTAREA')return;
+    var b=null;try{b=A.enterNext(e)}catch(x){}if(!b||!should())return;e.preventDefault();e.stopImmediatePropagation();pop(b)},true);
+  window.__mgate={count:n,should:should,open:function(){pop(null)},start:function(){setSz(0);try{A.start()}catch(e){console.error(e)}}};
+})({
+  count:function(){return Object.keys(mistakes).length},
+  inReview:function(){return mode!=='normal'},
+  isNext:function(t){var b=t.closest&&t.closest('#nextBtn,#skipBtn,#againBtn');return b&&mode==='normal'?b:null},
+  enterNext:function(){if(mode!=='normal')return null;var b=document.getElementById('nextBtn');return b&&b.offsetParent&&!b.disabled?b:null},
+  start:function(){start('mistakes');try{document.getElementById('sheet').scrollIntoView({block:'start'})}catch(e){}}
+});
+</script>
+</body></html>

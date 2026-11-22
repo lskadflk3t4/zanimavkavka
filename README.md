@@ -7,6 +7,7 @@ An installable web app (PWA) with Russian, German, Chinese (HSK), French and Eng
 1. Create a new **public** repository on GitHub (for example `language-drills`).
 2. Click **Add file → Upload files** and upload the contents of this folder in three goes, because GitHub's web uploader takes at most 100 files at a time:
    - all the loose files at the top (`index.html`, `listening-data.json`, `listening2-data.json`, `listening2-lex.json`, `story-data.json`, `story-lex.json`, `dehoer-data.json`, `sw.js`, `manifest.webmanifest`, `README.md`, `.nojekyll`) together with the `icons` folder;
+   - the `apps` folder (one page per drill) and the `fonts` folder;
    - the `audio-1` folder;
    - the `audio-2` folder;
    - the `audio-3` folder;
@@ -27,9 +28,12 @@ From then on it opens from the home screen and works with no connection.
 
 ## Good to know
 
-- **Sync between devices:** open ⋮ → *Sync between devices*, follow the link to create a GitHub token with only "gist" ticked, paste it and tap *Connect GitHub sync*. Do the same on every device with the same token. Progress is kept in a private gist called `language-drills-sync.json` in your GitHub account. It syncs when the app opens, about every 20–30 seconds while you drill, and when you leave the app. Offline changes sync later. Without sync, use the backup option in ⋮ to move progress by hand.
+- **Sync between devices:** open ⋮ → *Sync between devices*, follow the link to create a *fine-grained* GitHub token whose only permission is **Gists: Read and write**, with an expiry date, paste it and tap *Connect GitHub sync*. Do the same on every device with the same token. Progress is kept in a private gist called `language-drills-sync.json` in your GitHub account. It syncs when the app opens, about every 20–30 seconds while you drill, and when you leave the app. Offline changes sync later. Without sync, use the backup option in ⋮ to move progress by hand.
 - **Flashcards** (听力 / 听力 2 / 神秘的电话 “My words”, 生词卡, Hören “Meine Wörter”, Meine Wörter · Karten): choose how many cards per round (10, 20, 30, 50, all, or type your own number). New or missed cards need “knew it” three times — they come back in the same round — and then return tomorrow, in 3 days, 7, 14, 30, 60 and 120 days.
-- **When you change files later**, open `sw.js`, raise `const VERSION='v1'` to `'v2'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
+- **When you change files later**, open `sw.js`, raise `const VERSION='v44'` to `'v45'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
+- **How it is built:** `index.html` is only the frame (navigation, Today, sync, settings, about 250 KB). Each drill is its own page in `apps/` and is loaded the first time you open it; the fonts are files in `fonts/` that every drill shares. To change a drill, edit its file in `apps/` directly. Drills you have not used for 20 minutes (or beyond the last four) are closed to save memory; they reopen where you were.
+- **Where progress is kept:** in the browser's IndexedDB database `language-drills` on each device (much roomier than localStorage, and not shared with your other apps' localStorage). A red notice appears if a save ever fails, for example when the device is full; the app keeps your changes and tries again. Updating from an older version moves existing progress over automatically.
+- **Other apps on the same address:** all your GitHub Pages projects share one web address (`<username>.github.io`), so they share the browser's offline storage. This app only touches its own offline files (named `drills-…`). The sync key is stored separately from your progress, is not in backups, and the page only talks to this site and GitHub (a Content-Security-Policy blocks everything else). For full separation, give each app its own address, for example a custom domain per project.
 - `.nojekyll` tells GitHub to serve the files exactly as they are, so keep it.
 
 ## Export flashcards to Anki

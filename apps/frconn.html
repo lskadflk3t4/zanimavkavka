@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Connectors</title>
+<style>
+:root{
+  --bg:#F2F5F3;--surface:#FFFFFF;--ink:#1B2421;--muted:#5D6B66;--line:#D8E0DC;
+  --jade:#2B7A5E;--jade-soft:#E1EFE9;--seal:#B5442F;--seal-soft:#F7E5E0;--gold:#9A6A12;--gold-soft:#F6ECD6;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-han:"Noto Serif SC","Songti SC","PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+button,input,textarea{font:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 90px}
+header.top{padding:22px 0 8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-read);font-weight:600;font-size:clamp(22px,5vw,30px);line-height:1.2;margin:2px 0 4px}
+h1 .zh{font-family:var(--f-han)}
+.lede{color:var(--muted);margin:0 0 6px;max-width:60ch}
+.seg{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:10px 0 14px;overflow-x:auto;scrollbar-width:none}
+.seg button{appearance:none;border:0;background:none;font-weight:600;color:var(--muted);padding:10px 12px 9px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;min-height:44px}
+.seg button[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px;align-items:center}
+.opts .lab{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);min-width:64px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-size:13.5px;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--jade-soft);border-color:var(--jade);color:var(--jade);font-weight:600}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;min-height:44px}
+.btn:hover{border-color:var(--jade)}
+.btn.pri{background:var(--jade);border-color:var(--jade);color:var(--bg)}
+.btn:disabled{opacity:.45;cursor:default}
+h2{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);margin:22px 0 8px;font-weight:700}
+.sets{display:grid;gap:8px}
+.set{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:4px 12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;cursor:pointer;width:100%}
+.set:hover{border-color:var(--jade)}
+.set .no{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted);line-height:1.2}
+.set .no b{display:block;font-family:var(--f-han);font-size:15px;color:var(--jade);font-weight:600}
+.set .t{font-weight:600;line-height:1.3}
+.set .t small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.set .sc{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.set .sc b{color:var(--jade)}
+.bar{grid-column:1/-1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--jade)}
+.special{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 22px -18px rgba(0,0,0,.4)}
+.prog{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.prog .pbar{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog .pbar i{display:block;height:100%;background:var(--jade);transition:width .25s}
+.play{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pb{width:52px;height:52px;border-radius:50%;border:0;background:var(--jade);color:var(--bg);cursor:pointer;display:grid;place-items:center;flex:none}
+.pb svg{width:20px;height:20px;fill:currentColor}
+.pb.on{box-shadow:0 0 0 5px var(--jade-soft)}
+.small{font-size:13px;color:var(--muted)}
+.prompt-en{font-family:var(--f-read);font-size:17px;line-height:1.4}
+.prompt-en.off{color:var(--muted);font-style:italic;font-size:14px;font-family:var(--f-ui)}
+.pyhint{color:var(--jade);font-size:14px}
+.ans{min-height:64px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.ans.empty::before{content:"Tap the blocks in order";color:var(--muted);font-size:13.5px;padding:6px}
+.bank{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.tile{font-family:var(--f-han);font-size:19px;line-height:1.2;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 11px;cursor:pointer;min-height:44px;min-width:44px;user-select:none;box-shadow:0 1px 0 var(--line)}
+.tile:hover{border-color:var(--jade)}
+.tile.used{visibility:hidden}
+.tile.ok{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.tile.bad{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.tile.given{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px 12px;font-family:var(--f-han);font-size:20px;line-height:1.5;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row .sp{flex:1}
+.fb{border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.fb.ok{background:var(--jade-soft)}
+.fb.bad{background:var(--seal-soft)}
+.fb .v{font-weight:700}
+.fb.ok .v{color:var(--jade)}.fb.bad .v{color:var(--seal)}
+.han{font-family:var(--f-han);font-size:20px;line-height:1.55}
+.han .m{color:var(--seal);text-decoration:underline wavy;text-underline-offset:4px}
+.han .x{color:var(--seal);text-decoration:line-through}
+.han .g{color:var(--jade)}
+.han .tw{color:var(--gold);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+.fb .py{color:var(--jade);font-size:14px}
+.fb .en{color:var(--muted);font-size:14px}
+.done{text-align:center;padding:26px 10px;display:grid;gap:10px;justify-items:center}
+.done .big{font-family:var(--f-read);font-size:40px;color:var(--jade);line-height:1}
+.mini{display:grid;gap:6px;text-align:left;width:100%;margin-top:8px}
+.mini div{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;font-size:14px}
+.mini .han{font-size:16px}
+.mk{font-weight:700}.mk.g1{color:var(--jade)}.mk.g0{color:var(--seal)}.mk.gh{color:var(--gold)}
+.back{border:0;background:none;color:var(--jade);font-weight:600;cursor:pointer;padding:6px 0;min-height:40px}
+.note{font-size:12.5px;color:var(--muted)}
+.ab{display:grid;gap:6px}
+.ab div{font-family:var(--f-read);font-size:17px;line-height:1.45;background:var(--bg);border-radius:10px;padding:9px 12px}
+.ab b{font-family:var(--f-ui);font-size:12px;color:var(--muted);margin-right:6px}
+.use{font-size:14px}.use b{color:var(--seal);font-size:16px}
+.gapq{font-family:var(--f-read);font-size:19px;line-height:1.5}
+.gapq .gp{display:inline-block;min-width:70px;border-bottom:2px solid var(--seal);color:var(--seal);text-align:center;font-weight:700}
+.opts.ch{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.opts.ch .opt{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:16px;min-height:48px;text-align:left}
+.opts.ch .opt.ok{border-color:var(--jade);background:var(--jade-soft)}.opts.ch .opt.bad{border-color:var(--seal);background:var(--seal-soft)}
+.cl{display:grid;gap:8px}
+.cn{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 14px;display:grid;gap:4px}
+.cn .f{font-weight:700;font-size:17px;color:var(--jade)}
+.cn .m{font-size:14.5px}.cn .nt{font-size:13.5px;color:var(--muted)}
+.cn .ex{font-family:var(--f-read);font-size:15px;border-left:3px solid var(--line);padding-left:9px}
+.tag{display:inline-block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:6px;color:var(--muted);vertical-align:2px}
+.tag.reg-c{color:#9A6A12;border-color:#9A6A12}.tag.reg-e{color:#2E5FA8;border-color:#2E5FA8}.tag.reg-l{color:#7B3FA0;border-color:#7B3FA0}
+.cn .row{gap:6px}
+.lvbar{display:flex;gap:6px;flex-wrap:wrap}
+.cat h2{margin-top:18px}
+.src{font-size:12px;color:var(--muted)}
+.ch-hint{font-size:13px;color:var(--muted)}
+
+body.inround header.top{display:none}body.inround .wrap{padding-top:8px}
+.cfg{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:0 0 12px}
+.cfg>summary{cursor:pointer;list-style:none;padding:11px 14px;font-weight:600;min-height:44px}
+.cfg>summary::-webkit-details-marker{display:none}
+.cfg>summary small{font-weight:400;color:var(--muted);margin-left:6px}
+.cfg[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.cfg .opts{padding:0 12px}
+@media (max-width:480px){.tile{font-size:18px;padding:7px 9px}.han{font-size:18px}textarea{font-size:18px}}
+</style></head><body>
+<div class="wrap">
+<header class="top" id="hd">
+  <div class="eyebrow" id="eyebrow"></div>
+  <h1 id="h1"></h1>
+  <p class="lede" id="lede"></p>
+</header>
+<div id="app"></div>
+</div>
+<audio id="au" preload="none"></audio>
+<script>
+const CFG={"lang":"fr","han":false,"levels":["C1","C2"],"regs":{"n":"courant","e":"soutenu","l":"littéraire"},"cats":{"conc":"Concession","contr":"Opposition","cause":"Cause","cond":"Condition & hypothèse","cons":"Conséquence","purp":"But","time":"Temps","add":"Addition, gradation & corrélation","comp":"Comparaison & proportion","log":"Articulations logiques du discours"},"conns":[{"id":"bien_que","f":"bien que","cat":"conc","reg":"n","lv":"C1","m":"although","nt":"Subjonctif. Peut se construire sans verbe : bien que fatigué, …"},{"id":"quoique","f":"quoique","cat":"conc","reg":"e","lv":"C1","m":"although","nt":"Subjonctif ; ne pas confondre avec quoi que (whatever)."},{"id":"encore_que","f":"encore que","cat":"conc","reg":"l","lv":"C2","m":"although, albeit","nt":"Subjonctif ; corrige ou nuance ce qui précède."},{"id":"si_que","f":"si … que","cat":"conc","reg":"e","lv":"C2","m":"however (adjective)","nt":"Si + adjectif + que + subjonctif."},{"id":"quelque_que","f":"quelque … que","cat":"conc","reg":"l","lv":"C2","m":"however, whatever","nt":"Quelque + adjectif (invariable) ou nom (accordé) + que + subjonctif."},{"id":"quoi_que","f":"quoi que / où que / qui que","cat":"conc","reg":"e","lv":"C1","m":"whatever / wherever / whoever","nt":"Subjonctif."},{"id":"quand_bien","f":"quand bien même","cat":"conc","reg":"l","lv":"C2","m":"even if, even though","nt":"Conditionnel dans les deux propositions."},{"id":"meme_si","f":"même si","cat":"conc","reg":"n","lv":"C1","m":"even if","nt":"Indicatif ; jamais de futur ni de conditionnel après même si."},{"id":"pour_autant","f":"pour autant / (n')en … pas moins","cat":"conc","reg":"e","lv":"C2","m":"for all that, nonetheless","nt":""},{"id":"il_nen_reste","f":"il n'en reste pas moins que","cat":"conc","reg":"e","lv":"C2","m":"the fact remains that","nt":"Indicatif."},{"id":"alors_que","f":"alors que / tandis que","cat":"contr","reg":"n","lv":"C1","m":"whereas, while","nt":"Indicatif."},{"id":"en_revanche","f":"en revanche / par contre","cat":"contr","reg":"e","lv":"C1","m":"on the other hand","nt":"Par contre est critiqué par les puristes à l'écrit soutenu."},{"id":"au_lieu","f":"au lieu de / plutôt que de","cat":"contr","reg":"n","lv":"C1","m":"instead of, rather than","nt":"+ infinitif."},{"id":"puisque","f":"puisque","cat":"cause","reg":"n","lv":"C1","m":"since (the cause is known)","nt":"Indicatif."},{"id":"dans_la_mesure","f":"dans la mesure où","cat":"cause","reg":"e","lv":"C1","m":"insofar as, inasmuch as","nt":"Indicatif."},{"id":"dautant_que","f":"d'autant (plus) que","cat":"cause","reg":"e","lv":"C1","m":"all the more so as","nt":"Indicatif."},{"id":"etant_donne","f":"étant donné que / vu que","cat":"cause","reg":"e","lv":"C1","m":"given that","nt":"Indicatif."},{"id":"non_que","f":"non que / ce n'est pas que","cat":"cause","reg":"l","lv":"C2","m":"not that","nt":"Subjonctif : la cause écartée. La vraie cause suit : mais …"},{"id":"sous_pretexte","f":"sous prétexte que","cat":"cause","reg":"n","lv":"C1","m":"on the pretext that","nt":"Indicatif ; la cause est jugée fausse."},{"id":"a_moins_que","f":"à moins que (ne)","cat":"cond","reg":"e","lv":"C1","m":"unless","nt":"Subjonctif, ne explétif facultatif en style soutenu."},{"id":"pourvu_que","f":"pourvu que","cat":"cond","reg":"n","lv":"C1","m":"provided that","nt":"Subjonctif."},{"id":"pour_peu_que","f":"pour peu que","cat":"cond","reg":"l","lv":"C2","m":"if only, if ever so little","nt":"Subjonctif."},{"id":"a_condition","f":"à condition que","cat":"cond","reg":"n","lv":"C1","m":"on condition that","nt":"Subjonctif ; à condition de + infinitif."},{"id":"au_cas_ou","f":"au cas où","cat":"cond","reg":"n","lv":"C1","m":"in case","nt":"Conditionnel."},{"id":"si_tant_est","f":"si tant est que","cat":"cond","reg":"l","lv":"C2","m":"assuming (that), if indeed","nt":"Subjonctif ; exprime un doute."},{"id":"pour_peu","f":"à supposer que / en admettant que","cat":"cond","reg":"e","lv":"C2","m":"supposing that","nt":"Subjonctif."},{"id":"si_bien_que","f":"si bien que / de sorte que","cat":"cons","reg":"n","lv":"C1","m":"so that (result)","nt":"Indicatif pour la conséquence réelle."},{"id":"au_point_que","f":"au point que / tellement … que","cat":"cons","reg":"n","lv":"C1","m":"so much that","nt":"Indicatif."},{"id":"aussi_inv","f":"aussi (+ inversion)","cat":"cons","reg":"l","lv":"C2","m":"therefore, and so","nt":"En tête de phrase, aussi impose l'inversion du sujet."},{"id":"partant","f":"partant / dès lors","cat":"cons","reg":"l","lv":"C2","m":"consequently, hence","nt":"Partant est littéraire et vieilli."},{"id":"afin_que","f":"afin que / pour que","cat":"purp","reg":"n","lv":"C1","m":"so that","nt":"Subjonctif ; afin de + infinitif si même sujet."},{"id":"de_crainte","f":"de crainte que / de peur que (ne)","cat":"purp","reg":"e","lv":"C1","m":"for fear that, lest","nt":"Subjonctif avec ne explétif."},{"id":"en_sorte","f":"de sorte que / en sorte que (but)","cat":"purp","reg":"e","lv":"C2","m":"so that (aim)","nt":"Subjonctif quand c'est un but recherché."},{"id":"avant_que","f":"avant que (ne)","cat":"time","reg":"n","lv":"C1","m":"before","nt":"Subjonctif ; ne explétif possible. Avant de + infinitif si même sujet."},{"id":"apres_que","f":"après que","cat":"time","reg":"n","lv":"C1","m":"after","nt":"Indicatif (le subjonctif est fautif mais répandu)."},{"id":"des_que","f":"dès que / aussitôt que","cat":"time","reg":"n","lv":"C1","m":"as soon as","nt":"Futur antérieur si l'action est accomplie avant."},{"id":"a_peine","f":"à peine … que","cat":"time","reg":"l","lv":"C2","m":"hardly … when","nt":"En tête : inversion du sujet."},{"id":"jusqua_ce","f":"jusqu'à ce que / en attendant que","cat":"time","reg":"n","lv":"C1","m":"until","nt":"Subjonctif."},{"id":"tant_que","f":"tant que","cat":"time","reg":"n","lv":"C1","m":"as long as","nt":"Indicatif."},{"id":"depuis_que","f":"depuis que","cat":"time","reg":"n","lv":"C1","m":"(ever) since","nt":"Indicatif."},{"id":"a_mesure","f":"à mesure que / au fur et à mesure que","cat":"comp","reg":"n","lv":"C1","m":"as (progressively)","nt":""},{"id":"plus_plus","f":"plus …, plus","cat":"comp","reg":"n","lv":"C1","m":"the more … the more","nt":"Pas d'article ni de que : Plus on lit, plus on apprend."},{"id":"dautant_plus","f":"d'autant plus … que","cat":"comp","reg":"e","lv":"C2","m":"all the more … because","nt":""},{"id":"comme_si","f":"comme si","cat":"comp","reg":"n","lv":"C1","m":"as if","nt":"Imparfait ou plus-que-parfait."},{"id":"ainsi_que","f":"ainsi que / de même que","cat":"comp","reg":"e","lv":"C1","m":"just as, as well as","nt":""},{"id":"non_seulement","f":"non seulement …, mais (encore)","cat":"add","reg":"e","lv":"C1","m":"not only … but also","nt":""},{"id":"ni_ni","f":"ni … ni","cat":"add","reg":"n","lv":"C1","m":"neither … nor","nt":"Avec ne devant le verbe."},{"id":"soit_soit","f":"soit …, soit","cat":"add","reg":"e","lv":"C1","m":"either … or","nt":""},{"id":"tantot","f":"tantôt …, tantôt","cat":"add","reg":"l","lv":"C2","m":"now …, now","nt":""},{"id":"voire","f":"voire","cat":"add","reg":"e","lv":"C1","m":"or even, indeed","nt":""},{"id":"dailleurs","f":"d'ailleurs / du reste","cat":"add","reg":"e","lv":"C1","m":"besides, moreover","nt":""},{"id":"par_ailleurs","f":"par ailleurs","cat":"add","reg":"e","lv":"C1","m":"furthermore, in other respects","nt":""},{"id":"cependant","f":"cependant / toutefois / néanmoins","cat":"log","reg":"e","lv":"C1","m":"however, nevertheless","nt":""},{"id":"or","f":"or","cat":"log","reg":"l","lv":"C2","m":"now, yet (introduces a decisive fact in an argument)","nt":"En tête de phrase, suivi d'une virgule."},{"id":"donc","f":"donc / par conséquent","cat":"log","reg":"n","lv":"C1","m":"therefore","nt":""},{"id":"certes","f":"certes …, mais","cat":"log","reg":"e","lv":"C1","m":"admittedly …, but","nt":""},{"id":"en_effet","f":"en effet","cat":"log","reg":"e","lv":"C1","m":"indeed (confirms with an explanation)","nt":""},{"id":"autrement_dit","f":"autrement dit / c'est-à-dire","cat":"log","reg":"n","lv":"C1","m":"in other words","nt":""},{"id":"quant_a","f":"quant à","cat":"log","reg":"e","lv":"C1","m":"as for","nt":""}],"items":[{"c":"bien_que","lv":"C1","a":"Il pleuvait à verse.","b":"Nous avons maintenu la promenade.","s":"{Bien} {qu'}il pleuve à verse, nous avons maintenu la promenade.","alts":["Bien qu'il plût à verse, nous avons maintenu la promenade."]},{"c":"bien_que","lv":"C1","a":"Il était épuisé.","b":"Il a terminé le rapport dans la nuit.","s":"{Bien} {qu'}épuisé, il a terminé le rapport dans la nuit.","alts":["Bien qu'il fût épuisé, il a terminé le rapport dans la nuit.","Bien qu'il soit épuisé, il a terminé le rapport dans la nuit."],"task":"sans verbe"},{"c":"bien_que","lv":"C1","a":"Elle a beaucoup voyagé.","b":"Elle n'a jamais quitté l'Europe.","s":"{Bien} {qu'}elle ait beaucoup voyagé, elle n'a jamais quitté l'Europe.","alts":["Elle n'a jamais quitté l'Europe, bien qu'elle ait beaucoup voyagé."],"task":"subjonctif passé"},{"c":"quoique","lv":"C1","a":"Le projet est ambitieux.","b":"Il reste réalisable.","s":"{Quoique} ambitieux, le projet reste réalisable.","alts":["Quoique le projet soit ambitieux, il reste réalisable."],"task":"sans verbe"},{"c":"quoique","lv":"C1","a":"Il ne l'avouera jamais.","b":"Il a peur.","s":"{Quoiqu'}il ne l'avoue jamais, il a peur.","alts":["Il a peur, quoiqu'il ne l'avoue jamais."]},{"c":"encore_que","lv":"C2","a":"La thèse est convaincante.","b":"On pourrait discuter certains chiffres.","s":"La thèse est convaincante, {encore} {qu'}on puisse discuter certains chiffres."},{"c":"encore_que","lv":"C2","a":"Il a raison sur le fond.","b":"La forme laisse à désirer.","s":"Il a raison sur le fond, {encore} {que} la forme laisse à désirer."},{"c":"si_que","lv":"C2","a":"Son raisonnement est brillant.","b":"Il ne résiste pas à l'examen.","s":"{Si} brillant {que} soit son raisonnement, il ne résiste pas à l'examen.","alts":["Si brillant que soit son raisonnement, il ne résiste pas à l'examen des faits."],"task":"inversion"},{"c":"si_que","lv":"C2","a":"La tâche est ardue.","b":"Nous la mènerons à bien.","s":"{Si} ardue {que} soit la tâche, nous la mènerons à bien.","alts":["Si ardue que puisse être la tâche, nous la mènerons à bien."]},{"c":"quelque_que","lv":"C2","a":"Ses efforts ont été grands.","b":"Il n'a pu sauver l'entreprise.","s":"{Quelques} efforts {qu'}il ait faits, il n'a pu sauver l'entreprise.","task":"nom → quelques"},{"c":"quelque_que","lv":"C2","a":"Les arguments sont habiles.","b":"Ils ne me convainquent pas.","s":"{Quelque} habiles {que} soient ces arguments, ils ne me convainquent pas.","task":"adjectif → quelque invariable"},{"c":"quoi_que","lv":"C1","a":"Tu peux dire n'importe quoi.","b":"Je ne changerai pas d'avis.","s":"{Quoi} {que} tu dises, je ne changerai pas d'avis."},{"c":"quoi_que","lv":"C1","a":"Il va n'importe où.","b":"Il emporte ses carnets.","s":"{Où} {qu'}il aille, il emporte ses carnets."},{"c":"quoi_que","lv":"C2","a":"N'importe qui peut le prétendre.","b":"Personne n'est au-dessus des lois.","s":"{Qui} {que} vous soyez, vous n'êtes pas au-dessus des lois."},{"c":"quand_bien","lv":"C2","a":"On m'offrirait le double.","b":"Je refuserais.","s":"{Quand} {bien} {même} on m'offrirait le double, je refuserais.","alts":["Quand bien même on m'offrirait le double, je refuserais ce poste."],"task":"conditionnel"},{"c":"quand_bien","lv":"C2","a":"Il aurait raison.","b":"Le ton de sa lettre serait inacceptable.","s":"{Quand} {bien} {même} il aurait raison, le ton de sa lettre serait inacceptable."},{"c":"meme_si","lv":"C1","a":"Il pleuvra peut-être demain.","b":"La cérémonie aura lieu.","s":"{Même} {s'}il pleut demain, la cérémonie aura lieu.","alts":["Même s'il pleut demain, la cérémonie aura lieu.","La cérémonie aura lieu même s'il pleut demain."],"task":"pas de futur"},{"c":"meme_si","lv":"C1","a":"Vous n'êtes pas d'accord.","b":"Écoutez-le jusqu'au bout.","s":"{Même} {si} vous n'êtes pas d'accord, écoutez-le jusqu'au bout.","alts":["Écoutez-le jusqu'au bout, même si vous n'êtes pas d'accord."]},{"c":"pour_autant","lv":"C2","a":"La situation est grave.","b":"Elle n'est pas désespérée pour autant.","s":"La situation est grave ; elle n'est pas {pour} {autant} désespérée.","alts":["La situation est grave, elle n'est pas désespérée pour autant.","La situation est grave sans être pour autant désespérée."]},{"c":"pour_autant","lv":"C2","a":"Il a échoué.","b":"Son mérite est entier.","s":"Il a échoué ; son mérite {n'en} est {pas} {moins} entier.","alts":["Il a échoué, son mérite n'en est pas moins entier."],"task":"(n')en … pas moins"},{"c":"il_nen_reste","lv":"C2","a":"Les progrès sont réels.","b":"Beaucoup reste à faire.","s":"Les progrès sont réels ; {il} {n'en} {reste} {pas} {moins} {que} beaucoup reste à faire.","alts":["Les progrès sont réels, il n'en reste pas moins que beaucoup reste à faire."]},{"c":"alors_que","lv":"C1","a":"Paul adore la mer.","b":"Son frère ne jure que par la montagne.","s":"Paul adore la mer, {alors} {que} son frère ne jure que par la montagne.","alts":["Paul adore la mer, tandis que son frère ne jure que par la montagne."]},{"c":"alors_que","lv":"C1","a":"On l'attendait lundi.","b":"Il est arrivé dimanche.","s":"On l'attendait lundi, {alors} {qu'}il est arrivé dimanche.","alts":["Alors qu'on l'attendait lundi, il est arrivé dimanche."]},{"c":"en_revanche","lv":"C1","a":"Le premier chapitre est captivant.","b":"Le second s'enlise.","s":"Le premier chapitre est captivant ; le second, {en} {revanche,} s'enlise.","alts":["Le premier chapitre est captivant ; en revanche, le second s'enlise.","Le premier chapitre est captivant, en revanche le second s'enlise."]},{"c":"au_lieu","lv":"C1","a":"Il pourrait reconnaître son erreur.","b":"Il accuse ses collaborateurs.","s":"{Au} {lieu} {de} reconnaître son erreur, il accuse ses collaborateurs.","alts":["Plutôt que de reconnaître son erreur, il accuse ses collaborateurs."]},{"c":"puisque","lv":"C1","a":"Vous connaissez le dossier.","b":"Je serai bref.","s":"{Puisque} vous connaissez le dossier, je serai bref.","alts":["Je serai bref, puisque vous connaissez le dossier."]},{"c":"puisque","lv":"C1","a":"Tu insistes.","b":"Je viendrai.","s":"{Puisque} tu insistes, je viendrai.","alts":["Je viendrai, puisque tu insistes."]},{"c":"dans_la_mesure","lv":"C1","a":"Cette réforme est utile.","b":"Elle simplifie les démarches.","s":"Cette réforme est utile {dans} {la} {mesure} {où} elle simplifie les démarches.","alts":["Dans la mesure où elle simplifie les démarches, cette réforme est utile."]},{"c":"dautant_que","lv":"C1","a":"Il faut accepter l'offre.","b":"Elle expire demain.","s":"Il faut accepter l'offre, {d'autant} {qu'}elle expire demain.","alts":["Il faut accepter l'offre, d'autant qu'elle expire demain.","Il faut accepter l'offre, d'autant plus qu'elle expire demain."]},{"c":"dautant_que","lv":"C2","a":"Son silence m'inquiète.","b":"Il est d'ordinaire bavard.","s":"Son silence m'inquiète {d'autant} {plus} {qu'}il est d'ordinaire bavard.","alts":["Son silence m'inquiète, d'autant qu'il est d'ordinaire bavard."]},{"c":"etant_donne","lv":"C1","a":"Les délais sont courts.","b":"Nous devons nous répartir le travail.","s":"{Étant} {donné} {que} les délais sont courts, nous devons nous répartir le travail.","alts":["Vu que les délais sont courts, nous devons nous répartir le travail."]},{"c":"non_que","lv":"C2","a":"Je ne viendrai pas.","b":"Ce n'est pas que je sois fâché : je suis fatigué.","s":"Je ne viendrai pas, {non} {que} je sois fâché, mais je suis fatigué.","alts":["Je ne viendrai pas, non que je sois fâché, mais parce que je suis fatigué.","Je ne viendrai pas : ce n'est pas que je sois fâché, mais je suis fatigué."]},{"c":"non_que","lv":"C2","a":"Il a renoncé.","b":"Le projet ne lui déplaisait pas ; il manquait de temps.","s":"Il a renoncé, {non} {que} le projet lui déplût, mais il manquait de temps.","alts":["Il a renoncé, non que le projet lui déplaise, mais il manquait de temps."],"task":"subjonctif imparfait"},{"c":"sous_pretexte","lv":"C1","a":"Il a quitté la réunion.","b":"Il prétendait avoir un rendez-vous.","s":"Il a quitté la réunion {sous} {prétexte} {qu'}il avait un rendez-vous."},{"c":"a_moins_que","lv":"C1","a":"Nous partirons à l'aube.","b":"Le temps pourrait se gâter.","s":"Nous partirons à l'aube, {à} {moins} {que} le temps ne se gâte.","alts":["Nous partirons à l'aube, à moins que le temps se gâte."],"task":"ne explétif"},{"c":"a_moins_que","lv":"C1","a":"Je ne signerai pas.","b":"Vous devez modifier la clause trois.","s":"Je ne signerai pas, {à} {moins} {que} vous ne modifiiez la clause trois.","alts":["Je ne signerai pas, à moins que vous modifiiez la clause trois."]},{"c":"pourvu_que","lv":"C1","a":"Tu peux sortir.","b":"Tu rentres avant minuit.","s":"Tu peux sortir, {pourvu} {que} tu rentres avant minuit."},{"c":"pour_peu_que","lv":"C2","a":"Il s'emporte vite.","b":"On le contredit un tant soit peu.","s":"Il s'emporte {pour} {peu} {qu'}on le contredise.","alts":["Pour peu qu'on le contredise, il s'emporte."]},{"c":"a_condition","lv":"C1","a":"J'accepte.","b":"Vous me laissez carte blanche.","s":"J'accepte, {à} {condition} {que} vous me laissiez carte blanche.","alts":["J'accepte à condition que vous me laissiez carte blanche."]},{"c":"au_cas_ou","lv":"C1","a":"Le train pourrait être annulé.","b":"Prévoyez un autre moyen de transport.","s":"{Au} {cas} {où} le train serait annulé, prévoyez un autre moyen de transport.","alts":["Prévoyez un autre moyen de transport au cas où le train serait annulé."],"task":"conditionnel"},{"c":"si_tant_est","lv":"C2","a":"On peut se fier à ces chiffres.","b":"On en doute.","s":"Ces chiffres sont alarmants, {si} {tant} {est} {qu'}on puisse s'y fier."},{"c":"pour_peu","lv":"C2","a":"Admettons que l'hypothèse soit juste.","b":"Tout le modèle est à revoir.","s":"{À} {supposer} {que} l'hypothèse soit juste, tout le modèle est à revoir.","alts":["En admettant que l'hypothèse soit juste, tout le modèle est à revoir."]},{"c":"si_bien_que","lv":"C1","a":"Il n'a pas révisé.","b":"Il a échoué à l'examen.","s":"Il n'a pas révisé, {si} {bien} {qu'}il a échoué à l'examen.","alts":["Il n'a pas révisé, de sorte qu'il a échoué à l'examen."],"task":"indicatif"},{"c":"au_point_que","lv":"C1","a":"Il était bouleversé.","b":"Il ne pouvait plus parler.","s":"Il était bouleversé {au} {point} {qu'}il ne pouvait plus parler.","alts":["Il était tellement bouleversé qu'il ne pouvait plus parler."]},{"c":"aussi_inv","lv":"C2","a":"Les preuves manquaient.","b":"Le juge a prononcé un non-lieu.","s":"Les preuves manquaient ; {aussi} le juge a-t-il prononcé un non-lieu.","alts":["Les preuves manquaient. Aussi le juge a-t-il prononcé un non-lieu."],"task":"inversion"},{"c":"aussi_inv","lv":"C2","a":"Le temps nous est compté.","b":"Je serai bref.","s":"Le temps nous est compté ; {aussi} serai-je bref.","alts":["Le temps nous est compté. Aussi serai-je bref."]},{"c":"partant","lv":"C2","a":"Il a trahi ses alliés.","b":"Il a perdu tout crédit.","s":"Il a trahi ses alliés, et {partant} perdu tout crédit.","alts":["Il a trahi ses alliés ; dès lors, il a perdu tout crédit."]},{"c":"afin_que","lv":"C1","a":"Je vous envoie le dossier.","b":"Vous pourrez l'étudier avant la réunion.","s":"Je vous envoie le dossier {afin} {que} vous puissiez l'étudier avant la réunion.","alts":["Je vous envoie le dossier pour que vous puissiez l'étudier avant la réunion."],"task":"subjonctif"},{"c":"afin_que","lv":"C1","a":"Elle parlait lentement.","b":"Tout le monde devait la comprendre.","s":"Elle parlait lentement {pour} {que} tout le monde la comprenne.","alts":["Elle parlait lentement afin que tout le monde la comprenne."]},{"c":"de_crainte","lv":"C1","a":"Il a gardé le silence.","b":"Il craignait d'aggraver la situation.","s":"Il a gardé le silence {de} {peur} {d'}aggraver la situation.","alts":["Il a gardé le silence de crainte d'aggraver la situation."],"task":"même sujet → de + infinitif"},{"c":"de_crainte","lv":"C2","a":"J'ai noté l'adresse.","b":"J'avais peur que tu ne l'oublies.","s":"J'ai noté l'adresse, {de} {crainte} {que} tu ne l'oublies.","alts":["J'ai noté l'adresse de peur que tu ne l'oublies."],"task":"ne explétif"},{"c":"en_sorte","lv":"C2","a":"Agissez ainsi.","b":"Nul ne doit pouvoir vous reprocher quoi que ce soit.","s":"Agissez {de} {sorte} {que} nul ne puisse vous reprocher quoi que ce soit.","alts":["Agissez en sorte que nul ne puisse vous reprocher quoi que ce soit."],"task":"but → subjonctif"},{"c":"avant_que","lv":"C1","a":"Partez.","b":"Il fait nuit.","s":"Partez {avant} {qu'}il ne fasse nuit.","alts":["Partez avant qu'il fasse nuit."]},{"c":"avant_que","lv":"C1","a":"Je dois terminer ce chapitre.","b":"Les invités vont arriver.","s":"Je dois terminer ce chapitre {avant} {que} les invités n'arrivent.","alts":["Je dois terminer ce chapitre avant que les invités arrivent."]},{"c":"avant_que","lv":"C1","a":"Réfléchissez bien.","b":"Ensuite, répondez.","s":"Réfléchissez bien {avant} {de} répondre.","task":"même sujet"},{"c":"apres_que","lv":"C1","a":"Le président a parlé.","b":"La salle s'est vidée.","s":"{Après} {que} le président a parlé, la salle s'est vidée.","alts":["La salle s'est vidée après que le président a parlé."],"task":"indicatif"},{"c":"apres_que","lv":"C2","a":"Il eut signé le contrat.","b":"Il quitta la pièce.","s":"{Après} {qu'}il eut signé le contrat, il quitta la pièce.","task":"passé antérieur"},{"c":"des_que","lv":"C1","a":"Vous aurez reçu le colis.","b":"Prévenez-moi.","s":"{Dès} {que} vous aurez reçu le colis, prévenez-moi.","alts":["Prévenez-moi dès que vous aurez reçu le colis.","Aussitôt que vous aurez reçu le colis, prévenez-moi."],"task":"futur antérieur"},{"c":"des_que","lv":"C1","a":"Il entrait dans une pièce.","b":"Les conversations cessaient.","s":"{Dès} {qu'}il entrait dans une pièce, les conversations cessaient.","alts":["Aussitôt qu'il entrait dans une pièce, les conversations cessaient."]},{"c":"a_peine","lv":"C2","a":"Il était rentré.","b":"Le téléphone sonna.","s":"{À} {peine} était-il rentré {que} le téléphone sonna.","alts":["À peine était-il rentré que le téléphone sonna."],"task":"inversion"},{"c":"a_peine","lv":"C2","a":"Elle avait ouvert la lettre.","b":"Elle pâlit.","s":"{À} {peine} eut-elle ouvert la lettre {qu'}elle pâlit.","alts":["À peine avait-elle ouvert la lettre qu'elle pâlit."]},{"c":"jusqua_ce","lv":"C1","a":"Je resterai ici.","b":"Tu reviendras.","s":"Je resterai ici {jusqu'à} {ce} {que} tu reviennes.","task":"subjonctif"},{"c":"jusqua_ce","lv":"C1","a":"Nous patienterons.","b":"La situation se clarifiera.","s":"Nous patienterons {en} {attendant} {que} la situation se clarifie.","alts":["Nous patienterons jusqu'à ce que la situation se clarifie."]},{"c":"tant_que","lv":"C1","a":"Tu as de la fièvre.","b":"Tu restes au lit.","s":"{Tant} {que} tu as de la fièvre, tu restes au lit.","alts":["Tu restes au lit tant que tu as de la fièvre."]},{"c":"depuis_que","lv":"C1","a":"Il a quitté Paris.","b":"Il revit.","s":"{Depuis} {qu'}il a quitté Paris, il revit.","alts":["Il revit depuis qu'il a quitté Paris."]},{"c":"a_mesure","lv":"C1","a":"Le jour baissait.","b":"Les ombres s'allongeaient.","s":"{À} {mesure} {que} le jour baissait, les ombres s'allongeaient.","alts":["Au fur et à mesure que le jour baissait, les ombres s'allongeaient.","Les ombres s'allongeaient à mesure que le jour baissait."]},{"c":"plus_plus","lv":"C1","a":"On lit beaucoup.","b":"On écrit bien.","s":"{Plus} on lit, {plus} on écrit bien.","alts":["Plus on lit, mieux on écrit."]},{"c":"plus_plus","lv":"C1","a":"Il attendait longtemps.","b":"Il devenait nerveux.","s":"{Plus} il attendait, {plus} il devenait nerveux."},{"c":"dautant_plus","lv":"C2","a":"Sa victoire est méritée.","b":"Personne ne la donnait favorite.","s":"Sa victoire est {d'autant} {plus} méritée {que} personne ne la donnait favorite."},{"c":"comme_si","lv":"C1","a":"Il me regarde.","b":"Il ne m'a jamais vu.","s":"Il me regarde {comme} {s'}il ne m'avait jamais vu.","alts":["Il me regarde comme s'il ne m'avait jamais vu."]},{"c":"comme_si","lv":"C1","a":"Elle continuait à sourire.","b":"Rien ne s'était passé.","s":"Elle continuait à sourire, {comme} {si} rien ne s'était passé."},{"c":"ainsi_que","lv":"C1","a":"Le ministre était présent.","b":"Plusieurs députés l'accompagnaient.","s":"Le ministre, {ainsi} {que} plusieurs députés, était présent.","alts":["Le ministre était présent, ainsi que plusieurs députés."]},{"c":"non_seulement","lv":"C1","a":"Ce choix est coûteux.","b":"Il est inefficace.","s":"Ce choix est {non} {seulement} coûteux, {mais} {encore} inefficace.","alts":["Ce choix est non seulement coûteux, mais aussi inefficace.","Non seulement ce choix est coûteux, mais il est inefficace."]},{"c":"ni_ni","lv":"C1","a":"Il n'a pas répondu.","b":"Il n'a pas rappelé.","s":"Il n'a {ni} répondu {ni} rappelé."},{"c":"ni_ni","lv":"C1","a":"Je n'ai pas le temps.","b":"Je n'en ai pas l'envie.","s":"Je n'ai {ni} le temps {ni} l'envie."},{"c":"soit_soit","lv":"C1","a":"Vous paierez en espèces.","b":"Ou vous paierez par virement.","s":"Vous paierez {soit} en espèces, {soit} par virement."},{"c":"tantot","lv":"C2","a":"Il se montrait affable.","b":"À d'autres moments, il était glacial.","s":"Il se montrait {tantôt} affable, {tantôt} glacial."},{"c":"voire","lv":"C1","a":"Cette mesure est inutile.","b":"Elle est peut-être même dangereuse.","s":"Cette mesure est inutile, {voire} dangereuse."},{"c":"dailleurs","lv":"C1","a":"Je n'ai pas envie de sortir.","b":"Il pleut.","s":"Je n'ai pas envie de sortir ; {d'ailleurs,} il pleut.","alts":["Je n'ai pas envie de sortir ; du reste, il pleut.","Je n'ai pas envie de sortir, d'ailleurs il pleut."]},{"c":"par_ailleurs","lv":"C1","a":"Le rapport souligne les retards.","b":"Il relève des irrégularités comptables.","s":"Le rapport souligne les retards ; il relève {par} {ailleurs} des irrégularités comptables.","alts":["Le rapport souligne les retards. Par ailleurs, il relève des irrégularités comptables."]},{"c":"cependant","lv":"C1","a":"L'idée est séduisante.","b":"Elle soulève des difficultés pratiques.","s":"L'idée est séduisante ; elle soulève {cependant} des difficultés pratiques.","alts":["L'idée est séduisante. Toutefois, elle soulève des difficultés pratiques.","L'idée est séduisante ; néanmoins, elle soulève des difficultés pratiques."]},{"c":"cependant","lv":"C1","a":"Les chiffres sont encourageants.","b":"La prudence reste de mise.","s":"Les chiffres sont encourageants ; la prudence reste {néanmoins} de mise.","alts":["Les chiffres sont encourageants. Toutefois, la prudence reste de mise."]},{"c":"or","lv":"C2","a":"Tout homme est mortel.","b":"Socrate est un homme.","s":"Tout homme est mortel. {Or,} Socrate est un homme."},{"c":"or","lv":"C2","a":"Il prétend avoir passé la soirée chez lui.","b":"On l'a vu au théâtre.","s":"Il prétend avoir passé la soirée chez lui. {Or,} on l'a vu au théâtre."},{"c":"donc","lv":"C1","a":"Je pense.","b":"Je suis.","s":"Je pense, {donc} je suis."},{"c":"donc","lv":"C1","a":"Les conditions ne sont pas réunies.","b":"La séance est ajournée.","s":"Les conditions ne sont pas réunies ; {par} {conséquent,} la séance est ajournée.","alts":["Les conditions ne sont pas réunies, donc la séance est ajournée."]},{"c":"certes","lv":"C1","a":"Le film est long.","b":"Il est magnifique.","s":"{Certes,} le film est long, {mais} il est magnifique.","alts":["Le film est certes long, mais il est magnifique."]},{"c":"en_effet","lv":"C1","a":"Il ne viendra pas.","b":"Il est souffrant depuis lundi.","s":"Il ne viendra pas ; il est {en} {effet} souffrant depuis lundi.","alts":["Il ne viendra pas. En effet, il est souffrant depuis lundi."]},{"c":"autrement_dit","lv":"C1","a":"La décision est différée sine die.","b":"Elle est abandonnée.","s":"La décision est différée sine die, {autrement} {dit} abandonnée.","alts":["La décision est différée sine die, c'est-à-dire abandonnée."]},{"c":"quant_a","lv":"C1","a":"Les enfants sont partis à la plage.","b":"Moi, je suis resté lire.","s":"Les enfants sont partis à la plage ; {quant} {à} moi, je suis resté lire."}],"ui":{"practise":"Practise","learn":"Learn","mode":"Mode","comb":"Combiner deux phrases","build":"Construire","pick":"Choisir le connecteur","filters":"Filters","level":"Level","register":"Register","help":"Help","showTr":"Show translation","hideTr":"No translation","allCats":"All connectors","sentences":"sentences","notYet":"Not yet right","practiseThis":"Practise this one","back":"Back","joinWith":"Join the two sentences with","typeHere":"Type the combined sentence","buildWith":"Build the sentence with","decoyNote":"two blocks are wrong connectors","check":"Check","clear":"Clear","show":"Show","skip":"Skip","notQuite":"Not quite","missing":"{n} word(s) missing or different.","tryAgain":"Green is right, red does not belong. Try again or tap Show.","buildBad":"Green blocks are in the right place. Tap a block to send it back.","firstTry":"Right first time","right":"Right","hereItIs":"Here it is","alsoRight":"Also right","next":"Next","finish":"Finish","firstTryCount":"right first time","againWrong":"Practise the {n} again","more":"Another 10"},"title":"Français · Connecteurs","label":"Connecteurs","eyebrow":"Français · C1–C2 · langue soutenue","h1":"Connecteurs <span style=\"font-weight:400\">& subordonnées</span>","lede":"Elevated French: join two sentences with the connector given — watch the mood (indicatif, subjonctif, conditionnel), the ne explétif and the inversions."};
+const C=CFG,HAN=!!C.han;
+const LSK='conn-'+C.lang+'-v1';
+const S=(()=>{try{return JSON.parse(localStorage.getItem(LSK))||{}}catch(e){return {}}})();
+S.opt=Object.assign({mode:'comb',lv:C.levels.slice(),reg:Object.keys(C.regs),show:true,auto:true},S.opt||{});
+S.res=S.res||{};S.tab=S.tab||'prac';
+function save(){try{localStorage.setItem(LSK,JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+$('eyebrow').textContent=C.eyebrow;$('h1').innerHTML=C.h1;$('lede').textContent=C.lede;document.title=C.title;
+const CONN={};C.conns.forEach(c=>CONN[c.id]=c);
+const PUN=/^[，。、？！：；“”‘’《》（）…—,.?!:;"'()«»„“\-–]+$/;
+/* tokens of a model sentence: {t:text, k:is connector} */
+function toks(s){const out=[];s.trim().split(/\s+/).forEach(w=>{const m=w.match(/^\{([^}]*['’])\}(.+)$/);
+    if(m){out.push({t:m[1],k:true,g:true});out.push({t:m[2],k:false});return}
+    const k=/^\{.*\}[^\s]*$|^[^\s]*\{.*\}$/.test(w);out.push({t:w.replace(/[{}]/g,''),k})});return out}
+const join=ts=>HAN?ts.map(t=>t.t).join(''):ts.map((t,i)=>t.t+(i<ts.length-1&&!/['’]$/.test(t.t)?' ':'')).join('').replace(C.lang==='fr'?/\s+([,.)])/g:/\s+([,.;:!?»)])/g,'$1').replace(/([«(„])\s+/g,'$1');
+const plain=s=>join(toks(s));
+function norm(s){s=String(s).normalize('NFC').toLowerCase().replace(/[{}]/g,'').replace(/ё/g,'е').replace(/[’‘`]/g,"'");
+  s=s.replace(/[^\p{L}\p{N}']+/gu,' ').replace(/'\s+/g,"'").trim();return HAN?s.replace(/\s+/g,''):s.replace(/\s+/g,' ')}
+const ITEMS=C.items.map((x,i)=>{const T=toks(x.s);T.forEach((t,k)=>t.p=(x.tp||[])[k]||'');return Object.assign({i,T},x)}).filter(x=>CONN[x.c]);
+const answers=it=>[plain(it.s)].concat((it.alts||[]).map(plain));
+const rk=(it,m)=>it.i+':'+m;
+
+/* ---------- audio for sentences from the listening courses ---------- */
+const au=$('au');let stopAt=0,curSrc='';
+function playClip(it,btn){if(!it.clip)return;const [u,s,e]=it.clip;if(curSrc!==u){au.src=u;curSrc=u}
+  const go=()=>{try{au.currentTime=Math.max(0,s-0.1)}catch(x){}stopAt=e+0.3;const p=au.play();if(p&&p.catch)p.catch(()=>{});if(btn)btn.classList.add('on')};
+  if(au.readyState>=1)go();else{au.addEventListener('loadedmetadata',go,{once:true});au.load()}}
+au.addEventListener('timeupdate',()=>{if(stopAt&&au.currentTime>=stopAt){au.pause();stopAt=0}});
+au.addEventListener('pause',()=>document.querySelectorAll('.pb.on').forEach(b=>b.classList.remove('on')));
+
+/* ---------- filters ---------- */
+function pool(f){return ITEMS.filter(it=>{const c=CONN[it.c];if(!S.opt.lv.includes(it.lv||c.lv))return false;if(!S.opt.reg.includes(c.reg))return false;
+  if(S.opt.mode==='comb'&&!(it.a&&it.b))return false;if(f&&f.cat&&c.cat!==f.cat)return false;if(f&&f.c&&it.c!==f.c)return false;return true})}
+function stats(list){let m=0;list.forEach(it=>{if(S.res[rk(it,S.opt.mode)]===2)m++});return m}
+const MODES={comb:['🔗',C.ui.comb],build:['🧩',C.ui.build],pick:['❓',C.ui.pick]};
+const tags=c=>`<span class="tag">${esc(c.lv)}</span>${c.reg!=='n'?`<span class="tag reg-${c.reg}">${esc(C.regs[c.reg])}</span>`:''}`;
+
+function home(){R=null;au.pause();document.body.classList.remove('inround');
+  let h=`<div class="seg" role="tablist"><button role="tab" data-t="prac" aria-selected="${S.tab==='prac'}">${esc(C.ui.practise)}</button><button role="tab" data-t="learn" aria-selected="${S.tab==='learn'}">${esc(C.ui.learn)} · ${C.conns.length}</button></div>`;
+  h+=optsHTML();
+  if(S.tab==='learn')h+=learnHTML();else h+=pracHTML();
+  $('app').innerHTML=h;
+  $('app').querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;save();home()});
+  bindOpts();
+  $('app').querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>start(b.dataset.cat==='*'?{}:{cat:b.dataset.cat}));
+  $('app').querySelectorAll('[data-pc]').forEach(b=>b.onclick=()=>start({c:b.dataset.pc}));
+  const mi=$('miss');if(mi)mi.onclick=()=>{const L=pool({}).filter(it=>{const r=S.res[rk(it,S.opt.mode)];return r!=null&&r<2});start({list:L})};
+  scrollTo(0,0)}
+function optsHTML(){const o=S.opt;const c=(k,v,l,on)=>`<button class="chip" type="button" data-o="${k}" data-v="${v}" aria-pressed="${on}">${l}</button>`;
+  return `<div class="opts"><span class="lab">${esc(C.ui.mode)}</span>${Object.entries(MODES).map(([k,[i,l]])=>c('mode',k,i+' '+esc(l),o.mode===k)).join('')}</div>
+  <details class="cfg" id="cfg"${S.cfgOpen?' open':''}><summary>⚙︎ ${esc(C.ui.filters)} <small>${o.lv.join(' ')} · ${o.reg.map(r=>C.regs[r]).join(', ')}</small></summary>
+  <div class="opts"><span class="lab">${esc(C.ui.level)}</span>${C.levels.map(l=>c('lv',l,l,o.lv.includes(l))).join('')}</div>
+  <div class="opts"><span class="lab">${esc(C.ui.register)}</span>${Object.entries(C.regs).map(([k,l])=>c('reg',k,esc(l),o.reg.includes(k))).join('')}</div>
+  <div class="opts"><span class="lab">${esc(C.ui.help)}</span>${c('show',true,esc(C.ui.showTr),o.show)}${c('show',false,esc(C.ui.hideTr),!o.show)}</div></details>`}
+function bindOpts(){const cf=$('cfg');if(cf)cf.addEventListener('toggle',()=>{S.cfgOpen=cf.open;save()});
+  $('app').querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const k=b.dataset.o,v=b.dataset.v;
+    if(k==='lv'||k==='reg'){const a=S.opt[k];const i=a.indexOf(v);if(i>=0){if(a.length>1)a.splice(i,1)}else a.push(v)}
+    else S.opt[k]=v==='true'?true:v==='false'?false:v;save();home()})}
+function pracHTML(){const all=pool({});const miss=all.filter(it=>{const r=S.res[rk(it,S.opt.mode)];return r!=null&&r<2}).length;
+  let h=`<div class="special"><button class="set" type="button" data-cat="*" style="grid-template-columns:minmax(0,1fr) auto"><span class="t">${esc(C.ui.allCats)}<small>${all.length} ${esc(C.ui.sentences)}</small></span><span class="sc"><b>${stats(all)}</b>/${all.length} ✓</span></button></div>
+  <div class="special" style="margin-top:8px"><button class="btn" id="miss" type="button" ${miss?'':'disabled'}>↺ ${esc(C.ui.notYet)} (${miss})</button></div><div class="sets" style="margin-top:12px">`;
+  Object.entries(C.cats).forEach(([k,l])=>{const L=pool({cat:k});if(!L.length)return;const m=stats(L);const cs=C.conns.filter(c=>c.cat===k&&pool({c:c.id}).length).map(c=>c.f);
+    h+=`<button class="set" type="button" data-cat="${k}" style="grid-template-columns:minmax(0,1fr) auto"><span class="t">${esc(l)}<small>${esc(cs.slice(0,7).join(' · '))}${cs.length>7?' …':''}</small></span><span class="sc">${m?`<b>${m}</b>/`:''}${L.length}</span><span class="bar"><i style="width:${Math.round(100*m/L.length)}%"></i></span></button>`});
+  return h+'</div>'}
+function learnHTML(){let h='<div class="cat">';
+  Object.entries(C.cats).forEach(([k,l])=>{const cs=C.conns.filter(c=>c.cat===k&&S.opt.lv.includes(c.lv)&&S.opt.reg.includes(c.reg));if(!cs.length)return;
+    h+=`<h2>${esc(l)}</h2><div class="cl">`+cs.map(c=>{const ex=ITEMS.find(it=>it.c===c.id&&it.src!=='l'),n=pool({c:c.id}).length;
+      return `<div class="cn"><div><span class="f">${esc(c.f)}</span>${tags(c)}</div><div class="m">${esc(c.m)}</div>${c.nt?`<div class="nt">${esc(c.nt)}</div>`:''}${ex?`<div class="ex">${esc(plain(ex.s))}</div>`:''}
+        ${n?`<div class="row"><button class="btn" type="button" data-pc="${esc(c.id)}">${MODES[S.opt.mode][0]} ${esc(C.ui.practiseThis)} (${n})</button></div>`:''}</div>`}).join('')+'</div>'});
+  return h+'</div>'}
+
+/* ---------- rounds ---------- */
+let R=null;
+function start(f){let L=f.list||pool(f);if(!L.length)return;
+  const fresh=L.filter(it=>S.res[rk(it,S.opt.mode)]!==2);L=shuffle(fresh.length>=10?fresh:fresh.concat(shuffle(L.filter(it=>!fresh.includes(it))))).slice(0,10);
+  R={items:shuffle(L),k:0,log:[],f};document.body.classList.add('inround');item()}
+function head(it){const c=CONN[it.c],pct=Math.round(100*R.k/R.items.length);
+  return `<button class="back" type="button" id="bk">← ${esc(C.ui.back)}</button><div class="card">
+   <div class="prog"><span>${R.k+1} / ${R.items.length}</span><span class="pbar"><i style="width:${pct}%"></i></span><span>${MODES[S.opt.mode][0]}</span></div>`}
+function trLine(it){return S.opt.show&&it.tr?`<div class="prompt-en" style="font-size:15px">${esc(it.tr)}</div>`:''}
+function item(){const it=R.items[R.k];R.cur={it,tries:0,done:false};const m=S.opt.mode;
+  let h=head(it);const c=CONN[it.c];
+  if(m==='comb'){h+=`<div class="ab"><div><b>1</b>${esc(it.a)}</div><div><b>2</b>${esc(it.b)}</div></div>
+     <div class="use">${esc(C.ui.joinWith)} <b>${esc(c.f)}</b>${tags(c)}${it.task?` · ${esc(it.task)}`:''}</div>${trLine(it)}
+     <textarea id="ta" placeholder="${esc(C.ui.typeHere)}" autocomplete="off" spellcheck="false" lang="${C.lang}"></textarea>`}
+  if(m==='build'){const T=it.T.filter(t=>!(HAN&&PUN.test(t.t)));R.cur.T=T;
+    const dec=decoys(it,T);const tiles=shuffle(T.map((t,i)=>({t:t.t,i,p:t.p})).concat(dec.map((t,j)=>({t,i:-1-j,p:''}))));R.cur.tiles=tiles;R.cur.placed=[];
+    h+=`${it.clip?`<div class="play"><button class="pb" id="pl" type="button" aria-label="Play"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg></button><span class="src">🎧 ${esc(it.srcl||'')}</span></div>`:''}
+      <div class="use">${esc(C.ui.buildWith)} <b>${esc(c.f)}</b>${tags(c)} <span class="ch-hint">· ${esc(C.ui.decoyNote)}</span></div>${trLine(it)}${it.py&&S.opt.show?`<div class="pyhint">${esc(it.py)}</div>`:''}
+      <div class="ans empty" id="ans"></div><div class="bank" id="bank">${tiles.map((x,j)=>`<button class="tile" type="button" data-j="${j}"${x.p?` data-py="${esc(x.p)}"`:''}>${esc(x.t)}</button>`).join('')}</div>`}
+  if(m==='pick'){const g=gapOf(it);R.cur.g=g;
+    h+=`${it.clip?`<div class="play"><button class="pb" id="pl" type="button" aria-label="Play"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg></button></div>`:''}
+      <div class="gapq">${g.html}</div>${trLine(it)}<div class="opts ch">${g.opts.map((o,j)=>`<button class="opt" type="button" data-j="${j}">${esc(o.label)}</button>`).join('')}</div>`}
+  h+=`<div id="fb"></div><div class="row" id="acts">${m!=='pick'?`<button class="btn pri" id="ck" type="button">${esc(C.ui.check)}</button>`:''}${m==='build'?`<button class="btn" id="cl" type="button">${esc(C.ui.clear)}</button>`:''}<button class="btn" id="sh" type="button">${esc(C.ui.show)}</button><span class="sp"></span><button class="btn" id="sk" type="button">${esc(C.ui.skip)} →</button></div></div>`;
+  $('app').innerHTML=h;$('bk').onclick=home;$('sh').onclick=()=>finish(0);$('sk').onclick=()=>{R.log.push([it,null]);next()};
+  if($('ck'))$('ck').onclick=check;if($('pl')){$('pl').onclick=()=>playClip(it,$('pl'));if(S.opt.auto)setTimeout(()=>playClip(it,$('pl')),250)}
+  if(m==='comb'){const ta=$('ta');ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();R.cur.done?next():check()}});setTimeout(()=>{try{ta.focus({preventScroll:true})}catch(e){}},50)}
+  if(m==='build'){$('bank').querySelectorAll('.tile').forEach(b=>b.onclick=()=>place(+b.dataset.j));$('cl').onclick=()=>{R.cur.placed=[];draw()}}
+  if(m==='pick')document.querySelectorAll('.opts.ch .opt').forEach(b=>b.onclick=()=>pick(+b.dataset.j));
+  scrollTo(0,0)}
+/* wrong connectors as extra blocks */
+function decoys(it,T){const ks=T.filter(t=>t.k);if(!ks.length)return [];const cap=/^\p{Lu}/u.test(ks[0].t);const mine=CONN[it.c];
+  const others=shuffle(C.conns.filter(c=>c.cat!==mine.cat&&c.id!==it.c));const out=[];
+  /* single words look like any other block, so prefer one-word connectors */
+  others.sort((x,y)=>(x.f.trim().split(/\s+/).length>1)-(y.f.trim().split(/\s+/).length>1));
+  for(const c of others){const w=c.f.split(/\s*(?:…|\.\.\.|\/)\s*/)[0].trim().replace(/,$/,'');if(!w||(!HAN&&/\s/.test(w))||out.includes(w)||T.some(t=>norm(t.t)===norm(w)))continue;
+    out.push(!HAN&&cap?w.charAt(0).toUpperCase()+w.slice(1):w);if(out.length===2)break}
+  return out}
+function place(j){const c=R.cur;if(c.done||c.placed.includes(j))return;c.placed.push(j);$('fb').innerHTML='';draw()}
+function draw(){const c=R.cur,a=$('ans');a.innerHTML=c.placed.map((j,p)=>`<button class="tile" type="button" data-p="${p}">${esc(c.tiles[j].t)}</button>`).join('');a.classList.toggle('empty',!c.placed.length);
+  a.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{if(c.done)return;c.placed.splice(+b.dataset.p,1);$('fb').innerHTML='';draw()});
+  $('bank').querySelectorAll('.tile').forEach(b=>b.classList.toggle('used',c.placed.includes(+b.dataset.j)))}
+function gapOf(it){const T=it.T;const parts=T.map(t=>t.k);const n=new Set();let html='',inGap=false,gapTxt=[];const segs=[];let cur=[];
+  T.forEach((t,i)=>{if(t.k){if(!inGap){inGap=true;cur=[]}cur.push(t.t)}else{if(inGap){segs.push(cur.join(' '));inGap=false}}});if(inGap)segs.push(cur.join(' '));
+  let first=true;const outT=[];let inG=false;T.forEach(t=>{if(t.k){if(!inG){outT.push({t:'<span class="gp">___</span>',raw:1});inG=true}}else{inG=false;outT.push({t:esc(t.t)})}});
+  html=HAN?outT.map(x=>x.t).join(''):outT.map(x=>x.t).join(' ').replace(/\s+([,.;:!?»)])/g,'$1');
+  const right=segs.join(' … ');const mine=CONN[it.c];
+  const pool2=shuffle(C.conns.filter(c=>c.cat!==mine.cat&&c.id!==it.c)).map(c=>{const p=c.f.split('/')[0].trim();return p}).filter(p=>(p.split('…').length>1)===(segs.length>1)&&norm(p)!==norm(right));
+  const ds=[];for(const p of pool2){if(!ds.includes(p))ds.push(p);if(ds.length===3)break}
+  const opts=shuffle([{label:right,ok:true}].concat(ds.map(d=>({label:/^\p{Lu}/u.test(right)&&!HAN?d.charAt(0).toUpperCase()+d.slice(1):d,ok:false}))));
+  return {html,opts}}
+function pick(j){const c=R.cur;if(c.done)return;const o=c.g.opts[j];const B=document.querySelectorAll('.opts.ch .opt');
+  if(o.ok){B[j].classList.add('ok');return finish(c.tries===0?2:1)}c.tries++;B[j].classList.add('bad');B[j].disabled=true}
+function lcsDiff(u,t){const n=u.length,m=t.length,d=Array.from({length:n+1},()=>new Uint16Array(m+1));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)d[i][j]=u[i]===t[j]?d[i+1][j+1]+1:Math.max(d[i+1][j],d[i][j+1]);
+  const ia=new Set(),ib=new Set();let i=0,j=0;while(i<n&&j<m){if(u[i]===t[j]){ia.add(i);ib.add(j);i++;j++}else if(d[i+1][j]>=d[i][j+1])i++;else j++}return {ia,ib,score:ia.size/Math.max(n,m,1)}}
+const units=s=>HAN?[...norm(s)]:norm(s).split(' ').filter(Boolean);
+function check(){const c=R.cur,it=c.it;if(c.done)return;
+  if(S.opt.mode==='comb'){const v=$('ta').value.trim();if(!v)return;const nv=norm(v);const A=answers(it);
+    if(A.some(a=>norm(a)===nv))return finish(c.tries===0?2:1);c.tries++;
+    let best=null;A.forEach(a=>{const r=lcsDiff(units(v),units(a));if(!best||r.score>best.r.score)best={a,r}});
+    const u=units(v),t=units(best.a);const sep=HAN?'':' ';
+    const yours=u.map((w,k)=>best.r.ia.has(k)?`<span class="g">${esc(w)}</span>`:`<span class="x">${esc(w)}</span>`).join(sep);
+    const miss=t.length-best.r.ib.size;
+    $('fb').innerHTML=`<div class="fb bad"><span class="v">${esc(C.ui.notQuite)}</span><div class="han">${yours}</div><div class="small">${miss?esc(C.ui.missing.replace('{n}',miss))+' ':''}${esc(C.ui.tryAgain)}</div></div>`;return}
+  if(S.opt.mode==='build'){if(!c.placed.length)return;const built=c.placed.map(j=>c.tiles[j].t);const txt=HAN?built.join(''):built.join(' ');
+    const ok=answers(it).some(a=>norm(a)===norm(txt))&&c.placed.length===c.T.length;
+    if(ok)return finish(c.tries===0?2:1);c.tries++;
+    const T=c.T;$('ans').querySelectorAll('.tile').forEach((b,p)=>b.classList.add(T[p]&&norm(T[p].t)===norm(built[p])?'ok':'bad'));
+    $('fb').innerHTML=`<div class="fb bad"><span class="v">${esc(C.ui.notQuite)}</span><span class="small">${esc(C.ui.buildBad)}</span></div>`}}
+function finish(g){const c=R.cur,it=c.it;if(c.done)return;c.done=true;S.res[rk(it,S.opt.mode)]=g;save();R.log.push([it,g]);
+  const cn=CONN[it.c];const A=answers(it);
+  if(S.opt.mode==='build'){c.placed=c.T.map(t=>c.tiles.findIndex((x,j)=>x.t===t.t&&!0)).filter(j=>j>=0);
+    const used=new Set();c.placed=c.T.map(t=>{const j=c.tiles.findIndex((x,jj)=>x.t===t.t&&!used.has(jj));used.add(j);return j});draw();$('ans').querySelectorAll('.tile').forEach(b=>b.classList.add(g?'ok':'given'))}
+  if(S.opt.mode==='pick'){document.querySelectorAll('.opts.ch .opt').forEach((b,j)=>{if(c.g.opts[j].ok)b.classList.add('ok');b.disabled=true})}
+  if(S.opt.mode==='comb')$('ta').readOnly=true;
+  $('fb').innerHTML=`<div class="fb ${g?'ok':'bad'}"><span class="v">${g===2?'✓ '+esc(C.ui.firstTry):g===1?'✓ '+esc(C.ui.right):esc(C.ui.hereItIs)}</span>
+    <div class="han">${esc(A[0])}</div>${(()=>{const seen=new Set([norm(A[0])]);const B=A.slice(1).filter(x=>{const k=norm(x);if(seen.has(k))return false;seen.add(k);return true});return B.length?`<div class="small">${esc(C.ui.alsoRight)}: ${B.map(esc).join(' · ')}</div>`:''})()}
+    ${it.tr?`<div class="en">${esc(it.tr)}</div>`:''}<div class="small"><b>${esc(cn.f)}</b> — ${esc(cn.m)}${cn.nt?'. '+esc(cn.nt):''}</div></div>`;
+  $('acts').innerHTML=`${it.clip?`<button class="btn" id="pl2" type="button">🔊</button>`:''}<span class="sp"></span><button class="btn pri" id="nx" type="button">${R.k+1<R.items.length?esc(C.ui.next)+' →':esc(C.ui.finish)}</button>`;
+  if($('pl2'))$('pl2').onclick=()=>playClip(it,$('pl'));$('nx').onclick=next;setTimeout(()=>{try{$('nx').focus({preventScroll:true})}catch(e){}},30)}
+function next(){R.k++;if(R.k<R.items.length)item();else summary()}
+function summary(){const L=R.log,f=L.filter(x=>x[1]===2).length;const wrong=L.filter(x=>x[1]!==2).map(x=>x[0]);const ff=R.f;
+  $('app').innerHTML=`<button class="back" type="button" id="bk">← ${esc(C.ui.back)}</button><div class="card"><div class="done"><div class="big">${f}/${L.length}</div><div>${esc(C.ui.firstTryCount)}</div>
+   <div class="row" style="justify-content:center">${wrong.length?`<button class="btn pri" id="aw" type="button">${esc(C.ui.againWrong.replace('{n}',wrong.length))}</button>`:''}<button class="btn" id="more" type="button">${esc(C.ui.more)}</button></div>
+   <div class="mini">${L.map(([it,g])=>`<div><span class="mk ${g===2?'g1':g===1?'gh':'g0'}">${g===2?'✓':g===1?'~':g===0?'✗':'–'}</span><span>${esc(plain(it.s))}</span></div>`).join('')}</div></div></div>`;
+  $('bk').onclick=home;if(wrong.length)$('aw').onclick=()=>start({list:wrong});$('more').onclick=()=>start(ff)}
+home();
+</script>
+</body></html>

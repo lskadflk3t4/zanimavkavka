@@ -1,0 +1,1650 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}/* ===== full declension table + Mistakes tab (added) ===== */
+.ftbl{margin-top:16px;padding-top:12px;border-top:1.5px dashed var(--line)}
+.ftbl h3{margin:0 0 4px;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.ftbl h4{margin:12px 0 0;font-family:var(--f-display);font-size:1.05rem}
+.ftbl h4 small{font-family:var(--f-body);font-weight:500;font-size:.8rem;color:var(--muted)}
+.ft-sub,.ft-note{margin:4px 0 6px;font-size:.88rem;color:var(--muted);max-width:68ch}
+.ftab{font-size:.92rem}
+.ftab th small{display:block;font-weight:500;font-size:.72rem;color:var(--muted)}
+.ftab td[lang="be"]{font-family:var(--f-display)}
+.ftab td b{color:var(--accent)}
+.ftab td.fe{font-size:.8rem;color:var(--muted)}
+.ftab td.hl{background:var(--accent-soft)}
+.ft-more{margin-top:12px}
+.ft-more summary{cursor:pointer;font-weight:600;font-size:.88rem;color:var(--accent)}
+.tab .cnt{position:absolute;top:4px;right:2px;min-width:18px;padding:0 6px;border-radius:999px;background:var(--red);color:#fff;font-size:.7rem;font-weight:700;line-height:18px;text-align:center}
+.xh{margin:0 0 4px;font-family:var(--f-display);font-size:1.5rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.xh span{font-family:var(--f-body);font-size:.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.xsub,.howto{margin:4px 0;color:var(--muted);font-size:.9rem;max-width:68ch}
+.mk-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 10px}
+.mk-f{margin:0 0 6px}
+.mk-empty{margin-top:16px;padding:16px;border:1.5px dashed var(--line);border-radius:10px;color:var(--muted)}
+.mk-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column}
+.mk-list li{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.mk-l{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mk-w{font-family:var(--f-display);font-weight:700;font-size:1.05rem}
+.mk-m,.mk-t{font-size:.8rem;color:var(--muted)}
+.mk-m b{color:var(--red)}
+.mk-a{font-size:.95rem}
+.mk-a s{color:var(--red)}
+.mk-a b{color:var(--green)}
+.mk-r{display:flex;gap:6px;align-items:center;flex:none}
+.mk-x{appearance:none;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;width:32px;height:32px;cursor:pointer;font:inherit}
+.mk-x:hover{color:var(--red);border-color:var(--red)}
+.tab[data-mode="miss"]{position:relative;padding-right:26px}
+</style></head><body>
+<title>DRILL Belarusian Grammar Drill</title>
+<style>
+/* Layout: school exercise-book (тетрадь в клетку). Settings rail left, grid-paper drill sheet right with a red margin line; stacks on phones. */
+:root{
+  --bg:#EEF1F6; --sheet:#FFFFFF; --grid:rgba(43,79,203,.09); --ink:#1B2340; --muted:#5D6683;
+  --line:#D5DBE8; --accent:#2B4FCB; --accent-soft:#E3E9FB; --on-accent:#FFFFFF;
+  --red:#C7341F; --red-soft:#FBE7E3; --green:#1E7A4C; --green-soft:#E1F3E9; --margin:#E58A7C;
+  --f-display:"Literata",Georgia,"Times New Roman",serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-hand:"Caveat","Comic Sans MS",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F121B; --sheet:#171B28; --grid:rgba(143,168,255,.07); --ink:#E5E9F4; --muted:#9AA2BC;
+  --line:#2C3346; --accent:#8FA8FF; --accent-soft:#232C4A; --on-accent:#0F121B;
+  --red:#FF8069; --red-soft:#3A2020; --green:#5FCB92; --green-soft:#183326; --margin:#8A4A42; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F121B; --sheet:#171B28; --grid:rgba(143,168,255,.07); --ink:#E5E9F4; --muted:#9AA2BC;
+  --line:#2C3346; --accent:#8FA8FF; --accent-soft:#232C4A; --on-accent:#0F121B;
+  --red:#FF8069; --red-soft:#3A2020; --green:#5FCB92; --green-soft:#183326; --margin:#8A4A42; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:18px}
+.brand h1{font-family:var(--f-display);font-weight:700;font-size:clamp(1.6rem,3.6vw,2.2rem);margin:0;line-height:1.1;text-wrap:balance}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.score{display:flex;gap:18px;font-variant-numeric:tabular-nums}
+.score div{display:flex;flex-direction:column;align-items:flex-end}
+.score b{font-size:1.25rem;font-weight:700}
+.score span{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:18px}
+.tab{appearance:none;border:0;background:none;font:inherit;color:var(--muted);padding:10px 14px 9px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;font-weight:600;display:flex;flex-direction:column;align-items:flex-start;line-height:1.2}
+.tab small{font-weight:500;font-size:.72rem;opacity:.85}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.main{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:820px){.main{grid-template-columns:minmax(0,1fr)}}
+/* settings */
+.settings{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:4px 16px 16px}
+.settings summary{cursor:pointer;font-weight:700;padding:12px 0;list-style:none;display:flex;justify-content:space-between}
+.settings summary::-webkit-details-marker{display:none}
+.settings summary::after{content:"▾";color:var(--muted)}
+.settings[open] summary::after{content:"▴"}
+.grp{display:flex;flex-direction:column;gap:7px;padding-block:10px;border-top:1px solid var(--line)}
+.grp h3{margin:0;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{appearance:none;font:inherit;font-size:.82rem;border:1px solid var(--line);background:transparent;color:var(--ink);padding:5px 10px;border-radius:999px;cursor:pointer;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.quick{display:flex;gap:10px;font-size:.75rem}
+.quick button{appearance:none;border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+/* sheet */
+.sheet{position:relative;background-color:var(--sheet);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;border:1px solid var(--line);border-radius:10px;padding:22px 22px 22px 44px;min-width:0}
+.sheet::before{content:"";position:absolute;top:0;bottom:0;left:28px;width:2px;background:var(--margin);opacity:.8}
+@media (max-width:520px){.sheet{padding:18px 14px 18px 30px}.sheet::before{left:16px}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.tag{font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
+.tag.plain{background:transparent;color:var(--muted);padding-left:0;font-weight:500;letter-spacing:0;font-size:.85rem}
+.word{font-family:var(--f-display);font-weight:700;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.1;margin:4px 0 14px;overflow-wrap:anywhere}
+.target{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:14px}
+.target b{font-size:1.2rem}
+.target span{color:var(--muted);font-style:italic}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input.ans{font-family:var(--f-display);font-size:1.35rem;padding:9px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);flex:1 1 220px;min-width:0}
+input.ans:focus{border-color:var(--accent);outline:none}
+input.ans.ok{border-color:var(--green);background:var(--green-soft)}
+input.ans.bad{border-color:var(--red);background:var(--red-soft)}
+.btn{appearance:none;font:inherit;font-weight:700;border-radius:8px;padding:10px 16px;cursor:pointer;border:1.5px solid var(--accent);background:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.small{padding:6px 11px;font-size:.82rem;font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fb{margin-top:14px;min-height:2.4em;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.mark{font-family:var(--f-hand);font-size:1.9rem;font-weight:700;line-height:1}
+.mark.ok{color:var(--green)}.mark.bad{color:var(--red)}
+.fb .right{font-family:var(--f-display);font-size:1.2rem}
+.fb .right s{color:var(--red);text-decoration-thickness:2px}
+.cch{min-width:0}
+.cch .chip{font-size:.85rem;padding:6px 11px}
+.cch .chip.ok{background:var(--green);border-color:var(--green);color:var(--on-accent)}
+.cch .chip.bad{background:var(--red-soft);border-color:var(--red);color:var(--red);text-decoration:line-through}
+.cch .chip.miss{border:2px dashed var(--green);color:var(--green);font-weight:700}
+.cch .chip:disabled{cursor:default;opacity:1}
+.rule{flex-basis:100%;margin:6px 0 0;padding:8px 12px;background:var(--accent-soft);border-radius:6px;font-size:.9rem}
+.rule b{color:var(--accent)}
+.trow{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);gap:6px 12px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}
+.trow label{font-weight:600;font-size:.9rem;line-height:1.25}
+.trow label small{display:block;font-weight:400;color:var(--muted);font-style:italic}
+.trow .fix{grid-column:2;font-family:var(--f-display);color:var(--red);font-size:1rem;margin-top:-2px}
+@media (max-width:520px){.trow{grid-template-columns:minmax(0,1fr)}.trow .fix{grid-column:1}}
+.empty{color:var(--muted);padding:30px 0}
+/* reference */
+.ref{margin-top:18px}
+.ref summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:.88rem}
+.tbl-wrap{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;font-size:.92rem;background:var(--sheet);min-width:100%}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:left;white-space:nowrap}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+td.hl{background:var(--accent-soft);font-weight:700}
+td{font-family:var(--f-display)}
+/* keyboard */
+.kb{margin-top:16px;display:flex;flex-direction:column;gap:5px;align-items:center}
+.kb .kr{display:flex;gap:4px;flex-wrap:nowrap;justify-content:center;width:100%}
+.kb button{appearance:none;font-family:var(--f-display);font-size:1rem;flex:1 1 0;min-width:0;max-width:42px;height:38px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:6px;cursor:pointer;padding:0}
+.kb button.wide{max-width:96px;flex:2 1 0;font-family:var(--f-body);font-size:.78rem;font-weight:600}
+.kb button:active{background:var(--accent-soft)}
+/* log */
+.log{margin-top:22px}
+.log h2{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.log ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.log li{font-size:.88rem;display:flex;flex-wrap:wrap;gap:4px 10px}
+.log li .w{font-family:var(--f-display);font-weight:700}
+.log li .c{color:var(--green);font-family:var(--f-display)}
+.log li .y{color:var(--red);text-decoration:line-through;font-family:var(--f-display)}
+.note{font-size:.78rem;color:var(--muted);margin-top:12px}
+@media (prefers-reduced-motion:no-preference){.mark{animation:pop .25s ease-out}@keyframes pop{from{transform:scale(.6) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}}
+.ru-eq ul,.ru-tend ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.ru-eq li,.ru-tend li{font-size:.88rem;line-height:1.45}
+.ru-eq .nb{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.06em;padding:0 6px;border-radius:4px;background:var(--red-soft);color:var(--red)}
+.ru-eq .same{font-size:.75rem;color:var(--green);font-weight:600}
+.ru-tend ul{margin-top:10px}
+.rux{grid-column:2;font-family:var(--f-display);font-size:.95rem;color:var(--muted)}
+.rux-l{font-family:var(--f-body);font-size:.66rem;font-weight:700;letter-spacing:.08em;padding:1px 5px;border-radius:4px;border:1px solid var(--line);color:var(--muted);vertical-align:1px}
+@media (max-width:520px){.rux{grid-column:1}}
+.rux-box .rux-f{font-family:var(--f-display);font-weight:700}
+.rux-box .rux-cmp{color:var(--muted);font-size:.85rem}
+.endn{display:flex;flex-direction:column;gap:6px}
+.endn .tbl-wrap{margin-top:2px}
+.endn table.endt{font-size:.85rem;min-width:0}
+.endn table.endt td{white-space:normal;font-family:var(--f-body)}
+.endn .endsub{font-size:.8rem;color:var(--muted);margin-top:4px}
+.decl-ref{margin-top:22px;border-top:1px dashed var(--line);padding-top:12px}
+.dref-body{display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:.88rem;max-width:72ch}
+.dref-body p{margin:0}
+.dref-body h4{margin:10px 0 0;font-family:var(--f-display);font-size:1rem}
+.dref-body .tbl-wrap{max-width:none;margin-top:0}
+table.dref{font-size:.85rem}
+table.dref td{white-space:normal;min-width:90px;font-family:var(--f-body)}
+table.dref tbody th{white-space:nowrap}
+.dnote{font-size:.8rem;color:var(--muted)}
+/* ---- mobile / Android usability (added) ---- */
+button,.chip,.tab,.btn,summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media (max-width:820px){
+  .wrap{padding-block:10px 32px}
+  header{margin-bottom:10px;align-items:center}
+  .brand h1{font-size:1.45rem}
+  .brand p{display:none}
+  .score{gap:12px;width:100%;justify-content:space-between;background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:6px 12px}
+  .score div{align-items:center}
+  .score b{font-size:1.05rem}
+  .score span{font-size:.62rem}
+  .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -16px 12px;padding:0 16px;scroll-snap-type:x proximity}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:12px 14px 10px;min-height:48px;scroll-snap-align:start}
+  .main{gap:12px}
+  .settings{padding:0 14px 10px}
+  .settings summary{padding:14px 0;min-height:48px;align-items:center}
+  .chip{min-height:40px;padding:8px 14px;font-size:.88rem}
+  .quick{gap:18px;font-size:.85rem}
+  .quick button{padding:6px 0;min-height:32px}
+  .word{font-size:clamp(2rem,10vw,2.8rem);margin:2px 0 10px}
+  input.ans{font-size:1.3rem;min-height:52px;padding:10px 14px}
+  .btn{min-height:48px;padding:12px 18px;font-size:1rem}
+  .actions{position:sticky;bottom:0;z-index:4;background:var(--sheet);margin:12px -14px 0;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);flex-wrap:nowrap}
+  .actions .btn{flex:1 1 0;min-width:0}
+  .actions #go{flex:2 1 0}
+  .cch{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .cch .chip{min-height:48px;font-size:.92rem;justify-content:center;text-align:center}
+  .trow{padding:10px 0}
+  .ref summary{padding:12px 0;min-height:44px;display:flex;align-items:center}
+  .kb{position:sticky;bottom:0;z-index:4;background:var(--bg);margin:0 -14px;padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+  .kb .kr{gap:3px}
+  .kb button{height:46px;max-width:none;font-size:1.1rem}
+  .kb button.wide{max-width:none;height:44px}
+  .sheet:has(.kb) .actions{position:static;margin:12px 0 0;padding:0;border-top:0;background:transparent}
+  .log li{font-size:.9rem}
+}
+@media (max-width:520px){.sheet{padding:16px 14px 0 26px}.sheet::before{left:14px}.actions{margin-left:-26px;padding-left:26px}.kb{margin-left:-26px}.sheet:has(.kb) .actions{margin-left:0;padding-left:0}}
+/* ---- Russian colour coding (added) ---- */
+:root{--ru:#8A3A8C;--ru-soft:#F6EAF5;--ru-line:#DDB6DB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ru:#E3A6E2;--ru-soft:#2C1D2D;--ru-line:#5A3A5B}}
+:root[data-theme="dark"]{--ru:#E3A6E2;--ru-soft:#2C1D2D;--ru-line:#5A3A5B}
+.ru-block{background:var(--ru-soft);border:1px solid var(--ru-line);border-left:4px solid var(--ru);border-radius:6px;padding:8px 12px;display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+.ru-para{margin-top:12px}
+.ru-head{font-weight:700;color:var(--ru)}
+.ru-badge{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.08em;padding:1px 6px;border-radius:4px;background:var(--ru);color:var(--sheet);vertical-align:1px}
+.ru-sub{font-size:.8rem;color:var(--muted);margin:0}
+.ru-sub b{color:var(--ru)}
+table.rut{font-size:.85rem;min-width:0;background:var(--sheet)}
+table.rut th{color:var(--ru)}
+table.rut td{white-space:normal;font-family:var(--f-body);border-color:var(--ru-line)}
+table.rut th,table.rut td{border-color:var(--ru-line)}
+table.rut td.hl{background:var(--ru-line);color:var(--ink)}
+.ru-decl-ref{margin-top:14px}
+.ru-decl-ref summary{color:var(--ru)}
+.ru-decl-ref h4{color:var(--ru)}
+.rux-box{background:var(--ru-soft);border-left:4px solid var(--ru)}
+.rux-box b{color:var(--ru)}
+.rux{color:var(--ru)}
+.rux-l{border-color:var(--ru);color:var(--ru)}
+.ru-eq{background:var(--ru-soft);border-left:4px solid var(--ru)}
+.ru-eq>b{color:var(--ru)}
+.ru-tend summary{color:var(--ru)}
+.ru-tend b{color:var(--ru)}
+.endg-wrap{margin:-4px 0 14px}
+table.endg-info{font-size:.9rem;min-width:0}
+.endg-info td b{color:var(--accent);font-family:var(--f-body);font-weight:700}
+.ref td b{color:var(--accent)}
+table.rut td b{color:var(--ru)}
+.rux .rux-cmp{font-family:var(--f-body);font-size:.8rem}
+.rux b,.rux-box .rux-f b{color:var(--ru)}
+.fb>*{min-width:0;max-width:100%}
+.fb .tbl-wrap{max-width:100%}
+table.endg-info td,table.endg-info th{white-space:normal}
+/* ---- reset + revise bar (added) ---- */
+.mk-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:-6px 0 14px;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.mk-st{font-size:.85rem;color:var(--muted);flex:1 1 auto;min-width:0}
+.mk-st b{color:var(--red)}
+.mk-btn{appearance:none;font:inherit;font-size:.82rem;font-weight:700;border-radius:999px;padding:6px 14px;cursor:pointer;border:1.5px solid var(--accent);background:transparent;color:var(--accent);touch-action:manipulation}
+.mk-btn.rev{background:var(--red);border-color:var(--red);color:#fff;flex:0 0 auto;margin-right:auto}
+.mk-btn.ghost{border-color:var(--line);color:var(--muted)}
+.mk-btn.warn{border-color:var(--red);background:var(--red-soft);color:var(--red)}
+.mk-msg{flex-basis:100%;font-size:.82rem;color:var(--green);font-weight:600}
+.main.rv{grid-template-columns:minmax(0,1fr)}
+.tag.mk-tag{background:var(--red-soft);color:var(--red)}
+@media (max-width:820px){.mk-btn{min-height:40px;padding:8px 14px;font-size:.88rem}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1 lang="be">Склоны і спражэнні</h1>
+      <p>Belarusian drill — nouns, adjectives, verbs and prepositions</p>
+    </div>
+    <div class="score" aria-live="polite">
+      <div><b id="sc-ok">0</b><span>correct</span></div>
+      <div><b id="sc-all">0</b><span>answered</span></div>
+      <div><b id="sc-pct">–</b><span>accuracy</span></div>
+      <div><b id="sc-streak">0</b><span>streak</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+
+  <div class="main">
+    <details class="settings" id="settings">
+      <summary>Settings</summary>
+      <div id="settings-body"></div>
+    </details>
+
+    <section class="sheet" id="sheet" aria-live="polite"></section>
+  </div>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const CASES=[
+ {en:'Nominative',ab:'Н.',be:'назоўны',q:'хто? што?'},
+ {en:'Genitive',ab:'Р.',be:'родны',q:'каго? чаго?'},
+ {en:'Dative',ab:'Д.',be:'давальны',q:'каму? чаму?'},
+ {en:'Accusative',ab:'В.',be:'вінавальны',q:'каго? што?'},
+ {en:'Instrumental',ab:'Т.',be:'творны',q:'кім? чым?'},
+ {en:'Locative',ab:'М.',be:'месны',q:'аб кім? аб чым?'}];
+const GN={m:'masculine',f:'feminine',n:'neuter',pl:'plural',pt:'plural only'};
+
+/* nouns: w|g|anim|gloss|sg N,G,D,A,I,L|pl N,G,D,A,I,L|note  ("/" = accepted variants; note = exception) */
+const NOUNS_RAW=`чалавек|m|1|person|чалавек,чалавека,чалавеку,чалавека,чалавекам,чалавеку|людзі,людзей,людзям,людзей,людзьмі,людзях|Suppletive plural людзі (instr. людзьмі). Personal noun: locative аб чалавеку.
+дзень|m|0|day|дзень,дня,дню,дзень,днём,дні|дні,дзён,дням,дні,днямі,днях|Fleeting vowel: дзень → дня. Genitive plural дзён.
+год|m|0|year|год,года,году,год,годам,годзе|гады,гадоў,гадам,гады,гадамі,гадах|Akanne: stress moves to the ending in the plural, so о → а (гады, гадоў). Locative д → дз: у годзе.
+час|m|0|time|час,часу,часу,час,часам,часе|часы,часоў,часам,часы,часамі,часах|Abstract noun: genitive in -у (часу).
+горад|m|0|city, town|горад,горада,гораду,горад,горадам,горадзе|гарады,гарадоў,гарадам,гарады,гарадамі,гарадах|Locative д → дз (у горадзе); stressed plural ending, so о → а (гарады).
+дом|m|0|house|дом,дома,дому,дом,домам,доме|дамы,дамоў,дамам,дамы,дамамі,дамах|Stress jumps to the ending in the plural: о → а (дамы, дамоў).
+стол|m|0|table|стол,стала,сталу,стол,сталом,стале|сталы,сталоў,сталам,сталы,сталамі,сталах|Ending-stressed noun: о → а in every form except стол (стала, сталом). Stressed instr. -ом.
+сябар|m|1|friend|сябар,сябра,сябру,сябра,сябрам,сябру|сябры,сяброў,сябрам,сяброў,сябрамі,сябрах|Fleeting vowel: сябар → сябра. Personal noun: locative in -у (аб сябру).
+брат|m|1|brother|брат,брата,брату,брата,братам,брату/браце|браты,братоў,братам,братоў,братамі,братах|Personal noun: locative аб брату (браце also seen). Plural браты, not "братья".
+сын|m|1|son|сын,сына,сыну,сына,сынам,сыну/сыне|сыны,сыноў,сынам,сыноў,сынамі,сынах|Personal noun: locative аб сыну (сыне also seen).
+бацька|m|1|father|бацька,бацькі,бацьку,бацьку,бацькам,бацьку|бацькі,бацькоў,бацькам,бацькоў,бацькамі,бацьках|Masculine in -а: gen. -і but dat., acc. and loc. in -у and instr. -ам (з бацькам), unlike feminines. Plural бацькі also means "parents".
+лес|m|0|forest|лес,лесу,лесу,лес,лесам,лесе|лясы,лясоў,лясам,лясы,лясамі,лясах|Genitive in -у (з лесу). Yakanne: е → я before the stressed plural ending (лясы).
+край|m|0|land, edge|край,краю,краю,край,краем,краі|краі,краёў,краям,краі,краямі,краях|й-stem: soft endings (краю, краем); locative -і (у краі).
+урок|m|0|lesson|урок,урока,уроку,урок,урокам,уроку|урокі,урокаў,урокам,урокі,урокамі,уроках|Stem in к: locative -у (на ўроку), plural -і.
+конь|m|1|horse|конь,каня,каню,каня,канём,кані|коні,коней,коням,коней,конямі/коньмі,конях|Ending stress in the singular: о → а (каня, канём). Soft stem: locative -і.
+нож|m|0|knife|нож,нажа,нажу,нож,нажом,нажы|нажы,нажоў,нажам,нажы,нажамі,нажах|Hardened ж: -ы, never -і (нажы). Ending stress: о → а.
+сшытак|m|0|exercise book|сшытак,сшытка,сшытку,сшытак,сшыткам,сшытку|сшыткі,сшыткаў,сшыткам,сшыткі,сшыткамі,сшытках|Fleeting vowel -ак- (сшытка); stem in к → locative -у.
+сад|m|0|garden|сад,саду,саду,сад,садам,садзе|сады,садоў,садам,сады,садамі,садах|Genitive in -у (з саду); locative д → дз (у садзе).
+ліст|m|0|letter; leaf|ліст,ліста,лісту,ліст,лістом,лісце|лісты,лістоў,лістам,лісты,лістамі,лістах|Locative т → ц (у лісце); stressed instr. лістом.
+настаўнік|m|1|teacher|настаўнік,настаўніка,настаўніку,настаўніка,настаўнікам,настаўніку|настаўнікі,настаўнікаў,настаўнікам,настаўнікаў,настаўнікамі,настаўніках|
+сусед|m|1|neighbour|сусед,суседа,суседу,суседа,суседам,суседу/суседзе|суседзі,суседзяў,суседзям,суседзяў,суседзямі,суседзях|Soft plural: суседзі, суседзяў. Personal noun: locative аб суседу.
+музей|m|0|museum|музей,музея,музею,музей,музеем,музеі|музеі,музеяў,музеям,музеі,музеямі,музеях|
+акно|n|0|window|акно,акна,акну,акно,акном,акне|вокны,вокнаў,вокнам,вокны,вокнамі,вокнах|Plural with prothetic в-: вокны, because the stressed о now starts the word.
+слова|n|0|word|слова,слова,слову,слова,словам,слове|словы,слоў,словам,словы,словамі,словах|Genitive plural слоў (в → ў).
+месца|n|0|place|месца,месца,месцу,месца,месцам,месцы|месцы,месцаў,месцам,месцы,месцамі,месцах|Hardened ц: locative and plural in -ы.
+поле|n|0|field|поле,поля,полю,поле,полем,полі|палі,палёў,палям,палі,палямі,палях|Stressed plural ending: о → а (палі, палёў).
+мора|n|0|sea|мора,мора,мору,мора,морам,моры|моры,мораў,морам,моры,морамі,морах|Hardened р: locative -ы (у моры).
+сэрца|n|0|heart|сэрца,сэрца,сэрцу,сэрца,сэрцам,сэрцы|сэрцы,сэрцаў,сэрцам,сэрцы,сэрцамі,сэрцах|
+імя|n|0|name|імя,імя,імю,імя,імем,імі|імёны,імёнаў,імёнам,імёны,імёнамі,імёнах|Unlike Russian, the singular has no -ен-: імя, імю, імем; the plural has it: імёны.
+дрэва|n|0|tree|дрэва,дрэва,дрэву,дрэва,дрэвам,дрэве|дрэвы,дрэў,дрэвам,дрэвы,дрэвамі,дрэвах|Genitive plural дрэў.
+вока|n|0|eye|вока,вока,воку,вока,вокам,воку|вочы,вачэй,вачам,вочы,вачыма/вачамі,вачах|Irregular plural вочы; old dual instrumental вачыма.
+дзіця|n|1|child|дзіця,дзіцяці,дзіцяці,дзіця,дзіцем,дзіцяці|дзеці,дзяцей,дзецям,дзяцей,дзецьмі,дзецях|Mixed declension: -яці in gen., dat. and loc.; instr. дзіцем. Plural дзеці (instr. дзецьмі).
+возера|n|0|lake|возера,возера,возеру,возера,возерам,возеры|азёры,азёр,азёрам,азёры,азёрамі,азёрах|Plural азёры: stress moves, so the prothetic в- drops and о → а.
+яйка|n|0|egg|яйка,яйка,яйку,яйка,яйкам,яйку|яйкі,яек,яйкам,яйкі,яйкамі,яйках|Genitive plural яек; stem in к → locative -у.
+пытанне|n|0|question|пытанне,пытання,пытанню,пытанне,пытаннем,пытанні|пытанні,пытанняў,пытанням,пытанні,пытаннямі,пытаннях|
+жанчына|f|1|woman|жанчына,жанчыны,жанчыне,жанчыну,жанчынай/жанчынаю,жанчыне|жанчыны,жанчын,жанчынам,жанчын,жанчынамі,жанчынах|
+сястра|f|1|sister|сястра,сястры,сястры,сястру,сястрой/сястрою,сястры|сёстры,сясцёр,сёстрам,сясцёр,сёстрамі,сёстрах|Hardened р: dat./loc. -ы (сястры). Genitive plural сясцёр.
+кніга|f|0|book|кніга,кнігі,кнізе,кнігу,кнігай/кнігаю,кнізе|кнігі,кніг,кнігам,кнігі,кнігамі,кнігах|Dat./loc. г → з: кнізе.
+рука|f|0|hand, arm|рука,рукі,руцэ,руку,рукой/рукою,руцэ|рукі,рук,рукам,рукі,рукамі,руках|Dat./loc. к → ц: руцэ (hard ц, so -э).
+нага|f|0|leg, foot|нага,нагі,назе,нагу,нагой/нагою,назе|ногі,ног,нагам,ногі,нагамі,нагах|Dat./loc. г → з: назе. Stressed о only where the stem is stressed: ногі, ног.
+галава|f|0|head|галава,галавы,галаве,галаву,галавой/галавою,галаве|галовы,галоў,галовам,галовы,галовамі,галовах|Stem stress in the plural brings back о: галовы, галоў.
+зямля|f|0|earth, land|зямля,зямлі,зямлі,зямлю,зямлёй/зямлёю,зямлі|землі,земляў,землям,землі,землямі,землях|Stressed plural stem: я → е (землі).
+вада|f|0|water|вада,вады,вадзе,ваду,вадой/вадою,вадзе|воды,вод,водам,воды,водамі,водах|Dat./loc. д → дз (вадзе); plural воды with stressed о.
+вуліца|f|0|street|вуліца,вуліцы,вуліцы,вуліцу,вуліцай/вуліцаю,вуліцы|вуліцы,вуліц,вуліцам,вуліцы,вуліцамі,вуліцах|Hardened ц: dat./loc. -ы.
+школа|f|0|school|школа,школы,школе,школу,школай/школаю,школе|школы,школ,школам,школы,школамі,школах|
+хата|f|0|house, home|хата,хаты,хаце,хату,хатай/хатаю,хаце|хаты,хат,хатам,хаты,хатамі,хатах|Dat./loc. т → ц: хаце.
+сям'я|f|0|family|сям'я,сям'і,сям'і,сям'ю,сям'ёй/сям'ёю,сям'і|сем'і,сем'яў,сем'ям,сем'і,сем'ямі,сем'ях|Apostrophe throughout; plural stem stress я → е (сем'і).
+краіна|f|0|country|краіна,краіны,краіне,краіну,краінай/краінаю,краіне|краіны,краін,краінам,краіны,краінамі,краінах|
+гадзіна|f|0|hour|гадзіна,гадзіны,гадзіне,гадзіну,гадзінай/гадзінаю,гадзіне|гадзіны,гадзін,гадзінам,гадзіны,гадзінамі,гадзінах|
+мова|f|0|language|мова,мовы,мове,мову,мовай/моваю,мове|мовы,моў,мовам,мовы,мовамі,мовах|Genitive plural моў.
+дарога|f|0|road|дарога,дарогі,дарозе,дарогу,дарогай/дарогаю,дарозе|дарогі,дарог,дарогам,дарогі,дарогамі,дарогах|Dat./loc. г → з: дарозе.
+праца|f|0|work|праца,працы,працы,працу,працай/працаю,працы|працы,прац,працам,працы,працамі,працах|Hardened ц: dat./loc. -ы.
+дачка|f|1|daughter|дачка,дачкі,дачцэ,дачку,дачкой/дачкою,дачцэ|дочкі,дачок,дочкам,дачок,дочкамі,дочках|Dat./loc. к → ц: дачцэ. Stem stress in the plural: дочкі (but gen. дачок).
+песня|f|0|song|песня,песні,песні,песню,песняй/песняю,песні|песні,песень,песням,песні,песнямі,песнях|Genitive plural песень.
+сцяна|f|0|wall|сцяна,сцяны,сцяне,сцяну,сцяной/сцяною,сцяне|сцены,сцен,сценам,сцены,сценамі,сценах|Stressed plural stem: я → е (сцены).
+ноч|f|0|night|ноч,ночы,ночы,ноч,ноччу,ночы|ночы,начэй,начам,ночы,начамі,начах|3rd declension: instr. doubles the consonant (ноччу); -ы after hardened ч.
+рэч|f|0|thing|рэч,рэчы,рэчы,рэч,рэччу,рэчы|рэчы,рэчаў,рэчам,рэчы,рэчамі,рэчах|3rd declension: instr. рэччу (doubled ч); gen. pl. рэчаў.
+радасць|f|0|joy|радасць,радасці,радасці,радасць,радасцю,радасці|радасці,радасцей,радасцям,радасці,радасцямі,радасцях|3rd declension: no doubling after a consonant cluster (радасцю).
+дзверы|pt|0|door|-|дзверы,дзвярэй,дзвярам,дзверы,дзвярыма/дзвярамі,дзвярах|Plural only. Old dual instrumental дзвярыма.
+грошы|pt|0|money|-|грошы,грошай,грашам,грошы,грашыма/грашамі,грашах|Plural only. Gen. грошай; instr. грашыма.`;
+const NOUNS=NOUNS_RAW.split('\n').map(l=>{const [w,g,a,tr,sg,pl,note]=l.split('|');
+  const anim=a==='1',S6=s=>s==='-'?null:s.split(',');
+  return {w,g,anim,tr,sg:S6(sg),pl:S6(pl),note:note||'',t:!!note};});
+
+/* adjectives: stem + type */
+const ENDS={
+ hard:{m:['ы','ага','аму',{in:'ы',an:'ага'},'ым','ым'],n:['ае','ага','аму','ае','ым','ым'],f:['ая','ай','ай','ую','ай/аю','ай'],pl:['ыя','ых','ым',{in:'ыя',an:'ых'},'ымі','ых']},
+ hardS:{m:['ы','ога','ому',{in:'ы',an:'ога'},'ым','ым'],n:['ое','ога','ому','ое','ым','ым'],f:['ая','ой','ой','ую','ой/ою','ой'],pl:['ыя','ых','ым',{in:'ыя',an:'ых'},'ымі','ых']},
+ soft:{m:['і','яга','яму',{in:'і',an:'яга'},'ім','ім'],n:['яе','яга','яму','яе','ім','ім'],f:['яя','яй','яй','юю','яй/яю','яй'],pl:['ія','іх','ім',{in:'ія',an:'іх'},'імі','іх']},
+ velar:{m:['і','ага','аму',{in:'і',an:'ага'},'ім','ім'],n:['ае','ага','аму','ае','ім','ім'],f:['ая','ай','ай','ую','ай/аю','ай'],pl:['ія','іх','ім',{in:'ія',an:'іх'},'імі','іх']},
+ velarS:{m:['і','ога','ому',{in:'і',an:'ога'},'ім','ім'],n:['ое','ога','ому','ое','ім','ім'],f:['ая','ой','ой','ую','ой/ою','ой'],pl:['ія','іх','ім',{in:'ія',an:'іх'},'імі','іх']}};
+const ADJ_TYPES=[['hard','Hard stem (-ы, -ага)'],['hardS','Stressed ending (-ы́, -ога)'],['soft','Soft stem (-і, -яга)'],['velar','Stem in г, к, х (-і, -ага)'],['velarS','г, к, х + stressed (-і́, -ога)']];
+const ADJ_NOTE={hard:'Hard stem, unstressed ending: akanne turns о into а, so -ага, -аму, -ае, -ай (новага, новай).',
+ hardS:'Stressed ending: о is kept under stress, so -ога, -ому, -ое, -ой (маладога, маладой). Compare unstressed новага.',
+ soft:'Soft stem in -н-: я/ю/і throughout (сіняга, сіняя, сінюю, сінія).',
+ velar:'Stem in г, к, х: и-sound written і (вялікі, вялікім, вялікія), the rest like a hard stem (вялікага, вялікая).',
+ velarS:'Stem in г, к, х with stressed ending: і after the velar, о under stress (дарагі, дарагога, дарагой).'};
+const ADJ_RAW=`нов|hard|new;добр|hard|good, kind;дрэнн|hard|bad;прыгож|hard|beautiful;цікав|hard|interesting;важн|hard|important;галоўн|hard|main;
+бел|hard|white;чорн|hard|black;чырвон|hard|red;зялён|hard|green;жоўт|hard|yellow;цёпл|hard|warm;халодн|hard|cold;гарач|hard|hot;танн|hard|cheap;
+шчаслів|hard|happy;разумн|hard|clever;родн|hard|native, own;зімов|hard|winter (adj.);стар|hardS|old;малад|hardS|young;жыв|hardS|alive;чуж|hardS|foreign, someone else's;
+апошн|soft|last;сін|soft|blue;летн|soft|summer (adj.);ранн|soft|early;позн|soft|late;хатн|soft|home (adj.);
+вялік|velar|big;маленьк|velar|small;высок|velar|tall, high;нізк|velar|low;доўг|velar|long;каротк|velar|short;лёгк|velar|light, easy;беларуск|velar|Belarusian;
+дараг|velarS|dear, expensive;цяжк|velarS|heavy, difficult`;
+function expand(stem,e){return e.split('/').map(x=>stem+x).join('/');}
+function adjForms(stem,type){const E=ENDS[type],o={};
+  for(const g of ['m','n','f','pl'])o[g]=E[g].map(e=>typeof e==='object'?{in:expand(stem,e.in),an:expand(stem,e.an)}:expand(stem,e));return o;}
+const ADJS=ADJ_RAW.replace(/\n/g,'').split(';').map(x=>{let [st,ty,tr]=x.split('|');
+  const forms=adjForms(st,ty);return {w:forms.m[0],ty,tr,forms,note:ADJ_NOTE[ty]};});
+
+/* verbs: imperfective|perfective|gloss|impf present|impf past m,f,n,pl|pf future|pf past */
+const PERS=['я','ты','ён / яна','мы','вы','яны'];
+const BUDU=['буду','будзеш','будзе','будзем','будзеце','будуць'];
+const SYN=['му','меш','ме','мем','меце','муць'];
+function pfx(p,s){return s.split(',').map(f=>f.split('/').map(x=>p+x).join('/')).join(',');}
+const V=[
+ ['рабіць','зрабіць','to do, make','раблю,робіш,робіць,робім,робіце,робяць','рабіў,рабіла,рабіла,рабілі','з'],
+ ['гаварыць','сказаць','to speak, say','гавару,гаворыш,гаворыць,гаворым,гаворыце,гавораць','гаварыў,гаварыла,гаварыла,гаварылі',null,'скажу,скажаш,скажа,скажам,скажаце,скажуць','сказаў,сказала,сказала,сказалі'],
+ ['чытаць','прачытаць','to read','чытаю,чытаеш,чытае,чытаем,чытаеце,чытаюць','чытаў,чытала,чытала,чыталі','пра'],
+ ['пісаць','напісаць','to write','пішу,пішаш,піша,пішам,пішаце,пішуць','пісаў,пісала,пісала,пісалі','на'],
+ ['бачыць','убачыць','to see','бачу,бачыш,бачыць,бачым,бачыце,бачаць','бачыў,бачыла,бачыла,бачылі','у'],
+ ['чуць','пачуць','to hear','чую,чуеш,чуе,чуем,чуеце,чуюць','чуў,чула,чула,чулі','па'],
+ ['думаць','падумаць','to think','думаю,думаеш,думае,думаем,думаеце,думаюць','думаў,думала,думала,думалі','па'],
+ ['ісці','пайсці','to go (on foot)','іду,ідзеш,ідзе,ідзём,ідзяце,ідуць','ішоў,ішла,ішло,ішлі',null,'пайду,пойдзеш,пойдзе,пойдзем,пойдзеце,пойдуць','пайшоў,пайшла,пайшло,пайшлі'],
+ ['ехаць','паехаць','to go (by vehicle)','еду,едзеш,едзе,едзем,едзеце,едуць','ехаў,ехала,ехала,ехалі','па'],
+ ['браць','узяць','to take','бяру,бярэш,бярэ,бяром,бераце,бяруць','браў,брала,брала,бралі',null,'вазьму,возьмеш,возьме,возьмем,возьмеце,возьмуць','узяў,узяла,узяло,узялі'],
+ ['даваць','даць','to give','даю,даеш,дае,даём,даяце,даюць','даваў,давала,давала,давалі',null,'дам,дасі,дасць,дадзім,дасце,дадуць','даў,дала,дало,далі'],
+ ['купляць','купіць','to buy','купляю,купляеш,купляе,купляем,купляеце,купляюць','купляў,купляла,купляла,куплялі',null,'куплю,купіш,купіць,купім,купіце,купяць','купіў,купіла,купіла,купілі'],
+ ['пачынаць','пачаць','to begin','пачынаю,пачынаеш,пачынае,пачынаем,пачынаеце,пачынаюць','пачынаў,пачынала,пачынала,пачыналі',null,'пачну,пачнеш,пачне,пачнём,пачняце,пачнуць','пачаў,пачала,пачало,пачалі'],
+ ['разумець','зразумець','to understand','разумею,разумееш,разумее,разумеем,разумееце,разумеюць','разумеў,разумела,разумела,разумелі','з'],
+ ['пытацца','спытацца','to ask','пытаюся,пытаешся,пытаецца,пытаемся,пытаецеся,пытаюцца','пытаўся,пыталася,пыталася,пыталіся','с'],
+ ['адказваць','адказаць','to answer','адказваю,адказваеш,адказвае,адказваем,адказваеце,адказваюць','адказваў,адказвала,адказвала,адказвалі',null,'адкажу,адкажаш,адкажа,адкажам,адкажаце,адкажуць','адказаў,адказала,адказала,адказалі'],
+ ['есці',"з'есці",'to eat','ем,ясі,есць,ядзім,ясце,ядуць','еў,ела,ела,елі',"з'"],
+ ['піць','выпіць','to drink',"п'ю,п'еш,п'е,п'ём,п'яце,п'юць",'піў,піла,піло/піла,пілі',null,"вып'ю,вып'еш,вып'е,вып'ем,вып'еце,вып'юць",'выпіў,выпіла,выпіла,выпілі'],
+ ['вучыць','вывучыць','to learn, study; teach','вучу,вучыш,вучыць,вучым,вучыце,вучаць','вучыў,вучыла,вучыла,вучылі','вы'],
+ ['рыхтаваць','падрыхтаваць','to prepare','рыхтую,рыхтуеш,рыхтуе,рыхтуем,рыхтуеце,рыхтуюць','рыхтаваў,рыхтавала,рыхтавала,рыхтавалі','пад'],
+ ['хацець','захацець','to want','хачу,хочаш,хоча,хочам,хочаце,хочуць','хацеў,хацела,хацела,хацелі','за'],
+ ['магчы','змагчы','to be able, can','магу,можаш,можа,можам,можаце,могуць','мог,магла,магло,маглі','з'],
+ ['сустракаць','сустрэць','to meet','сустракаю,сустракаеш,сустракае,сустракаем,сустракаеце,сустракаюць','сустракаў,сустракала,сустракала,сустракалі',null,'сустрэну,сустрэнеш,сустрэне,сустрэнем,сустрэнеце,сустрэнуць','сустрэў,сустрэла,сустрэла,сустрэлі'],
+ ['забываць','забыць','to forget','забываю,забываеш,забывае,забываем,забываеце,забываюць','забываў,забывала,забывала,забывалі',null,'забуду,забудзеш,забудзе,забудзем,забудзеце,забудуць','забыў,забыла,забыла,забылі'],
+ ['дапамагаць','дапамагчы','to help','дапамагаю,дапамагаеш,дапамагае,дапамагаем,дапамагаеце,дапамагаюць','дапамагаў,дапамагала,дапамагала,дапамагалі',null,'дапамагу,дапаможаш,дапаможа,дапаможам,дапаможаце,дапамогуць','дапамог,дапамагла,дапамагло,дапамаглі'],
+ ['званіць','пазваніць','to call, ring','званю,звоніш/званіш,звоніць/званіць,звонім/званім,звоніце/званіце,звоняць/званяць','званіў,званіла,званіла,званілі','па'],
+ ['чакаць','пачакаць','to wait','чакаю,чакаеш,чакае,чакаем,чакаеце,чакаюць','чакаў,чакала,чакала,чакалі','па'],
+ ['вяртацца','вярнуцца','to return','вяртаюся,вяртаешся,вяртаецца,вяртаемся,вяртаецеся,вяртаюцца','вяртаўся,вярталася,вярталася,вярталіся',null,'вярнуся,вернешся,вернецца,вернемся,вернецеся,вернуцца','вярнуўся,вярнулася,вярнулася,вярнуліся'],
+ ['прыходзіць','прыйсці','to come, arrive (on foot)','прыходжу,прыходзіш,прыходзіць,прыходзім,прыходзіце,прыходзяць','прыходзіў,прыходзіла,прыходзіла,прыходзілі',null,'прыйду,прыйдзеш,прыйдзе,прыйдзем,прыйдзеце,прыйдуць','прыйшоў,прыйшла,прыйшло,прыйшлі'],
+ ['вырашаць','вырашыць','to decide, solve','вырашаю,вырашаеш,вырашае,вырашаем,вырашаеце,вырашаюць','вырашаў,вырашала,вырашала,вырашалі',null,'вырашу,вырашыш,вырашыць,вырашым,вырашыце,вырашаць','вырашыў,вырашыла,вырашыла,вырашылі']];
+const VNOTE={
+ 'рабіць':'Labial б adds л in the 1st person: раблю; stem stress moves (робіш). 2nd conjugation (-іш, -яць).',
+ 'гаварыць':'Suppletive pair: гаварыць / сказаць. 2nd conjugation with о under stress: гаворыш.',
+ 'сказаць':'з → ж through the whole future: скажу, скажаш. Unstressed endings after ж: -аш, -а, -ам, -аце.',
+ 'пісаць':'с → ш through the whole present; after hardened ш the unstressed е becomes а: пішаш, піша.',
+ 'ісці':'Past from a different stem: ішоў, ішла. Stressed endings: ідзём, ідзяце (е → я before the stress).',
+ 'пайсці':'Stress moves to the stem after the 1st person: пайду, but пойдзеш (а → о under stress).',
+ 'браць':'Present on the stem бяр-: бяру, бярэш, бяром, бераце (е, two syllables before the stress).',
+ 'узяць':'Future from a different stem: вазьму, возьмеш (о under stress).',
+ 'даць':'Irregular: дам, дасі, дасць, дадзім, дасце, дадуць.',
+ 'даваць':'-ва- drops in the present: даю, даеш (not "даваю").',
+ 'есці':'Irregular: ем, ясі, есць, ядзім, ясце, ядуць.',
+ "з'есці":'Like есці with the apostrophe prefix з\': з\'ем, з\'ясі, з\'есць.',
+ 'піць':'Apostrophe before я, е, ё, ю: п\'ю, п\'еш, п\'ём. Stressed endings -ём, -яце.',
+ 'выпіць':'The prefix вы- takes the stress, so the endings are unstressed: вып\'ем, вып\'еце (compare п\'ём, п\'яце).',
+ 'купіць':'Labial п adds л in the 1st person: куплю. Same л in the imperfective купляць.',
+ 'пачаць':'Future on the stem пачн-: пачну, пачнём, пачняце.',
+ 'пытацца':'Reflexive: -ся after a vowel or ў, -цца in 3rd person (пытаецца, пытаюцца), -ся after -ш (пытаешся).',
+ 'вяртацца':'Reflexive: -цца in the 3rd person (вяртаецца, вяртаюцца), -ся elsewhere (вяртаюся, вяртаешся).',
+ 'вярнуцца':'Stress moves to the stem: вярнуся, but вернешся (я → е under stress).',
+ 'хацець':'Mixed conjugation: хачу, хочаш, хоча, хочам (о under stem stress).',
+ 'магчы':'г → ж: магу, можаш, можа, могуць. Past without -ў: мог, магла.',
+ 'дапамагчы':'Like магчы: дапамагу, дапаможаш; past дапамог, дапамагла.',
+ 'званіць':'Both звоніш and званіш are heard; звоніць is the more common form.',
+ 'прыходзіць':'дз → дж in the 1st person: прыходжу.',
+ 'прыйсці':'Like ісці: прыйду, прыйдзеш; past прыйшоў.',
+ 'забыць':'Future on the stem забуд-: забуду, забудзеш.',
+ 'сустрэць':'Future on the stem сустрэн-: сустрэну, сустрэнеш.',
+ 'вучыць':'2nd conjugation: вучу, вучыш, вучаць (after hardened ч: -ы, -аць).',
+ 'рыхтаваць':'-ава- → -у- in the present: рыхтую, рыхтуеш.',
+ 'чуць':'1st conjugation on the stem чу-: чую, чуеш.'};
+const VERBS=[];
+V.forEach(([i,p,tr,ipr,ipa,pre,ppr,ppa])=>{
+  VERBS.push({w:i,asp:'i',tr,partner:p,np:ipr.split(','),past:ipa.split(','),note:VNOTE[i]||''});
+  const pr=pre!=null?pfx(pre,ipr):ppr, pa=pre!=null?pfx(pre,ipa):ppa;
+  VERBS.push({w:p,asp:'p',tr,partner:i,np:pr.split(','),past:pa.split(','),note:VNOTE[p]||(pre?`Prefixed perfective: ${pre}- + ${i}, conjugated exactly like ${i}.`:'')});});
+const PAIRS=V.map(v=>[v[0],v[1]]);
+
+/* prepositions: [w, main cases, extra (also accepted), meaning, example] */
+const PREPS=[
+ ['без',[1],[],'without','без цукру'],['для',[1],[],'for','для мамы'],['да',[1],[],'to, up to, until','да школы · да вечара'],
+ ['ад',[1],[],'from (a person, a starting point); than','ад сябра · ад раніцы'],
+ ['з (са)',[1,4],[3],'from, off, since (gen.); with (instr.); about, roughly (acc.)','з горада · з сябрам · з тыдзень'],
+ ['у (ва)',[1,3,5],[],'at someone\'s, "have" (gen.); into, to (acc.); in (loc.)','у брата · у школу · у школе'],
+ ['на',[3,5],[],'onto, to, for (acc.); on, at (loc.)','на стол · на стале'],
+ ['аб (аба)',[5],[3],'about (loc.); against (acc.)','аб кнізе · аб сцяну'],
+ ['пра',[3],[],'about — with the accusative, unlike Russian о + prep.','пра кнігу'],
+ ['па',[3,5],[],'along, around, by (loc., not dat. as in Russian); to fetch, up to (acc.)','па вуліцы · па тэлефоне · па ваду'],
+ ['праз',[3],[],'through, across; in (time); because of','праз лес · праз гадзіну'],
+ ['цераз',[3],[],'over, across','цераз раку'],['скрозь',[3],[],'through','скрозь акно'],['паўз',[3],[],'past, alongside','паўз дом'],
+ ['за',[3,4],[],'behind (direction) / for (acc.); behind, beyond (location) / to fetch (instr.)','за дом · за кнігу · за домам · за хлебам'],
+ ['пад',[3,4],[],'under (direction, acc.); under (location, instr.)','пад стол · пад сталом'],
+ ['над',[4],[],'above, over','над сталом'],['перад',[4],[],'in front of; before','перад домам · перад урокам'],
+ ['паміж',[4],[1],'between (gen. is less common)','паміж дамамі'],['па-за',[4],[],'outside, beyond','па-за горадам'],
+ ['згодна з',[4],[],'in accordance with','згодна з законам'],
+ ['пры',[5],[],'in the presence of; attached to; under (a ruler)','пры школе · пры бацьку'],
+ ['каля',[1],[],'near; about (amount)','каля дома · каля гадзіны'],['ля',[1],[],'by, near','ля акна'],
+ ['сярод',[1],[],'among, in the middle of','сярод сяброў'],['пасярод',[1],[],'in the middle of','пасярод вуліцы'],
+ ['вакол',[1],[],'around','вакол дома'],['пасля',[1],[],'after','пасля ўрока'],['акрамя',[1],[],'except, besides','акрамя брата'],
+ ['замест',[1],[],'instead of','замест кавы'],['супраць',[1],[],'against','супраць вайны'],['насупраць',[1],[],'opposite','насупраць школы'],
+ ['уздоўж',[1],[],'along','уздоўж ракі'],['міма',[1],[],'past','міма дома'],['дзеля',[1],[],'for the sake of','дзеля дзяцей'],
+ ['накшталт',[1],[],'like, such as','накшталт гэтага'],['адносна',[1],[],'concerning','адносна працы'],['наконт',[1],[],'about, regarding','наконт працы'],
+ ['паводле',[1],[],'according to','паводле закона'],['падчас',[1],[],'during','падчас урока'],['звыш',[1],[],'over, more than','звыш гадзіны'],
+ ['з-за',[1],[],'from behind; because of','з-за дрэва · з-за дажджу'],['з-пад',[1],[],'from under','з-пад стала'],
+ ['дзякуючы',[2],[],'thanks to','дзякуючы сябру'],['насустрач',[2],[],'towards (to meet)','насустрач сябру']];
+
+/* ---- Russian equivalents (added): [Russian, NB if the case government differs] ---- */
+const RU_EQ={
+ 'без':['без + Р.',''],'для':['для + Р.',''],
+ 'да':['до + Р.; к + Д.','Direction to a person or place: Belarusian да + Р. where Russian uses к + Д. (пайсці да сябра = пойти к другу).'],
+ 'ад':['от + Р.',''],
+ 'з (са)':['с + Р. / Т. / В.; из + Р.','Same cases, but Belarusian з covers both Russian из and с (з горада = из города). Also: смяяцца з каго (Р.) = смеяться над кем (Т.).'],
+ 'у (ва)':['в + В. / П.; у + Р.','Same cases, but one Belarusian у does the work of Russian в and у.'],
+ 'на':['на + В. / П.',''],
+ 'аб (аба)':['о / об + П. / В.',''],
+ 'пра':['про + В.; о + П.','Same case as Russian про (+ В.), but Belarusian uses пра far more: where Russian says о книге (П.), Belarusian often says пра кнігу (В.).'],
+ 'па':['по + Д. / В. / П.','Location and movement: Belarusian па + М. where Russian по takes Д. (па вуліцы = по улице, па тэлефоне = по телефону). Same with feelings: сумаваць па кім (М.) = скучать по кому (Д.).'],
+ 'праз':['через + В.; из-за + Р.','Cause: Belarusian праз + В. where Russian uses из-за + Р. (праз дождж = из-за дождя). In space and time it matches через.'],
+ 'цераз':['через + В.',''],'скрозь':['сквозь + В.',''],
+ 'паўз':['мимо + Р.; вдоль + Р.','Belarusian паўз + В. where Russian мимо / вдоль take Р. (паўз дом = мимо дома).'],
+ 'за':['за + В. / Т.',''],'пад':['под + В. / Т.',''],'над':['над + Т.',''],'перад':['перед + Т.',''],
+ 'паміж':['между + Т. (rarely Р.)',''],
+ 'па-за':['вне + Р.; за пределами + Р.','Belarusian па-за + Т. where Russian вне takes Р. (па-за горадам = вне города).'],
+ 'згодна з':['согласно + Д.','Belarusian згодна з + Т. where Russian согласно takes Д. (згодна з законам = согласно закону).'],
+ 'пры':['при + П.',''],'каля':['около + Р.',''],'ля':['у / возле + Р.',''],'сярод':['среди + Р.',''],'пасярод':['посреди + Р.',''],
+ 'вакол':['вокруг + Р.',''],'пасля':['после + Р.',''],'акрамя':['кроме + Р.',''],'замест':['вместо + Р.',''],'супраць':['против + Р.',''],
+ 'насупраць':['напротив + Р.',''],'уздоўж':['вдоль + Р.',''],'міма':['мимо + Р.',''],'дзеля':['ради + Р.',''],
+ 'накшталт':['вроде / наподобие + Р.',''],'адносна':['относительно + Р.',''],'наконт':['насчёт + Р.',''],
+ 'паводле':['по + Д.; согласно + Д.','Belarusian паводле + Р. where Russian по / согласно take Д. (паводле закона = по закону).'],
+ 'падчас':['во время + Р.',''],'звыш':['свыше + Р.',''],'з-за':['из-за + Р.',''],'з-пад':['из-под + Р.',''],
+ 'дзякуючы':['благодаря + Д.',''],'насустрач':['навстречу + Д.','']};
+const RU_TENDENCIES=[
+ ['Locative replaces the Russian dative after па','па вуліцы, па тэлефоне, сумаваць па доме — Russian по улице, по телефону, скучать по дому.'],
+ ['Genitive where Russian has the dative','да сябра (к другу), паводле закона (по закону). Belarusian has no к: direction to a person is да + Р.'],
+ ['Accusative where Russian has the genitive or prepositional','паўз дом (мимо дома), праз дождж (из-за дождя), and пра кнігу as the usual "about" (о книге).'],
+ ['Instrumental where Russian has the dative or genitive','згодна з законам (согласно закону), па-за горадам (вне города).'],
+ ['One preposition for two Russian ones','з = из + с, у = в + у, да = до + к, праз = через + из-за. The case stays the same; only the preposition merges.'],
+ ['Verbs follow the same pattern','смяяцца з каго (Р.) = смеяться над кем (Т.); дзякаваць каму (Д.) = благодарить кого (В.); хварэць на што (В.) = болеть чем (Т.).']];
+
+/* ---- Russian comparison forms (added) ---- */
+const RU_N={"чалавек":{"w":"человек","sg":["человек","человека","человеку","человека","человеком","человеке"],"pl":["люди","людей","людям","людей","людьми","людях"]},"дзень":{"w":"день","sg":["день","дня","дню","день","днём","дне"],"pl":["дни","дней","дням","дни","днями","днях"]},"год":{"w":"год","sg":["год","года","году","год","годом","годе/году"],"pl":["годы","лет/годов","годам","годы","годами","годах"]},"час":{"w":"время","sg":["время","времени","времени","время","временем","времени"],"pl":["времена","времён","временам","времена","временами","временах"]},"горад":{"w":"город","sg":["город","города","городу","город","городом","городе"],"pl":["города","городов","городам","города","городами","городах"]},"дом":{"w":"дом","sg":["дом","дома","дому","дом","домом","доме"],"pl":["дома","домов","домам","дома","домами","домах"]},"стол":{"w":"стол","sg":["стол","стола","столу","стол","столом","столе"],"pl":["столы","столов","столам","столы","столами","столах"]},"сябар":{"w":"друг","sg":["друг","друга","другу","друга","другом","друге"],"pl":["друзья","друзей","друзьям","друзей","друзьями","друзьях"]},"брат":{"w":"брат","sg":["брат","брата","брату","брата","братом","брате"],"pl":["братья","братьев","братьям","братьев","братьями","братьях"]},"сын":{"w":"сын","sg":["сын","сына","сыну","сына","сыном","сыне"],"pl":["сыновья","сыновей","сыновьям","сыновей","сыновьями","сыновьях"]},"бацька":{"w":"отец","sg":["отец","отца","отцу","отца","отцом","отце"],"pl":["отцы","отцов","отцам","отцов","отцами","отцах"]},"лес":{"w":"лес","sg":["лес","леса","лесу","лес","лесом","лесе/лесу"],"pl":["леса","лесов","лесам","леса","лесами","лесах"]},"край":{"w":"край","sg":["край","края","краю","край","краем","крае/краю"],"pl":["края","краёв","краям","края","краями","краях"]},"урок":{"w":"урок","sg":["урок","урока","уроку","урок","уроком","уроке"],"pl":["уроки","уроков","урокам","уроки","уроками","уроках"]},"конь":{"w":"конь","sg":["конь","коня","коню","коня","конём","коне"],"pl":["кони","коней","коням","коней","конями","конях"]},"нож":{"w":"нож","sg":["нож","ножа","ножу","нож","ножом","ноже"],"pl":["ножи","ножей","ножам","ножи","ножами","ножах"]},"сшытак":{"w":"тетрадь","sg":["тетрадь","тетради","тетради","тетрадь","тетрадью","тетради"],"pl":["тетради","тетрадей","тетрадям","тетради","тетрадями","тетрадях"]},"сад":{"w":"сад","sg":["сад","сада","саду","сад","садом","саде/саду"],"pl":["сады","садов","садам","сады","садами","садах"]},"ліст":{"w":"письмо","sg":["письмо","письма","письму","письмо","письмом","письме"],"pl":["письма","писем","письмам","письма","письмами","письмах"]},"настаўнік":{"w":"учитель","sg":["учитель","учителя","учителю","учителя","учителем","учителе"],"pl":["учителя","учителей","учителям","учителей","учителями","учителях"]},"сусед":{"w":"сосед","sg":["сосед","соседа","соседу","соседа","соседом","соседе"],"pl":["соседи","соседей","соседям","соседей","соседями","соседях"]},"музей":{"w":"музей","sg":["музей","музея","музею","музей","музеем","музее"],"pl":["музеи","музеев","музеям","музеи","музеями","музеях"]},"акно":{"w":"окно","sg":["окно","окна","окну","окно","окном","окне"],"pl":["окна","окон","окнам","окна","окнами","окнах"]},"слова":{"w":"слово","sg":["слово","слова","слову","слово","словом","слове"],"pl":["слова","слов","словам","слова","словами","словах"]},"месца":{"w":"место","sg":["место","места","месту","место","местом","месте"],"pl":["места","мест","местам","места","местами","местах"]},"поле":{"w":"поле","sg":["поле","поля","полю","поле","полем","поле"],"pl":["поля","полей","полям","поля","полями","полях"]},"мора":{"w":"море","sg":["море","моря","морю","море","морем","море"],"pl":["моря","морей","морям","моря","морями","морях"]},"сэрца":{"w":"сердце","sg":["сердце","сердца","сердцу","сердце","сердцем","сердце"],"pl":["сердца","сердец","сердцам","сердца","сердцами","сердцах"]},"імя":{"w":"имя","sg":["имя","имени","имени","имя","именем","имени"],"pl":["имена","имён","именам","имена","именами","именах"]},"дрэва":{"w":"дерево","sg":["дерево","дерева","дереву","дерево","деревом","дереве"],"pl":["деревья","деревьев","деревьям","деревья","деревьями","деревьях"]},"вока":{"w":"глаз","sg":["глаз","глаза","глазу","глаз","глазом","глазе"],"pl":["глаза","глаз","глазам","глаза","глазами","глазах"]},"дзіця":{"w":"ребёнок","sg":["ребёнок","ребёнка","ребёнку","ребёнка","ребёнком","ребёнке"],"pl":["дети","детей","детям","детей","детьми","детях"]},"возера":{"w":"озеро","sg":["озеро","озера","озеру","озеро","озером","озере"],"pl":["озёра","озёр","озёрам","озёра","озёрами","озёрах"]},"яйка":{"w":"яйцо","sg":["яйцо","яйца","яйцу","яйцо","яйцом","яйце"],"pl":["яйца","яиц","яйцам","яйца","яйцами","яйцах"]},"пытанне":{"w":"вопрос","sg":["вопрос","вопроса","вопросу","вопрос","вопросом","вопросе"],"pl":["вопросы","вопросов","вопросам","вопросы","вопросами","вопросах"]},"жанчына":{"w":"женщина","sg":["женщина","женщины","женщине","женщину","женщиной/женщиною","женщине"],"pl":["женщины","женщин","женщинам","женщин","женщинами","женщинах"]},"сястра":{"w":"сестра","sg":["сестра","сестры","сестре","сестру","сестрой/сестрою","сестре"],"pl":["сёстры","сестёр","сёстрам","сестёр","сёстрами","сёстрах"]},"кніга":{"w":"книга","sg":["книга","книги","книге","книгу","книгой/книгою","книге"],"pl":["книги","книг","книгам","книги","книгами","книгах"]},"рука":{"w":"рука","sg":["рука","руки","руке","руку","рукой/рукою","руке"],"pl":["руки","рук","рукам","руки","руками","руках"]},"нага":{"w":"нога","sg":["нога","ноги","ноге","ногу","ногой/ногою","ноге"],"pl":["ноги","ног","ногам","ноги","ногами","ногах"]},"галава":{"w":"голова","sg":["голова","головы","голове","голову","головой/головою","голове"],"pl":["головы","голов","головам","головы","головами","головах"]},"зямля":{"w":"земля","sg":["земля","земли","земле","землю","землёй/землёю","земле"],"pl":["земли","земель","землям","земли","землями","землях"]},"вада":{"w":"вода","sg":["вода","воды","воде","воду","водой/водою","воде"],"pl":["воды","вод","водам","воды","водами","водах"]},"вуліца":{"w":"улица","sg":["улица","улицы","улице","улицу","улицей/улицею","улице"],"pl":["улицы","улиц","улицам","улицы","улицами","улицах"]},"школа":{"w":"школа","sg":["школа","школы","школе","школу","школой/школою","школе"],"pl":["школы","школ","школам","школы","школами","школах"]},"хата":{"w":"дом","sg":["дом","дома","дому","дом","домом","доме"],"pl":["дома","домов","домам","дома","домами","домах"]},"сям'я":{"w":"семья","sg":["семья","семьи","семье","семью","семьёй/семьёю","семье"],"pl":["семьи","семей","семьям","семьи","семьями","семьях"]},"краіна":{"w":"страна","sg":["страна","страны","стране","страну","страной/страною","стране"],"pl":["страны","стран","странам","страны","странами","странах"]},"гадзіна":{"w":"час","sg":["час","часа","часу","час","часом","часе"],"pl":["часы","часов","часам","часы","часами","часах"]},"мова":{"w":"язык","sg":["язык","языка","языку","язык","языком","языке"],"pl":["языки","языков","языкам","языки","языками","языках"]},"дарога":{"w":"дорога","sg":["дорога","дороги","дороге","дорогу","дорогой/дорогою","дороге"],"pl":["дороги","дорог","дорогам","дороги","дорогами","дорогах"]},"праца":{"w":"работа","sg":["работа","работы","работе","работу","работой/работою","работе"],"pl":["работы","работ","работам","работы","работами","работах"]},"дачка":{"w":"дочь","sg":["дочь","дочери","дочери","дочь","дочерью","дочери"],"pl":["дочери","дочерей","дочерям","дочерей","дочерьми/дочерями","дочерях"]},"песня":{"w":"песня","sg":["песня","песни","песне","песню","песней/песнею","песне"],"pl":["песни","песен","песням","песни","песнями","песнях"]},"сцяна":{"w":"стена","sg":["стена","стены","стене","стену","стеной/стеною","стене"],"pl":["стены","стен","стенам","стены","стенами","стенах"]},"ноч":{"w":"ночь","sg":["ночь","ночи","ночи","ночь","ночью","ночи"],"pl":["ночи","ночей","ночам","ночи","ночами","ночах"]},"рэч":{"w":"вещь","sg":["вещь","вещи","вещи","вещь","вещью","вещи"],"pl":["вещи","вещей","вещам","вещи","вещами","вещах"]},"радасць":{"w":"радость","sg":["радость","радости","радости","радость","радостью","радости"],"pl":["радости","радостей","радостям","радости","радостями","радостях"]},"дзверы":{"w":"двери","sg":null,"pl":["двери","дверей","дверям","двери","дверями/дверьми","дверях"]},"грошы":{"w":"деньги","sg":null,"pl":["деньги","денег","деньгам","деньги","деньгами","деньгах"]}};
+const RU_A_LIST=[{"m":["новый","нового","новому",{"in":"новый","an":"нового"},"новым","новом"],"n":["новое","нового","новому","новое","новым","новом"],"f":["новая","новой","новой","новую","новой/новою","новой"],"pl":["новые","новых","новым",{"in":"новые","an":"новых"},"новыми","новых"]},{"m":["добрый","доброго","доброму",{"in":"добрый","an":"доброго"},"добрым","добром"],"n":["доброе","доброго","доброму","доброе","добрым","добром"],"f":["добрая","доброй","доброй","добрую","доброй/доброю","доброй"],"pl":["добрые","добрых","добрым",{"in":"добрые","an":"добрых"},"добрыми","добрых"]},{"m":["плохой","плохого","плохому",{"in":"плохой","an":"плохого"},"плохим","плохом"],"n":["плохое","плохого","плохому","плохое","плохим","плохом"],"f":["плохая","плохой","плохой","плохую","плохой/плохою","плохой"],"pl":["плохие","плохих","плохим",{"in":"плохие","an":"плохих"},"плохими","плохих"]},{"m":["красивый","красивого","красивому",{"in":"красивый","an":"красивого"},"красивым","красивом"],"n":["красивое","красивого","красивому","красивое","красивым","красивом"],"f":["красивая","красивой","красивой","красивую","красивой/красивою","красивой"],"pl":["красивые","красивых","красивым",{"in":"красивые","an":"красивых"},"красивыми","красивых"]},{"m":["интересный","интересного","интересному",{"in":"интересный","an":"интересного"},"интересным","интересном"],"n":["интересное","интересного","интересному","интересное","интересным","интересном"],"f":["интересная","интересной","интересной","интересную","интересной/интересною","интересной"],"pl":["интересные","интересных","интересным",{"in":"интересные","an":"интересных"},"интересными","интересных"]},{"m":["важный","важного","важному",{"in":"важный","an":"важного"},"важным","важном"],"n":["важное","важного","важному","важное","важным","важном"],"f":["важная","важной","важной","важную","важной/важною","важной"],"pl":["важные","важных","важным",{"in":"важные","an":"важных"},"важными","важных"]},{"m":["главный","главного","главному",{"in":"главный","an":"главного"},"главным","главном"],"n":["главное","главного","главному","главное","главным","главном"],"f":["главная","главной","главной","главную","главной/главною","главной"],"pl":["главные","главных","главным",{"in":"главные","an":"главных"},"главными","главных"]},{"m":["белый","белого","белому",{"in":"белый","an":"белого"},"белым","белом"],"n":["белое","белого","белому","белое","белым","белом"],"f":["белая","белой","белой","белую","белой/белою","белой"],"pl":["белые","белых","белым",{"in":"белые","an":"белых"},"белыми","белых"]},{"m":["чёрный","чёрного","чёрному",{"in":"чёрный","an":"чёрного"},"чёрным","чёрном"],"n":["чёрное","чёрного","чёрному","чёрное","чёрным","чёрном"],"f":["чёрная","чёрной","чёрной","чёрную","чёрной/чёрною","чёрной"],"pl":["чёрные","чёрных","чёрным",{"in":"чёрные","an":"чёрных"},"чёрными","чёрных"]},{"m":["красный","красного","красному",{"in":"красный","an":"красного"},"красным","красном"],"n":["красное","красного","красному","красное","красным","красном"],"f":["красная","красной","красной","красную","красной/красною","красной"],"pl":["красные","красных","красным",{"in":"красные","an":"красных"},"красными","красных"]},{"m":["зелёный","зелёного","зелёному",{"in":"зелёный","an":"зелёного"},"зелёным","зелёном"],"n":["зелёное","зелёного","зелёному","зелёное","зелёным","зелёном"],"f":["зелёная","зелёной","зелёной","зелёную","зелёной/зелёною","зелёной"],"pl":["зелёные","зелёных","зелёным",{"in":"зелёные","an":"зелёных"},"зелёными","зелёных"]},{"m":["жёлтый","жёлтого","жёлтому",{"in":"жёлтый","an":"жёлтого"},"жёлтым","жёлтом"],"n":["жёлтое","жёлтого","жёлтому","жёлтое","жёлтым","жёлтом"],"f":["жёлтая","жёлтой","жёлтой","жёлтую","жёлтой/жёлтою","жёлтой"],"pl":["жёлтые","жёлтых","жёлтым",{"in":"жёлтые","an":"жёлтых"},"жёлтыми","жёлтых"]},{"m":["тёплый","тёплого","тёплому",{"in":"тёплый","an":"тёплого"},"тёплым","тёплом"],"n":["тёплое","тёплого","тёплому","тёплое","тёплым","тёплом"],"f":["тёплая","тёплой","тёплой","тёплую","тёплой/тёплою","тёплой"],"pl":["тёплые","тёплых","тёплым",{"in":"тёплые","an":"тёплых"},"тёплыми","тёплых"]},{"m":["холодный","холодного","холодному",{"in":"холодный","an":"холодного"},"холодным","холодном"],"n":["холодное","холодного","холодному","холодное","холодным","холодном"],"f":["холодная","холодной","холодной","холодную","холодной/холодною","холодной"],"pl":["холодные","холодных","холодным",{"in":"холодные","an":"холодных"},"холодными","холодных"]},{"m":["горячий","горячего","горячему",{"in":"горячий","an":"горячего"},"горячим","горячем"],"n":["горячее","горячего","горячему","горячее","горячим","горячем"],"f":["горячая","горячей","горячей","горячую","горячей/горячею","горячей"],"pl":["горячие","горячих","горячим",{"in":"горячие","an":"горячих"},"горячими","горячих"]},{"m":["дешёвый","дешёвого","дешёвому",{"in":"дешёвый","an":"дешёвого"},"дешёвым","дешёвом"],"n":["дешёвое","дешёвого","дешёвому","дешёвое","дешёвым","дешёвом"],"f":["дешёвая","дешёвой","дешёвой","дешёвую","дешёвой/дешёвою","дешёвой"],"pl":["дешёвые","дешёвых","дешёвым",{"in":"дешёвые","an":"дешёвых"},"дешёвыми","дешёвых"]},{"m":["счастливый","счастливого","счастливому",{"in":"счастливый","an":"счастливого"},"счастливым","счастливом"],"n":["счастливое","счастливого","счастливому","счастливое","счастливым","счастливом"],"f":["счастливая","счастливой","счастливой","счастливую","счастливой/счастливою","счастливой"],"pl":["счастливые","счастливых","счастливым",{"in":"счастливые","an":"счастливых"},"счастливыми","счастливых"]},{"m":["умный","умного","умному",{"in":"умный","an":"умного"},"умным","умном"],"n":["умное","умного","умному","умное","умным","умном"],"f":["умная","умной","умной","умную","умной/умною","умной"],"pl":["умные","умных","умным",{"in":"умные","an":"умных"},"умными","умных"]},{"m":["родной","родного","родному",{"in":"родной","an":"родного"},"родным","родном"],"n":["родное","родного","родному","родное","родным","родном"],"f":["родная","родной","родной","родную","родной/родною","родной"],"pl":["родные","родных","родным",{"in":"родные","an":"родных"},"родными","родных"]},{"m":["зимний","зимнего","зимнему",{"in":"зимний","an":"зимнего"},"зимним","зимнем"],"n":["зимнее","зимнего","зимнему","зимнее","зимним","зимнем"],"f":["зимняя","зимней","зимней","зимнюю","зимней/зимнею","зимней"],"pl":["зимние","зимних","зимним",{"in":"зимние","an":"зимних"},"зимними","зимних"]},{"m":["старый","старого","старому",{"in":"старый","an":"старого"},"старым","старом"],"n":["старое","старого","старому","старое","старым","старом"],"f":["старая","старой","старой","старую","старой/старою","старой"],"pl":["старые","старых","старым",{"in":"старые","an":"старых"},"старыми","старых"]},{"m":["молодой","молодого","молодому",{"in":"молодой","an":"молодого"},"молодым","молодом"],"n":["молодое","молодого","молодому","молодое","молодым","молодом"],"f":["молодая","молодой","молодой","молодую","молодой/молодою","молодой"],"pl":["молодые","молодых","молодым",{"in":"молодые","an":"молодых"},"молодыми","молодых"]},{"m":["живой","живого","живому",{"in":"живой","an":"живого"},"живым","живом"],"n":["живое","живого","живому","живое","живым","живом"],"f":["живая","живой","живой","живую","живой/живою","живой"],"pl":["живые","живых","живым",{"in":"живые","an":"живых"},"живыми","живых"]},{"m":["чужой","чужого","чужому",{"in":"чужой","an":"чужого"},"чужим","чужом"],"n":["чужое","чужого","чужому","чужое","чужим","чужом"],"f":["чужая","чужой","чужой","чужую","чужой/чужою","чужой"],"pl":["чужие","чужих","чужим",{"in":"чужие","an":"чужих"},"чужими","чужих"]},{"m":["последний","последнего","последнему",{"in":"последний","an":"последнего"},"последним","последнем"],"n":["последнее","последнего","последнему","последнее","последним","последнем"],"f":["последняя","последней","последней","последнюю","последней/последнею","последней"],"pl":["последние","последних","последним",{"in":"последние","an":"последних"},"последними","последних"]},{"m":["синий","синего","синему",{"in":"синий","an":"синего"},"синим","синем"],"n":["синее","синего","синему","синее","синим","синем"],"f":["синяя","синей","синей","синюю","синей/синею","синей"],"pl":["синие","синих","синим",{"in":"синие","an":"синих"},"синими","синих"]},{"m":["летний","летнего","летнему",{"in":"летний","an":"летнего"},"летним","летнем"],"n":["летнее","летнего","летнему","летнее","летним","летнем"],"f":["летняя","летней","летней","летнюю","летней/летнею","летней"],"pl":["летние","летних","летним",{"in":"летние","an":"летних"},"летними","летних"]},{"m":["ранний","раннего","раннему",{"in":"ранний","an":"раннего"},"ранним","раннем"],"n":["раннее","раннего","раннему","раннее","ранним","раннем"],"f":["ранняя","ранней","ранней","раннюю","ранней/раннею","ранней"],"pl":["ранние","ранних","ранним",{"in":"ранние","an":"ранних"},"ранними","ранних"]},{"m":["поздний","позднего","позднему",{"in":"поздний","an":"позднего"},"поздним","позднем"],"n":["позднее","позднего","позднему","позднее","поздним","позднем"],"f":["поздняя","поздней","поздней","позднюю","поздней/позднею","поздней"],"pl":["поздние","поздних","поздним",{"in":"поздние","an":"поздних"},"поздними","поздних"]},{"m":["домашний","домашнего","домашнему",{"in":"домашний","an":"домашнего"},"домашним","домашнем"],"n":["домашнее","домашнего","домашнему","домашнее","домашним","домашнем"],"f":["домашняя","домашней","домашней","домашнюю","домашней/домашнею","домашней"],"pl":["домашние","домашних","домашним",{"in":"домашние","an":"домашних"},"домашними","домашних"]},{"m":["большой","большого","большому",{"in":"большой","an":"большого"},"большим","большом"],"n":["большое","большого","большому","большое","большим","большом"],"f":["большая","большой","большой","большую","большой/большою","большой"],"pl":["большие","больших","большим",{"in":"большие","an":"больших"},"большими","больших"]},{"m":["маленький","маленького","маленькому",{"in":"маленький","an":"маленького"},"маленьким","маленьком"],"n":["маленькое","маленького","маленькому","маленькое","маленьким","маленьком"],"f":["маленькая","маленькой","маленькой","маленькую","маленькой/маленькою","маленькой"],"pl":["маленькие","маленьких","маленьким",{"in":"маленькие","an":"маленьких"},"маленькими","маленьких"]},{"m":["высокий","высокого","высокому",{"in":"высокий","an":"высокого"},"высоким","высоком"],"n":["высокое","высокого","высокому","высокое","высоким","высоком"],"f":["высокая","высокой","высокой","высокую","высокой/высокою","высокой"],"pl":["высокие","высоких","высоким",{"in":"высокие","an":"высоких"},"высокими","высоких"]},{"m":["низкий","низкого","низкому",{"in":"низкий","an":"низкого"},"низким","низком"],"n":["низкое","низкого","низкому","низкое","низким","низком"],"f":["низкая","низкой","низкой","низкую","низкой/низкою","низкой"],"pl":["низкие","низких","низким",{"in":"низкие","an":"низких"},"низкими","низких"]},{"m":["длинный","длинного","длинному",{"in":"длинный","an":"длинного"},"длинным","длинном"],"n":["длинное","длинного","длинному","длинное","длинным","длинном"],"f":["длинная","длинной","длинной","длинную","длинной/длинною","длинной"],"pl":["длинные","длинных","длинным",{"in":"длинные","an":"длинных"},"длинными","длинных"]},{"m":["короткий","короткого","короткому",{"in":"короткий","an":"короткого"},"коротким","коротком"],"n":["короткое","короткого","короткому","короткое","коротким","коротком"],"f":["короткая","короткой","короткой","короткую","короткой/короткою","короткой"],"pl":["короткие","коротких","коротким",{"in":"короткие","an":"коротких"},"короткими","коротких"]},{"m":["лёгкий","лёгкого","лёгкому",{"in":"лёгкий","an":"лёгкого"},"лёгким","лёгком"],"n":["лёгкое","лёгкого","лёгкому","лёгкое","лёгким","лёгком"],"f":["лёгкая","лёгкой","лёгкой","лёгкую","лёгкой/лёгкою","лёгкой"],"pl":["лёгкие","лёгких","лёгким",{"in":"лёгкие","an":"лёгких"},"лёгкими","лёгких"]},{"m":["белорусский","белорусского","белорусскому",{"in":"белорусский","an":"белорусского"},"белорусским","белорусском"],"n":["белорусское","белорусского","белорусскому","белорусское","белорусским","белорусском"],"f":["белорусская","белорусской","белорусской","белорусскую","белорусской/белорусскою","белорусской"],"pl":["белорусские","белорусских","белорусским",{"in":"белорусские","an":"белорусских"},"белорусскими","белорусских"]},{"m":["дорогой","дорогого","дорогому",{"in":"дорогой","an":"дорогого"},"дорогим","дорогом"],"n":["дорогое","дорогого","дорогому","дорогое","дорогим","дорогом"],"f":["дорогая","дорогой","дорогой","дорогую","дорогой/дорогою","дорогой"],"pl":["дорогие","дорогих","дорогим",{"in":"дорогие","an":"дорогих"},"дорогими","дорогих"]},{"m":["тяжёлый","тяжёлого","тяжёлому",{"in":"тяжёлый","an":"тяжёлого"},"тяжёлым","тяжёлом"],"n":["тяжёлое","тяжёлого","тяжёлому","тяжёлое","тяжёлым","тяжёлом"],"f":["тяжёлая","тяжёлой","тяжёлой","тяжёлую","тяжёлой/тяжёлою","тяжёлой"],"pl":["тяжёлые","тяжёлых","тяжёлым",{"in":"тяжёлые","an":"тяжёлых"},"тяжёлыми","тяжёлых"]}];
+const RU_V={"рабіць":{"w":"делать","np":["делаю","делаешь","делает","делаем","делаете","делают"],"past":["делал","делала","делало","делали"]},"зрабіць":{"w":"сделать","np":["сделаю","сделаешь","сделает","сделаем","сделаете","сделают"],"past":["сделал","сделала","сделало","сделали"]},"гаварыць":{"w":"говорить","np":["говорю","говоришь","говорит","говорим","говорите","говорят"],"past":["говорил","говорила","говорило","говорили"]},"сказаць":{"w":"сказать","np":["скажу","скажешь","скажет","скажем","скажете","скажут"],"past":["сказал","сказала","сказало","сказали"]},"чытаць":{"w":"читать","np":["читаю","читаешь","читает","читаем","читаете","читают"],"past":["читал","читала","читало","читали"]},"прачытаць":{"w":"прочитать","np":["прочитаю","прочитаешь","прочитает","прочитаем","прочитаете","прочитают"],"past":["прочитал","прочитала","прочитало","прочитали"]},"пісаць":{"w":"писать","np":["пишу","пишешь","пишет","пишем","пишете","пишут"],"past":["писал","писала","писало","писали"]},"напісаць":{"w":"написать","np":["напишу","напишешь","напишет","напишем","напишете","напишут"],"past":["написал","написала","написало","написали"]},"бачыць":{"w":"видеть","np":["вижу","видишь","видит","видим","видите","видят"],"past":["видел","видела","видело","видели"]},"убачыць":{"w":"увидеть","np":["увижу","увидишь","увидит","увидим","увидите","увидят"],"past":["увидел","увидела","увидело","увидели"]},"чуць":{"w":"слышать","np":["слышу","слышишь","слышит","слышим","слышите","слышат"],"past":["слышал","слышала","слышало","слышали"]},"пачуць":{"w":"услышать","np":["услышу","услышишь","услышит","услышим","услышите","услышат"],"past":["услышал","услышала","услышало","услышали"]},"думаць":{"w":"думать","np":["думаю","думаешь","думает","думаем","думаете","думают"],"past":["думал","думала","думало","думали"]},"падумаць":{"w":"подумать","np":["подумаю","подумаешь","подумает","подумаем","подумаете","подумают"],"past":["подумал","подумала","подумало","подумали"]},"ісці":{"w":"идти","np":["иду","идёшь","идёт","идём","идёте","идут"],"past":["шёл","шла","шло","шли"]},"пайсці":{"w":"пойти","np":["пойду","пойдёшь","пойдёт","пойдём","пойдёте","пойдут"],"past":["пошёл","пошла","пошло","пошли"]},"ехаць":{"w":"ехать","np":["еду","едешь","едет","едем","едете","едут"],"past":["ехал","ехала","ехало","ехали"]},"паехаць":{"w":"поехать","np":["поеду","поедешь","поедет","поедем","поедете","поедут"],"past":["поехал","поехала","поехало","поехали"]},"браць":{"w":"брать","np":["беру","берёшь","берёт","берём","берёте","берут"],"past":["брал","брала","брало","брали"]},"узяць":{"w":"взять","np":["возьму","возьмёшь","возьмёт","возьмём","возьмёте","возьмут"],"past":["взял","взяла","взяло","взяли"]},"даваць":{"w":"давать","np":["даю","даёшь","даёт","даём","даёте","дают"],"past":["давал","давала","давало","давали"]},"даць":{"w":"дать","np":["дам","дашь","даст","дадим","дадите","дадут"],"past":["дал","дала","дало","дали"]},"купляць":{"w":"покупать","np":["покупаю","покупаешь","покупает","покупаем","покупаете","покупают"],"past":["покупал","покупала","покупало","покупали"]},"купіць":{"w":"купить","np":["куплю","купишь","купит","купим","купите","купят"],"past":["купил","купила","купило","купили"]},"пачынаць":{"w":"начинать","np":["начинаю","начинаешь","начинает","начинаем","начинаете","начинают"],"past":["начинал","начинала","начинало","начинали"]},"пачаць":{"w":"начать","np":["начну","начнёшь","начнёт","начнём","начнёте","начнут"],"past":["начал","начала","начало","начали"]},"разумець":{"w":"понимать","np":["понимаю","понимаешь","понимает","понимаем","понимаете","понимают"],"past":["понимал","понимала","понимало","понимали"]},"зразумець":{"w":"понять","np":["пойму","поймёшь","поймёт","поймём","поймёте","поймут"],"past":["понял","поняла","поняло","поняли"]},"пытацца":{"w":"спрашивать","np":["спрашиваю","спрашиваешь","спрашивает","спрашиваем","спрашиваете","спрашивают"],"past":["спрашивал","спрашивала","спрашивало","спрашивали"]},"спытацца":{"w":"спросить","np":["спрошу","спросишь","спросит","спросим","спросите","спросят"],"past":["спросил","спросила","спросило","спросили"]},"адказваць":{"w":"отвечать","np":["отвечаю","отвечаешь","отвечает","отвечаем","отвечаете","отвечают"],"past":["отвечал","отвечала","отвечало","отвечали"]},"адказаць":{"w":"ответить","np":["отвечу","ответишь","ответит","ответим","ответите","ответят"],"past":["ответил","ответила","ответило","ответили"]},"есці":{"w":"есть","np":["ем","ешь","ест","едим","едите","едят"],"past":["ел","ела","ело","ели"]},"з'есці":{"w":"съесть","np":["съем","съешь","съест","съедим","съедите","съедят"],"past":["съел","съела","съело","съели"]},"піць":{"w":"пить","np":["пью","пьёшь","пьёт","пьём","пьёте","пьют"],"past":["пил","пила","пило","пили"]},"выпіць":{"w":"выпить","np":["выпью","выпьешь","выпьет","выпьем","выпьете","выпьют"],"past":["выпил","выпила","выпило","выпили"]},"вучыць":{"w":"учить","np":["учу","учишь","учит","учим","учите","учат"],"past":["учил","учила","учило","учили"]},"вывучыць":{"w":"выучить","np":["выучу","выучишь","выучит","выучим","выучите","выучат"],"past":["выучил","выучила","выучило","выучили"]},"рыхтаваць":{"w":"готовить","np":["готовлю","готовишь","готовит","готовим","готовите","готовят"],"past":["готовил","готовила","готовило","готовили"]},"падрыхтаваць":{"w":"приготовить","np":["приготовлю","приготовишь","приготовит","приготовим","приготовите","приготовят"],"past":["приготовил","приготовила","приготовило","приготовили"]},"хацець":{"w":"хотеть","np":["хочу","хочешь","хочет","хотим","хотите","хотят"],"past":["хотел","хотела","хотело","хотели"]},"захацець":{"w":"захотеть","np":["захочу","захочешь","захочет","захотим","захотите","захотят"],"past":["захотел","захотела","захотело","захотели"]},"магчы":{"w":"мочь","np":["могу","можешь","может","можем","можете","могут"],"past":["мог","могла","могло","могли"]},"змагчы":{"w":"смочь","np":["смогу","сможешь","сможет","сможем","сможете","смогут"],"past":["смог","смогла","смогло","смогли"]},"сустракаць":{"w":"встречать","np":["встречаю","встречаешь","встречает","встречаем","встречаете","встречают"],"past":["встречал","встречала","встречало","встречали"]},"сустрэць":{"w":"встретить","np":["встречу","встретишь","встретит","встретим","встретите","встретят"],"past":["встретил","встретила","встретило","встретили"]},"забываць":{"w":"забывать","np":["забываю","забываешь","забывает","забываем","забываете","забывают"],"past":["забывал","забывала","забывало","забывали"]},"забыць":{"w":"забыть","np":["забуду","забудешь","забудет","забудем","забудете","забудут"],"past":["забыл","забыла","забыло","забыли"]},"дапамагаць":{"w":"помогать","np":["помогаю","помогаешь","помогает","помогаем","помогаете","помогают"],"past":["помогал","помогала","помогало","помогали"]},"дапамагчы":{"w":"помочь","np":["помогу","поможешь","поможет","поможем","поможете","помогут"],"past":["помог","помогла","помогло","помогли"]},"званіць":{"w":"звонить","np":["звоню","звонишь","звонит","звоним","звоните","звонят"],"past":["звонил","звонила","звонило","звонили"]},"пазваніць":{"w":"позвонить","np":["позвоню","позвонишь","позвонит","позвоним","позвоните","позвонят"],"past":["позвонил","позвонила","позвонило","позвонили"]},"чакаць":{"w":"ждать","np":["жду","ждёшь","ждёт","ждём","ждёте","ждут"],"past":["ждал","ждала","ждало","ждали"]},"пачакаць":{"w":"подождать","np":["подожду","подождёшь","подождёт","подождём","подождёте","подождут"],"past":["подождал","подождала","подождало","подождали"]},"вяртацца":{"w":"возвращаться","np":["возвращаюсь","возвращаешься","возвращается","возвращаемся","возвращаетесь","возвращаются"],"past":["возвращался","возвращалась","возвращалось","возвращались"]},"вярнуцца":{"w":"вернуться","np":["вернусь","вернёшься","вернётся","вернёмся","вернётесь","вернутся"],"past":["вернулся","вернулась","вернулось","вернулись"]},"прыходзіць":{"w":"приходить","np":["прихожу","приходишь","приходит","приходим","приходите","приходят"],"past":["приходил","приходила","приходило","приходили"]},"прыйсці":{"w":"прийти","np":["приду","придёшь","придёт","придём","придёте","придут"],"past":["пришёл","пришла","пришло","пришли"]},"вырашаць":{"w":"решать","np":["решаю","решаешь","решает","решаем","решаете","решают"],"past":["решал","решала","решало","решали"]},"вырашыць":{"w":"решить","np":["решу","решишь","решит","решим","решите","решат"],"past":["решил","решила","решило","решили"]}};
+const RU_A={};ADJS.forEach((a,i)=>{RU_A[a.w]=RU_A_LIST[i];});
+const RU_BUDU=['буду','будешь','будет','будем','будете','будут'];
+const RU_VW=Object.fromEntries(Object.entries(RU_V).map(([b,v])=>[b,v.w]));
+/* Russian equivalent of one prompt's answer, or null */
+function ruFor(it,p){
+  if(S.mode==='noun'){const r=RU_N[it.word];if(!r)return null;const a=r[p.num];return a?{w:r.w,f:a[p.c]}:{w:r.w,f:'—'};}
+  if(S.mode==='adj'){const r=RU_A[it.word];if(!r)return null;let f=r[p.gn][p.c];if(typeof f==='object')f=/^animate/.test(p.s)?f.an:f.in;return {w:r.m[0],f};}
+  if(S.mode==='verb'){const r=RU_V[it.word];if(!r)return null;
+    if(p.k==='pres')return {w:r.w,f:r.np[p.i]};
+    if(p.k==='fut')return {w:r.w,f:it.tags[0]==='imperfective'?RU_BUDU[p.i]+' '+r.w:r.np[p.i]};
+    if(p.k==='past')return {w:r.w,f:r.past[p.i]};return null;}
+  if(S.mode==='pair'){const a=RU_VW[p.w],b=RU_VW[first(p.a)];return a&&b?{w:a,f:a+' → '+b}:null;}
+  return null;}
+function ruCompare(it){
+  if(!['noun','adj','verb','pair'].includes(S.mode))return;
+  const rs=cur.prompts.map(p=>ruFor(it,p));if(!rs.some(Boolean))return;
+  const fb=document.getElementById('fb');
+  if(S.style==='single'){const r=rs[0],p=cur.prompts[0];if(!r)return;
+    fb.insertAdjacentHTML('beforeend',S.mode==='pair'
+      ?`<p class="rule rux-box"><b>Russian:</b> <span lang="ru">${esc(show(r.f))}</span></p>`
+      :`<p class="rule rux-box"><b>Russian:</b> <span lang="ru">${esc(r.w)}</span> → <span lang="ru" class="rux-f">${esc(show(r.f))}</span> <span class="rux-cmp">(Belarusian: <span lang="be">${esc(show(p.a))}</span>)</span></p>`);
+  } else {
+    cur.prompts.forEach((p,i)=>{const r=rs[i];if(!r)return;const row=document.getElementById('ans-'+i);if(!row)return;
+      row.closest('.trow').insertAdjacentHTML('beforeend',`<div class="rux"><span class="rux-l">RU</span> <span lang="ru">${esc(show(r.f))}</span></div>`);});
+    if(S.mode!=='pair')fb.insertAdjacentHTML('beforeend',`<p class="rule rux-box"><b>Russian:</b> <span lang="ru">${esc(rs.find(Boolean).w)}</span>. The Russian form is shown under each of your answers.</p>`);
+  }}
+
+/* ---- ending patterns shown after Check (added) ---- */
+const NCLS={};
+`2m-hard:чалавек,год,час,горад,дом,стол,брат,сын,лес,урок,сшытак,сад,ліст,настаўнік,сусед
+2m-soft:дзень,конь,край,музей
+2m-mixed:сябар,нож
+2n-hard:акно,слова,дрэва,вока,яйка
+2n-soft:поле,пытанне
+2n-mixed:месца,мора,сэрца,возера
+1-hard:жанчына,галава,вада,школа,хата,краіна,гадзіна,мова,сцяна
+1-velar:кніга,рука,нага,дарога,дачка
+1-soft:зямля,сям'я,песня
+1-mixed:сястра,вуліца,праца
+1-masc:бацька
+3:ноч,рэч,радасць
+het:імя,дзіця
+pt:дзверы,грошы`.split('\n').forEach(l=>{const [k,ws]=l.split(':');ws.split(',').forEach(w=>NCLS[w]=k);});
+const AN='= Н. (inanimate) / = Р. (animate)';
+const NEND={
+ '2m-hard':{t:'2nd declension · masculine · hard stem',
+  sg:['zero ending','-а (concrete) / -у (abstract, mass, places)','-у',AN,'-ам · -ом when stressed','-е (д→дз, т→ц) · -у after г, к, х and for persons'],
+  pl:['-ы (-і after г, к, х)','-аў · -оў when stressed','-ам','= Н. / = Р.','-амі','-ах']},
+ '2m-soft':{t:'2nd declension · masculine · soft stem',
+  sg:['-ь / -й','-я / -ю','-ю',AN,'-ем · -ём when stressed','-і · -ю for persons'],
+  pl:['-і','-яў / -ёў / -ей','-ям','= Н. / = Р.','-ямі','-ях']},
+ '2m-mixed':{t:'2nd declension · masculine · mixed (hardened ж, ш, ч, дж, ц, р)',
+  sg:['zero ending','-а / -у','-у',AN,'-ам · -ом when stressed','-ы · -у for persons'],
+  pl:['-ы','-аў · -оў when stressed','-ам','= Н. / = Р.','-амі','-ах']},
+ '2n-hard':{t:'2nd declension · neuter · hard stem',
+  sg:['-о when stressed / -а','-а','-у','= Н.','-ом when stressed / -ам','-е (д→дз, т→ц) · -у after г, к, х'],
+  pl:['-ы (-і after г, к, х)','zero / -аў','-ам','= Н.','-амі','-ах']},
+ '2n-soft':{t:'2nd declension · neuter · soft stem',
+  sg:['-ё when stressed / -е','-я','-ю','= Н.','-ём / -ем','-і'],
+  pl:['-і','-яў / -ёў','-ям','= Н.','-ямі','-ях']},
+ '2n-mixed':{t:'2nd declension · neuter · mixed (hardened ц, р, ж, ш, ч)',
+  sg:['-о when stressed / -а','-а','-у','= Н.','-ом / -ам','-ы'],
+  pl:['-ы','-аў / zero','-ам','= Н.','-амі','-ах']},
+ '1-hard':{t:'1st declension · hard stem',
+  sg:['-а','-ы','-е (д→дз, т→ц)','-у','-ой / -ою when stressed · -ай / -аю','-е (д→дз, т→ц)'],
+  pl:['-ы','zero / -аў','-ам','= Н. / = Р. (animate)','-амі','-ах']},
+ '1-velar':{t:'1st declension · stem in г, к, х',
+  sg:['-а','-і','-е with г→з, к→ц, х→с (-э after ц)','-у','-ой / -ою when stressed · -ай / -аю','-е with г→з, к→ц, х→с (-э after ц)'],
+  pl:['-і','zero / -ак → -ок','-ам','= Н. / = Р. (animate)','-амі','-ах']},
+ '1-soft':{t:'1st declension · soft stem',
+  sg:['-я','-і','-і','-ю','-ёй / -ёю when stressed · -яй / -яю','-і'],
+  pl:['-і','-яў / zero (песень)','-ям','= Н. / = Р. (animate)','-ямі','-ях']},
+ '1-mixed':{t:'1st declension · mixed (hardened ж, ш, ч, дж, ц, р)',
+  sg:['-а','-ы','-ы','-у','-ой / -ою when stressed · -ай / -аю','-ы'],
+  pl:['-ы','zero / -аў','-ам','= Н. / = Р. (animate)','-амі','-ах']},
+ '1-masc':{t:'1st declension · masculine noun in -а',
+  sg:['-а','-і (-ы after hardened)','-у (not -е like feminines)','-у','-ам (not -ай like feminines)','-у'],
+  pl:['-і','-оў / -аў','-ам','= Р. (animate)','-амі','-ах']},
+ '3':{t:'3rd declension · feminine, zero ending',
+  sg:['zero ending (-ь or hardened consonant)','-і (-ы after hardened)','-і (-ы after hardened)','= Н.','-ю, consonant doubled after a vowel (ноччу); no doubling after a cluster (радасцю)','-і (-ы after hardened)'],
+  pl:['-і / -ы','-ей / -аў','-ям / -ам','= Н.','-ямі / -амі','-ях / -ах']},
+ 'het':{t:'Irregular (рознаскланяльны) noun',
+  sg:['-я','-яці (дзіця) / -я (імя)','-яці / -ю','-я','-ем','-яці / -і'],
+  pl:['-і / -ы','-ей / -аў','-ям / -ам','= Р. (дзеці) / = Н. (імёны)','-мі / -амі','-ях / -ах']},
+ 'pt':{t:'Plural-only noun (no singular)',
+  sg:['—','—','—','—','—','—'],
+  pl:['-ы / -і','-ей / -ай / -аў','-ам / -ям','= Н.','-амі · old dual -ыма','-ах / -ях']}};
+const ATYPE_T={hard:'Hard stem, unstressed ending',hardS:'Hard stem, stressed ending',soft:'Soft stem',velar:'Stem in г, к, х, unstressed ending',velarS:'Stem in г, к, х, stressed ending'};
+const VEND={
+ 1:{t:'1st conjugation (яны -уць / -юць)',r:['-у / -ю','-еш / -эш · -аш after hardened consonants when unstressed','-е / -э · -а after hardened consonants when unstressed','-ем / -ём / -ом when stressed · -ам after hardened','-еце / -яце when stressed · -аце after hardened','-уць / -юць']},
+ 2:{t:'2nd conjugation (яны -аць / -яць)',r:['-у / -ю (labials add л: раблю, куплю)','-іш / -ыш (after hardened ж, ш, ч, р)','-іць / -ыць','-ім / -ым','-іце / -ыце','-аць / -яць']},
+ irr:{t:'Irregular conjugation (даць, есці)',r:['-м (дам, ем)','-сі (дасі, ясі)','-сць (дасць, есць)','-дзім (дадзім, ядзім)','-сце (дасце, ясце)','-дуць (дадуць, ядуць)']}};
+const VPAST=['-ў after a vowel · zero after a consonant (мог)','-ла','-ла unstressed · -ло stressed','-лі'];
+function verbConj(v){if(/(^|')(даць|есці)$/.test(v.w)||v.w==="з'есці")return 'irr';
+  const t=first(v.np[5]);return /[ая](ць|цца)$/.test(t)?2:1;}
+function endTable(cols,rows,hl){
+  return `<div class="tbl-wrap"><table class="endt"><thead><tr><th></th>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th>${esc(r.h)}</th>${r.cells.map((c,ci)=>`<td class="${hl.has(ri+'|'+ci)?'hl':''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+function endingsNote(it){
+  const fb=document.getElementById('fb');let h='';
+  if(S.mode==='noun'){const k=NCLS[it.word];if(!k)return;const E=NEND[k];
+    const hl=new Set(cur.prompts.map(p=>p.c+'|'+(p.num==='sg'?0:1)));
+    h=`<b>Endings · ${esc(E.t)}</b>`+endTable(['singular','plural'],CASES.map((c,i)=>({h:c.ab+' '+c.be,cells:[E.sg[i],E.pl[i]]})),hl);}
+  else if(S.mode==='adj'){const a=ADJS.find(x=>x.w===it.word);if(!a)return;const E=ENDS[a.ty];
+    const cell=e=>typeof e==='object'?`-${e.in.replace('/',' / -')} (inanim.) · -${e.an} (anim.)`:'-'+e.split('/').join(' / -');
+    const G=['m','n','f','pl'];const hl=new Set(cur.prompts.map(p=>p.c+'|'+G.indexOf(p.gn)));
+    h=`<b>Endings · ${esc(ATYPE_T[a.ty])}</b>`+endTable(['masc.','neut.','fem.','plural'],CASES.map((c,i)=>({h:c.ab+' '+c.be,cells:G.map(g=>cell(E[g][i]))})),hl);}
+  else if(S.mode==='verb'){const v=VERBS.find(x=>x.w===it.word);if(!v)return;const k=verbConj(v),E=VEND[k],impf=v.asp==='i';
+    const hlP=new Set(cur.prompts.filter(p=>p.k==='pres'||(p.k==='fut'&&!impf)).map(p=>p.i+'|0'));
+    const hlF=new Set(cur.prompts.filter(p=>p.k==='fut'&&impf).map(p=>p.i+'|0'));
+    const hlPa=new Set(cur.prompts.filter(p=>p.k==='past').map(p=>p.i+'|0'));
+    h=`<b>Endings · ${esc(E.t)}</b><span class="endsub">${impf?'Present tense':'Perfective future (same endings as a present tense)'}</span>`
+      +endTable(['ending'],PERS.map((p,i)=>({h:p,cells:[E.r[i]]})),hlP);
+    if(impf)h+=`<span class="endsub">Imperfective future: буду + infinitive (synthetic -му, -меш, -ме, -мем, -меце, -муць)</span>`
+      +endTable(['auxiliary'],PERS.map((p,i)=>({h:p,cells:[BUDU[i]+' + inf.']})),hlF);
+    h+=`<span class="endsub">Past tense (agrees in gender and number)</span>`
+      +endTable(['ending'],['ён (m)','яна (f)','яно (n)','яны (pl)'].map((p,i)=>({h:p,cells:[VPAST[i]]})),hlPa);
+    if(/(ся|цца)$/.test(v.w))h+=`<span class="endsub">Reflexive: -цца in the infinitive and 3rd person (ён, яны), -ся after -ш (ты), -ся elsewhere.</span>`;}
+  else return;
+  fb.insertAdjacentHTML('beforeend',`<div class="rule endn">${h}</div>`);}
+
+/* ---- reference tables from "Belarusian declination endings table" (added) ---- */
+function mdT(head,rows){return `<div class="tbl-wrap"><table class="dref"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr><th>${r[0]}</th>${r.slice(1).map(c=>`<td lang="be">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+const DREF_INTRO=`<p><b>Case abbreviations:</b> N = nominative, G = genitive, D = dative, A = accusative, I = instrumental, L = locative (always used with a preposition).</p>
+<p><b>Vowel alternation (akanne):</b> many endings change with stress. A stressed <b>о/ё</b> becomes unstressed <b>а/я</b> (or <b>е</b>). The tables show stressed / unstressed forms where they differ.</p>`;
+const DREF_NOUNS=DREF_INTRO+`<h4>1st declension: feminine (and some masculine) in ‑а / ‑я</h4>`+mdT(['Case','Hard stem (вада)','Hardened stem* (мяжа)','Soft stem (зямля)'],[
+ ['N sg','‑а','‑а','‑я'],['G sg','‑ы (‑і after г, к, х)','‑ы','‑і'],['D sg','‑е / ‑э + alternation**','‑ы','‑і'],['A sg','‑у','‑у','‑ю'],
+ ['I sg','‑ой(‑ою) / ‑ай(‑аю)','‑ой(‑ою) / ‑ай(‑аю)','‑ёй(‑ёю) / ‑яй(‑яю), ‑ей'],['L sg','‑е / ‑э + alternation**','‑ы','‑і'],
+ ['N pl','‑ы / ‑і','‑ы','‑і'],['G pl','∅ (вод), sometimes ‑аў','∅ / ‑аў','∅ (зямель) / ‑яў'],['D pl','‑ам','‑ам','‑ям'],
+ ['A pl','= N (inanimate) / = G (animate)','same','same'],['I pl','‑амі','‑амі','‑ямі'],['L pl','‑ах','‑ах','‑ях']])
++`<p class="dnote">*Hardened consonants are ж, ш, ч, дж, р, ц.<br>**The stem consonant alternates before ‑е: г→з, к→ц, х→с, д→дз, т→ц. Examples: нага → назе, рука → руцэ, вада → вадзе.</p>
+<h4>2nd declension: masculine with no ending, neuter in ‑о / ‑е / ‑ё</h4>`+mdT(['Case','Masc. hard (стол)','Masc. hardened (нож)','Masc. soft (конь)','Neut. hard (акно)','Neut. soft (поле)'],[
+ ['N sg','∅','∅','∅ (‑ь)','‑о / ‑а','‑ё / ‑е'],['G sg','‑а / ‑у*','‑а / ‑у*','‑я / ‑ю*','‑а','‑я'],['D sg','‑у','‑у','‑ю','‑у','‑ю'],
+ ['A sg','= N / = G (animate)','= N / = G','= N / = G','= N','= N'],['I sg','‑ом / ‑ам','‑ом / ‑ам','‑ём / ‑ем','‑ом / ‑ам','‑ём / ‑ем'],
+ ['L sg','‑е / ‑э + alternation, or ‑у**','‑ы','‑і','‑е / ‑э + alternation','‑і'],['N pl','‑ы / ‑і','‑ы','‑і','‑ы / ‑і (вокны)','‑і'],
+ ['G pl','‑оў / ‑аў','‑оў / ‑аў','‑ёў / ‑яў, ‑ей','‑аў, ∅','‑яў, ∅'],['D pl','‑ам','‑ам','‑ям','‑ам','‑ям'],
+ ['A pl','= N / = G','= N / = G','= N / = G','= N','= N'],['I pl','‑амі','‑амі','‑ямі (sometimes ‑мі: коньмі)','‑амі','‑ямі'],['L pl','‑ах','‑ах','‑ях','‑ах','‑ях']])
++`<p class="dnote">*In the genitive singular, concrete countable nouns take ‑а/‑я (стала). Abstract, mass, collective and place nouns take ‑у/‑ю (снегу, цукру, лесу).<br>**The locative ending ‑у is common after velars (у парку) and with personal nouns (аб бацьку).</p>
+<h4>3rd declension: feminine ending in a consonant (соль, ноч)</h4>`+mdT(['Case','Singular','Plural'],[
+ ['N','∅','‑і / ‑ы'],['G','‑і / ‑ы','‑ей / ‑эй'],['D','‑і / ‑ы','‑ям / ‑ам'],['A','∅ (= N)','= N / = G (animate)'],
+ ['I',"‑у / ‑ю, with the consonant doubled after a vowel (соллю, ноччу) or an apostrophe after labials (верф'ю)",'‑ямі / ‑амі'],['L','‑і / ‑ы','‑ях / ‑ах']])
++`<p class="dnote"><b>Irregular nouns:</b><br>Neuters in ‑мя: імя → імя, імені, імю / імені, імем, (аб) імені.<br>Baby-animal nouns in ‑я: цяля → цяляці, цяляці, цяля, цялём, (аб) цяляці.</p>`;
+const DREF_ADJ=DREF_INTRO+`<h4>Hard stem: новы / stressed малады</h4>`+mdT(['Case','Masculine','Neuter','Feminine','Plural (all genders)'],[
+ ['N','‑ы (новы, малады)','‑ае / ‑ое (новае, маладое)','‑ая (новая)','‑ыя (новыя)'],['G','‑ага / ‑ога','‑ага / ‑ога','‑ай / ‑ой','‑ых'],
+ ['D','‑аму / ‑ому','‑аму / ‑ому','‑ай / ‑ой','‑ым'],['A','= N / = G (animate)','= N','‑ую','= N / = G (animate)'],
+ ['I','‑ым','‑ым','‑ай(‑аю) / ‑ой(‑ою)','‑ымі'],['L','‑ым','‑ым','‑ай / ‑ой','‑ых']])
++`<h4>Soft stem: сіні</h4>`+mdT(['Case','Masculine','Neuter','Feminine','Plural'],[
+ ['N','‑і (сіні)','‑яе (сіняе)','‑яя (сіняя)','‑ія (сінія)'],['G','‑яга','‑яга','‑яй','‑іх'],['D','‑яму','‑яму','‑яй','‑ім'],
+ ['A','= N / = G','= N','‑юю','= N / = G'],['I','‑ім','‑ім','‑яй(‑яю)','‑імі'],['L','‑ім','‑ім','‑яй','‑іх']])
++`<p class="dnote"><b>Velar stems</b> (г, к, х), such as ціхі and мяккі, follow the hard pattern. The only difference is that ‑ы is written as ‑і: ціхі, ціхім, ціхія, ціхіх.</p>
+<p class="dnote"><b>Full example:</b> <i>новая вада</i> (new water) declines as новая вада → новай вады → новай вадзе → новую ваду → новай вадой → (у) новай вадзе.</p>`;
+function declRefHtml(){
+  if(S.mode==='noun')return `<details class="ref decl-ref"><summary>Reference: noun declension endings (all declensions)</summary><div class="dref-body">${DREF_NOUNS}</div></details>`;
+  if(S.mode==='adj')return `<details class="ref decl-ref"><summary>Reference: adjective declension endings</summary><div class="dref-body">${DREF_ADJ}</div></details>`;
+  return '';}
+
+/* ============ STATE ============ */
+const DEF={mode:'noun',style:'single',kb:false,
+ noun:{cases:[0,1,2,3,4,5],num:['sg','pl'],gen:['m','f','n','pt'],set:'all'},
+ adj:{cases:[0,1,2,3,4,5],gn:['m','f','n','pl'],types:ADJ_TYPES.map(t=>t[0])},
+ combo:{cases:[0,1,2,3,4,5],num:['sg','pl'],gen:['m','f','n','pt'],set:'all'},
+ verb:{forms:['pres','fut','past'],asp:['i','p']},
+ pair:{dir:['ip','pi']},
+ prep:{types:['one','multi']}};
+let S=JSON.parse(JSON.stringify(DEF));
+try{const s=JSON.parse(localStorage.getItem('bgd-settings')||'null');if(s&&s.noun&&s.verb&&s.adj&&s.adj.types)S=Object.assign(S,s);}catch(e){}
+const save=()=>{try{localStorage.setItem('bgd-settings',JSON.stringify(S));}catch(e){}};
+const score={ok:0,all:0,streak:0};
+let log=[],cur=null,lastInput=null;
+
+/* ============ HELPERS ============ */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const norm=s=>s.toLowerCase().replace(/́/g,'').replace(/ё/g,'е').replace(/[’ʼ`ˈ‘]/g,"'").replace(/i/g,'і').replace(/[.,!?;:"«»]/g,'').replace(/\s+/g,' ').trim();
+const stripPron=s=>s.replace(/^(я|ты|ён|яна|яно|мы|вы|яны)\s+/,'');
+function isRight(input,ans,isVerb){let u=norm(input);if(isVerb)u=stripPron(u);return ans.split('/').some(a=>norm(a)===u);}
+const first=a=>a.split('/')[0];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function casePrompts(forms,cases,suffix){const out=[];
+  cases.forEach(c=>{const f=forms[c];
+    if(f&&typeof f==='object'){out.push({t:CASES[c].en,s:'inanimate · што?'+(suffix?' · '+suffix:''),a:f.in,c});out.push({t:CASES[c].en,s:'animate · каго?'+(suffix?' · '+suffix:''),a:f.an,c});}
+    else out.push({t:CASES[c].en,s:CASES[c].q+(suffix?' · '+suffix:''),a:f,c});});return out;}
+const show=a=>a.split('/').join(' / ');
+const accCell=f=>typeof f==='object'?`${esc(show(f.in))} / ${esc(show(f.an))}`:esc(show(f));
+function caseRef(cols,arrs){return {cols:['',...cols],rows:CASES.map((c,i)=>({h:c.ab+' '+c.be,cells:arrs.map(a=>a?accCell(a[i]):'—')}))};}
+
+/* ============ GENERATORS ============ */
+function genNoun(){
+  if(!S.noun.cases.length||!S.noun.num.length)return null;
+  const pool=NOUNS.filter(n=>S.noun.gen.includes(n.g)&&(S.noun.set!=='tricky'||n.t)&&(S.noun.set!=='regular'||!n.t)&&S.noun.num.some(x=>n[x]));
+  if(!pool.length)return null;
+  const n=rnd(pool),prompts=[];
+  S.noun.num.forEach(num=>{const arr=n[num];if(!arr)return;
+    S.noun.cases.forEach(c=>prompts.push({t:CASES[c].en,s:(num==='sg'?'singular':'plural')+' · '+CASES[c].q,a:arr[c],c,num}));});
+  const tags=[GN[n.g],n.anim?'animate':'inanimate'];if(n.t)tags.push('watch out');
+  return {word:n.w,tags,gloss:n.tr,note:n.note,prompts,ref:caseRef(['singular','plural'],[n.sg,n.pl]),hl:p=>({col:p.num==='sg'?0:1,row:p.c})};
+}
+function genAdj(){const A=S.adj;if(!A.gn.length||!A.cases.length)return null;
+  const pool=ADJS.filter(a=>A.types.includes(a.ty));if(!pool.length)return null;
+  const a=rnd(pool),gn=rnd(A.gn);
+  return {word:a.w,tags:['adjective',GN[gn],ADJ_TYPES.find(t=>t[0]===a.ty)[1].replace(/ \(.*/,'').toLowerCase()],gloss:a.tr,note:a.note,lead:`Put it in the ${GN[gn]} form`,
+    prompts:casePrompts(a.forms[gn],A.cases,GN[gn]).map(p=>({...p,gn})),
+    ref:caseRef(['masc.','neut.','fem.','plural'],[a.forms.m,a.forms.n,a.forms.f,a.forms.pl]),hl:p=>({col:['m','n','f','pl'].indexOf(p.gn),row:p.c})};
+}
+function cross(a,b){return a.split('/').flatMap(x=>b.split('/').map(y=>x+' '+y)).join('/');}
+function comboForms(adj,n,num){const af=adj.forms[num==='pl'?'pl':n.g],nf=n[num];
+  return [0,1,2,3,4,5].map(c=>{let a=af[c];if(typeof a==='object')a=n.anim?a.an:a.in;return cross(a,nf[c]);});}
+function genCombo(){
+  const C=S.combo;if(!C.cases.length||!C.num.length)return null;
+  let pool=NOUNS.filter(n=>C.gen.includes(n.g)&&C.num.some(x=>n[x]));if(C.set==='tricky')pool=pool.filter(n=>n.t);if(C.set==='regular')pool=pool.filter(n=>!n.t);if(!pool.length)return null;
+  const n=rnd(pool),adj=rnd(ADJS);
+  const F={sg:n.sg?comboForms(adj,n,'sg'):null,pl:comboForms(adj,n,'pl')};
+  const prompts=[];
+  C.num.forEach(num=>{if(!F[num])return;C.cases.forEach(c=>prompts.push({t:CASES[c].en,s:(num==='sg'?'singular':'plural')+' · '+CASES[c].q,a:F[num][c],c,num}));});
+  if(!prompts.length)return null;
+  const tags=[GN[n.g],n.anim?'animate':'inanimate'];if(n.t)tags.push('watch out');
+  const notes=[];
+  if(n.g==='m'&&/[ая]$/.test(n.w))notes.push('бацька is masculine: the adjective stays masculine (добры бацька, доброга бацькі) even though the noun ends in -а.');
+  if(n.note)notes.push('Noun: '+n.note);notes.push('Adjective: '+adj.note);
+  if(n.anim&&(n.g==='m'||C.num.includes('pl')))notes.push('Animate noun: masculine singular and all plural accusatives equal the genitive, for the adjective too.');
+  if(n.g==='f')notes.push('Feminine instrumental: both short and long forms are accepted (новай кнігай / новаю кнігаю).');
+  return {word:first((F.sg||F.pl)[0]),tags,gloss:`${adj.tr} + ${n.tr}`,note:notes.join(' '),lead:'Decline the whole phrase — adjective and noun agree',prompts,
+    ref:caseRef(['singular','plural'],[F.sg,F.pl]),hl:p=>({col:p.num==='sg'?0:1,row:p.c})};
+}
+function synth(v){return /(ся|цца)$/.test(v.w)?null:SYN.map(e=>v.w+e);}
+function genVerb(){
+  const F=S.verb.forms,A=S.verb.asp;if(!F.length||!A.length)return null;
+  const build=v=>{const P=[],impf=v.asp==='i',sy=impf?synth(v):null;
+    if(F.includes('pres')&&impf)v.np.forEach((f,i)=>P.push({t:'Present',s:PERS[i],a:f,k:'pres',i}));
+    if(F.includes('fut'))v.np.forEach((f,i)=>P.push({t:'Future',s:PERS[i]+(impf?' · compound':''),a:impf?BUDU[i]+' '+v.w+(sy?'/'+sy[i]:''):f,k:'fut',i}));
+    if(F.includes('past'))['ён (m)','яна (f)','яно (n)','яны (pl)'].forEach((s,i)=>P.push({t:'Past',s,a:v.past[i],k:'past',i}));
+    return P;};
+  const pool=VERBS.filter(v=>A.includes(v.asp)).map(v=>({v,P:build(v)})).filter(o=>o.P.length);
+  if(!pool.length)return null;
+  const {v,P}=rnd(pool),impf=v.asp==='i';
+  const rows=PERS.map((p,i)=>({h:p,cells:[impf?esc(show(v.np[i])):'—',esc(impf?BUDU[i]+' '+v.w:show(v.np[i]))],key:['pres|'+i,'fut|'+i]}));
+  const ref={cols:['','present','future'],rows};
+  const ref2=[['Past m / f / n / pl',v.past.map(show).join(', '),'past']];
+  const sy=impf?synth(v):null;if(sy)ref2.push(['Synthetic future (also accepted)',sy.join(', '),'syn']);
+  let note=v.note;
+  if(impf&&F.includes('fut'))note=(note?note+' ':'')+'Imperfective future: буду, будзеш… + infinitive'+(sy?` (the synthetic ${sy[0]}, ${sy[1]}… is accepted too)`:'')+'.';
+  if(!impf&&F.includes('pres'))note=(note?note+' ':'')+'Perfective verbs have no present tense: their conjugated form is the future.';
+  return {word:v.w,tags:[impf?'imperfective':'perfective',/(ся|цца)$/.test(v.w)?'reflexive':''].filter(Boolean),note,
+    gloss:`${v.tr} · pair: ${v.partner}`,prompts:P,isVerb:true,verbRef:{ref,ref2},hl:p=>p};
+}
+function genPair(){
+  const D=S.pair.dir;if(!D.length)return null;
+  const n=S.style==='single'?1:8,prompts=[],seen=new Set();let guard=0;
+  while(prompts.length<n&&guard++<200){const [i,pf]=rnd(PAIRS),d=rnd(D);
+    const p=d==='ip'?{w:i,t:'Perfective partner',s:'незакончанае → закончанае',a:pf,tags:['aspect','imperfective']}
+                    :{w:pf,t:'Imperfective partner',s:'закончанае → незакончанае',a:i,tags:['aspect','perfective']};
+    if(seen.has(p.w))continue;seen.add(p.w);prompts.push(p);}
+  return {word:n===1?prompts[0].w:'Знайдзі пару',tags:n===1?prompts[0].tags:['aspect pairs'],gloss:'',isPair:true,
+    note:'Pairs are formed by a prefix (чытаць → прачытаць), a suffix change (адказваць ↔ адказаць), or a different root (гаварыць ↔ сказаць, браць ↔ узяць).',
+    lead:'Write the aspect partner of each verb',prompts,
+    ref:{cols:['verb','partner'],rows:prompts.map(p=>({h:p.w,cells:[esc(show(p.a))]}))},hl:p=>({row:prompts.indexOf(p),col:0})};
+}
+function genPrep(){
+  const T=S.prep.types;if(!T.length)return null;
+  const pool=PREPS.filter(p=>T.includes(p[1].length+p[2].length>1?'multi':'one'));if(!pool.length)return null;
+  const n=S.style==='single'?1:Math.min(8,pool.length);
+  const pick=[...pool].sort(()=>Math.random()-.5).slice(0,n);
+  const caseList=a=>a.map(c=>CASES[c].en).join(' + ');
+  const prompts=pick.map(([w,main,extra,mean,ex])=>({w,t:'Which case(s)?',s:mean,choice:{main,extra},
+    a:caseList(main)+(extra.length?` (also ${caseList(extra)})`:''),tags:['preposition',main.length+extra.length>1?'several cases':'one case'],ex}));
+  return {word:n===1?prompts[0].w:'Прыназоўнікі',tags:['prepositions'],gloss:'',isPair:true,lead:'Mark every case each preposition can govern',
+    note:n===1?`Example: ${prompts[0].ex}.${prompts[0].choice.extra.length?' Required: '+caseList(prompts[0].choice.main)+'; the less common case is optional.':''}`:'Rarer second cases (з + acc. "about", аб + acc. "against") are optional; the main cases are required.',
+    ruNotes:prompts.map(p=>({w:p.w,ru:(RU_EQ[p.w]||['—',''])[0],nb:(RU_EQ[p.w]||['',''])[1]})),
+    prompts,ref:{cols:['preposition','cases','example','Russian'],rows:prompts.map(p=>({h:p.w,cells:[esc(p.a),esc(p.ex),esc((RU_EQ[p.w]||['—'])[0])+((RU_EQ[p.w]||[])[1]?' <b style="color:var(--red)">NB</b>':'')]}))},hl:p=>({row:prompts.indexOf(p),col:0})};
+}
+const GEN={noun:genNoun,adj:genAdj,combo:genCombo,verb:genVerb,pair:genPair,prep:genPrep};
+
+/* ============ RENDER: tabs & settings ============ */
+const MODES=[['noun','Nouns','назоўнікі'],['adj','Adjectives','прыметнікі'],['combo','Adj. + Noun','словазлучэнні'],['verb','Verbs','дзеясловы'],['pair','Aspect pairs','трывалыя пары'],['prep','Prepositions','прыназоўнікі і склоны']];
+function renderTabs(){document.getElementById('tabs').innerHTML=MODES.map(([k,en,be])=>`<button class="tab" role="tab" aria-selected="${S.mode===k}" data-mode="${k}">${en}<small lang="be">${be}</small></button>`).join('');}
+function chipGroup(title,path,opts){const arr=path.split('.').reduce((o,k)=>o[k],S);
+  return `<div class="grp"><h3>${title}</h3><div class="chips">${opts.map(([v,l])=>`<button class="chip" data-path="${path}" data-val="${v}" aria-pressed="${arr.includes(v)}">${l}</button>`).join('')}</div>
+  <div class="quick"><button data-all="${path}">All</button><button data-none="${path}">None</button></div></div>`;}
+const caseOpts=CASES.map((c,i)=>[i,c.en]);
+const genOpts=[['m','Masculine'],['f','Feminine'],['n','Neuter'],['pt','Plural only']];
+function renderSettings(){
+  let h=`<div class="grp"><h3>Drill style</h3><div class="chips">
+    <button class="chip" data-style="single" aria-pressed="${S.style==='single'}">One form at a time</button>
+    <button class="chip" data-style="table" aria-pressed="${S.style==='table'}">Whole table</button></div></div>`;
+  const setGrp=(m,all)=>`<div class="grp"><h3>Words</h3><div class="chips">
+    <button class="chip" data-set="${m}|all" aria-pressed="${S[m].set==='all'}">${all}</button>
+    <button class="chip" data-set="${m}|regular" aria-pressed="${S[m].set==='regular'}">Regular only (${NOUNS.filter(x=>!x.t).length})</button>
+    <button class="chip" data-set="${m}|tricky" aria-pressed="${S[m].set==='tricky'}">Irregular / tricky nouns (${NOUNS.filter(x=>x.t).length})</button></div></div>`;
+  if(S.mode==='noun')h+=setGrp('noun',`All (${NOUNS.length})`)+chipGroup('Cases','noun.cases',caseOpts)+chipGroup('Number','noun.num',[['sg','Singular'],['pl','Plural']])+chipGroup('Gender','noun.gen',genOpts);
+  if(S.mode==='adj')h+=chipGroup(`Stem type (${ADJS.length} adjectives)`,'adj.types',ADJ_TYPES.map(([k,l])=>[k,`${l} · ${ADJS.filter(a=>a.ty===k).length}`]))+chipGroup('Cases','adj.cases',caseOpts)+chipGroup('Gender & number','adj.gn',[['m','Masc. sg.'],['f','Fem. sg.'],['n','Neut. sg.'],['pl','Plural']]);
+  if(S.mode==='combo')h+=setGrp('combo',`All (${NOUNS.length} nouns × ${ADJS.length} adj.)`)+chipGroup('Cases','combo.cases',caseOpts)+chipGroup('Number','combo.num',[['sg','Singular'],['pl','Plural']])+chipGroup('Noun gender','combo.gen',genOpts);
+  if(S.mode==='verb')h+=chipGroup(`Tenses (${VERBS.length} verbs = ${PAIRS.length} pairs)`,'verb.forms',[['pres','Present'],['fut','Future'],['past','Past']])+chipGroup('Aspect','verb.asp',[['i','Imperfective'],['p','Perfective']]);
+  if(S.mode==='pair')h+=chipGroup(`Direction (${PAIRS.length} pairs)`,'pair.dir',[['ip','Imperfective → perfective'],['pi','Perfective → imperfective']]);
+  if(S.mode==='prep')h+=chipGroup(`Prepositions (${PREPS.length})`,'prep.types',[['one',`One case (${PREPS.filter(p=>p[1].length+p[2].length===1).length})`],['multi',`Several cases (${PREPS.filter(p=>p[1].length+p[2].length>1).length})`]]);
+  if(S.mode==='endg')h+=chipGroup('Write the ending of','endg.what',[['noun','Noun'],['adj','Adjective'],['both','Adjective + noun']])
+    +`<div class="grp"><h3>Words</h3><div class="chips"><button class="chip" data-set="endg|all" aria-pressed="${S.endg.set==='all'}">All words</button><button class="chip" data-set="endg|regular" aria-pressed="${S.endg.set==='regular'}">Regular only</button><button class="chip" data-set="endg|tricky" aria-pressed="${S.endg.set==='tricky'}">Irregular / tricky only</button></div></div>`
+    +chipGroup('Cases','endg.cases',caseOpts.filter(([i])=>i>0))+chipGroup('Number','endg.num',[['sg','Singular'],['pl','Plural']])
+    +chipGroup('Noun gender','endg.gen',genOpts)+chipGroup('Adjective gender (adjective only)','endg.agn',[['m','Masculine'],['f','Feminine'],['n','Neuter']]);
+  h+=`<div class="grp"><h3>Typing</h3><div class="chips"><button class="chip" data-kb="1" aria-pressed="${S.kb}">On-screen Belarusian keyboard</button></div></div>`;
+  h+=`<p class="note">ё/е are both accepted, stress marks are ignored, and any apostrophe (' ’ ʼ) works. A Latin i is read as і.${S.mode==='verb'?' A leading pronoun (я, ты…) is ignored.':''}</p>`;
+  document.getElementById('settings-body').innerHTML=h;
+}
+
+/* ============ RENDER: sheet ============ */
+function newItem(){const item=GEN[S.mode]();if(!item){cur=null;renderSheet();return;}
+  let prompts=item.prompts;if(S.style==='single')prompts=[rnd(prompts)];
+  cur={item,prompts,checked:false,hint:0,res:[]};renderSheet();}
+function tagsHtml(it){return `<div class="tags">${it.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}${it.gloss?`<span class="tag plain">${esc(it.gloss)}</span>`:''}</div>`;}
+function renderSheet(){
+  const el=document.getElementById('sheet');
+  if(!cur){el.innerHTML=`<p class="empty">No exercises match these settings. Pick at least one option in each group${S.mode==='verb'?' (perfective verbs have no present tense, so add Future or Past)':''}.</p>`;return;}
+  const it=cur.item;
+  if(it.isPair&&S.style==='single'){it.word=cur.prompts[0].w;it.tags=cur.prompts[0].tags;}
+  let h=tagsHtml(it)+`<div class="word" lang="be">${esc(it.word)}</div>`+(it.pre?`<div class="tbl-wrap endg-wrap">${it.pre}</div>`:'');
+  if(S.style==='single'){const p=cur.prompts[0];
+    h+=`<div class="target"><b>${esc(p.t)}</b><span${p.choice?'':' lang="be"'}>${esc(p.s)}</span></div>
+      <div class="row">${p.choice?choiceHtml(0):`<input class="ans" id="ans-0" lang="be" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${p.endParts?(p.endParts.length>1?'Adjective ending, then noun ending (∅ or 0 = zero)':'Type the ending (∅ or 0 = zero)'):'Type the form…'}" aria-label="${esc(p.t+' '+p.s)}">`}</div>
+      <div class="actions"><button class="btn" id="go">Check</button>${p.choice?'':'<button class="btn ghost" id="hint">Hint</button>'}<button class="btn ghost" id="skip">Skip</button></div>
+      <div class="fb" id="fb"></div>`;
+  } else {
+    h+=`<p style="margin:0 0 6px;color:var(--muted)">${esc(it.lead||(it.isVerb?'Give every form below':'Decline it in every case below'))}</p>`;
+    h+=cur.prompts.map((p,i)=>`<div class="trow"><label for="ans-${i}">${p.w?`<span lang="be">${esc(p.w)}</span>`:esc(p.t)}<small${p.w?'':' lang="be"'}>${esc(p.choice?p.s:p.w?p.t:p.s)}</small></label>
+      ${p.choice?choiceHtml(i):`<input class="ans" id="ans-${i}" data-i="${i}" lang="be" autocomplete="off" autocapitalize="off" spellcheck="false">`}<div class="fix" id="fix-${i}" hidden></div></div>`).join('');
+    h+=`<div class="actions"><button class="btn" id="go">Check all</button><button class="btn ghost" id="skip">New word</button></div><div class="fb" id="fb"></div>`;
+  }
+  h+=`<details class="ref" id="ref"><summary>Full paradigm</summary><div id="ref-body"></div></details>`;
+  if(S.mode==='prep')h+=`<details class="ref ru-tend"><summary>Belarusian vs Russian: case government tendencies</summary><ul>${RU_TENDENCIES.map(([t,d])=>`<li><b>${esc(t)}.</b> <span lang="be">${esc(d)}</span></li>`).join('')}</ul><p class="note">Prepositions not mentioned here take the same case as their Russian equivalent. After each answer, the Russian equivalent is shown, with NB where the case differs.</p></details>`;
+  if(S.kb)h+=kbHtml();
+  h+=logHtml()+declRefHtml();el.innerHTML=h;renderRef();
+  const f=document.getElementById('ans-0');if(f){f.focus({preventScroll:true});lastInput=f;}
+}
+function choiceHtml(i){return `<div class="chips cch" id="ch-${i}" role="group" aria-label="Cases">${CASES.map((c,ci)=>`<button class="chip" data-ci="${ci}" aria-pressed="false">${c.ab} ${c.en}</button>`).join('')}</div>`;}
+function renderRef(){
+  const b=document.getElementById('ref-body');if(!b||!cur)return;const it=cur.item,hlSet=new Set();
+  if(cur.checked)cur.prompts.forEach(p=>{if(it.isVerb)hlSet.add(p.k+'|'+(p.i??''));else{const x=it.hl(p);hlSet.add(x.row+'|'+x.col);}});
+  if(it.isVerb){const {ref,ref2}=it.verbRef;
+    let t=`<table><thead><tr>${ref.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+    ref.rows.forEach(r=>{t+=`<tr><th lang="be">${r.h}</th>${r.cells.map((c,ci)=>`<td lang="be" class="${hlSet.has(r.key[ci])?'hl':''}">${c}</td>`).join('')}</tr>`;});
+    t+='</tbody></table>';
+    const t2='<table style="margin-top:8px"><tbody>'+ref2.map(([l,v,k])=>{const on=[...hlSet].some(s=>s.startsWith(k+'|'));return `<tr><th>${l}</th><td lang="be" class="${on?'hl':''}">${esc(v)}</td></tr>`;}).join('')+'</tbody></table>';
+    b.innerHTML=`<div class="tbl-wrap">${t}</div><div class="tbl-wrap">${t2}</div>`;return;}
+  const r=it.ref;let t=`<table><thead><tr>${r.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+  r.rows.forEach((row,ri)=>{t+=`<tr><th lang="be">${row.h}</th>${row.cells.map((c,ci)=>`<td lang="be" class="${hlSet.has(ri+'|'+ci)?'hl':''}">${c}</td>`).join('')}</tr>`;});
+  b.innerHTML=`<div class="tbl-wrap">${t}</tbody></table></div>`;
+}
+function logHtml(){if(!log.length)return '';
+  return `<div class="log"><h2>Recent mistakes</h2><ul>${log.map(l=>`<li><span class="w" lang="be">${esc(l.w)}</span><span>${esc(l.label)}</span><span class="y" lang="be">${esc(l.you||'—')}</span><span class="c" lang="be">${esc(l.right)}</span></li>`).join('')}</ul></div>`;}
+function kbHtml(){const rows=["йцукенгшўзх'",'фывапролджэ','ячсмітьбюё'];
+  return `<div class="kb" aria-label="Belarusian keyboard">${rows.map(r=>`<div class="kr">${[...r].map(c=>`<button data-k="${c}" tabindex="-1">${c}</button>`).join('')}</div>`).join('')}
+   <div class="kr"><button class="wide" data-k=" " tabindex="-1">space</button><button class="wide" data-k="⌫" tabindex="-1">⌫ delete</button></div></div>`;}
+function updScore(){document.getElementById('sc-ok').textContent=score.ok;document.getElementById('sc-all').textContent=score.all;
+  document.getElementById('sc-pct').textContent=score.all?Math.round(score.ok/score.all*100)+'%':'–';document.getElementById('sc-streak').textContent=score.streak;}
+
+/* ============ CHECK ============ */
+function check(){
+  if(!cur||cur.checked)return;const it=cur.item;let allOk=true;cur.res=[];
+  cur.prompts.forEach((p,i)=>{let val,ok;
+    if(p.choice){const box=document.getElementById('ch-'+i);
+      const sel=[...box.querySelectorAll('[aria-pressed="true"]')].map(b=>+b.dataset.ci),okSet=[...p.choice.main,...p.choice.extra];
+      ok=sel.length>0&&p.choice.main.every(c=>sel.includes(c))&&sel.every(c=>okSet.includes(c));val=sel.map(c=>CASES[c].en).join(' + ');
+      box.querySelectorAll('[data-ci]').forEach(b=>{const c=+b.dataset.ci,on=b.getAttribute('aria-pressed')==='true';b.disabled=true;
+        if(on&&okSet.includes(c))b.classList.add('ok');else if(on)b.classList.add('bad');else if(p.choice.main.includes(c))b.classList.add('miss');});
+    } else {const inp=document.getElementById('ans-'+i);val=inp.value;ok=p.endParts?endMatch(val,p.endParts):isRight(val,p.a,it.isVerb);inp.classList.add(ok?'ok':'bad');inp.readOnly=true;}
+    cur.res[i]=ok;score.all++;if(ok)score.ok++;else{allOk=false;log.unshift({w:p.w||it.word,label:p.t+' · '+p.s,you:val.trim(),right:show(p.a)});}
+    const fx=document.getElementById('fix-'+i);if(fx&&!ok){fx.hidden=false;fx.textContent='→ '+show(p.a);}
+  });
+  log=log.slice(0,8);
+  if(allOk&&!cur.hint)score.streak++;else if(!allOk)score.streak=0;
+  cur.checked=true;const fb=document.getElementById('fb');
+  if(S.style==='single'){const p=cur.prompts[0],ok=cur.res[0];
+    fb.innerHTML=ok?`<span class="mark ok">Правільна!</span><span class="right" lang="be">${esc(show(p.a))}</span>`:`<span class="mark bad">Памылка</span><span class="right" lang="be">Correct: ${esc(show(p.a))}</span>`;
+  } else {const n=cur.prompts.length,k=cur.res.filter(Boolean).length;
+    fb.innerHTML=`<span class="mark ${k===n?'ok':'bad'}">${k===n?'Выдатна!':k+' / '+n}</span><span style="color:var(--muted)">${k===n?'Every form correct.':'Corrections are shown under each wrong answer.'}</span>`;}
+  if(it.note)fb.insertAdjacentHTML('beforeend',`<p class="rule"><b>Why:</b> ${esc(it.note)}</p>`);
+  if(it.ruNotes)fb.insertAdjacentHTML('beforeend',`<div class="rule ru-eq"><b>Russian:</b><ul>${it.ruNotes.map(r=>`<li><span lang="be">${esc(r.w)}</span> → <span lang="ru">${esc(r.ru)}</span>${r.nb?`<br><span class="nb">NB</span> ${esc(r.nb)}`:' <span class="same">same case</span>'}</li>`).join('')}</ul></div>`);
+  ruCompare(it);
+  endingsNote(it);
+  const go=document.getElementById('go');go.textContent='Next →';
+  const h=document.getElementById('hint');if(h)h.hidden=true;const sk=document.getElementById('skip');if(sk)sk.hidden=true;
+  document.getElementById('ref').open=!allOk;renderRef();
+  const lg=document.querySelector('.log'),nl=logHtml();const dr=document.querySelector('.decl-ref');if(lg)lg.outerHTML=nl;else if(dr)dr.insertAdjacentHTML('beforebegin',nl);else document.getElementById('sheet').insertAdjacentHTML('beforeend',nl);
+  updScore();go.focus({preventScroll:true});
+}
+function hint(){if(!cur||cur.checked)return;const a=first(cur.prompts[0].a);cur.hint=Math.min(cur.hint+1,a.length);
+  const inp=document.getElementById('ans-0');inp.value=a.slice(0,cur.hint);inp.focus();}
+
+/* ============ EVENTS ============ */
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(!b)return;S.mode=b.dataset.mode;save();renderTabs();renderSettings();newItem();});
+document.getElementById('settings-body').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;const get=p=>p.split('.').reduce((o,k)=>o[k],S);
+  if(b.dataset.style)S.style=b.dataset.style;
+  else if(b.dataset.set){const [m,v]=b.dataset.set.split('|');S[m].set=v;}
+  else if(b.dataset.kb)S.kb=!S.kb;
+  else if(b.dataset.path){const arr=get(b.dataset.path);let v=b.dataset.val;if(/^\d$/.test(v))v=+v;const i=arr.indexOf(v);i>=0?arr.splice(i,1):arr.push(v);}
+  else if(b.dataset.all){const p=b.dataset.all,arr=get(p);arr.length=0;arr.push(...p.split('.').reduce((o,k)=>o[k],DEF));}
+  else if(b.dataset.none)get(b.dataset.none).length=0;
+  save();renderSettings();if(b.dataset.kb&&cur)renderSheet();else newItem();
+});
+const sheet=document.getElementById('sheet');
+sheet.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.ci!==undefined){if(!cur||cur.checked)return;b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');return;}
+  if(b.id==='go'){cur&&cur.checked?newItem():check();}
+  else if(b.id==='skip'){if(cur&&!cur.checked&&S.style==='single'){score.streak=0;updScore();}newItem();}
+  else if(b.id==='hint')hint();
+  else if(b.dataset.k){const inp=lastInput&&document.body.contains(lastInput)?lastInput:document.getElementById('ans-0');if(!inp||inp.readOnly)return;
+    const k=b.dataset.k,s=inp.selectionStart??inp.value.length,en=inp.selectionEnd??s;
+    if(k==='⌫'){if(s===en&&s>0){inp.value=inp.value.slice(0,s-1)+inp.value.slice(en);inp.setSelectionRange(s-1,s-1);}else{inp.value=inp.value.slice(0,s)+inp.value.slice(en);inp.setSelectionRange(s,s);}}
+    else{inp.value=inp.value.slice(0,s)+k+inp.value.slice(en);inp.setSelectionRange(s+1,s+1);}
+    inp.focus({preventScroll:true});}
+});
+sheet.addEventListener('mousedown',e=>{if(e.target.closest('.kb'))e.preventDefault();});
+sheet.addEventListener('focusin',e=>{if(e.target.classList.contains('ans'))lastInput=e.target;});
+sheet.addEventListener('keydown',e=>{if(e.key!=='Enter'||!cur)return;
+  if(cur.checked){e.preventDefault();newItem();return;}
+  if(e.target.classList.contains('ans')){e.preventDefault();
+    if(S.style==='table'){const nx=document.getElementById('ans-'+(+e.target.dataset.i+1));if(nx){nx.focus();return;}}
+    check();}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&cur&&cur.checked&&e.target===document.body)newItem();});
+
+
+/* ---- mobile / Android usability (added): input hints, keyboard handling, scrolling ---- */
+const isTouch=window.matchMedia('(pointer:coarse)').matches;
+function mobileTune(){
+  const ins=[...document.querySelectorAll('#sheet input.ans')];
+  ins.forEach((inp,i)=>{inp.setAttribute('autocorrect','off');inp.setAttribute('enterkeyhint',i<ins.length-1?'next':'done');
+    if(S.kb)inp.setAttribute('inputmode','none');else inp.removeAttribute('inputmode');});
+  if(isTouch&&S.kb&&ins[0])ins[0].blur();
+}
+const _renderSheet=renderSheet;renderSheet=function(){_renderSheet();mobileTune();};
+const _check=check;check=function(){_check();
+  if(isTouch&&cur&&cur.checked){const fb=document.getElementById('fb');if(fb)setTimeout(()=>fb.scrollIntoView({behavior:'smooth',block:'nearest'}),60);}};
+document.getElementById('tabs').addEventListener('click',()=>{const t=document.querySelector('.tab[aria-selected="true"]');if(t)t.scrollIntoView({inline:'nearest',block:'nearest'});});
+/* ---- Russian equivalents of Endings, Full paradigm and Reference (added) ---- */
+const RU_CASES=[['И.','именительный'],['Р.','родительный'],['Д.','дательный'],['В.','винительный'],['Т.','творительный'],['П.','предложный']];
+const RU_PERS=['я','ты','он / она','мы','вы','они'];
+const RU_A_STEM=['нов','добр','плох','красив','интересн','важн','главн','бел','чёрн','красн','зелён','жёлт','тёпл','холодн','горяч','дешёв','счастлив','умн','родн','зимн','стар','молод','жив','чуж','последн','син','летн','ранн','поздн','домашн','больш','маленьк','высок','низк','длинн','коротк','лёгк','белорусск','дорог','тяжёл'];
+const RU_A_TY=['hard','hard','velarS','hard','hard','hard','hard','hard','hard','hard','hard','hard','hard','hard','sib','hard','hard','hard','hardS','soft','hard','hardS','hardS','sibS','soft','soft','soft','soft','soft','soft','sibS','velar','velar','velar','hard','velar','velar','velar','velarS','hard'];
+const RU_ATY_T={hard:'Hard stem, unstressed ending (-ый, -ого)',hardS:'Hard stem, stressed ending (-ой, -ого)',soft:'Soft stem (-ий, -его)',velar:'Stem in г, к, х (-ий, -ого)',velarS:'Stem in г, к, х, stressed ending (-ой, -ого)',sib:'Stem in ж, ш, ч, щ, unstressed (-ий, -его)',sibS:'Stem in ж, ш, ч, щ, stressed ending (-ой, -ого)'};
+const RU_G={};`m:человек,день,год,город,дом,стол,друг,брат,сын,отец,лес,край,урок,конь,нож,сад,учитель,сосед,музей,глаз,ребёнок,вопрос,час,язык
+n:время,письмо,окно,слово,место,поле,море,сердце,имя,дерево,озеро,яйцо
+f:тетрадь,женщина,сестра,книга,рука,нога,голова,земля,вода,улица,школа,семья,страна,дорога,работа,дочь,песня,стена,ночь,вещь,радость
+pt:двери,деньги`.split('\n').forEach(l=>{const [g,ws]=l.split(':');ws.split(',').forEach(w=>RU_G[w]=g);});
+const RU_NCLS={};`2m-hard:человек,год,город,дом,стол,друг,брат,сын,лес,урок,сад,сосед,глаз,ребёнок,вопрос,час,язык
+2m-soft:день,край,конь,учитель,музей
+2m-mixed:отец,нож
+2n-hard:письмо,окно,слово,место,дерево,озеро
+2n-soft:поле,море
+2n-mixed:сердце,яйцо
+1-hard:женщина,сестра,голова,вода,школа,страна,работа,стена
+1-velar:книга,рука,нога,дорога
+1-soft:земля,семья,песня
+1-mixed:улица
+3:тетрадь,ночь,вещь,радость,дочь
+het:время,имя
+pt:двери,деньги`.split('\n').forEach(l=>{const [k,ws]=l.split(':');ws.split(',').forEach(w=>RU_NCLS[w]=k);});
+const RAN='= И. (inanimate) / = Р. (animate)';
+const RU_NEND={
+ '2m-hard':{t:'2nd declension · masculine · hard stem',sg:['zero ending','-а (partitive -у: чаю, сахару)','-у',RAN,'-ом','-е · locative -у after в / на (в лесу, в саду)'],pl:['-ы (-и after г, к, х) · stressed -а (города, дома)','-ов','-ам','= И. / = Р.','-ами','-ах']},
+ '2m-soft':{t:'2nd declension · masculine · soft stem',sg:['-ь / -й','-я','-ю',RAN,'-ем · -ём when stressed','-е (-и in -ий)'],pl:['-и','-ей (after ь) / -ев (after й)','-ям','= И. / = Р.','-ями','-ях']},
+ '2m-mixed':{t:'2nd declension · masculine · stem in ж, ш, ч, щ, ц',sg:['zero ending','-а','-у',RAN,'-ом when stressed · -ем unstressed','-е'],pl:['-и (-ы after ц)','-ей (ж, ш, ч, щ) / -ов (ц)','-ам','= И. / = Р.','-ами','-ах']},
+ '2n-hard':{t:'2nd declension · neuter · hard stem',sg:['-о','-а','-у','= И.','-ом','-е'],pl:['-а','zero ending, often with a fleeting vowel (окон, писем)','-ам','= И.','-ами','-ах']},
+ '2n-soft':{t:'2nd declension · neuter · soft stem',sg:['-е / -ё','-я','-ю','= И.','-ем / -ём','-е (-и in -ие)'],pl:['-я','-ей (полей, морей) / zero in -ие (зданий)','-ям','= И.','-ями','-ях']},
+ '2n-mixed':{t:'2nd declension · neuter · stem in ц',sg:['-о when stressed · -е unstressed','-а','-у','= И.','-ом / -ем','-е'],pl:['-а','zero ending (сердец, яиц)','-ам','= И.','-ами','-ах']},
+ '1-hard':{t:'1st declension · hard stem',sg:['-а','-ы','-е (no consonant change)','-у','-ой (-ою)','-е (no consonant change)'],pl:['-ы','zero ending','-ам','= И. / = Р. (animate)','-ами','-ах']},
+ '1-velar':{t:'1st declension · stem in г, к, х',sg:['-а','-и','-е, no consonant change (руке, ноге — compare Belarusian руцэ, назе)','-у','-ой (-ою)','-е, no consonant change'],pl:['-и','zero ending','-ам','= И. / = Р. (animate)','-ами','-ах']},
+ '1-soft':{t:'1st declension · soft stem',sg:['-я','-и','-е (-и in -ия)','-ю','-ей (-ею) · -ёй when stressed','-е (-и in -ия)'],pl:['-и','-ь / -ей / zero (земель, семей, песен)','-ям','= И. / = Р. (animate)','-ями','-ях']},
+ '1-mixed':{t:'1st declension · stem in ж, ш, ч, щ, ц',sg:['-а','-и (-ы after ц)','-е','-у','-ой when stressed · -ей unstressed (улицей)','-е'],pl:['-и (-ы after ц)','zero ending','-ам','= И. / = Р. (animate)','-ами','-ах']},
+ '3':{t:'3rd declension · feminine in -ь',sg:['-ь','-и','-и','= И.','-ью (no doubling: ночью — compare Belarusian ноччу)','-и'],pl:['-и','-ей','-ям (-ам after ж, ш, ч, щ: ночам, вещам)','= И. / = Р. (animate)','-ями / -ами','-ях / -ах']},
+ 'het':{t:'Irregular neuter in -мя',sg:['-мя','-мени','-мени','-мя','-менем','-мени'],pl:['-мена','-мён','-менам','= И.','-менами','-менах']},
+ 'pt':{t:'Plural-only noun (no singular)',sg:['—','—','—','—','—','—'],pl:['-и / -ы','-ей / -ег (денег)','-ям / -ам','= И.','-ями / -ьми / -ами','-ях / -ах']}};
+const RU_VEND={
+ 1:{t:'1st conjugation (они -ут / -ют)',r:['-у / -ю','-ешь · -ёшь when stressed','-ет · -ёт','-ем · -ём','-ете · -ёте','-ут / -ют']},
+ 2:{t:'2nd conjugation (они -ат / -ят)',r:['-у / -ю (labials add л: готовлю)','-ишь','-ит','-им','-ите','-ат / -ят']},
+ mix:{t:'Mixed conjugation (хотеть)',r:['-у (хочу) · 1st type','-ешь (хочешь) · 1st type','-ет (хочет) · 1st type','-им (хотим) · 2nd type','-ите (хотите) · 2nd type','-ят (хотят) · 2nd type']},
+ irr:{t:'Irregular conjugation (дать, есть)',r:['-м (дам, ем)','-шь (дашь, ешь)','-ст (даст, ест)','-дим (дадим, едим)','-дите (дадите, едите)','-дут / -дят (дадут, едят)']}};
+const RU_VPAST=['-л · zero after a consonant (мог, шёл)','-ла','-ло','-ли'];
+function ruVerbConj(w,np){if(/(^|с)ъ?есть$|^с?дать$|^дать$/.test(w)||w==='съесть')return 'irr';if(/хотеть$/.test(w))return 'mix';
+  return /[ая]т(ся)?$/.test(first(np[5]))?2:1;}
+/* combo: find the adjective and noun behind a phrase */
+function comboParts(it){
+  for(const n of NOUNS){for(const a of ADJS){for(const num of ['sg','pl']){if(!n[num])continue;
+    const f=comboForms(a,n,num);if(first(f[0])===it.word)return {a,n};}}}return null;}
+function ruComboForms(ra,rn,g,anim,num){const af=ra[num==='pl'?'pl':g],nf=rn[num];if(!af||!nf)return null;
+  return [0,1,2,3,4,5].map(c=>{let a=af[c];if(typeof a==='object')a=anim?a.an:a.in;return cross(a,nf[c]);});}
+function ruTable(cols,rows,hl){
+  return `<div class="tbl-wrap"><table class="rut"><thead><tr><th></th>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map((r,ri)=>`<tr><th lang="ru">${esc(r.h)}</th>${r.cells.map((c,ci)=>`<td lang="ru" class="${hl.has(ri+'|'+ci)?'hl':''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+const ruCaseRows=arrs=>RU_CASES.map(([ab,n],i)=>({h:ab+' '+n,cells:arrs.map(a=>a?(typeof a[i]==='object'?show(a[i].in)+' / '+show(a[i].an):show(a[i])):'—')}));
+function ruParadigm(){
+  if(!cur||!cur.checked)return '';const it=cur.item;const G=['m','n','f','pl'];let h='',title='';
+  if(S.mode==='noun'){const r=RU_N[it.word];if(!r)return '';title=r.w;
+    h=ruTable(['singular','plural'],ruCaseRows([r.sg,r.pl]),new Set(cur.prompts.map(p=>p.c+'|'+(p.num==='sg'?0:1))));}
+  else if(S.mode==='adj'){const r=RU_A[it.word];if(!r)return '';title=r.m[0];
+    h=ruTable(['masc.','neut.','fem.','plural'],ruCaseRows(G.map(g=>r[g])),new Set(cur.prompts.map(p=>p.c+'|'+G.indexOf(p.gn))));}
+  else if(S.mode==='combo'){const pr=comboParts(it);if(!pr)return '';const ra=RU_A[pr.a.w],rn=RU_N[pr.n.w];if(!ra||!rn)return '';
+    const g=RU_G[rn.w]||'m';const sg=g==='pt'?null:ruComboForms(ra,rn,g,pr.n.anim,'sg'),pl=ruComboForms(ra,rn,g,pr.n.anim,'pl');
+    title=first((sg||pl)[0]);h=ruTable(['singular','plural'],ruCaseRows([sg,pl]),new Set(cur.prompts.map(p=>p.c+'|'+(p.num==='sg'?0:1))));
+    if(g!=='pt'&&g!==(pr.n.g==='pt'?'pt':pr.n.g))h+=`<p class="ru-sub">Gender differs: Belarusian ${pr.n.w} is ${GN[pr.n.g]}, Russian ${rn.w} is ${GN[g]}, so the adjective agrees differently.</p>`;}
+  else if(S.mode==='verb'){const r=RU_V[it.word];if(!r)return '';title=r.w;const impf=it.tags[0]==='imperfective';
+    const keys=new Set(cur.prompts.map(p=>p.k+'|'+(p.i??'')));
+    const rows=RU_PERS.map((p,i)=>`<tr><th lang="ru">${p}</th><td lang="ru" class="${keys.has('pres|'+i)?'hl':''}">${impf?esc(show(r.np[i])):'—'}</td><td lang="ru" class="${keys.has('fut|'+i)?'hl':''}">${esc(impf?RU_BUDU[i]+' '+r.w:show(r.np[i]))}</td></tr>`).join('');
+    const pastOn=[...keys].some(k=>k.startsWith('past|'));
+    h=`<div class="tbl-wrap"><table class="rut"><thead><tr><th></th><th>present</th><th>future</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="tbl-wrap"><table class="rut"><tbody><tr><th>Past m / f / n / pl</th><td lang="ru" class="${pastOn?'hl':''}">${esc(r.past.map(show).join(', '))}</td></tr></tbody></table></div>`;}
+  else if(S.mode==='pair'){const rows=cur.prompts.map(p=>({h:RU_VW[p.w]||'—',cells:[RU_VW[first(p.a)]||'—']}));
+    title='aspect pairs';h=ruTable(['partner'],rows,new Set(cur.prompts.map((p,i)=>i+'|0')));}
+  else return '';
+  return `<div class="ru-block ru-para"><div class="ru-head"><span class="ru-badge">RU</span> Russian paradigm · <span lang="ru">${esc(title)}</span></div>${h}</div>`;}
+function ruEndings(it){
+  let h='';const G=['m','n','f','pl'];
+  if(S.mode==='noun'){const r=RU_N[it.word];if(!r)return;const k=RU_NCLS[r.w];if(!k)return;const E=RU_NEND[k];
+    h=`<div class="ru-head"><span class="ru-badge">RU</span> Russian endings · <span lang="ru">${esc(r.w)}</span> · ${esc(E.t)}</div>`
+     +ruTable(['singular','plural'],RU_CASES.map(([ab,n],i)=>({h:ab+' '+n,cells:[E.sg[i],E.pl[i]]})),new Set(cur.prompts.map(p=>p.c+'|'+(p.num==='sg'?0:1))));
+    if(r.w==='человек'||r.w==='ребёнок')h+=`<p class="ru-sub">Suppletive plural: ${r.w==='человек'?'люди, людей, людьми':'дети, детей, детьми'}.</p>`;
+    if(r.w==='дочь')h+=`<p class="ru-sub">дочь (like мать) adds -ер- outside the nominative and accusative singular: дочери, дочерью, дочери.</p>`;}
+  else if(S.mode==='adj'){const i=ADJS.findIndex(a=>a.w===it.word);if(i<0)return;const st=RU_A_STEM[i],F=RU_A_LIST[i];
+    const strip=f=>typeof f==='object'?'-'+strip1(f.in)+' (inanim.) · -'+strip1(f.an)+' (anim.)':'-'+strip1(f);
+    function strip1(x){return x.split('/').map(y=>y.startsWith(st)?y.slice(st.length):y).join(' / -');}
+    h=`<div class="ru-head"><span class="ru-badge">RU</span> Russian endings · <span lang="ru">${esc(F.m[0])}</span> · ${esc(RU_ATY_T[RU_A_TY[i]])}</div>`
+     +ruTable(['masc.','neut.','fem.','plural'],RU_CASES.map(([ab,n],ci)=>({h:ab+' '+n,cells:G.map(g=>strip(F[g][ci]))})),new Set(cur.prompts.map(p=>p.c+'|'+G.indexOf(p.gn))));}
+  else if(S.mode==='verb'){const r=RU_V[it.word];if(!r)return;const k=ruVerbConj(r.w,r.np),E=RU_VEND[k],impf=it.tags[0]==='imperfective';
+    const hlP=new Set(cur.prompts.filter(p=>p.k==='pres'||(p.k==='fut'&&!impf)).map(p=>p.i+'|0'));
+    const hlF=new Set(cur.prompts.filter(p=>p.k==='fut'&&impf).map(p=>p.i+'|0'));
+    const hlPa=new Set(cur.prompts.filter(p=>p.k==='past').map(p=>p.i+'|0'));
+    h=`<div class="ru-head"><span class="ru-badge">RU</span> Russian endings · <span lang="ru">${esc(r.w)}</span> · ${esc(E.t)}</div><span class="ru-sub">${impf?'Present tense':'Perfective future (same endings as a present tense)'}</span>`
+     +ruTable(['ending'],RU_PERS.map((p,i)=>({h:p,cells:[E.r[i]]})),hlP);
+    if(impf)h+=`<span class="ru-sub">Imperfective future: буду + infinitive (Russian has no synthetic -му future)</span>`+ruTable(['auxiliary'],RU_PERS.map((p,i)=>({h:p,cells:[RU_BUDU[i]+' + inf.']})),hlF);
+    h+=`<span class="ru-sub">Past tense (agrees in gender and number) · Russian -л where Belarusian has -ў</span>`+ruTable(['ending'],['он (m)','она (f)','оно (n)','они (pl)'].map((p,i)=>({h:p,cells:[RU_VPAST[i]]})),hlPa);
+    if(/(ся|сь)$/.test(r.w))h+=`<span class="ru-sub">Reflexive: -ся after a consonant (возвращается), -сь after a vowel (возвращаюсь) — Russian has no -цца spelling.</span>`;}
+  else return;
+  document.getElementById('fb').insertAdjacentHTML('beforeend',`<div class="ru-block ru-endn">${h}</div>`);}
+function rT(head,rows){return `<div class="tbl-wrap"><table class="rut"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr><th>${r[0]}</th>${r.slice(1).map(c=>`<td lang="ru">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+const RU_REF_INTRO=`<p><b>Case abbreviations:</b> N = именительный, G = родительный, D = дательный, A = винительный, I = творительный, P = предложный (always used with a preposition).</p>
+<p><b>Spelling rules instead of akanne:</b> Russian keeps о in writing whether stressed or not (нового, pronounced [ава]). After г, к, х, ж, ш, ч, щ write и, not ы; after ж, ш, ч, щ, ц an unstressed о becomes е.</p>`;
+const RU_REF_NOUNS=RU_REF_INTRO+`<h4>1st declension: feminine (and some masculine) in ‑а / ‑я</h4>`+rT(['Case','Hard stem (вода)','Velar / sibilant stem* (книга, улица)','Soft stem (земля)'],[
+ ['N sg','‑а','‑а','‑я'],['G sg','‑ы','‑и (‑ы after ц)','‑и'],['D sg','‑е (no consonant change)','‑е (руке, ноге)','‑е (‑и in ‑ия)'],['A sg','‑у','‑у','‑ю'],
+ ['I sg','‑ой (‑ою)','‑ой stressed / ‑ей unstressed (улицей)','‑ей (‑ею) / ‑ёй stressed'],['P sg','‑е','‑е','‑е (‑и in ‑ия)'],
+ ['N pl','‑ы','‑и (‑ы after ц)','‑и'],['G pl','∅ (вод)','∅ (книг, улиц)','‑ь / ∅ / ‑ей (земель, песен, семей)'],['D pl','‑ам','‑ам','‑ям'],
+ ['A pl','= N (inanimate) / = G (animate)','same','same'],['I pl','‑ами','‑ами','‑ями'],['P pl','‑ах','‑ах','‑ях']])
++`<p class="ru-sub">*After г, к, х, ж, ш, ч, щ write и. <b>Contrast with Belarusian:</b> no consonant alternation before ‑е (руке, ноге, воде — Belarusian руцэ, назе, вадзе); ‑ы in G / D / L stays ‑е in D and P.</p>
+<h4>2nd declension: masculine with no ending, neuter in ‑о / ‑е</h4>`+rT(['Case','Masc. hard (стол)','Masc. sibilant (нож)','Masc. soft (конь, музей)','Neut. hard (окно)','Neut. soft (поле)'],[
+ ['N sg','∅','∅','‑ь / ‑й','‑о','‑е / ‑ё'],['G sg','‑а (partitive ‑у: чаю)*','‑а','‑я','‑а','‑я'],['D sg','‑у','‑у','‑ю','‑у','‑ю'],
+ ['A sg','= N / = G (animate)','= N / = G','= N / = G','= N','= N'],['I sg','‑ом','‑ом stressed / ‑ем','‑ем / ‑ём','‑ом','‑ем / ‑ём'],
+ ['P sg','‑е (locative ‑у: в лесу)**','‑е','‑е (‑и in ‑ий)','‑е','‑е (‑и in ‑ие)'],['N pl','‑ы (‑и after г, к, х); stressed ‑а (города)','‑и','‑и','‑а','‑я'],
+ ['G pl','‑ов','‑ей','‑ей (ь) / ‑ев (й)','∅ (окон)','‑ей (полей) / ∅ (зданий)'],['D pl','‑ам','‑ам','‑ям','‑ам','‑ям'],
+ ['A pl','= N / = G','= N / = G','= N / = G','= N','= N'],['I pl','‑ами','‑ами','‑ями','‑ами','‑ями'],['P pl','‑ах','‑ах','‑ях','‑ах','‑ях']])
++`<p class="ru-sub">*Genitive ‑у is a limited partitive (чаю, сахару), much narrower than Belarusian ‑у (лесу, часу).<br>**Locative ‑у only after в / на with about 150 masculine nouns (в лесу, в саду, на мосту). Personal nouns take ‑е (о брате, о сыне), unlike Belarusian аб брату. <b>Contrast:</b> Russian neuter plural ‑а (окна, слова) where Belarusian has ‑ы (вокны, словы).</p>
+<h4>3rd declension: feminine in ‑ь (ночь, вещь, тетрадь)</h4>`+rT(['Case','Singular','Plural'],[
+ ['N','‑ь','‑и'],['G','‑и','‑ей'],['D','‑и','‑ям (‑ам after ж, ш, ч, щ)'],['A','‑ь (= N)','= N / = G (animate)'],
+ ['I','‑ью, no doubling (ночью, вещью — Belarusian ноччу, рэччу)','‑ями / ‑ами'],['P','‑и','‑ях / ‑ах']])
++`<p class="ru-sub"><b>Irregular nouns:</b><br>Neuters in ‑мя: имя → имени, имени, имя, именем, (об) имени; plural имена, имён.<br>мать, дочь add ‑ер‑: дочери, дочерью; plural дочери, дочерей, дочерьми.<br>путь: пути, пути, путь, путём, (о) пути.</p>`;
+const RU_REF_ADJ=RU_REF_INTRO+`<h4>Hard stem: новый / stressed молодой</h4>`+rT(['Case','Masculine','Neuter','Feminine','Plural (all genders)'],[
+ ['N','‑ый / ‑ой (новый, молодой)','‑ое (новое)','‑ая (новая)','‑ые (новые)'],['G','‑ого','‑ого','‑ой','‑ых'],['D','‑ому','‑ому','‑ой','‑ым'],
+ ['A','= N / = G (animate)','= N','‑ую','= N / = G (animate)'],['I','‑ым','‑ым','‑ой (‑ою)','‑ыми'],['P','‑ом','‑ом','‑ой','‑ых']])
++`<h4>Soft stem: синий</h4>`+rT(['Case','Masculine','Neuter','Feminine','Plural'],[
+ ['N','‑ий (синий)','‑ее (синее)','‑яя (синяя)','‑ие (синие)'],['G','‑его','‑его','‑ей','‑их'],['D','‑ему','‑ему','‑ей','‑им'],
+ ['A','= N / = G','= N','‑юю','= N / = G'],['I','‑им','‑им','‑ей (‑ею)','‑ими'],['P','‑ем','‑ем','‑ей','‑их']])
++`<p class="ru-sub"><b>Velar stems</b> (тихий, лёгкий, дорогой) follow the hard pattern with и after г, к, х: тихий, тихим, тихие. <b>Sibilant stems</b> (хороший, горячий, большой) write и after ж, ш, ч, щ, and е for an unstressed о: горячего, горячей, but большого.</p>
+<p class="ru-sub"><b>Contrast with Belarusian:</b> Russian writes ‑ого / ‑ому / ‑ое / ‑ой whether stressed or not (нового, Belarusian новага); masculine / neuter P is ‑ом (о новом, Belarusian аб новым); plural nominative is ‑ые / ‑ие (Belarusian ‑ыя / ‑ія).</p>
+<p class="ru-sub"><b>Full example:</b> <i>новая вода</i> declines as новая вода → новой воды → новой воде → новую воду → новой водой → (о) новой воде.</p>`;
+function ruRefAfterCheck(){
+  if(!cur||!cur.checked||!['noun','adj'].includes(S.mode))return;if(document.querySelector('.ru-decl-ref'))return;
+  const dr=document.querySelector('.decl-ref');if(!dr)return;
+  dr.insertAdjacentHTML('afterend',`<details class="ref ru-decl-ref ru-block"><summary><span class="ru-badge">RU</span> Reference: Russian ${S.mode==='noun'?'noun':'adjective'} declension endings</summary><div class="dref-body">${S.mode==='noun'?RU_REF_NOUNS:RU_REF_ADJ}</div></details>`);}
+const _renderRef=renderRef;renderRef=function(){_renderRef();const b=document.getElementById('ref-body');if(b&&cur&&cur.checked)b.insertAdjacentHTML('beforeend',ruParadigm());};
+const _endingsNote=endingsNote;endingsNote=function(it){_endingsNote(it);ruEndings(it);};
+const _check2=check;check=function(){_check2();ruRefAfterCheck();};
+
+/* ---- Endings tab (added): write only the case ending, with Russian equivalents ---- */
+const ENDG_DEF={what:['noun','adj','both'],set:'all',cases:[1,2,3,4,5],num:['sg','pl'],gen:['m','f','n','pt'],agn:['m','f','n']};
+DEF.endg=JSON.parse(JSON.stringify(ENDG_DEF));if(!S.endg)S.endg=JSON.parse(JSON.stringify(ENDG_DEF));
+const VN=s=>s.replace(/о/g,'а').replace(/[её]/g,'я').replace(/ў/g,'в');
+const lcpB=arr=>{let s=arr[0]||'';for(const x of arr)while(s&&!x.startsWith(s))s=s.slice(0,-1);return s;};
+const altsOf=f=>(typeof f==='object'?[f.in,f.an]:[f]).flatMap(x=>x.split('/'));
+const C_ALT={'г':'з','к':'ц','х':'с','т':'ц','д':'дз'};
+function bEndingOf(alt,stem){
+  if(alt.startsWith(stem)){const r=alt.slice(stem.length);
+    if(stem.endsWith('д')&&/^з[еэі]/.test(r))return {end:r.slice(1),note:'д → дз'};
+    if(r.length===2&&r[0]===stem.slice(-1)&&/[уюы]/.test(r[1])&&!/[аеёіоуыэюя]/.test(r[0]))return {end:r.slice(1),note:'doubled '+r[0]};
+    return {end:r};}
+  if(VN(alt).startsWith(VN(stem))){const r=alt.slice(stem.length);return {end:r,note:'stem vowel '+alt.slice(0,stem.length)};}
+  if(stem.endsWith('ь')&&alt.startsWith(stem.slice(0,-1))&&alt.length>stem.length-1&&/^[аеёіиоуыэюя]/.test(alt.slice(stem.length-1)))return {end:alt.slice(stem.length-1)};
+  let i=0;const va=VN(alt),vs=VN(stem);while(i<va.length&&va[i]===vs[i])i++;
+  const sr=stem.slice(i),fr=alt.slice(i);
+  if(C_ALT[sr]&&fr.startsWith(C_ALT[sr]))return {end:fr.slice(C_ALT[sr].length),note:sr+' → '+C_ALT[sr]};
+  const cores=alt.endsWith('ь')?[alt,alt.slice(0,-1)]:[alt];
+  const VN2=x=>VN(x).replace(/дз/g,'д');
+  for(const c of cores)for(let k=1;k<c.length;k++){if('аеёояи'.includes(c[k])){
+      const rm=c.slice(0,k)+c.slice(k+1);if(VN2(rm)===VN2(stem))return {end:c===alt?'':'ь',ins:true};
+      for(const r of ['й','ь'])if(VN2(c.slice(0,k)+r+c.slice(k+1))===VN2(stem))return {end:c===alt?'':'ь',ins:true};}}
+  return null;}
+function bSplit(form,stem){
+  const alts=form.split('/'),acc=new Set(),disp=[],html=[];
+  alts.forEach(alt=>{const e=bEndingOf(alt,stem);acc.add(norm(alt));
+    if(e){acc.add(norm(e.end));if(e.ins||e.end==='ь')acc.add('');if(e.note&&e.note.startsWith('doubled'))acc.add(norm(alt.slice(-2)));
+      const z=e.end===''||e.end==='ь';
+      disp.push((e.ins?`-∅ (fleeting vowel: ${alt})`:z?`-∅${e.end==='ь'?' (ь)':''}`:'-'+e.end)+(e.note&&!e.ins&&!/^stem vowel/.test(e.note)?` (${e.note}: ${alt})`:''));
+      const cut=alt.length-e.end.length;html.push(e.ins?esc(alt)+' <small>(∅)</small>':esc(alt.slice(0,cut))+'<b>'+esc(alt.slice(cut))+'</b>');}
+    else if(/[^аеёіиоуыэюя]$/.test(alt)){acc.add('');disp.push(`-∅ (stem change: ${alt})`);html.push(esc(alt)+' <small>(∅)</small>');}
+    else{disp.push(`${alt} (stem change)`);html.push('<b>'+esc(alt)+'</b>');}});
+  return {acc:[...acc],disp:disp.join(' / '),html:html.join(' / ')};}
+function bNounStems(sg,pl){
+  let s=null;if(sg){const pool=[1,4].flatMap(i=>sg[i].split('/'));if(sg[3]!==sg[0])pool.push(...sg[3].split('/'));s=lcpB(pool).replace(/[аеёіиоуыэюя]+$/,'');}
+  const p=pl?pl[2].split('/')[0].slice(0,-2):null;return {sg:s,pl:p};}
+function bAdjStem(forms){return lcpB(['m','n','f','pl'].flatMap(k=>forms[k].flatMap(altsOf)));}
+function endMatch(input,parts){
+  const Z=['∅','0','ø','zero','нуль',''];
+  const t=input.trim().toLowerCase().split(/[\s,;+|]+/).filter(Boolean).map(x=>{x=norm(x).replace(/^[-–—]+|[-–—]+$/g,'');return Z.includes(x)?'':x;});
+  if(!t.length&&parts.length===1)t.push('');
+  return t.length===parts.length&&t.every((x,i)=>parts[i].includes(x));}
+function genEndg(){
+  const E=S.endg;if(!E.what.length||!E.cases.length||!E.num.length)return null;
+  const what=rnd(E.what),tricky=E.set==='tricky',numLab=x=>x==='sg'?'singular':'plural';
+  const prompts=[],rows={sg:[],pl:[]};
+  if(what==='adj'){
+    const gn=rnd(E.agn.length?E.agn:['m','f','n']);const a=rnd(tricky?ADJS.filter(x=>x.ty!=='hard'):E.set==='regular'?ADJS.filter(x=>x.ty==='hard'):ADJS);const st=bAdjStem(a.forms);
+    E.num.forEach(num=>{const F=a.forms[num==='sg'?gn:'pl'];const g2=num==='sg'?gn:'pl';
+      CASES.forEach((c,ci)=>{const f=F[ci];
+        if(typeof f==='object'){const i1=bSplit(f.in,st),i2=bSplit(f.an,st);rows[num][ci]=`${i1.html} / ${i2.html}`;
+          if(E.cases.includes(ci)){prompts.push({t:c.en,s:`${numLab(num)} · inanimate noun`,a:i1.disp,endParts:[i1.acc],c:ci,num,gn:g2,anim:0});
+            prompts.push({t:c.en,s:`${numLab(num)} · animate noun`,a:i2.disp,endParts:[i2.acc],c:ci,num,gn:g2,anim:1});}}
+        else{const x=bSplit(f,st);rows[num][ci]=x.html;if(E.cases.includes(ci))prompts.push({t:c.en,s:`${numLab(num)} · ${c.q}`,a:x.disp,endParts:[x.acc],c:ci,num,gn:g2});}});});
+    if(!prompts.length)return null;
+    const nsg=a.forms[gn][0],npl=a.forms.pl[0];
+    const pre=`<table class="endg-info"><thead><tr><th></th><th>singular (${GN[gn]})</th><th>plural</th></tr></thead><tbody>
+      <tr><th>stem</th><td colspan="2" lang="be">${esc(st)}-</td></tr>
+      <tr><th>Nom.</th><td lang="be">${esc(nsg)} <b>(-${esc(nsg.slice(st.length)||'∅')})</b></td><td lang="be">${esc(npl)} <b>(-${esc(npl.slice(st.length))})</b></td></tr></tbody></table>`;
+    return {word:nsg,tags:['adjective ending',GN[gn],ADJ_TYPES.find(t=>t[0]===a.ty)[1].replace(/ \(.*/,'').toLowerCase()],gloss:a.tr,note:a.note,pre,isEndg:true,
+      endg:{what,a,gn},lead:'Write the adjective ending for each case',prompts,
+      ref:{cols:['',`singular (${GN[gn]})`,'plural'],rows:CASES.map((c,i)=>({h:c.ab+' '+c.be,cells:[rows.sg[i]||'—',rows.pl[i]||'—']}))},hl:p=>({col:p.num==='sg'?0:1,row:p.c})};
+  }
+  let pool=NOUNS.filter(n=>E.gen.includes(n.g)&&E.num.some(x=>n[x]));if(tricky&&what==='noun')pool=pool.filter(n=>n.t);if(E.set==='regular')pool=pool.filter(n=>!n.t);if(!pool.length)return null;
+  const n=rnd(pool),S2=bNounStems(n.sg,n.pl);
+  const a=what==='both'?rnd(ADJS):null;const ast=a?bAdjStem(a.forms):'';
+  E.num.forEach(num=>{if(!n[num])return;
+    CASES.forEach((c,ci)=>{const ne=bSplit(n[num][ci],S2[num]);let parts=[ne.acc],disp=ne.disp,html=ne.html;
+      if(a){let af=a.forms[num==='pl'?'pl':n.g][ci];if(typeof af==='object')af=n.anim?af.an:af.in;
+        const ae=bSplit(af,ast);parts=[ae.acc,ne.acc];disp=`${ae.disp} + ${ne.disp}`;html=`${ae.html} ${ne.html}`;}
+      rows[num][ci]=html;
+      if(E.cases.includes(ci))prompts.push({t:c.en,s:`${numLab(num)} · ${c.q}`,a:disp,endParts:parts,c:ci,num,gn:num==='pl'?'pl':n.g});});});
+  if(!prompts.length)return null;
+  const nomE=num=>{if(!n[num])return '—';const f=first(n[num][0]);const e=bEndingOf(f,S2[num]);
+    const af=a?(()=>{const x=a.forms[num==='pl'?'pl':n.g][0];const y=typeof x==='object'?x.in:x;return `${esc(y)} <b>(-${esc(y.slice(ast.length)||'∅')})</b> `;})():'';
+    return `${af}${esc(f)} <b>(${e?(e.ins?'-∅, fleeting vowel':(e.end===''||e.end==='ь')?'-∅':'-'+esc(e.end)):'stem change'})</b>`;};
+  const pre=`<table class="endg-info"><thead><tr><th></th><th>singular</th><th>plural</th></tr></thead><tbody>
+    ${a?`<tr><th>adjective stem</th><td colspan="2" lang="be">${esc(ast)}-</td></tr>`:''}
+    <tr><th>${a?'noun stem':'stem'}</th><td lang="be">${n.sg?esc(S2.sg)+'-':'—'}</td><td lang="be">${esc(S2.pl)}-</td></tr>
+    <tr><th>Nom.</th><td lang="be">${nomE('sg')}</td><td lang="be">${nomE('pl')}</td></tr></tbody></table>`;
+  const tags=[a?'adjective + noun endings':'noun ending',GN[n.g],n.anim?'animate':'inanimate'];if(n.t)tags.push('watch out');
+  const notes=[];if(n.note)notes.push((a?'Noun: ':'')+n.note);if(a)notes.push('Adjective: '+a.note);
+  if(S2.sg&&S2.pl&&S2.sg!==S2.pl)notes.push(`The stem changes between singular (${S2.sg}-) and plural (${S2.pl}-).`);
+  const w=a?`${(()=>{const x=a.forms[n.sg?n.g:'pl'][0];return typeof x==='object'?x.in:x;})()} ${first((n.sg||n.pl)[0])}`:n.w;
+  return {word:w,tags,gloss:a?`${a.tr} + ${n.tr}`:n.tr,note:notes.join(' '),pre,isEndg:true,endg:{what,n,a},
+    lead:a?'Write both endings: adjective first, then noun':'Write the noun ending for each case',prompts,
+    ref:{cols:['','singular','plural'],rows:CASES.map((c,i)=>({h:c.ab+' '+c.be,cells:[rows.sg[i]||'—',rows.pl[i]||'—']}))},hl:p=>({col:p.num==='sg'?0:1,row:p.c})};
+}
+GEN.endg=genEndg;
+MODES.push(['endg','Endings','склонавыя канчаткі']);
+/* Russian side for the Endings tab */
+function ruEndgData(it){
+  const d=it.endg;if(!d)return null;
+  if(d.what==='adj'){const r=RU_A[d.a.w];if(!r)return null;const st=bAdjStem(r);
+    return {w:r.m[0],forms:(num,ci,p)=>{let f=r[num==='sg'?d.gn:'pl'][ci];if(typeof f==='object')f=p&&p.anim?f.an:f.in;return [bSplit(f,st)];}};}
+  const rn=RU_N[d.n.w];if(!rn)return null;const S2=bNounStems(rn.sg,rn.pl);
+  const g=RU_G[rn.w]||'m';const ra=d.a?RU_A[d.a.w]:null;const ast=ra?bAdjStem(ra):'';
+  return {w:ra?`${(()=>{const x=ra[g==='pt'?'pl':g][0];return typeof x==='object'?x.in:x;})()} ${first((rn.sg||rn.pl)[0])}`:rn.w,g,
+    forms:(num,ci)=>{const nf=rn[num];if(!nf)return null;const ne=bSplit(nf[ci],S2[num]);
+      if(!ra)return [ne];let af=ra[num==='pl'||g==='pt'?'pl':g][ci];if(typeof af==='object')af=d.n.anim?af.an:af.in;return [bSplit(af,ast),ne];}};}
+function endgRuCompare(it){
+  const R=ruEndgData(it);if(!R)return;const fb=document.getElementById('fb');
+  const one=p=>{const x=R.forms(p.num,p.c,p);return x?{disp:x.map(y=>y.disp).join(' + '),html:x.map(y=>y.html).join(' ')}:null;};
+  if(S.style==='single'){const p=cur.prompts[0],x=one(p);if(!x)return;
+    fb.insertAdjacentHTML('beforeend',`<p class="rule rux-box"><b>Russian:</b> <span lang="ru">${esc(R.w)}</span> → <span lang="ru" class="rux-f">${x.html}</span> <span class="rux-cmp">(ending ${esc(x.disp)} · Belarusian ${esc(p.a)})</span></p>`);}
+  else{cur.prompts.forEach((p,i)=>{const x=one(p),row=document.getElementById('ans-'+i);if(!x||!row)return;
+      row.closest('.trow').insertAdjacentHTML('beforeend',`<div class="rux"><span class="rux-l">RU</span> <span lang="ru">${x.html}</span> <span class="rux-cmp">${esc(x.disp)}</span></div>`);});
+    fb.insertAdjacentHTML('beforeend',`<p class="rule rux-box"><b>Russian:</b> <span lang="ru">${esc(R.w)}</span>. The Russian ending is shown under each of your answers.</p>`);}
+  if(it.endg.what!=='adj'&&R.g&&R.g!==(it.endg.n.g)&&!(R.g==='pt'&&it.endg.n.g==='pt'))
+    fb.insertAdjacentHTML('beforeend',`<p class="ru-sub" style="flex-basis:100%">Gender differs: Belarusian ${esc(it.endg.n.w)} is ${GN[it.endg.n.g]}, Russian ${esc(RU_N[it.endg.n.w].w)} is ${GN[R.g]}.</p>`);}
+function endgRuParadigm(){
+  const it=cur.item,R=ruEndgData(it);if(!R)return '';
+  const hl=new Set(cur.prompts.map(p=>p.c+'|'+(p.num==='sg'?0:1)));
+  const cell=(num,ci)=>{const x=R.forms(num,ci,{anim:0});if(!x)return '—';let h=x.map(y=>y.html).join(' ');
+    if(it.endg.what==='adj'){const r=RU_A[it.endg.a.w][num==='sg'?it.endg.gn:'pl'][ci];if(typeof r==='object'){const y=R.forms(num,ci,{anim:1});h+=' / '+y.map(z=>z.html).join(' ');}}return h;};
+  const rows=RU_CASES.map(([ab,n],ci)=>`<tr><th lang="ru">${ab} ${n}</th>${['sg','pl'].map((num,k)=>`<td lang="ru" class="${hl.has(ci+'|'+k)?'hl':''}">${cell(num,ci)}</td>`).join('')}</tr>`).join('');
+  return `<div class="ru-block ru-para"><div class="ru-head"><span class="ru-badge">RU</span> Russian paradigm · <span lang="ru">${esc(R.w)}</span> · endings in bold</div><div class="tbl-wrap"><table class="rut endg-rut"><thead><tr><th></th><th>singular${it.endg.what==='adj'?' ('+GN[it.endg.gn]+')':''}</th><th>plural</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;}
+const _ruParadigmE=ruParadigm;ruParadigm=function(){if(S.mode==='endg'&&cur&&cur.checked)return endgRuParadigm();return _ruParadigmE();};
+const _endingsNoteE=endingsNote;endingsNote=function(it){
+  if(S.mode!=='endg'||!it.endg)return _endingsNoteE(it);
+  const d=it.endg;const m=S.mode;
+  try{if(d.what!=='noun'&&d.a){S.mode='adj';_endingsNoteE({word:d.a.w});}
+      if(d.n){S.mode='noun';_endingsNoteE({word:d.n.w});}}finally{S.mode=m;}};
+const _declRefE=declRefHtml;declRefHtml=function(){if(S.mode!=='endg')return _declRefE();
+  return `<details class="ref decl-ref"><summary>Reference: noun declension endings (all declensions)</summary><div class="dref-body">${DREF_NOUNS}</div></details><details class="ref decl-ref"><summary>Reference: adjective declension endings</summary><div class="dref-body">${DREF_ADJ}</div></details>`;};
+const _ruRefE=ruRefAfterCheck;ruRefAfterCheck=function(){if(S.mode!=='endg')return _ruRefE();
+  if(!cur||!cur.checked||document.querySelector('.ru-decl-ref'))return;const drs=document.querySelectorAll('.decl-ref');if(drs.length<2)return;
+  drs[0].insertAdjacentHTML('afterend',`<details class="ref ru-decl-ref ru-block"><summary><span class="ru-badge">RU</span> Reference: Russian noun declension endings</summary><div class="dref-body">${RU_REF_NOUNS}</div></details>`);
+  drs[1].insertAdjacentHTML('afterend',`<details class="ref ru-decl-ref ru-block"><summary><span class="ru-badge">RU</span> Reference: Russian adjective declension endings</summary><div class="dref-body">${RU_REF_ADJ}</div></details>`);};
+const _checkE=check;check=function(){_checkE();if(S.mode==='endg'&&cur&&cur.checked)endgRuCompare(cur.item);};
+
+/* ---- Preposition + adjective + noun tab (added): decline the phrase in the case the preposition demands, with Russian comparison ---- */
+/* [Belarusian preposition, case, meaning / cue, Russian preposition, Russian case, restriction ('anim' = animate nouns only, 'pl' = plural only)] */
+const PPHR_USES=[
+ ['без',1,'without','без',1],['для',1,'for','для',1],['да',1,'to, up to, as far as','до',1],['ад',1,'from, away from','от',1],
+ ['з',1,'from, out of, off','из',1],['у',1,'at someone\'s · у каго?','у',1,'anim'],['каля',1,'near','около',1],['ля',1,'by, next to','возле',1],
+ ['сярод',1,'among, in the middle of','среди',1],['пасярод',1,'in the middle of','посреди',1],['вакол',1,'around','вокруг',1],['пасля',1,'after','после',1],
+ ['акрамя',1,'except, besides','кроме',1],['замест',1,'instead of','вместо',1],['супраць',1,'against','против',1],['насупраць',1,'opposite','напротив',1],
+ ['уздоўж',1,'along','вдоль',1],['міма',1,'past','мимо',1],['дзеля',1,'for the sake of','ради',1],['паводле',1,'according to','по',2],
+ ['падчас',1,'during','во время',1],['з-за',1,'from behind; because of','из-за',1],['з-пад',1,'from under','из-под',1],
+ ['дзякуючы',2,'thanks to','благодаря',2],['насустрач',2,'towards (to meet)','навстречу',2],
+ ['у',3,'into, to · куды?','в',3],['на',3,'onto, to · куды?','на',3],['за',3,'behind · куды?','за',3],['пад',3,'under · куды?','под',3],
+ ['за',3,'for (in exchange, in favour of)','за',3],['пра',3,'about','о',5],['праз',3,'through, across','через',3],['цераз',3,'over, across','через',3],
+ ['скрозь',3,'through','сквозь',3],['паўз',3,'past, alongside','мимо',1],
+ ['з',4,'with, together with','с',4],['за',4,'behind · дзе?','за',4],['пад',4,'under · дзе?','под',4],['над',4,'above, over','над',4],
+ ['перад',4,'in front of; before','перед',4],['паміж',4,'between','между',4,'pl'],['па-за',4,'outside, beyond','вне',1],['згодна з',4,'in accordance with','согласно',2],
+ ['у',5,'in · дзе?','в',5],['на',5,'on, at · дзе?','на',5],['аб',5,'about','о',5],['пры',5,'in the presence of; attached to','при',5],['па',5,'along, around, by','по',2]];
+/* Notes where Russian differs (on top of the RU_EQ notes of the Prepositions tab) */
+const PPHR_RU_NB={
+ 'пра|3':'Belarusian пра + В. is the usual "about"; Russian про + В. exists but the neutral form is о + П. (о новой книге).',
+ 'да|1':'With people Russian uses к + Д. (к новому другу), Belarusian keeps да + Р. (да новага сябра).',
+ 'паўз|3':'Belarusian паўз + В. where Russian мимо takes Р.',
+ 'па|5':'Belarusian па + М. where Russian по takes Д. (па вуліцы = по улице).',
+ 'паводле|1':'Belarusian паводле + Р. where Russian по / согласно take Д.',
+ 'па-за|4':'Belarusian па-за + Т. where Russian вне takes Р.',
+ 'згодна з|4':'Belarusian згодна з + Т. where Russian согласно takes Д.',
+ 'з|1':'Belarusian з covers both Russian из and с (с горы, с работы); the case, Р., is the same.'};
+const PPHR_DEF={cases:[1,2,3,4,5],num:['sg','pl'],set:'all'};
+DEF.pphr=JSON.parse(JSON.stringify(PPHR_DEF));if(!S.pphr)S.pphr=JSON.parse(JSON.stringify(PPHR_DEF));
+const PPHR_ALT={'са':'з','ва':'у','ў':'у','аба':'аб'};
+function pphrNorm(s){const w=norm(s).split(' ');if(PPHR_ALT[w[0]])w[0]=PPHR_ALT[w[0]];if(w[0]==='згодна'&&PPHR_ALT[w[1]])w[1]=PPHR_ALT[w[1]];return w.join(' ');}
+/* Russian preposition with its euphonic form (об, во, со) */
+function ruPrepForm(p,next){const n=(next||'').toLowerCase();
+  if(p==='о'&&/^[аоуэи]/.test(n))return 'об';
+  if(p==='в'&&(/^[вф][^аеёиоуыэюя]/.test(n)||/^мн/.test(n)))return 'во';
+  if(p==='с'&&(/^[сзшж][^аеёиоуыэюя]/.test(n)||/^мн/.test(n)))return 'со';
+  return p;}
+const SETOK_BY=(set,n)=>set==='tricky'?!!n.t:set==='regular'?!n.t:true;
+function genPphr(){
+  const P=S.pphr;if(!P.cases.length||!P.num.length)return null;
+  const uses=PPHR_USES.filter(u=>P.cases.includes(u[1]));if(!uses.length)return null;
+  const nouns=NOUNS.filter(n=>SETOK_BY(P.set,n));if(!nouns.length)return null;
+  const n=S.style==='single'?1:6,prompts=[],seen=new Set();let guard=0;
+  while(prompts.length<n&&guard++<400){
+    const u=rnd(uses),[bp,c,mean,rp,rc,lim]=u;if(seen.has(bp+'|'+c+'|'+mean))continue;
+    const nums=P.num.filter(x=>lim!=='pl'||x==='pl');if(!nums.length)continue;
+    const pool=nouns.filter(x=>(lim!=='anim'||x.anim)&&nums.some(k=>x[k]));if(!pool.length)continue;
+    const nn=rnd(pool),num=rnd(nums.filter(k=>nn[k])),a=rnd(ADJS);
+    const F=comboForms(a,nn,num),phrase=F[c];
+    const adjDict=(()=>{const x=a.forms[num==='pl'?'pl':nn.g][0];return typeof x==='object'?x.in:x;})();
+    const nounDict=first(nn[num][0]);
+    /* Russian */
+    const rn=RU_N[nn.w],ra=RU_A[a.w];let ru=null;
+    if(rn&&ra){const g=RU_G[rn.w]||'m';const rf=ruComboForms(ra,rn,g,nn.anim,num);
+      if(rf){const ph=first(rf[rc]);ru={phrase:ruPrepForm(rp,ph)+' '+ph,prep:rp,c:rc,g,w:rn.w};}}
+    seen.add(bp+'|'+c+'|'+mean);
+    const numLab=num==='sg'?'singular':'plural';
+    prompts.push({w:`${bp} + ${adjDict} + ${nounDict}`,t:mean,s:numLab+(nn.g==='pt'?' (plural-only noun)':''),
+      a:phrase.split('/').map(x=>bp+' '+x).join('/'),c,num,u,n:nn,adj:a,ru,
+      tags:[numLab,nn.anim?'animate':'inanimate'].concat(nn.t?['watch out']:[])});
+  }
+  if(!prompts.length)return null;
+  const caseNote=p=>`${p.u[0]} + ${CASES[p.c].en.toLowerCase()} (${CASES[p.c].ab}) — ${p.u[2].replace(/ · .*/,'')}`;
+  let note;
+  if(n===1){const p=prompts[0],nn=p.n,bits=[caseNote(p)+'.'];
+    if(p.c===3&&nn.anim&&(p.num==='pl'||nn.g==='m'))bits.push('Animate noun: this accusative equals the genitive, for the adjective too.');
+    if(p.c===4&&(p.num==='sg'&&nn.g==='f'))bits.push('Feminine instrumental: the long forms (-аю, -ою, -яю) are accepted too.');
+    if(nn.g==='m'&&/[ая]$/.test(nn.w))bits.push(nn.w+' is masculine, so the adjective is masculine even though the noun ends in -а.');
+    if(nn.note)bits.push('Noun: '+nn.note);bits.push('Adjective: '+p.adj.note);note=bits.join(' ');}
+  else note=prompts.map(p=>caseNote(p)).join(' · ');
+  return {word:n===1?prompts[0].w:'Прыназоўнік + словазлучэнне',tags:['preposition + phrase'],gloss:'',isPair:true,isPphr:true,
+    lead:'Write the whole phrase, preposition included, in the case the preposition demands',note,prompts,
+    ref:{cols:['given','phrase','case','Russian'],rows:prompts.map(p=>({h:p.w,cells:[esc(show(p.a)),esc(CASES[p.c].ab+' '+CASES[p.c].be),p.ru?`<span lang="ru">${esc(p.ru.phrase)}</span> (${esc(RU_CASES[p.ru.c][0])})`:'—']}))},
+    hl:p=>({row:prompts.indexOf(p),col:0})};
+}
+GEN.pphr=genPphr;
+MODES.push(['pphr','Prep. + Adj. + Noun','прыназоўнік + словазлучэнне']);
+const _isRightP=isRight;isRight=function(input,ans,isVerb){
+  if(S.mode!=='pphr')return _isRightP(input,ans,isVerb);
+  const u=pphrNorm(input);return ans.split('/').some(a=>pphrNorm(a)===u);};
+/* settings */
+const _renderSettingsP=renderSettings;renderSettings=function(){_renderSettingsP();
+  if(S.mode!=='pphr')return;const body=document.getElementById('settings-body');const style=body.querySelector('.grp');
+  const P=S.pphr,reg=NOUNS.filter(n=>!n.t).length,tr=NOUNS.filter(n=>n.t).length;
+  const h=`<div class="grp"><h3>Nouns</h3><div class="chips">
+    <button class="chip" data-set="pphr|all" aria-pressed="${P.set==='all'}">All (${NOUNS.length})</button>
+    <button class="chip" data-set="pphr|regular" aria-pressed="${P.set==='regular'}">Regular only (${reg})</button>
+    <button class="chip" data-set="pphr|tricky" aria-pressed="${P.set==='tricky'}">Irregular / tricky only (${tr})</button></div></div>`
+   +chipGroup(`Case required (${PPHR_USES.length} preposition uses)`,'pphr.cases',caseOpts.filter(([i])=>i>0).map(([i,l])=>[i,`${l} · ${PPHR_USES.filter(u=>u[1]===i).length}`]))
+   +chipGroup('Number','pphr.num',[['sg','Singular'],['pl','Plural']]);
+  style.insertAdjacentHTML('afterend',h);
+  const nt=body.querySelector('.note');if(nt)nt.insertAdjacentHTML('beforeend',' The preposition may be written з or са, у, ў or ва, аб or аба.');};
+/* Russian comparison below the answer */
+function pphrRu(it){
+  const fb=document.getElementById('fb');if(!fb)return;
+  const line=p=>{if(!p.ru)return '';const same=p.ru.c===p.c&&!PPHR_RU_NB[p.u[0]+'|'+p.c];
+    const nb=PPHR_RU_NB[p.u[0]+'|'+p.c]||(p.ru.c!==p.c?`Belarusian ${p.u[0]} + ${CASES[p.c].ab}, Russian ${p.ru.prep} + ${RU_CASES[p.ru.c][0]}.`:'');
+    const gd=p.ru.g!==(p.n.g)&&!(p.ru.g==='pt'&&p.n.g==='pt')?` Gender differs: ${p.n.w} is ${GN[p.n.g]}, Russian ${p.ru.w} is ${GN[p.ru.g]}.`:'';
+    return `<li><span lang="be">${esc(first(p.a))}</span> → <span lang="ru" class="rux-f">${esc(p.ru.phrase)}</span> <span class="rux-cmp">(${esc(p.ru.prep)} + ${esc(RU_CASES[p.ru.c][0])} ${esc(RU_CASES[p.ru.c][1])})</span>${p.ru.c===p.c?' <span class="same">same case</span>':''}${nb?`<br><span class="nb">NB</span> ${esc(nb)}`:''}${gd?`<br><span class="rux-cmp">${esc(gd)}</span>`:''}</li>`;};
+  const items=cur.prompts.map(line).filter(Boolean);if(!items.length)return;
+  fb.insertAdjacentHTML('beforeend',`<div class="rule ru-eq"><b>Russian for comparison:</b><ul>${items.join('')}</ul></div>`);
+  if(S.style!=='single')cur.prompts.forEach((p,i)=>{if(!p.ru)return;const row=document.getElementById('ans-'+i);if(!row)return;
+    row.closest('.trow').insertAdjacentHTML('beforeend',`<div class="rux"><span class="rux-l">RU</span> <span lang="ru">${esc(p.ru.phrase)}</span></div>`);});}
+const _checkP=check;check=function(){_checkP();if(S.mode==='pphr'&&cur&&cur.checked){
+  const fb=document.getElementById('fb');
+  if(S.style==='single'){const p=cur.prompts[0];fb.insertAdjacentHTML('beforeend',`<p class="rule"><b>Case:</b> ${esc(CASES[p.c].en)} (${esc(CASES[p.c].ab+' '+CASES[p.c].be)}) · ${esc(CASES[p.c].q)}</p>`);}
+  pphrRu(cur.item);}};
+const _declRefP=declRefHtml;declRefHtml=function(){if(S.mode!=='pphr')return _declRefP();
+  return `<details class="ref ru-tend"><summary>Belarusian vs Russian: case government tendencies</summary><ul>${RU_TENDENCIES.map(([t,d])=>`<li><b>${esc(t)}.</b> <span lang="be">${esc(d)}</span></li>`).join('')}</ul></details>`
+   +`<details class="ref decl-ref"><summary>Reference: noun declension endings (all declensions)</summary><div class="dref-body">${DREF_NOUNS}</div></details><details class="ref decl-ref"><summary>Reference: adjective declension endings</summary><div class="dref-body">${DREF_ADJ}</div></details>`;};
+
+/* ---- Reset button + saved mistakes with a "Revise mistakes" round (added) ---- */
+const MK_KEY='bgd-mistakes',MK_MAX=300,MK_UNLOCK=20;
+let MK=[];try{const s=JSON.parse(localStorage.getItem(MK_KEY)||'[]');if(Array.isArray(s))MK=s;}catch(e){}
+const mkSave=()=>{try{localStorage.setItem(MK_KEY,JSON.stringify(MK));}catch(e){}};
+const RV={on:false,mode:null,style:null,done:0};
+const mkKey=(m,p,it)=>[m,p.w||it.word,p.t,p.s,p.a].join('|');
+function mkRecord(it,p){
+  const key=mkKey(S.mode,p,it),old=MK.find(x=>x.key===key);
+  if(old){old.n=(old.n||1)+1;return;}
+  const item=JSON.parse(JSON.stringify(it));delete item.prompts;
+  const pp=JSON.parse(JSON.stringify(p));
+  if(!it.isVerb&&typeof it.hl==='function'){try{pp._hl=it.hl(p);}catch(e){}}
+  if(item.ruNotes&&p.w)item.ruNotes=item.ruNotes.filter(r=>r.w===p.w);
+  if(S.mode==='pphr'&&p.u){const bits=[`${p.u[0]} + ${CASES[p.c].en.toLowerCase()} (${CASES[p.c].ab}) — ${p.u[2].replace(/ · .*/,'')}.`];
+    if(p.n&&p.n.note)bits.push('Noun: '+p.n.note);if(p.adj&&p.adj.note)bits.push('Adjective: '+p.adj.note);item.note=bits.join(' ');}
+  MK.push({key,mode:S.mode,item,p:pp,n:1});if(MK.length>MK_MAX)MK.splice(0,MK.length-MK_MAX);}
+function rvStart(){if(!MK.length)return;RV.on=true;RV.mode=S.mode;RV.style=S.style;RV.done=0;
+  S.style='single';document.getElementById('settings').hidden=true;document.querySelector('.main').classList.add('rv');cur=null;newItem();}
+function rvStop(msg){if(!RV.on)return;RV.on=false;S.mode=RV.mode;S.style=RV.style;document.getElementById('settings').hidden=false;document.querySelector('.main').classList.remove('rv');
+  renderTabs();renderSettings();cur=null;newItem();if(msg){const b=document.getElementById('mk-bar');if(b)b.insertAdjacentHTML('beforeend',`<span class="mk-msg">${esc(msg)}</span>`);}}
+const _newItemR=newItem;newItem=function(){
+  if(!RV.on)return _newItemR();
+  if(cur&&cur.review&&!cur.checked&&MK.length>1)MK.push(MK.shift());   /* skipped: send to the back */
+  if(!MK.length){const d=RV.done;rvStop(`All mistakes revised (${d} corrected). Выдатна!`);return;}
+  const m=MK[0];S.mode=m.mode;renderTabs();
+  const p=JSON.parse(JSON.stringify(m.p));const item=Object.assign(JSON.parse(JSON.stringify(m.item)),{prompts:[p],hl:x=>x._hl||{row:-1,col:-1}});
+  cur={item,prompts:[p],checked:false,hint:0,res:[],review:true,mk:m.key};renderSheet();};
+function mkBar(){
+  const n=MK.length;let h='';
+  if(RV.on)h=`<span class="mk-st"><b>Revising mistakes</b> · ${n} left${RV.done?` · ${RV.done} corrected`:''}</span><button class="mk-btn ghost" id="mk-stop">Stop revising</button>`;
+  else{h=n>MK_UNLOCK?`<button class="mk-btn rev" id="mk-rev">Revise mistakes (${n})</button>`
+      :`<span class="mk-st">${n} mistake${n===1?'':'s'} saved${n?` · revision unlocks after ${MK_UNLOCK}`:''}</span>`;}
+  h+=`<button class="mk-btn ghost" id="mk-reset" title="Sets correct, answered, accuracy and streak back to zero and clears the saved mistakes">↺ Reset score &amp; mistakes</button>`;
+  return `<div class="mk-bar" id="mk-bar">${h}</div>`;}
+function mkRefresh(){const b=document.getElementById('mk-bar');if(b)b.outerHTML=mkBar();}
+const _renderSheetR=renderSheet;renderSheet=function(){_renderSheetR();const el=document.getElementById('sheet');el.insertAdjacentHTML('afterbegin',mkBar());
+  if(RV.on&&cur&&cur.review){const m=MK.find(x=>x.key===cur.mk);const t=el.querySelector('.tags');
+    if(t)t.insertAdjacentHTML('afterbegin',`<span class="tag mk-tag">revision${m&&m.n>1?` · missed ${m.n}×`:''}</span>`);}};
+const _checkR=check;check=function(){
+  const was=cur&&cur.checked;_checkR();if(!cur||!cur.checked||was)return;
+  if(cur.review){const i=MK.findIndex(x=>x.key===cur.mk);
+    if(i>=0){if(cur.res[0]){MK.splice(i,1);RV.done++;}else{const m=MK.splice(i,1)[0];m.n=(m.n||1)+1;MK.push(m);}}}
+  else cur.prompts.forEach((p,i)=>{if(!cur.res[i])mkRecord(cur.item,p);});
+  mkSave();mkRefresh();};
+let mkArm=0;
+sheet.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.id==='mk-rev'){rvStart();}
+  else if(b.id==='mk-stop'){rvStop();}
+  else if(b.id==='mk-reset'){
+    if(Date.now()-mkArm>3000){mkArm=Date.now();b.classList.add('warn');b.textContent='Tap again to reset';
+      setTimeout(()=>{if(document.body.contains(b)){b.classList.remove('warn');b.innerHTML='↺ Reset score &amp; mistakes';}},3000);return;}
+    mkArm=0;score.ok=score.all=score.streak=0;updScore();log=[];MK=[];mkSave();
+    if(RV.on)rvStop();else{cur=null;newItem();}
+    const bar=document.getElementById('mk-bar');if(bar)bar.insertAdjacentHTML('beforeend','<span class="mk-msg">Score and mistakes reset.</span>');}},true);
+/* switching tabs ends a revision round */
+document.getElementById('tabs').addEventListener('click',e=>{if(!RV.on||!e.target.closest('[data-mode]'))return;
+  RV.on=false;S.style=RV.style;document.getElementById('settings').hidden=false;document.querySelector('.main').classList.remove('rv');},true);
+
+
+/* ---- Full declension table below the answer + "Mistakes" tab (added) ---- */
+/* 1. Full declension table: after Check, the whole paradigm of the word (or phrase) is shown below the
+      feedback, with the endings marked in bold and the asked forms highlighted. It stays until Next. */
+const FT_G=['m','n','f','pl'],FT_GL={m:'masculine',n:'neuter',f:'feminine',pl:'plural'};
+function ftParts(it){
+  const m=S.mode;
+  if(m==='noun'){const n=NOUNS.find(x=>x.w===it.word);return n?{n}:null;}
+  if(m==='adj'){const a=ADJS.find(x=>x.w===it.word);return a?{a}:null;}
+  if(m==='combo'){const p=comboParts(it);return p?{a:p.a,n:p.n}:null;}
+  if(m==='endg'&&it.endg){const d=it.endg;return {a:d.a||null,n:d.what==='adj'?null:(d.n||null)};}
+  if(m==='pphr'&&cur.prompts.length===1){const p=cur.prompts[0];return p.n&&p.adj?{a:p.adj,n:p.n,prep:p.u&&p.u[0]}:null;}
+  return null;}
+const ftAsked=()=>{const s=new Set();cur.prompts.forEach(p=>{if(p.c==null)return;s.add(p.c+'|'+(p.gn||p.num||''));});return s;};
+function ftNounCell(form,stem){return form?bSplit(form,stem).html:'—';}
+function ftAdjCell(f,stem,anim){
+  if(typeof f==='object'){if(anim===true)return bSplit(f.an,stem).html;if(anim===false)return bSplit(f.in,stem).html;
+    return `${bSplit(f.in,stem).html} <small>(inan.)</small><br>${bSplit(f.an,stem).html} <small>(anim.)</small>`;}
+  return bSplit(f,stem).html;}
+function ftTable(head,rows){
+  return `<div class="tbl-wrap"><table class="ftab"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`;}
+function ftNounHtml(n,asked){
+  const St=bNounStems(n.sg,n.pl),k=NCLS[n.w],E=k?NEND[k]:null;
+  const head=['Case'].concat(E?['sg ending','singular','pl ending','plural']:['singular','plural']);
+  const rows=CASES.map((c,i)=>{const hs=asked.has(i+'|sg')?' class="hl"':'',hp=asked.has(i+'|pl')?' class="hl"':'';
+    const sg=n.sg?ftNounCell(n.sg[i],St.sg):'—',pl=n.pl?ftNounCell(n.pl[i],St.pl):'—';
+    return `<tr><th>${c.ab} ${c.be}<small>${c.q}</small></th>`+(E?`<td class="fe">${esc(E.sg[i])}</td><td lang="be"${hs}>${sg}</td><td class="fe">${esc(E.pl[i])}</td><td lang="be"${hp}>${pl}</td>`
+      :`<td lang="be"${hs}>${sg}</td><td lang="be"${hp}>${pl}</td>`)+'</tr>';});
+  return `<h4>${esc(n.w)} <small>· ${esc(n.tr)} · ${E?esc(E.t):esc(GN[n.g])}${n.anim?' · animate':''}</small></h4>`+ftTable(head,rows)
+    ;}
+function ftAdjHtml(a,asked){
+  const st=bAdjStem(a.forms);
+  const rows=CASES.map((c,i)=>`<tr><th>${c.ab} ${c.be}<small>${c.q}</small></th>${FT_G.map(g=>`<td lang="be"${asked.has(i+'|'+g)?' class="hl"':''}>${ftAdjCell(a.forms[g][i],st)}</td>`).join('')}</tr>`);
+  return `<h4>${esc(a.w)} <small>· ${esc(a.tr)} · ${esc(ATYPE_T[a.ty]||'')} · stem ${esc(st)}-</small></h4>`+ftTable(['Case','masc.','neut.','fem.','plural'],rows);}
+function ftPhraseHtml(a,n,asked,prep){
+  const ast=bAdjStem(a.forms),St=bNounStems(n.sg,n.pl);
+  const cell=(num,i)=>{if(!n[num])return '—';const af=a.forms[num==='pl'?'pl':n.g][i];
+    return `${ftAdjCell(af,ast,n.anim)} ${ftNounCell(n[num][i],St[num])}`;};
+  const rows=CASES.map((c,i)=>`<tr><th>${c.ab} ${c.be}<small>${c.q}</small></th><td lang="be"${asked.has(i+'|sg')?' class="hl"':''}>${cell('sg',i)}</td><td lang="be"${asked.has(i+'|pl')?' class="hl"':''}>${cell('pl',i)}</td></tr>`);
+  const nom=x=>typeof x==='object'?x.in:x;
+  const title=`${first(nom(a.forms[n.sg?n.g:'pl'][0]))} ${first((n.sg||n.pl)[0])}`;
+  return `<h4>${esc(title)} <small>· ${esc(a.tr)} + ${esc(n.tr)} · ${esc(GN[n.g])}${n.anim?', animate':''}${prep?` · the phrase as it declines after any preposition (here ${esc(prep)})`:''}</small></h4>`
+    +ftTable(['Case','singular','plural'],rows);}
+function fullDeclHtml(it){
+  const P=ftParts(it);if(!P)return '';const asked=ftAsked();let h='';
+  if(P.a&&P.n){h+=ftPhraseHtml(P.a,P.n,asked,P.prep);
+    h+=`<details class="ft-more"><summary>Adjective and noun separately</summary>${ftAdjHtml(P.a,new Set())}${ftNounHtml(P.n,new Set())}</details>`;}
+  else if(P.n)h+=ftNounHtml(P.n,asked);
+  else if(P.a)h+=ftAdjHtml(P.a,asked);
+  if(!h)return '';
+  return `<section class="ftbl" aria-label="Full declension table"><h3>Full declension table · поўная табліца скланення</h3>
+    <p class="ft-sub">Every case in the singular and plural. Endings are in bold; the forms you were asked are highlighted.</p>${h}</section>`;}
+function ftShow(){
+  const old=document.querySelector('.ftbl');if(old)old.remove();
+  if(!cur||!cur.checked)return;let h='';try{h=fullDeclHtml(cur.item);}catch(e){h='';}
+  if(!h)return;const fb=document.getElementById('fb');if(fb)fb.insertAdjacentHTML('afterend',h);}
+/* the shorter endings-only box is replaced by the full table where the full table exists */
+const _endingsNoteFT=endingsNote;endingsNote=function(it){if(['noun','adj'].includes(S.mode)&&ftParts(it))return;return _endingsNoteFT(it);};
+const _checkFT=check;check=function(){const was=cur&&cur.checked;_checkFT();if(cur&&cur.checked&&!was)ftShow();};
+
+/* 2. Mistakes tab: everything you got wrong in any tab, with your answer, and a way to redo them
+      (all, one tab's worth, or a single one). A mistake leaves the list when you get it right. */
+MODES.push(['miss','Mistakes','памылкі']);
+const MK_LBL={noun:'Nouns',adj:'Adjectives',combo:'Adj. + Noun',verb:'Verbs',pair:'Aspect pairs',prep:'Prepositions',endg:'Endings',pphr:'Prep. + Adj. + Noun'};
+RV.filter=null;RV.only=null;RV.total=0;
+const _renderTabsMK=renderTabs;renderTabs=function(){_renderTabsMK();
+  const t=document.querySelector('#tabs [data-mode="miss"]');if(t&&MK.length){const sm=t.querySelector('small');(sm||t).insertAdjacentHTML('beforebegin',`<span class="cnt">${MK.length}</span>`);}};
+const _mkRecordMK=mkRecord;mkRecord=function(it,p){_mkRecordMK(it,p);
+  try{const key=mkKey(S.mode,p,it),m=MK.find(x=>x.key===key);if(!m)return;const i=cur.prompts.indexOf(p);let you='';
+    if(p.choice){const box=document.getElementById('ch-'+i);if(box)you=[...box.querySelectorAll('[aria-pressed="true"]')].map(b=>CASES[+b.dataset.ci].en).join(' + ');}
+    else{const inp=document.getElementById('ans-'+i);if(inp)you=inp.value.trim();}
+    m.you=you.slice(0,80);m.t=Date.now();}catch(e){}};
+const mkMatch=m=>RV.only?m.key===RV.only:RV.filter?m.mode===RV.filter:true;
+function rvBegin(filter,only){const list=MK.filter(m=>only?m.key===only:filter?m.mode===filter:true);if(!list.length)return;
+  RV.filter=filter||null;RV.only=only||null;RV.total=list.length;rvStart();}
+/* review order respects the filter; a skipped one goes to the back */
+newItem=function(){
+  if(!RV.on){if(S.mode==='miss'){cur=null;renderMiss();return;}return _newItemR();}
+  if(cur&&cur.review&&!cur.checked){const i=MK.findIndex(x=>x.key===cur.mk);if(i>=0&&MK.filter(mkMatch).length>1)MK.push(MK.splice(i,1)[0]);}
+  const m=MK.find(mkMatch);
+  if(!m){const d=RV.done;RV.filter=RV.only=null;rvStop(d?`Done — ${d} corrected. Выдатна!`:'Nothing left to redo.');return;}
+  S.mode=m.mode;renderTabs();
+  const p=JSON.parse(JSON.stringify(m.p));const item=Object.assign(JSON.parse(JSON.stringify(m.item)),{prompts:[p],hl:x=>x._hl||{row:-1,col:-1}});
+  cur={item,prompts:[p],checked:false,hint:0,res:[],review:true,mk:m.key};renderSheet();};
+const _rvStopMK=rvStop;rvStop=function(msg){RV.filter=RV.only=null;_rvStopMK(msg);};
+/* the bar inside the drills now just points to the Mistakes tab */
+mkBar=function(){
+  const n=MK.length;let h='';
+  if(RV.on){const left=MK.filter(mkMatch).length;
+    h=`<span class="mk-st"><b>Redoing mistakes${RV.filter?' · '+esc(MK_LBL[RV.filter]||RV.filter):''}</b> · ${left} left${RV.done?` · ${RV.done} corrected`:''}</span><button class="mk-btn ghost" id="mk-stop">Stop</button>`;}
+  else h=`<span class="mk-st">${n} mistake${n===1?'':'s'} saved</span>${n?'<button class="mk-btn ghost" id="mk-open">Mistakes tab →</button>':''}`;
+  if(!RV.on)h+=`<button class="mk-btn ghost" id="mk-reset" title="Sets correct, answered, accuracy and streak back to zero and clears the saved mistakes">↺ Reset score &amp; mistakes</button>`;
+  return `<div class="mk-bar" id="mk-bar">${h}</div>`;};
+const _renderSheetMK=renderSheet;renderSheet=function(){if(S.mode==='miss'&&!RV.on){renderMiss();return;}_renderSheetMK();};
+const _renderSettingsMK=renderSettings;renderSettings=function(){const st=document.getElementById('settings'),mn=document.querySelector('.main');
+  if(S.mode==='miss'){st.hidden=true;mn.classList.add('rv');document.getElementById('settings-body').innerHTML='';return;}
+  if(!RV.on){st.hidden=false;mn.classList.remove('rv');}_renderSettingsMK();};
+const mkWhen=t=>{if(!t)return '';const d=Math.floor((Date.now()-t)/864e5);return d<=0?'today':d===1?'yesterday':d+' days ago';};
+const mkAns=p=>p.choice?p.choice.main.map(c=>CASES[c].en).join(' + '):show(String(p.a||''));
+function mkTarget(m){const p=m.p;return [p.t,p.s].filter(Boolean).join(' · ');}
+function renderMiss(){
+  const el=document.getElementById('sheet');const n=MK.length;
+  const modes=[...new Set(MK.map(m=>m.mode))];let f=S.mkF||'all';if(f!=='all'&&!modes.includes(f))f='all';
+  const list=MK.map((m,i)=>({m,i})).filter(o=>f==='all'||o.m.mode===f).sort((a,b)=>(b.m.n||1)-(a.m.n||1)||(b.m.t||0)-(a.m.t||0));
+  let h=`<h2 class="xh">Памылкі<span>Mistakes</span></h2>
+    <p class="xsub">Everything you got wrong in any tab collects here.</p>
+    <p class="howto"><b>How it works:</b> redo them one by one. A mistake you get right leaves the list; one you get wrong again goes to the back and its count goes up. Skipped ones go to the back too.</p>`;
+  if(!n){h+=`<div class="mk-empty"><b>No mistakes saved.</b><br>Answer some exercises in any tab — whatever you get wrong will appear here to redo.</div><div class="mk-bar" id="mk-bar"></div>`;el.innerHTML=h;return;}
+  h+=`<div class="mk-top"><button class="btn" data-mk="all">Redo ${f==='all'?'all':esc(MK_LBL[f]||f)} (${list.length})</button>
+    <button class="mk-btn ghost" data-mk="clear">Clear the list</button></div>`;
+  if(modes.length>1)h+=`<div class="chips mk-f">${['all',...modes].map(k=>`<button class="chip" data-mkf="${k}" aria-pressed="${f===k}">${k==='all'?'All':esc(MK_LBL[k]||k)} · ${k==='all'?n:MK.filter(m=>m.mode===k).length}</button>`).join('')}</div>`;
+  h+=`<div class="mk-bar" id="mk-bar"></div><ul class="mk-list">${list.map(({m,i})=>{const p=m.p,w=p.w||m.item.word;
+    return `<li><div class="mk-l"><span class="mk-w" lang="be">${esc(w)}</span><span class="mk-m">${esc(MK_LBL[m.mode]||m.mode)}${m.n>1?` · <b>missed ${m.n}×</b>`:''}${m.t?' · '+mkWhen(m.t):''}</span>
+      <span class="mk-t">${esc(mkTarget(m))}</span>
+      <span class="mk-a">${m.you!=null?`<s lang="be">${esc(m.you||'—')}</s> → `:''}<b lang="be">${esc(mkAns(p))}</b></span></div>
+      <div class="mk-r"><button class="mk-btn" data-mk="one" data-i="${i}">Redo</button><button class="mk-x" data-mk="del" data-i="${i}" aria-label="Remove from the list" title="Remove from the list">✕</button></div></li>`;}).join('')}</ul>`;
+  el.innerHTML=h;}
+let mkClr=0;
+document.getElementById('sheet').addEventListener('click',e=>{
+  const o=e.target.closest('#mk-open');if(o){S.mode='miss';save();renderTabs();renderSettings();newItem();try{window.scrollTo({top:0,behavior:'smooth'})}catch(x){}return;}
+  if(S.mode!=='miss'||RV.on)return;
+  const fb=e.target.closest('[data-mkf]');if(fb){S.mkF=fb.dataset.mkf;save();renderMiss();return;}
+  const b=e.target.closest('[data-mk]');if(!b)return;const a=b.dataset.mk;
+  if(a==='all'){const f=S.mkF&&S.mkF!=='all'?S.mkF:null;rvBegin(f,null);}
+  else if(a==='one'){const m=MK[+b.dataset.i];if(m)rvBegin(null,m.key);}
+  else if(a==='del'){MK.splice(+b.dataset.i,1);mkSave();renderTabs();renderMiss();}
+  else if(a==='clear'){if(Date.now()-mkClr>3000){mkClr=Date.now();b.classList.add('warn');b.textContent='Tap again to clear';return;}
+    mkClr=0;MK=[];mkSave();renderTabs();renderMiss();}
+});
+/* keep the tab badge current after each answer */
+const _checkMK=check;check=function(){_checkMK();renderTabs();};
+/* a mistake answered wrong again keeps your newest answer */
+const _checkMK2=check;check=function(){const was=cur&&cur.checked,rv=cur&&cur.review,key=cur&&cur.mk;_checkMK2();
+  if(!rv||was||!cur.checked||cur.res[0])return;const m=MK.find(x=>x.key===key);if(!m)return;const p=cur.prompts[0];
+  try{if(p.choice){const box=document.getElementById('ch-0');m.you=[...box.querySelectorAll('[aria-pressed="true"]')].map(b=>CASES[+b.dataset.ci].en).join(' + ');}
+    else m.you=document.getElementById('ans-0').value.trim().slice(0,80);m.t=Date.now();mkSave();}catch(e){}};
+
+/* ============ INIT ============ */
+if(window.matchMedia('(min-width:821px)').matches)document.getElementById('settings').open=true;
+renderTabs();renderSettings();newItem();updScore();
+</script>
+
+
+<style>
+/* ===== phone layer (as in Инглишко на шиш): exercise first, bottom tab bar, help behind a button ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.bnav,.helpbtn{display:none}
+@media (max-width:820px){
+  :root{--bnav-h:62px}
+  body.kbd-up{--bnav-h:0px}
+  html{scroll-padding-bottom:calc(var(--bnav-h) + 80px)}
+  body{overscroll-behavior-y:contain}
+  #tabs{display:none!important}
+  .bnav{display:grid;grid-template-columns:repeat(var(--bn,6),minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:var(--sheet);border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.12);
+    padding:0 max(2px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(2px,env(safe-area-inset-left,0px))}
+  .bnav.scroll{display:flex;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+  .bnav.scroll::-webkit-scrollbar{display:none}
+  .bnav.scroll button{flex:0 0 68px;scroll-snap-align:start}
+  .bnav button{position:relative;border:0;background:transparent;min-width:0;height:62px;padding:6px 0 4px;margin:0;font:inherit;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .bnav .bi{font-size:21px;line-height:1;display:grid;place-items:center;width:44px;height:28px;border-radius:999px;transition:background .15s}
+  .bnav .bl{font-size:10px;font-weight:600;line-height:1.1;max-width:100%;white-space:nowrap;overflow:hidden;letter-spacing:-.02em}
+  .bnav button[aria-current="page"]{color:var(--accent)}
+  .bnav button[aria-current="page"] .bi{background:var(--accent-soft)}
+  .bnav button[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+  .bnav .bd{position:absolute;top:7px;left:calc(50% + 10px);width:9px;height:9px;border-radius:50%;background:var(--bad,var(--red,#c0392b));box-shadow:0 0 0 2px var(--sheet)}
+  .bnav button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;border-radius:10px}
+  .bnav.dense .bl{font-size:9.5px;letter-spacing:-.04em}
+  body.kbd-up .bnav{display:none!important}
+  /* instructions behind a "How it works" button */
+  .helpbtn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--accent-soft);color:var(--muted);border-radius:999px;
+    padding:6px 12px;min-height:36px;font-weight:600;font-size:13px;line-height:1.2;font-family:inherit;white-space:nowrap;cursor:pointer;margin:6px 0 0;align-self:flex-start;-webkit-tap-highlight-color:transparent}
+  .helpbtn .hi{font-size:15px;line-height:1}
+  .helpbtn[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+  body:not(.help-open) :is(#sheet .xsub,#sheet .howto,#sheet .mp>p.muted:first-of-type){display:none!important}
+
+  .wrap{display:flex;flex-direction:column}
+  .wrap>.main{order:-1}
+  .wrap>header{order:2;margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+  .main>.sheet{order:-1}
+  /* Check / Hint / Skip stay in thumb reach, just above the bottom tab bar */
+  .sheet>.actions{position:sticky;bottom:var(--bnav-h);z-index:4;background:transparent;flex-wrap:nowrap;margin:12px 0 0;padding:10px 0;border:0}
+  .sheet>.actions .btn.ghost{background:var(--sheet)}
+  .sheet>.actions .btn{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .sheet:has(.kb)>.actions{position:static;margin:12px 0 0;padding:0;border-top:0;background:transparent}
+  .kb{bottom:var(--bnav-h)!important}
+  .wrap{padding-bottom:calc(var(--bnav-h) + 24px + env(safe-area-inset-bottom,0px))!important}
+  .fb{scroll-margin-bottom:calc(var(--bnav-h) + 84px)}
+
+}
+
+</style>
+<script>
+/* ===== phone layer (as in Инглишко на шиш) ===== */
+(function(){
+  const C={"bp": 820, "items": [["📦", "Nouns"], ["🎨", "Adjectives"], ["🧷", "Adj+Noun"], ["🏃", "Verbs"], ["👫", "Aspect"], ["📍", "Preps"], ["🔚", "Endings"], ["🔗", "Prep+Phr"], ["❌", "Mistakes"]], "dot": ".cnt,.tcount:not(.list)", "dotRe": null, "root": "#sheet", "heads": "#sheet h2.xh,#sheet h2.ph", "helpTexts": "#sheet .xsub,#sheet .howto,#sheet .mp>p.muted:first-of-type", "hap": {"ok": ".mark.ok", "bad": ".mark.bad"}, "fb": "#fb"};
+  const MQ=window.matchMedia('(max-width:'+C.bp+'px)');
+  const tabsEl=document.getElementById('tabs');if(!tabsEl)return;
+  const st={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const el=(t,a,...k)=>{const e=document.createElement(t);if(a)for(const n in a){if(n==='class')e.className=a[n];else if(n.startsWith('on'))e.addEventListener(n.slice(2),a[n]);else if(a[n]!=null)e.setAttribute(n,a[n])}k.forEach(x=>x!=null&&e.append(x));return e};
+  /* ---------- bottom tab bar ---------- */
+  const nav=el('nav',{class:'bnav','aria-label':'Sections'});document.body.append(nav);
+  let busy=false;
+  function render(){
+    if(busy)return;busy=true;
+    const tabs=[...tabsEl.children].filter(t=>t.tagName==='BUTTON'||t.getAttribute('role')==='tab');
+    nav.style.setProperty('--bn',tabs.length);nav.classList.toggle('scroll',tabs.length>8);nav.classList.toggle('dense',tabs.length===8);
+    nav.replaceChildren(...tabs.map((t,i)=>{
+      const it=C.items[i]||['•',(t.textContent||'').trim().slice(0,10)];
+      const cur=t.getAttribute('aria-selected')==='true';
+      let dot=false;try{const d=C.dot&&t.querySelector(C.dot);dot=!!(d&&d.textContent.trim()&&!/^0\b/.test(d.textContent.trim())&&(!C.dotRe||new RegExp(C.dotRe).test(d.textContent)))}catch(e){}
+      return el('button',{type:'button','aria-label':(t.textContent||'').trim().replace(/\s+/g,' '),'aria-current':cur?'page':null,
+        onclick:()=>{t.click();try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){window.scrollTo(0,0)}}},
+        el('span',{class:'bi','aria-hidden':'true'},it[0]),el('span',{class:'bl'},it[1]),dot?el('span',{class:'bd','aria-hidden':'true'}):null)}));
+    const a=nav.querySelector('[aria-current="page"]');
+    if(a&&nav.classList.contains('scroll')){const x=a.offsetLeft-nav.clientWidth/2+a.offsetWidth/2;nav.scrollLeft=Math.max(0,x)}
+    busy=false;
+  }
+  new MutationObserver(()=>requestAnimationFrame(render)).observe(tabsEl,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-selected','class']});
+  render();
+  /* hide the bar while the on-screen keyboard is up */
+  const typing=e=>e&&(e.tagName==='TEXTAREA'||(e.tagName==='INPUT'&&!/^(checkbox|radio|button|submit|file|range)$/.test(e.type)));
+  document.addEventListener('focusin',e=>{if(MQ.matches&&typing(e.target))document.body.classList.add('kbd-up')});
+  document.addEventListener('focusout',()=>setTimeout(()=>{if(!typing(document.activeElement))document.body.classList.remove('kbd-up')},120));
+  /* ---------- instructions behind a "How it works" button ---------- */
+  if(st.get('pl-help',false))document.body.classList.add('help-open');
+  const root=document.querySelector(C.root)||document.body;
+  function decorate(){
+    const open=document.body.classList.contains('help-open');
+    document.querySelectorAll(C.heads).forEach(h=>{
+      if(h.nextElementSibling&&h.nextElementSibling.classList.contains('helpbtn'))return;
+      const scope=h.closest('.phead,.mp,.pstack,#panel,#sheet')||h.parentElement;
+      if(!scope.querySelector(C.helpTexts))return;
+      h.after(el('button',{type:'button',class:'helpbtn','aria-expanded':open?'true':'false',onclick:()=>{
+        const v=!document.body.classList.contains('help-open');document.body.classList.toggle('help-open',v);st.set('pl-help',v);
+        document.querySelectorAll('.helpbtn').forEach(b=>b.setAttribute('aria-expanded',v?'true':'false'))}},
+        el('span',{class:'hi','aria-hidden':'true'},'ⓘ'),'How it works'));
+    });
+  }
+  new MutationObserver(decorate).observe(root,{childList:true,subtree:true});decorate();
+  /* ---------- haptics + keep feedback in view ---------- */
+  if(C.hap){
+    let last=0;const buzz=p=>{if(!MQ.matches||!navigator.vibrate)return;const t=Date.now();if(t-last<150)return;last=t;try{navigator.vibrate(p)}catch(e){}};
+    const fb=C.fb&&document.querySelector(C.fb);
+    new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType!==1)continue;
+      const bad=n.matches(C.hap.bad)||n.querySelector(C.hap.bad),ok=n.matches(C.hap.ok)||n.querySelector(C.hap.ok);
+      if(bad||ok){buzz(bad?[30,60,30]:15);
+        const f=(C.fb&&document.querySelector(C.fb))||n;
+        if(MQ.matches)requestAnimationFrame(()=>{const r=f.getBoundingClientRect();if(r.bottom>window.innerHeight-140||r.top<0){try{f.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(e){}}});return}}})
+      .observe(root,{childList:true,subtree:true});
+  }
+})();
+</script>
+
+
+
+</body></html>
