@@ -219,9 +219,312 @@ function play(c,btn){if(c.s==null)return;const u=audioURL(c);if(!u)return;
   au.pause();const go=()=>{au.currentTime=Math.max(0,c.s-0.05);stopAt=(c.e!=null?c.e:c.s+4)+0.15;curBtn=btn;if(btn)btn.classList.add('on');au.play().catch(()=>{})};
   if(!au.src.endsWith(u)){au.src=u;au.addEventListener('loadedmetadata',go,{once:true});au.load()}else go()}
 const PLAY='<svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg>';
+/* ---------- tags & filters: categories for memorising in context (same code in 生词卡 and Karten) ----------
+   Automatic tags come from the word itself and where you marked it (lesson, recording, word type, family, topic,
+   confusion set). Your own tags (ear or meaning, stage, own confusion sets and labels, and any correction of an
+   automatic tag) are kept in 'wk-tags'. Filters and grouping are kept in 'wk-filt'. Nothing here changes the
+   cards' progress ('wk-srs') or the words in the listening tabs. */
+const TAGS=(()=>{
+const ZH=CFG.lang==='zh';
+const SCN={"zhl":{"001":["听力 1 · Unit 01 · 001–007","听力 1 · 001 生词",0],"002":["听力 1 · Unit 01 · 001–007","听力 1 · 002 听句子",1],"003":["听力 1 · Unit 01 · 001–007","听力 1 · 003 打错电话",2],"004":["听力 1 · Unit 01 · 001–007","听力 1 · 004 找老林",3],"005":["听力 1 · Unit 01 · 001–007","听力 1 · 005 口音、电话、问路",4],"006":["听力 1 · Unit 01 · 001–007","听力 1 · 006 安达的北京话",5],"007":["听力 1 · Unit 01 · 001–007","听力 1 · 007 问路",6],"008":["听力 1 · Unit 02 · 008–012","听力 1 · 008 生词",7],"009":["听力 1 · Unit 02 · 008–012","听力 1 · 009 词语用法",8],"010":["听力 1 · Unit 02 · 008–012","听力 1 · 010 美国老板的北京口音",9],"011":["听力 1 · Unit 02 · 008–012","听力 1 · 011 走错路了",10],"012":["听力 1 · Unit 02 · 008–012","听力 1 · 012 有个外地人找您",11],"013":["听力 1 · Unit 03 · 013–019","听力 1 · 013 生词",12],"014":["听力 1 · Unit 03 · 013–019","听力 1 · 014 听句子",13],"015":["听力 1 · Unit 03 · 013–019","听力 1 · 015 听后选择",14],"016":["听力 1 · Unit 03 · 013–019","听力 1 · 016 小孙急坏了",15],"017":["听力 1 · Unit 03 · 013–019","听力 1 · 017 这一觉睡得真累",16],"018":["听力 1 · Unit 03 · 013–019","听力 1 · 018 我看错了",17],"019":["听力 1 · Unit 03 · 013–019","听力 1 · 019 你怎么现在才来",18],"020":["听力 1 · Unit 04 · 020–023","听力 1 · 020 生词",19],"021":["听力 1 · Unit 04 · 020–023","听力 1 · 021 词语用法",20],"022":["听力 1 · Unit 04 · 020–023","听力 1 · 022 那你怎么又来晚了呢",21],"023":["听力 1 · Unit 04 · 020–023","听力 1 · 023 课间休息",22],"024":["听力 1 · Unit 05 · 024–031","听力 1 · 024 生词",23],"025":["听力 1 · Unit 05 · 024–031","听力 1 · 025 听句子",24],"026":["听力 1 · Unit 05 · 024–031","听力 1 · 026 听后选择",25],"027":["听力 1 · Unit 05 · 024–031","听力 1 · 027 招新员工",26],"028":["听力 1 · Unit 05 · 024–031","听力 1 · 028 丽丽呢？",27],"029":["听力 1 · Unit 05 · 024–031","听力 1 · 029 给爸爸妈妈的礼物",28],"030":["听力 1 · Unit 05 · 024–031","听力 1 · 030 请柬",29],"031":["听力 1 · Unit 05 · 024–031","听力 1 · 031 你也是我的",30],"032":["听力 1 · Unit 06 · 032–035","听力 1 · 032 生词",31],"033":["听力 1 · Unit 06 · 032–035","听力 1 · 033 词语用法",32],"034":["听力 1 · Unit 06 · 032–035","听力 1 · 034 哪一个合适",33],"035":["听力 1 · Unit 06 · 032–035","听力 1 · 035 面试",34],"036":["听力 1 · Unit 07 · 036–041","听力 1 · 036 生词",35],"037":["听力 1 · Unit 07 · 036–041","听力 1 · 037 “把”字句",36],"038":["听力 1 · Unit 07 · 036–041","听力 1 · 038 听后选择",37],"039":["听力 1 · Unit 07 · 036–041","听力 1 · 039 做巧克力蛋糕",38],"040":["听力 1 · Unit 07 · 036–041","听力 1 · 040 我把你当成学英语的了",39],"041":["听力 1 · Unit 07 · 036–041","听力 1 · 041 炒土豆丝",40],"042":["听力 1 · Unit 08 · 042–045","听力 1 · 042 生词",41],"043":["听力 1 · Unit 08 · 042–045","听力 1 · 043 词语用法",42],"044":["听力 1 · Unit 08 · 042–045","听力 1 · 044 蛋糕的故事",43],"045":["听力 1 · Unit 08 · 042–045","听力 1 · 045 蛋糕的故事（二）",44],"046":["听力 1 · Unit 09 · 046–050","听力 1 · 046 生词",45],"047":["听力 1 · Unit 09 · 046–050","听力 1 · 047 听句子",46],"048":["听力 1 · Unit 09 · 046–050","听力 1 · 048 听后选择",47],"049":["听力 1 · Unit 09 · 046–050","听力 1 · 049 吃法国菜的规矩",48],"050":["听力 1 · Unit 09 · 046–050","听力 1 · 050 米饭怎么还没来？",49],"051":["听力 1 · Unit 10 · 051–053","听力 1 · 051 生词",50],"052":["听力 1 · Unit 10 · 051–053","听力 1 · 052 词语用法",51],"053":["听力 1 · Unit 10 · 051–053","听力 1 · 053 法国人的请客方式",52],"054":["听力 1 · Unit 11 · 054–059","听力 1 · 054 生词",53],"055":["听力 1 · Unit 11 · 054–059","听力 1 · 055 听句子",54],"056":["听力 1 · Unit 11 · 054–059","听力 1 · 056 听后选择",55],"057":["听力 1 · Unit 11 · 054–059","听力 1 · 057 买得到票吗",56],"058":["听力 1 · Unit 11 · 054–059","听力 1 · 058 今天回得了家吗",57],"059":["听力 1 · Unit 11 · 054–059","听力 1 · 059 走不动了",58],"060":["听力 1 · Unit 12 · 060–063","听力 1 · 060 生词",59],"061":["听力 1 · Unit 12 · 060–063","听力 1 · 061 词语用法",60],"062":["听力 1 · Unit 12 · 060–063","听力 1 · 062 演唱会以后",61],"063":["听力 1 · Unit 12 · 060–063","听力 1 · 063 终于到了",62],"064":["听力 1 · Unit 13 · 064–068","听力 1 · 064 生词",63],"065":["听力 1 · Unit 13 · 064–068","听力 1 · 065 听句子",64],"066":["听力 1 · Unit 13 · 064–068","听力 1 · 066 听后选择",65],"067":["听力 1 · Unit 13 · 064–068","听力 1 · 067 看长江",66],"068":["听力 1 · Unit 13 · 064–068","听力 1 · 068 谁更富有",67],"069":["听力 1 · Unit 14 · 069–071","听力 1 · 069 生词",68],"070":["听力 1 · Unit 14 · 069–071","听力 1 · 070 词语用法",69],"071":["听力 1 · Unit 14 · 069–071","听力 1 · 071 登庐山",70],"072":["听力 1 · Unit 15 · 072–078","听力 1 · 072 生词",71],"073":["听力 1 · Unit 15 · 072–078","听力 1 · 073 听句子",72],"074":["听力 1 · Unit 15 · 072–078","听力 1 · 074 听后选择",73],"075":["听力 1 · Unit 15 · 072–078","听力 1 · 075 在邮局",74],"076":["听力 1 · Unit 15 · 072–078","听力 1 · 076 去海南岛过年",75],"077":["听力 1 · Unit 15 · 072–078","听力 1 · 077 一定要回家过年",76],"078":["听力 1 · Unit 15 · 072–078","听力 1 · 078 红色",77],"079":["听力 1 · Unit 16 · 079–082","听力 1 · 079 生词",78],"080":["听力 1 · Unit 16 · 079–082","听力 1 · 080 词语用法",79],"081":["听力 1 · Unit 16 · 079–082","听力 1 · 081 中国人的新年",80],"082":["听力 1 · Unit 16 · 079–082","听力 1 · 082 过年了，火车一定会开的",81],"083":["听力 1 · Unit 17 · 083–087","听力 1 · 083 生词",82],"084":["听力 1 · Unit 17 · 083–087","听力 1 · 084 听句子",83],"085":["听力 1 · Unit 17 · 083–087","听力 1 · 085 听后选择",84],"086":["听力 1 · Unit 17 · 083–087","听力 1 · 086 听后选择",85],"087":["听力 1 · Unit 17 · 083–087","听力 1 · 087 香港怎么样",86],"088":["听力 1 · Unit 18 · 088–091","听力 1 · 088 生词",87],"089":["听力 1 · Unit 18 · 088–091","听力 1 · 089 词语用法",88],"090":["听力 1 · Unit 18 · 088–091","听力 1 · 090 中国的人口、地理和方言",89],"091":["听力 1 · Unit 18 · 088–091","听力 1 · 091 中国的方言",90],"092":["听力 1 · Unit 19 · 092–101","听力 1 · 092 生词",91],"093":["听力 1 · Unit 19 · 092–101","听力 1 · 093 听句子",92],"094":["听力 1 · Unit 19 · 092–101","听力 1 · 094 听力练习",93],"095":["听力 1 · Unit 19 · 092–101","听力 1 · 095 听力练习",94],"096":["听力 1 · Unit 19 · 092–101","听力 1 · 096 短文",95],"097":["听力 1 · Unit 19 · 092–101","听力 1 · 097 最爱你的是你的身体",96],"098":["听力 1 · Unit 19 · 092–101","听力 1 · 098 补充生词",97],"099":["听力 1 · Unit 19 · 092–101","听力 1 · 099 词语用法",98],"100":["听力 1 · Unit 19 · 092–101","听力 1 · 100 一个老中医的话",99],"101":["听力 1 · Unit 19 · 092–101","听力 1 · 101 什么样的人是好中医",100],"102":["听力 1 · Unit 20 · 102–109","听力 1 · 102 生词",101],"103":["听力 1 · Unit 20 · 102–109","听力 1 · 103 听句子",102],"104":["听力 1 · Unit 20 · 102–109","听力 1 · 104 听力练习",103],"105":["听力 1 · Unit 20 · 102–109","听力 1 · 105 四二一家庭",104],"106":["听力 1 · Unit 20 · 102–109","听力 1 · 106 老人帮忙带孩子",105],"107":["听力 1 · Unit 20 · 102–109","听力 1 · 107 补充生词",106],"108":["听力 1 · Unit 20 · 102–109","听力 1 · 108 词语用法",107],"109":["听力 1 · Unit 20 · 102–109","听力 1 · 109 四二一家庭",108],"110":["听力 1 · Unit 21 · 110–119","听力 1 · 110 生词",109],"111":["听力 1 · Unit 21 · 110–119","听力 1 · 111 听句子",110],"112":["听力 1 · Unit 21 · 110–119","听力 1 · 112 听力练习",111],"113":["听力 1 · Unit 21 · 110–119","听力 1 · 113 你有房子吗",112],"114":["听力 1 · Unit 21 · 110–119","听力 1 · 114 这是你家的新房子吧",113],"115":["听力 1 · Unit 21 · 110–119","听力 1 · 115 我希望公司再搬一次家",114],"116":["听力 1 · Unit 21 · 110–119","听力 1 · 116 买房不如租房",115],"117":["听力 1 · Unit 21 · 110–119","听力 1 · 117 补充生词",116],"118":["听力 1 · Unit 21 · 110–119","听力 1 · 118 词语用法",117],"119":["听力 1 · Unit 21 · 110–119","听力 1 · 119 房子的故事",118],"120":["听力 1 · Unit 22 · 120–128","听力 1 · 120 生词",119],"121":["听力 1 · Unit 22 · 120–128","听力 1 · 121 听句子",120],"122":["听力 1 · Unit 22 · 120–128","听力 1 · 122 听力练习",121],"123":["听力 1 · Unit 22 · 120–128","听力 1 · 123 网络文学",122],"124":["听力 1 · Unit 22 · 120–128","听力 1 · 124 网上购物",123],"125":["听力 1 · Unit 22 · 120–128","听力 1 · 125 中国网民节",124],"126":["听力 1 · Unit 22 · 120–128","听力 1 · 126 补充生词",125],"127":["听力 1 · Unit 22 · 120–128","听力 1 · 127 词语用法",126],"128":["听力 1 · Unit 22 · 120–128","听力 1 · 128 关于网络文学的讨论",127],"129":["听力 1 · Unit 23 · 129–136","听力 1 · 129 生词",128],"130":["听力 1 · Unit 23 · 129–136","听力 1 · 130 听句子",129],"131":["听力 1 · Unit 23 · 129–136","听力 1 · 131 听力练习",130],"132":["听力 1 · Unit 23 · 129–136","听力 1 · 132 李光头和宋刚",131],"133":["听力 1 · Unit 23 · 129–136","听力 1 · 133 你知道大白兔奶糖吗",132],"134":["听力 1 · Unit 23 · 129–136","听力 1 · 134 补充生词",133],"135":["听力 1 · Unit 23 · 129–136","听力 1 · 135 词语用法",134],"136":["听力 1 · Unit 23 · 129–136","听力 1 · 136 大白兔奶糖",135]},"zhl2":{"001":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 001 生词和词组",136],"002":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 002 词语和解释",137],"003":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 003 词语分类",138],"004":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 004 补充句子",139],"005":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 005 找出重复的词语",140],"006":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 006 意思一样吗",141],"007":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 007 说话人的态度",142],"008":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 008 当丁克：好处和问题",143],"009":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 009 丁克家庭",144],"010":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 010 你为什么不想要小孩",145],"011":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 011 我的丁克同事",146],"012":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 012 传统家庭观念",147],"013":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 013 对丁克的看法",148],"014":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 014 模仿语气",149],"015":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 015 妈，你又来了",150],"016":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 016 常回家看看",151],"017":["听力 2 · Lesson 01 · 家庭 Family","听力 2 · 017 大世界与小家庭",152],"018":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 018 生词和词组",153],"019":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 019 词语和解释",154],"020":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 020 词语分类",155],"021":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 021 补充句子",156],"022":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 022 找出重复的词语",157],"023":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 023 意思一样吗",158],"024":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 024 该不该当房奴",159],"025":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 025 当房奴：好处和问题",160],"026":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 026 房奴",161],"027":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 027 房子是有了",162],"028":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 028 王东的生日",163],"029":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 029 李梦芳的房奴生活",164],"030":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 030 模仿语气",165],"031":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 031 那还不快",166],"032":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 032 漂在北京",167],"033":["听力 2 · Lesson 02 · 住房 Housing","听力 2 · 033 北上广：逃离还是坚持",168],"034":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 034 生词和词组",169],"035":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 035 词语和解释",170],"036":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 036 词语分类",171],"037":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 037 补充句子",172],"038":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 038 找出重复的词语",173],"039":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 039 意思一样吗",174],"040":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 040 该不该上补习班",175],"041":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 041 望子成龙（一）",176],"042":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 042 望子成龙（二）",177],"043":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 043 再听一遍",178],"044":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 044 两位妈妈（一）",179],"045":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 045 两位妈妈（二）",180],"046":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 046 家长的看法",181],"047":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 047 模仿语气",182],"048":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 048 我就玩一会儿",183],"049":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 049 望子成龙",184],"050":["听力 2 · Lesson 03 · 教育 Education","听力 2 · 050 谈谈减负",185],"051":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 051 生词和词组",186],"052":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 052 词语和解释",187],"053":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 053 词语分类",188],"054":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 054 补充句子",189],"055":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 055 找出重复的词语",190],"056":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 056 意思一样吗",191],"057":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 057 该不该出国旅游",192],"058":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 058 中国人的消费方式",193],"059":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 059 守财奴和月光族",194],"060":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 060 再听一遍",195],"061":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 061 今年春节去饭馆吃吧",196],"062":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 062 三个月光族",197],"063":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 063 听录音讨论",198],"064":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 064 模仿语气",199],"065":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 065 名牌包",200],"066":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 066 带着父母去旅行",201],"067":["听力 2 · Lesson 04 · 消费 Spending","听力 2 · 067 消费时代谈节俭",202],"068":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 068 生词和词组",203],"069":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 069 词语和解释",204],"070":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 070 词语分类",205],"071":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 071 补充句子",206],"072":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 072 找出重复的词语",207],"073":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 073 意思是否相符",208],"074":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 074 判断说话人的意思",209],"075":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 075 现代生活病",210],"076":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 076 电脑脖",211],"077":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 077 夜猫子采访",212],"078":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 078 现代病",213],"079":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 079 听指令做动作",214],"080":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 080 八个最不健康的生活习惯",215],"081":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 081 模仿语气",216],"082":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 082 我好像又感冒了",217],"083":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 083 现代病——从减肥说起",218],"084":["听力 2 · Lesson 05 · 健康 Health","听力 2 · 084 中国人的养生之道",219],"085":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 085 生词和词组",220],"086":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 086 词语和解释",221],"087":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 087 补充句子",222],"088":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 088 找出重复的词语",223],"089":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 089 意思是否相符",224],"090":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 090 四十岁有感",225],"091":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 091 聊天儿",226],"092":["听力 2 · Lesson 06 · 聊天 Chatting","听力 2 · 092 聊天",227],"093":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 093 生词和词组",228],"094":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 094 词语和解释",229],"095":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 095 词语分类",230],"096":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 096 补充句子",231],"097":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 097 找出重复的词语",232],"098":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 098 意思是否相符",233],"099":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 099 南北方的误解",234],"100":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 100 南北新鲜事",235],"101":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 101 中国北方",236],"102":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 102 厉害的四川花椒",237],"103":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 103 倒霉的一顿饭",238],"104":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 104 南方女孩爱上北方男孩",239],"105":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 105 家乡话",240],"106":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 106 模仿语气",241],"107":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 107 点菜",242],"108":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 108 我的大学室友",243],"109":["听力 2 · Lesson 07 · 南北差异 North and south","听力 2 · 109 中国的南北差异",244],"110":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 110 生词和词组",245],"111":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 111 词语和解释",246],"112":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 112 词语分类",247],"113":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 113 补充句子",248],"114":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 114 找出重复的词语",249],"115":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 115 意思是否相符",250],"116":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 116 做客",251],"117":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 117 中国人的交际习惯",252],"118":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 118 老刘送礼",253],"119":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 119 千里送鹅毛",254],"120":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 120 对送礼的看法",255],"121":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 121 模仿语气",256],"122":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 122 母亲节礼物",257],"123":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 123 送礼的学问",258],"124":["听力 2 · Lesson 08 · 送礼 Giving gifts","听力 2 · 124 红包应不应该被取消？",259],"125":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 125 生词和词组",260],"126":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 126 词语和解释",261],"127":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 127 词语分类",262],"128":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 128 补充句子",263],"129":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 129 找出重复的词语",264],"130":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 130 意思是否相符",265],"131":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 131 在法国留学",266],"132":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 132 外国人在中国",267],"133":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 133 中秋节",268],"134":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 134 嫦娥奔月",269],"135":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 135 中国人的价值观",270],"136":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 136 模仿语气",271],"137":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 137 嫦娥和逄蒙",272],"138":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 138 从出国热到移民潮",273],"139":["听力 2 · Lesson 09 · 中国与世界 China and the world","听力 2 · 139 外国人在中国",274],"140":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 140 生词和词组",275],"141":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 141 词语和解释",276],"142":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 142 词语分类",277],"143":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 143 补充句子",278],"144":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 144 找出重复的词语",279],"145":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 145 意思是否相符",280],"146":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 146 北京的胡同",281],"147":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 147 菊儿胡同",282],"148":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 148 幸福的老姜",283],"149":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 149 城市化下的返乡青年（一）",284],"150":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 150 城市化下的返乡青年（二）",285],"151":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 151 模仿语气",286],"152":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 152 在胡同里开饭店",287],"153":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 153 候鸟",288],"154":["听力 2 · Lesson 10 · 城市化 Urbanisation","听力 2 · 154 城市化的得与失",289],"155":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 155 生词和词组",290],"156":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 156 词语和解释",291],"157":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 157 词语分类",292],"158":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 158 补充句子",293],"159":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 159 找出重复的词语",294],"160":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 160 意思是否相符",295],"161":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 161 蔡侯纸",296],"162":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 162 手写还是电写？",297],"163":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 163 互联网和中国",298],"164":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 164 你为什么上网？",299],"165":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 165 是否符合事实",300],"166":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 166 模仿语气",301],"167":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 167 对着手机说话",302],"168":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 168 电子时代：电子书与纸书",303],"169":["听力 2 · Lesson 11 · 生活中的科技 Technology in daily life","听力 2 · 169 造纸术",304],"170":["听力 2 · Lesson 12 · 求职 Job hunting","听力 2 · 170 丽丽的兴趣班",305],"171":["听力 2 · Lesson 12 · 求职 Job hunting","听力 2 · 171 江欢晨的补习班",306],"172":["听力 2 · Lesson 12 · 求职 Job hunting","听力 2 · 172 南方人看北方",307],"173":["听力 2 · Lesson 12 · 求职 Job hunting","听力 2 · 173 龚女士谈改造四合院",308],"174":["听力 2 · Lesson 12 · 求职 Job hunting","听力 2 · 174 求职与就业",309]},"zhmy":{"001":["神秘的电话","神秘的电话 · 001 一场意外",311],"002":["神秘的电话","神秘的电话 · 002 守护人",312],"003":["神秘的电话","神秘的电话 · 003 神秘来电",313],"004":["神秘的电话","神秘的电话 · 004 老师，我希望你生病",314],"005":["神秘的电话","神秘的电话 · 005 公交车司机的秘密",315],"006":["神秘的电话","神秘的电话 · 006 失去的记忆",316],"007":["神秘的电话","神秘的电话 · 007 交叉的两条线",317],"008":["神秘的电话","神秘的电话 · 008 蛛丝马迹",318],"009":["神秘的电话","神秘的电话 · 009 亲爱的朋友啊",319],"010":["神秘的电话","神秘的电话 · 010 重逢",320],"011":["神秘的电话","神秘的电话 · 011 黑暗之神",321],"012":["神秘的电话","神秘的电话 · 012 半生的等待",322]}};
+const L=ZH?{
+  cats:{lesson:'Lesson / unit',scene:'Recording',fn:'Word type',fam:'Character family',topic:'Topic',prob:'Ear or meaning',stage:'Stage',conf:'Confusion set',own:'Own tags'},
+  fn:{verb:'Verb',noun:'Noun',adj:'Adjective',mw:'Measure word',tp:'Time & place',gram:'Grammar word',conn:'Connector',phrase:'Chunk / idiom',name:'Name'},
+  prob:{mean:'📖 New meaning',ear:'👂 Missed by ear'},
+  stage:{new:'New',text:'Know it in text',ear:'Catch it by ear',use:'Can use it'},
+  topic:{people:'Family & people',food:'Food & drink',home:'Home & housing',travel:'Travel & directions',work:'Work & jobs',money:'Money & shopping',study:'Study & language',health:'Health & body',feel:'Feelings & character',time:'Time & festivals',nature:'Nature & weather',comm:'Phone, media & tech',society:'Society & culture',other:'Other'},
+  grp:'Group by',noGrp:'No groups',search:'Search: characters, pinyin or English',only:'Only these',learnG:'Learn',clear:'Clear filters',filt:'Filter',
+  learnF:n=>'Learn the filtered cards ('+n+')',none:'(none)',auto:'auto',tags:'🏷 Tags',close:'Close',
+  edProb:'Problem',edStage:'Stage',edFn:'Word type',edTopic:'Topic',edConf:'Confusion set',edOwn:'Own tags',
+  confPh:'e.g. 买/卖 — same name = same set',ownPh:'comma-separated, e.g. HSK3, exam',autoInfo:'Automatic',
+  cardEar:'👂 Missed by ear',cardStage:'Stage',
+  note:'Lesson, recording, word type, character family, topic and sound-alike sets are filled in automatically. Ear or meaning, stage, your own confusion sets and own tags are yours to set (🏷 on a word, or under a card once it is flipped). You can also correct any automatic tag. 🎧 By ear moves a word up to “Catch it by ear” when you get its tones right.',
+  expT:'Export for Anki with categories',expSub:'Subdecks by',expOnly:'Only the cards the filter shows',expBtn:'Export with categories (CSV)',
+  expNote:'One deck, “中文::生词卡”, with a subdeck for every value of the category you choose (for example 中文::生词卡::Verb). Every other category goes along as tags (zh::type::verb, zh::topic::…, zh::lesson::…), so in Anki you can browse them in the sidebar or build filtered decks from them. In Anki (2.1.55 or newer): File → Import, pick the file; the subdecks are created for you.',
+  ear:'Problem',stg:'Stage',fam:n=>n+' words',cnt:n=>n+(n===1?' word':' words'),deckRoot:'中文::生词卡',tagRoot:'zh',
+  fsum:'Filter'}:{
+  cats:{lesson:'Prüfung / Teil',scene:'Aufnahme',fn:'Wortart',fam:'Wortfamilie',topic:'Thema',prob:'Hören oder Bedeutung',stage:'Stufe',conf:'Verwechslungsgruppe',own:'Eigene Tags'},
+  fn:{n_der:'Nomen · der',n_die:'Nomen · die',n_das:'Nomen · das',verb:'Verb',sep:'Trennbares Verb',refl:'Reflexives Verb',vprep:'Verb + Präposition',adj:'Adjektiv / Adverb',conn:'Konnektor',func:'Funktionswort',phrase:'Ausdruck',name:'Name'},
+  prob:{mean:'📖 Bedeutung neu',ear:'👂 Beim Hören verpasst'},
+  stage:{new:'Neu',text:'Im Text erkannt',ear:'Beim Hören erkannt',use:'Kann ich benutzen'},
+  topic:{people:'Familie & Menschen',food:'Essen & Trinken',home:'Wohnen',travel:'Reisen & Verkehr',work:'Arbeit & Beruf',money:'Geld & Konsum',study:'Bildung & Sprache',health:'Gesundheit & Körper',feel:'Gefühle & Charakter',time:'Zeit',nature:'Natur & Umwelt',comm:'Medien & Technik',society:'Gesellschaft & Politik',science:'Wissenschaft & Forschung',other:'Sonstiges'},
+  grp:'Gruppieren nach',noGrp:'Keine Gruppen',search:'Suchen: Wort oder Bedeutung',only:'Nur diese',learnG:'Lernen',clear:'Filter löschen',filt:'Filter',
+  learnF:n=>'Gefilterte Karten lernen ('+n+')',none:'(keine)',auto:'automatisch',tags:'🏷 Tags',close:'Schließen',
+  edProb:'Problem',edStage:'Stufe',edFn:'Wortart',edTopic:'Thema',edConf:'Verwechslungsgruppe',edOwn:'Eigene Tags',
+  confPh:'z. B. bekommen/werden – gleicher Name = gleiche Gruppe',ownPh:'mit Komma getrennt, z. B. B2, Prüfung',autoInfo:'Automatisch',
+  cardEar:'👂 Beim Hören verpasst',cardStage:'Stufe',
+  note:'Prüfung/Teil, Aufnahme, Wortart, Wortfamilie, Thema und Präfix-Verwechslungen (bestehen · verstehen · entstehen) werden automatisch erkannt. Hören oder Bedeutung, Stufe, eigene Verwechslungsgruppen und eigene Tags legst du selbst fest (🏷 bei einem Wort oder unter der umgedrehten Karte). Jeden automatischen Tag kannst du auch korrigieren.',
+  expT:'Für Anki exportieren – mit Kategorien',expSub:'Unterstapel nach',expOnly:'Nur die Karten, die der Filter zeigt',expBtn:'Mit Kategorien exportieren (CSV)',
+  expNote:'Ein Stapel „Deutsch::Meine Wörter“ mit einem Unterstapel für jeden Wert der gewählten Kategorie (z. B. Deutsch::Meine Wörter::Trennbares Verb). Alle anderen Kategorien kommen als Tags mit (de::wortart::…, de::thema::…, de::aufnahme::…) – in Anki in der Seitenleiste durchsuchbar oder als gefilterte Stapel nutzbar. In Anki (ab 2.1.55): Datei → Importieren, Datei wählen; die Unterstapel werden automatisch angelegt.',
+  ear:'Problem',stg:'Stufe',fam:n=>n+' Wörter',cnt:n=>n+(n===1?' Wort':' Wörter'),deckRoot:'Deutsch::Meine Wörter',tagRoot:'de',
+  fsum:'Filter'};
+const CAT_IDS=['lesson','scene','fn','fam','topic','prob','stage','conf','own'];
+const TAGSLUG=ZH?{lesson:'lesson',scene:'recording',fn:'type',fam:'family',topic:'topic',prob:'problem',stage:'stage',conf:'confusion',own:'own'}:
+  {lesson:'pruefung',scene:'aufnahme',fn:'wortart',fam:'wortfamilie',topic:'thema',prob:'problem',stage:'stufe',conf:'verwechslung',own:'eigene'};
+let TG=ld('wk-tags',{});
+let F=Object.assign({g:'lesson',f:{},q:''},ld('wk-filt',{}));if(!F.f||typeof F.f!=='object')F.f={};
+const saveTG=()=>sv('wk-tags',TG),saveF=()=>sv('wk-filt',F);
+const tg=k=>TG[k]||{};
+function setTG(k,field,v){const o=Object.assign({},TG[k]||{});if(v==null||v==='')delete o[field];else o[field]=v;
+  if(Object.keys(o).length)TG[k]=o;else delete TG[k];saveTG();AUTO=null}
+
+/* ---------- automatic tags ---------- */
+const first=en=>String(en||'').split(/\s*[;/]\s*/).map(x=>x.replace(/^\((bound form|literary|coll\.|colloquial|formal|dialect|old)\)\s*/i,'').trim()).filter(Boolean)[0]||'';
+const ZH_CONN=new Set('因为 所以 但是 可是 虽然 而且 并且 或者 还是 如果 要是 假如 即使 尽管 不但 不仅 只要 只有 除非 于是 然后 因此 因而 而 否则 不然 不管 无论 既然 一边 一方面 另一方面 甚至 何况 况且 以便 以免 然而 不过 可见 总之 总而言之 接着 首先 其次 最后 另外 此外 同时 那么 也就是说 宁可 与其 哪怕 以及 从而 由于 只是 反而 而是 结果 就是说 再说 否则的话 的话 因为…所以 虽然…但是'.split(' '));
+const ZH_GRAM=new Set('了 着 过 的 地 得 吗 呢 吧 啊 呀 嘛 啦 哦 哇 就 才 还 都 也 又 再 已经 正在 正 在 刚 刚才 曾经 一直 总是 常常 往往 经常 竟然 居然 果然 到底 究竟 终于 毕竟 难道 简直 几乎 差点儿 差点 千万 根本 并 却 倒 偏偏 恐怕 大概 也许 似乎 好像 稍微 比较 更 最 太 挺 非常 十分 特别 越来越 把 被 让 叫 给 比 跟 和 对 向 往 从 离 为了 为 关于 对于 按照 根据 通过 除了 连 将 所 之 其 便 曾 正好 恰好 一定 必须 应该 可以 能 会 要 敢 肯 不 没 没有 别 很 只 光 仅 尤其 几 每 各 某 这 那 哪 什么 怎么 怎样 为什么 多少 谁 自己 一下 一些 一点儿 有点儿 有些 个 们 呗 嘞 么 啥 咋 甭 不用 好不容易 本来 原来 其实 当然 果真 难怪 怪不得 反正 随便 赶紧 赶快 马上 立刻 顿时 渐渐 逐渐 仍然 依然 还是 万一 幸亏 好在 只好 不得不 何必 未必 不必'.split(' '));
+const TIMEPLACE=/\b(yesterday|today|tomorrow|morning|afternoon|evening|night|noon|midnight|year|years|month|week|weekend|days?|hours?|minutes?|o'clock|period|recently|lately|future|past|nowadays|moment|soon|later|ago|season|street|road|lane|alley|hutong|city|town|village|countryside|place|area|region|side|north|south|east|west|inside|outside|above|below|front|behind|left|right|nearby|province|district|location|corner|downtown|suburbs?|abroad)\b/i;
+const ADJW=/^(very |rather |quite )|^[a-z-]+(ful|ous|ive|able|ible|ical|ic|ish|less|ent|ant|ary|al|ed|ing)$|^(happy|busy|tired|angry|pretty|lazy|easy|heavy|dirty|healthy|lucky|early|noisy|funny|ugly|empty|dry|crazy|dizzy|friendly|lonely|lively|sorry|ready|tidy|messy|silly|guilty|wealthy|worthy|salty|spicy|tasty|oily|greasy|rainy|sunny|cloudy|windy|snowy|stingy|thrifty|clumsy|steady|hungry|thirsty|fussy|cosy|cozy|good|bad|big|small|new|old|long|short|high|low|hot|cold|warm|cool|fast|slow|clean|quiet|loud|hard|soft|cheap|dear|rich|poor|young|strong|weak|thin|fat|tall|wide|narrow|deep|shallow|near|far|bright|dark|full|free|safe|true|false|right|wrong|real|clear|simple|strange|famous|popular|common|normal|special|serious|polite|rude|honest|kind|smart|clever|stupid|brave|proud|calm|nervous|strict|gentle|rare|fresh|sweet|sour|bitter|delicious|beautiful|ordinary|convenient|comfortable|terrible|wonderful|excellent|correct|similar|different|same|whole|enough|important|necessary|possible|impossible|complicated|exhausted|embarrassed|disappointed|satisfied|surprised|worried|excited|bored|interested|anxious|careful|lively|modest|frank|rough|smooth|thick|plain|fine|nice|great|awful|lonely|naughty|mature|stable|equal|fair|tough|busy)$/i;
+function fnZh(w){const k=w.tgt||w.k,en=String(w.en||''),fs=first(en),py=String(w.py||''),n=[...k].length;
+  if(/^[A-ZĀÁǍÀĒÉĚÈŌÓǑÒ]/.test(py)||/\b(surname|place name|personal name|given name)\b/i.test(fs))return 'name';
+  if(ZH_CONN.has(k))return 'conn';
+  if(/^(classifier|measure word|CL)\b|classifier for/i.test(fs))return 'mw';
+  if(ZH_GRAM.has(k)||/particle|^\(adverb\)|auxiliary|preposition|interjection/i.test(fs))return 'gram';
+  if(/\(idiom\)/i.test(en)||n>=4)return 'phrase';
+  if(/^to\s/i.test(fs))return 'verb';
+  if(/^(a|an|the)\s/i.test(fs))return TIMEPLACE.test(fs)?'tp':'noun';
+  if(TIMEPLACE.test(fs)&&fs.split(' ').length<=3)return 'tp';
+  if(ADJW.test(fs))return 'adj';
+  return 'noun'}
+const DE_CONN=new Set('weil obwohl obgleich deshalb darum deswegen daher trotzdem dennoch sodass damit indem während falls sofern sondern jedoch allerdings außerdem zudem folglich somit stattdessen nachdem bevor ehe seitdem sobald solange als wenn ob dass denn aber oder und sowohl weder entweder zwar je desto umso inzwischen schließlich anschließend einerseits andererseits dabei dagegen hingegen ebenfalls also nämlich beziehungsweise bzw sprich zumal wohingegen insofern insbesondere vielmehr ferner demnach demzufolge infolgedessen ansonsten sonst danach zuerst zunächst erstens zweitens drittens letztlich übrigens immerhin wobei weshalb wodurch womit worauf'.split(' '));
+const DE_FUNC=new Set('ab an auf aus bei bis durch für gegen hinter in mit nach neben ohne seit über um unter von vor wegen zu zwischen trotz statt anstatt innerhalb außerhalb laut gemäß dank mittels bezüglich hinsichtlich angesichts aufgrund ja doch eben halt mal wohl schon eigentlich etwa sogar nur erst noch auch bloß ganz gar überhaupt der die das ein eine kein man es sich wer was wie wo wann warum welche welcher dieser jener jeder alle einige manche viele wenige derselbe selbst einander beide irgendwie irgendwo eher kaum fast sehr ziemlich recht besonders genau gerade bereits immer nie niemals oft manchmal selten jetzt dann hier dort da'.split(' '));
+const DPRE=['zurück','zusammen','weiter','wieder','heraus','herein','hinaus','voraus','vorbei','entgegen','über','unter','durch','gegen','nach','mit','vor','auf','aus','ein','fest','los','weg','her','hin','ab','an','bei','be','ge','er','ent','emp','ver','zer','miss','um','zu'];
+const SEPRE=/^(zurück|zusammen|weiter|wieder|heraus|herein|hinaus|voraus|vorbei|entgegen|nach|mit|vor|auf|aus|ein|fest|los|weg|her|hin|ab|an|bei|zu|teil|statt|stand)/;
+function fnDe(w){const h=String(w.tgt||''),k=String(w.k||''),lk=k.toLowerCase(),en=first(w.en);
+  const m=h.match(/^(der|die|das)\b/);if(m)return 'n_'+m[1];
+  if(DE_CONN.has(lk))return 'conn';
+  if(DE_FUNC.has(lk))return 'func';
+  const verb=/^to\s/i.test(en)||(/^[a-zäöü]/.test(k)&&/(en|ern|eln)$/.test(k)&&/\(/.test(h));
+  if(verb){if(/\bsich\b/.test(h))return 'refl';
+    if(/\(\+\s*(Akk|Dat|Gen)|\((an|auf|über|für|mit|von|zu|nach|um|bei|aus|vor|in|gegen)\)|^(an|auf|über|für|mit|von|zu|nach|um|bei|aus|vor|in) (etw|jdn|jdm)\./.test(h))return 'vprep';
+    if(SEPRE.test(lk)&&new RegExp('\\b('+SEPRE.source.slice(2,-1)+')\\)').test(h))return 'sep';
+    if(SEPRE.test(lk)&&/^(ab|an|auf|aus|ein|mit|nach|vor|zu|zurück|weg|fest|los|her|hin|teil|zusammen|weiter|vorbei)[a-zäöüß]{3,}(en|ern|eln)$/.test(lk)&&!/^(an|auf|aus|ein|ab)(t|d)?(en)$/.test(lk))return 'sep';
+    return 'verb'}
+  if(/\s/.test(h.replace(/\s*\(.*$/,'').replace(/^(etw|jdn|jdm)\.\s*/,'').trim()))return 'phrase';
+  if(/^[A-ZÄÖÜ]/.test(k))return 'name';
+  return 'adj'}
+const TOPIC_RE=[
+ ['people',/\b(family|mother|father|mum|mom|dad|parents?|child(ren)?|kids?|sons?|daughters?|husband|wife|brother|sister|grand\w*|relatives?|friends?|colleagues?|neighbou?rs?|couples?|marri\w*|wedding|baby|babies|people|person|guests?|strangers?|classmates?|DINK|elderly|generation|relationship|partner|boyfriend|girlfriend|old man|old lady|aunt|uncle|cousin)\b/i],
+ ['food',/\b(eat\w*|food|dish(es)?|meals?|rice|noodles?|tea|coffee|drink\w*|cook\w*|restaurants?|menu|tastes?|delicious|vegetables?|fruits?|meat|pork|beef|chicken|fish|soup|dumplings?|breakfast|lunch|dinner|supper|bread|sugar|salt|wine|beer|spicy|sweet|sour|bitter|chopsticks|bowls?|banquet|appetite|snacks?|flavou?r|recipe|bake|fry|steam\w*|eggs?|milk|kitchen)\b/i],
+ ['home',/\b(home|houses?|housing|rooms?|apartments?|rent\w*|furniture|beds?|doors?|windows?|bathroom|landlord|buildings?|floor|courtyard|dormitor\w*|dorm|move house|decorat\w*|household|residen\w*|property)\b/i],
+ ['travel',/\b(travel\w*|trips?|tours?|tourist|tickets?|trains?|bus(es)?|cars?|taxi|subway|metro|planes?|flights?|airport|station|roads?|streets?|directions?|maps?|driv\w*|bicycle|bike|hotels?|passport|luggage|scenery|beach|visit\w*|lost|turn( left| right)?|cross\w*|traffic|journey|holiday|vacation|sightseeing|route|way to)\b/i],
+ ['work',/\b(work\w*|jobs?|office|company|companies|boss|employ\w*|salary|wages?|career|business|manager|meetings?|colleagues?|tasks?|profession\w*|interviews?|hire|resign\w*|unemploy\w*|staff|clients?|customers?|project|occupation|industry|factory|promotion|overtime|retire\w*)\b/i],
+ ['money',/\b(money|pay\w*|price|cost\w*|spend\w*|sav(e|ing)|buy\w*|sell\w*|cheap|expensive|bank|cash|yuan|dollars?|economy|economic|market|shop\w*|stores?|consum\w*|brands?|gifts?|thrift\w*|stingy|discount|bargain|budget|loan|debt|income|afford|wealth\w*|rich|poor|luxury|designer)\b/i],
+ ['study',/\b(stud\w*|school|students?|teachers?|class(es)?|lessons?|exams?|tests?|learn\w*|universit\w*|college|educat\w*|homework|grades?|degrees?|knowledge|books?|read\w*|writ\w*|languages?|dialects?|accents?|pronunc\w*|words?|characters?|grammar|Mandarin|Putonghua|vocabulary|textbook|course)\b/i],
+ ['health',/\b(health\w*|ill(ness)?|sick\w*|diseases?|doctors?|hospital|medicine|medical|pain|hurt|body|head\w*|stomach|fever|cough|sleep\w*|exercis\w*|sports?|fitness|diet|stress|injur\w*|heart|blood|tooth|teeth|eyes?|clinic|symptom|treatment|cure|recover\w*|lifestyle|traditional Chinese medicine|TCM|balance)\b/i],
+ ['feel',/\b(feel\w*|happy|glad|sad|angry|afraid|fear|worr\w*|anxious|nervous|surpris\w*|embarrass\w*|proud|lonely|love|hate|mood|emotion\w*|personality|polite|rude|honest|patient|shy|calm|excited|disappoint\w*|satisf\w*|regret|annoy\w*|bored|attitude|temper|pleased|upset|jealous|grateful|ashamed|confident|frank|stubborn|generous|modest|cheerful)\b/i],
+ ['time',/\b(time|day|week|month|year|hours?|minutes?|morning|evening|night|today|tomorrow|yesterday|early|late|soon|recent\w*|future|past|moment|always|often|seldom|never|festival|holiday|new year|spring festival|weekend|birthday|age|century|calendar|schedule|lunar)\b/i],
+ ['nature',/\b(weather|rain\w*|snow\w*|wind\w*|sun\w*|clouds?|climate|seasons?|nature|trees?|flowers?|mountains?|rivers?|lakes?|sea|ocean|animals?|dogs?|cats?|birds?|environment\w*|pollut\w*|air|earth|forest|grass|landscape|scenery|hill|island|plants?)\b/i],
+ ['comm',/\b(phones?|call\w*|telephone|message|internet|online|computers?|e-?mail|chat\w*|talk\w*|speak\w*|tell|news|media|TV|television|radio|newspapers?|network|apps?|video|technolog\w*|mobile|engaged|busy signal|dial\w*|wrong number|smartphone|website|digital|social media)\b/i],
+ ['society',/\b(society|social|tradition\w*|cultur\w*|customs?|government|law|polic(y|ies)|cities|city|urban\w*|rural|countryside|nation\w*|world|China|Chinese|foreign\w*|population|public|rules?|rights?|equal\w*|community|politic\w*|migra\w*|etiquette|values?)\b/i]];
+if(!ZH)TOPIC_RE.push(['science',/\b(science|scientific|research\w*|study|experiment\w*|brain|data|theory|technolog\w*|invent\w*|universit\w*|laborator\w*|analys\w*|sensor\w*|computer\w*|engineer\w*|patent)\b/i]);
+function topicOf(w){const en=String(w.en||'').split(/\s*;\s*/).slice(0,3).join('; ');if(!en)return 'other';let best='other',bs=0;
+  for(const [id,re] of TOPIC_RE){const m=en.match(new RegExp(re.source,'gi'));const s=m?m.length:0;if(s>bs){bs=s;best=id}}return best}
+const toneless=py=>String(py||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z]/g,'');
+function stemDe(k){let s=String(k||'').toLowerCase().replace(/^(der|die|das|sich)\s+/,'');
+  for(let i=0;i<3;i++){const p=DPRE.find(p=>s.startsWith(p)&&s.length-p.length>=4);if(!p)break;s=s.slice(p.length)}return s}
+const ZH_SKIPFAM=new Set('的 了 个 么 们 子 儿 着 过 吗 呢 吧 一 不 是 有 在'.split(' '));
+/* AUTO: computed once per set of words; AUTO=null after any change */
+let AUTO=null,AUTO_SIG='';
+function auto(){const ks=Object.keys(W),sig=ks.length+'|'+ks.slice(0,5).join(',')+'|'+ks.slice(-5).join(',');
+  if(AUTO&&AUTO_SIG===sig)return AUTO;AUTO_SIG=sig;const A={},fams={},conf={};
+  for(const k of ks){const w=W[k],a={lesson:[],scene:[],fn:ZH?fnZh(w):fnDe(w),topic:topicOf(w),fam:[],conf:[]};
+    const seen=new Set();
+    for(const c of (w.ctx||[])){const s=SCN[c.src]&&SCN[c.src][c.pid];const sk=c.src+':'+c.pid;if(seen.has(sk))continue;seen.add(sk);
+      a.scene.push(sk);const lv=s?s[0]:(c.src+' · ?');if(a.lesson.indexOf(lv)<0)a.lesson.push(lv)}
+    if(!a.scene.length&&w.src){a.lesson.push(w.src+' · ?')}
+    A[k]=a}
+  if(ZH){const cnt={};for(const k of ks)for(const ch of new Set([...(W[k].tgt||k)]))if(/[㐀-鿿]/.test(ch)&&!ZH_SKIPFAM.has(ch))(cnt[ch]=cnt[ch]||[]).push(k);
+    for(const ch in cnt)if(cnt[ch].length>=2){fams[ch]=cnt[ch].length;cnt[ch].forEach(k=>A[k].fam.push(ch))}
+    const snd={};for(const k of ks){const t=toneless(W[k].py);if(t)(snd[t]=snd[t]||[]).push(k)}
+    for(const t in snd){const g=snd[t];if(g.length>=2&&new Set(g.map(k=>W[k].tgt)).size>=2){conf['≈ '+t]=g.length;g.forEach(k=>A[k].conf.push('≈ '+t))}}}
+  else{const base={};for(const k of ks){const b=stemDe(W[k].k||k);base[k]=b}
+    const keys={};for(const k of ks){const b=base[k];if(b.length>=4)keys[b.slice(0,5)]=1}
+    for(const key in keys){const mem=ks.filter(k=>base[k].startsWith(key)||(key.length>=4&&base[k].length>key.length+2&&base[k].includes(key)));
+      if(mem.length>=2){const lab=mem.map(k=>W[k].k||k).sort((a,b)=>a.length-b.length)[0];if(fams[lab])continue;fams[lab]=mem.length;mem.forEach(k=>{if(A[k].fam.indexOf(lab)<0)A[k].fam.push(lab)})}}
+    /* verbs with the same root and different prefixes: bestehen · verstehen · entstehen */
+    const vr={};for(const k of ks){const f=A[k].fn;if(!/^(verb|sep|refl|vprep)$/.test(f))continue;const lk=String(W[k].k||k).toLowerCase(),r=stemDe(lk);if(r!==lk&&r.length>=4)(vr[r]=vr[r]||[]).push(k)}
+    for(const r in vr){const g=vr[r];const all=ks.filter(k=>String(W[k].k||k).toLowerCase()===r&&/^(verb|sep|refl|vprep)$/.test(A[k].fn)).concat(g);
+      if(new Set(all).size>=2){const lab='≈ -'+r;conf[lab]=new Set(all).size;new Set(all).forEach(k=>A[k].conf.push(lab))}}}
+  /* families: largest first, so a word's first family is its biggest */
+  for(const k of ks)A[k].fam.sort((a,b)=>(fams[b]||0)-(fams[a]||0));
+  AUTO={A,fams,conf};return AUTO}
+
+/* ---------- values of a word in each category (auto + your own) ---------- */
+function vals(k,cat){const a=(auto().A[k])||{},t=tg(k);
+  switch(cat){
+    case 'lesson':return a.lesson||[];
+    case 'scene':return a.scene||[];
+    case 'fn':return [t.fn||a.fn||(ZH?'noun':'adj')];
+    case 'topic':return [t.tp||a.topic||'other'];
+    case 'fam':return a.fam||[];
+    case 'prob':return [t.p||'mean'];
+    case 'stage':return [t.s||'new'];
+    case 'conf':return (t.cf?String(t.cf).split(',').map(x=>x.trim()).filter(Boolean):[]).concat(a.conf||[]);
+    case 'own':return t.o?String(t.o).split(',').map(x=>x.trim()).filter(Boolean):[]}
+  return []}
+function lab(cat,v){if(v==null||v==='')return L.none;
+  if(cat==='scene'){const [src,pid]=v.split(':');const s=SCN[src]&&SCN[src][pid];return s?s[1]:v}
+  if(cat==='fn')return L.fn[v]||v;if(cat==='topic')return L.topic[v]||v;if(cat==='prob')return L.prob[v]||v;if(cat==='stage')return L.stage[v]||v;
+  return v}
+function ordOf(cat,v){
+  if(cat==='scene'){const [src,pid]=v.split(':');const s=SCN[src]&&SCN[src][pid];return s?s[2]:1e6}
+  if(cat==='lesson'){let m=1e6;for(const src in SCN)for(const pid in SCN[src]){const s=SCN[src][pid];if(s[0]===v&&s[2]<m)m=s[2]}return m}
+  const O={fn:Object.keys(L.fn),topic:Object.keys(L.topic),prob:['ear','mean'],stage:['new','text','ear','use']}[cat];
+  return O?(O.indexOf(v)<0?99:O.indexOf(v)):null}
+/* ---------- filter ---------- */
+function active(){return Object.keys(F.f).length>0||!!(F.q&&F.q.trim())}
+function pass(k){for(const c in F.f){if(vals(k,c).indexOf(F.f[c])<0)return false}
+  const q=(F.q||'').trim().toLowerCase();if(q){const w=W[k]||{};const hay=[w.tgt,w.k,w.py,toneless(w.py),w.en,w.form].join(' ').toLowerCase();if(hay.indexOf(q)<0)return false}
+  return true}
+function summary(){const p=Object.keys(F.f).map(c=>L.cats[c]+': '+lab(c,F.f[c]));if(F.q&&F.q.trim())p.push('“'+F.q.trim()+'”');return p.join(' · ')}
+/* groups of keys for the list */
+function groups(keys,cat){const G=new Map(),none=[];
+  for(const k of keys){const v=vals(k,cat);if(!v.length){none.push(k);continue}for(const x of v){if(!G.has(x))G.set(x,[]);G.get(x).push(k)}}
+  let arr=[...G.entries()].map(([v,ks])=>({v,ks}));
+  if(cat==='fam'||cat==='conf'||cat==='own')arr.sort((a,b)=>b.ks.length-a.ks.length||String(a.v).localeCompare(String(b.v)));
+  else arr.sort((a,b)=>(ordOf(cat,a.v)-ordOf(cat,b.v))||String(a.v).localeCompare(String(b.v),undefined,{numeric:true}));
+  if(none.length)arr.push({v:'',ks:none});return arr}
+
+/* ---------- styles ---------- */
+const css=`.tgp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:14px 0 12px;display:grid;gap:9px}
+.tgp-h{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tgc{display:flex;flex-wrap:wrap;gap:6px}
+.tgc button,.tgb{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 11px;min-height:34px;cursor:pointer;font:inherit;font-size:13px}
+.tgc button[aria-pressed="true"],.tgb[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#fff}
+.tgq{width:100%;box-sizing:border-box;min-height:38px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 12px;font:inherit;font-size:14px}
+.tgact{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tgf{display:inline-flex;align-items:center;gap:6px;background:var(--jade-soft);color:var(--ink);border:1px solid var(--jade);border-radius:999px;padding:3px 4px 3px 11px;font-size:13px}
+.tgf button{border:0;background:transparent;color:var(--jade);font-size:15px;cursor:pointer;min-height:28px;min-width:28px;border-radius:999px}
+.tglearn{border:0;background:var(--jade);color:#fff;border-radius:999px;padding:7px 14px;min-height:38px;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.tgh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.tgh b{font-size:15px;flex:1 1 auto;min-width:0}.tgh .zh{font-family:var(--f-han)}
+.tgh span{font-size:12px;color:var(--muted)}
+.tgh button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;min-height:30px;cursor:pointer;font:inherit;font-size:12.5px}
+.tgh button.go{border-color:var(--jade);color:var(--jade);font-weight:700}
+.tgl{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tgl i{font-style:normal;font-size:11px;line-height:1.2;padding:2px 7px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tgl i.e{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.tgl i.s{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+.tgl i.f{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.tge{background:var(--surface);border:1px solid var(--jade);border-radius:12px;padding:10px 12px;margin:-4px 0 6px;display:grid;gap:8px}
+.tgr{display:grid;grid-template-columns:118px 1fr;gap:8px;align-items:center}
+.tgr>span{font-size:12.5px;color:var(--muted)}
+.tgr select,.tgr input{min-height:34px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:13.5px;width:100%;box-sizing:border-box}
+.tgauto{font-size:12px;color:var(--muted);line-height:1.5}
+.tgnote{font-size:12px;color:var(--muted);line-height:1.45}
+.tgban{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;background:var(--jade-soft);border:1px solid var(--jade);border-radius:10px;padding:6px 10px;margin:0 0 10px}
+.tgban b{flex:1 1 auto}.tgban button{border:1px solid var(--jade);background:var(--surface);color:var(--jade);border-radius:999px;min-height:30px;padding:2px 10px;cursor:pointer;font:inherit;font-size:12.5px}
+.tgcard{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px dashed var(--line);padding-top:10px}
+.tgcard small{font-size:12px;color:var(--muted);margin-right:2px}
+.tgx{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0;display:grid;gap:8px}
+.tgx label{display:flex;gap:8px;align-items:center;font-size:13.5px}
+.tgx select{min-height:36px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px}
+@media (max-width:520px){.tgr{grid-template-columns:1fr}.tgr>span{margin-bottom:-4px}}`;
+(()=>{const s=document.createElement('style');s.id='tg-css';s.textContent=css;document.head.appendChild(s)})();
+
+/* ---------- pieces of HTML ---------- */
+const OPEN=new Set();
+function chips(k){const a=(auto().A[k])||{},t=tg(k),out=[];
+  const fn=vals(k,'fn')[0],tp=vals(k,'topic')[0];
+  out.push('<i class="f">'+esc(lab('fn',fn))+'</i>');
+  if(tp!=='other')out.push('<i>'+esc(lab('topic',tp))+'</i>');
+  if((t.p||'mean')==='ear')out.push('<i class="e">'+esc(L.prob.ear)+'</i>');
+  if(t.s&&t.s!=='new')out.push('<i class="s">'+esc(L.stage[t.s])+'</i>');
+  vals(k,'conf').slice(0,2).forEach(c=>out.push('<i>'+esc(c)+'</i>'));
+  vals(k,'own').slice(0,3).forEach(c=>out.push('<i>#'+esc(c)+'</i>'));
+  return '<div class="tgl">'+out.join('')+'</div>'}
+function sel(field,cur,autoV,map){return '<select data-tgs="'+field+'"><option value="">'+esc(L.auto)+': '+esc(map[autoV]||autoV)+'</option>'+
+  Object.keys(map).map(v=>'<option value="'+v+'"'+(cur===v?' selected':'')+'>'+esc(map[v])+'</option>').join('')+'</select>'}
+function editor(k){const a=(auto().A[k])||{},t=tg(k);
+  const confList=[...new Set(Object.values(TG).map(x=>x.cf).filter(Boolean).flatMap(x=>String(x).split(',').map(s=>s.trim())).filter(Boolean))];
+  let h='<div class="tge" data-tgk="'+esc(k)+'">';
+  h+='<div class="tgr"><span>'+L.edProb+'</span><div class="tgc">'+['mean','ear'].map(v=>'<button type="button" data-tgset="p" data-v="'+v+'" aria-pressed="'+((t.p||'mean')===v)+'">'+esc(L.prob[v])+'</button>').join('')+'</div></div>';
+  h+='<div class="tgr"><span>'+L.edStage+'</span><div class="tgc">'+Object.keys(L.stage).map(v=>'<button type="button" data-tgset="s" data-v="'+v+'" aria-pressed="'+((t.s||'new')===v)+'">'+esc(L.stage[v])+'</button>').join('')+'</div></div>';
+  h+='<div class="tgr"><span>'+L.edFn+'</span>'+sel('fn',t.fn,a.fn,L.fn)+'</div>';
+  h+='<div class="tgr"><span>'+L.edTopic+'</span>'+sel('tp',t.tp,a.topic,L.topic)+'</div>';
+  h+='<div class="tgr"><span>'+L.edConf+'</span><input data-tgi="cf" list="tg-cfl" value="'+esc(t.cf||'')+'" placeholder="'+esc(L.confPh)+'"><datalist id="tg-cfl">'+confList.map(c=>'<option value="'+esc(c)+'">').join('')+'</datalist></div>';
+  h+='<div class="tgr"><span>'+L.edOwn+'</span><input data-tgi="o" value="'+esc(t.o||'')+'" placeholder="'+esc(L.ownPh)+'"></div>';
+  const info=[];if(a.lesson&&a.lesson.length)info.push(L.cats.lesson+': '+a.lesson.map(esc).join(' · '));
+  if(a.scene&&a.scene.length)info.push(L.cats.scene+': '+a.scene.map(v=>esc(lab('scene',v))).join(' · '));
+  if(a.fam&&a.fam.length)info.push(L.cats.fam+': '+a.fam.map(esc).join(' · '));
+  if(a.conf&&a.conf.length)info.push(L.cats.conf+': '+a.conf.map(esc).join(' · '));
+  h+='<div class="tgauto"><b>'+L.autoInfo+':</b><br>'+info.join('<br>')+'</div>';
+  h+='<div><button type="button" class="tgb" data-tgedit="'+esc(k)+'">'+L.close+'</button></div></div>';return h}
+/* one list row: the page's own row, then the tag chips and the 🏷 button inside it */
+function wrapRow(k,html){const i=html.indexOf('</small></div>');
+  if(i>=0)html=html.slice(0,i+8)+chips(k)+html.slice(i+8);
+  const j=html.lastIndexOf('<button');
+  html=html.slice(0,j)+'<button data-tgedit="'+esc(k)+'" aria-expanded="'+OPEN.has(k)+'">🏷</button>'+html.slice(j);
+  return html+(OPEN.has(k)?editor(k):'')}
+function panel(keysAll){const n=keysAll.filter(pass).length;
+  let h='<div class="tgp"><div class="tgp-h">'+L.grp+'</div><div class="tgc">'+CAT_IDS.map(c=>'<button type="button" data-tgg="'+c+'" aria-pressed="'+(F.g===c)+'">'+esc(L.cats[c])+'</button>').join('')+
+    '<button type="button" data-tgg="none" aria-pressed="'+(F.g==='none')+'">'+esc(L.noGrp)+'</button></div>';
+  h+='<input class="tgq" type="search" data-tgq value="'+esc(F.q||'')+'" placeholder="'+esc(L.search)+'" aria-label="'+esc(L.search)+'">';
+  if(active()){h+='<div class="tgact"><span class="tgp-h">'+L.filt+'</span>'+Object.keys(F.f).map(c=>'<span class="tgf">'+esc(L.cats[c])+': <b>'+esc(lab(c,F.f[c]))+'</b><button type="button" data-tgrm="'+c+'" aria-label="remove">✕</button></span>').join('')+
+    (F.q&&F.q.trim()?'<span class="tgf">“'+esc(F.q.trim())+'”<button type="button" data-tgrm="#q" aria-label="remove">✕</button></span>':'')+
+    '<button type="button" class="tgb" data-tgclr>'+L.clear+'</button></div><div><button type="button" class="tglearn" data-tglf>▶ '+esc(L.learnF(n))+'</button></div>'}
+  h+='<details class="tgnote"><summary>'+(ZH?'How tags work':'So funktionieren die Tags')+'</summary>'+L.note+'</details></div>';return h}
+function body(act,rowFn){if(F.g==='none'||!CAT_IDS.includes(F.g))return '<div class="list">'+act.map(rowFn).join('')+'</div>';
+  return groups(act,F.g).map(g=>{const v=g.v,l=lab(F.g,v),zh=ZH&&(F.g==='fam');
+    const btns=v===''?'':'<button type="button" data-tgonly="'+esc(F.g)+'" data-v="'+esc(v)+'">'+L.only+'</button><button type="button" class="go" data-tglg="'+esc(F.g)+'" data-v="'+esc(v)+'">▶ '+L.learnG+' ('+g.ks.length+')</button>';
+    return '<div class="tgh"><b'+(zh?' class="zh"':'')+'>'+esc(v===''?L.none:l)+'</b><span>'+L.cnt(g.ks.length)+'</span>'+btns+'</div><div class="list">'+g.ks.map(rowFn).join('')+'</div>'}).join('')}
+function banner(){if(!active())return '';return '<div class="tgban"><span>'+L.fsum+':</span><b>'+esc(summary())+'</b><button type="button" data-tgclr>✕ '+L.clear+'</button></div>'}
+function cardRow(k){const t=tg(k);
+  return '<div class="tgcard" data-tgk="'+esc(k)+'"><button type="button" class="tgb" data-tgset="p" data-v="'+((t.p||'mean')==='ear'?'mean':'ear')+'" aria-pressed="'+((t.p||'mean')==='ear')+'">'+esc(L.cardEar)+'</button>'+
+    '<small>'+L.cardStage+':</small>'+Object.keys(L.stage).map(v=>'<button type="button" class="tgb" data-tgset="s" data-v="'+v+'" aria-pressed="'+((t.s||'new')===v)+'">'+esc(L.stage[v])+'</button>').join('')+'</div>'}
+function exportHTML(){const sub=F.xs||'lesson';
+  return '<div class="tgx"><div class="tgp-h">'+L.expT+'</div><label>'+L.expSub+' <select data-tgxs>'+CAT_IDS.map(c=>'<option value="'+c+'"'+(sub===c?' selected':'')+'>'+esc(L.cats[c])+'</option>').join('')+'</select></label>'+
+    '<label><input type="checkbox" data-tgxo'+(F.xo?' checked':'')+'> '+L.expOnly+'</label>'+
+    '<div><button type="button" class="anki-btn" data-tgexp>⬇ '+L.expBtn+'</button></div><div class="anki-note">'+L.expNote+'</div></div>'}
+/* when you get a word's tones right by ear, it moves up to "catch it by ear" (never down) */
+function bump(k,to){const order=['new','text','ear','use'],cur=tg(k).s||'new';if(order.indexOf(to)>order.indexOf(cur))setTG(k,'s',to)}
+
+/* ---------- Anki export with subdecks + hierarchical tags ---------- */
+function q(v){v=String(v==null?'':v).replace(/\r?\n/g,'<br>');return /[",\r\n]/.test(v)||/^\s|\s$/.test(v)||v.charAt(0)==='#'?'"'+v.replace(/"/g,'""')+'"':v}
+const slug=s=>String(s||'').replace(/\s*·\s*/g,'_').replace(/::/g,'_').replace(/[\s,"]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+const deckPart=s=>String(s||'').replace(/::/g,':').replace(/"/g,'').trim()||L.none;
+function exportCats(){refresh();AUTO=null;const H=ANKI.h,sub=F.xs||'lesson';
+  let ks=Object.keys(W).sort((a,b)=>W[b].t-W[a].t);if(F.xo)ks=ks.filter(pass);
+  const lines=['#separator:Comma','#html:true','#columns:Front,Back,Tags,Deck','#tags column:3','#deck column:4'];
+  for(const k of ks){const w=W[k],s=st(k),cs=(w.ctx||[]).slice(0,2);
+    let back=(w.py?H(w.py)+'<br>':'')+(w.form?'<i>'+H(w.form)+'</i><br>':'')+H(w.en||'');
+    cs.forEach(c=>{const t=ZH?(c.h||''):(c.t||'');back+='<br><br>'+ANKI.mark(t,ZH?w.k:(c.w||w.form||''))+(c.p?'<br><i>'+H(c.p)+'</i>':'')+(c.en?'<br>'+H(c.en):'')});
+    const tags=['zanimavkavka',ZH?'zh_wordcards':'de_wortkarten'].concat(s.a?['learned']:s.b?['level_'+s.b]:['new']);
+    for(const c of CAT_IDS){for(const v of vals(k,c)){const l=lab(c,v).replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]\uFE0F?/gu,'').trim();tags.push(L.tagRoot+'::'+TAGSLUG[c]+'::'+slug(l))}}
+    const dv=vals(k,sub)[0];const deck=L.deckRoot+'::'+deckPart(dv==null?'':lab(sub,dv));
+    lines.push([H(w.tgt),back,tags.map(t=>String(t).trim().replace(/\s+/g,'_').replace(/[",]/g,'')).filter(Boolean).join(' '),deck].map(q).join(','))}
+  ANKI.save(ZH?'anki-zh-word-cards-categories':'anki-de-meine-woerter-kategorien',lines.join('\n')+'\n')}
+
+/* ---------- events (one listener for everything above, so the page's own handlers stay as they are) ---------- */
+let onChange=()=>{};
+document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;let b;
+  if(b=t.closest('[data-tgedit]')){e.stopPropagation();const k=b.dataset.tgedit;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);onChange('list');return}
+  if(b=t.closest('[data-tgset]')){e.stopPropagation();const box=b.closest('[data-tgk]');if(!box)return;const k=box.dataset.tgk,f=b.dataset.tgset,v=b.dataset.v;
+    if(box.classList.contains('tgcard')){setTG(k,f,(f==='p'&&v==='mean')||(f==='s'&&v==='new')?'':v);box.outerHTML=cardRow(k);return}
+    setTG(k,f,(f==='p'&&v==='mean')||(f==='s'&&v==='new')?'':v);onChange('list');return}
+  if(b=t.closest('[data-tgg]')){e.stopPropagation();F.g=b.dataset.tgg;saveF();onChange('list');return}
+  if(b=t.closest('[data-tgonly]')){e.stopPropagation();F.f[b.dataset.tgonly]=b.dataset.v;saveF();onChange('list');return}
+  if(b=t.closest('[data-tglg]')){e.stopPropagation();F.f[b.dataset.tglg]=b.dataset.v;saveF();onChange('learn');return}
+  if(b=t.closest('[data-tgrm]')){e.stopPropagation();const c=b.dataset.tgrm;if(c==='#q')F.q='';else delete F.f[c];saveF();onChange(VIEW==='learn'?'learn-due':'list');return}
+  if(b=t.closest('[data-tgclr]')){e.stopPropagation();F.f={};F.q='';saveF();onChange(VIEW==='learn'?'learn-due':'list');return}
+  if(b=t.closest('[data-tglf]')){e.stopPropagation();onChange('learn');return}
+  if(b=t.closest('[data-tgexp]')){e.stopPropagation();exportCats();return}
+},true);
+document.addEventListener('change',e=>{const t=e.target;if(!t.closest)return;
+  if(t.matches('[data-tgs]')){const k=t.closest('[data-tgk]').dataset.tgk;setTG(k,t.dataset.tgs,t.value);onChange('list');return}
+  if(t.matches('[data-tgi]')){const k=t.closest('[data-tgk]').dataset.tgk;setTG(k,t.dataset.tgi,t.value.split(',').map(x=>x.trim()).filter(Boolean).join(', '));onChange('list');return}
+  if(t.matches('[data-tgxs]')){F.xs=t.value;saveF();return}
+  if(t.matches('[data-tgxo]')){F.xo=t.checked;saveF();return}},true);
+let qT=0;document.addEventListener('input',e=>{const t=e.target;if(!t.matches||!t.matches('[data-tgq]'))return;F.q=t.value;saveF();clearTimeout(qT);
+  qT=setTimeout(()=>{const pos=t.selectionStart;onChange('list');const n=document.querySelector('[data-tgq]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},250)},true);
+/* keep the page's keyboard shortcuts out of the tag boxes */
+document.addEventListener('keydown',e=>{const t=e.target;if(t&&t.closest&&t.closest('.tge,.tgp,.tgx')&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName))e.stopPropagation()},true);
+return {noMatch:ZH?'No cards match the filter.':'Keine Karte passt zum Filter.',pass,active,panel,body,wrapRow,banner,cardRow,exportHTML,bump,vals,lab,setOnChange:f=>{onChange=f},reset:()=>{AUTO=null}}
+})();
+
 /* ---------- learning session ---------- */
 let VIEW='learn',Q=[],qi=0,shown=false,hintOn=false,sess={ok:0,no:0},mode='due';
-function build(m){mode=m;refresh();let ks=Object.keys(W).filter(k=>!st(k).a);
+function build(m){mode=m;refresh();let ks=Object.keys(W).filter(k=>!st(k).a).filter(TAGS.pass);
   if(m==='due')ks=ks.filter(isDue);
   ks.sort(()=>Math.random()-.5);
   if(m==='due')ks.sort((a,b)=>(st(a).d||0)-(st(b).d||0));
@@ -281,7 +584,7 @@ function earCard(k,w,M){const chars=[...w.tgt];const sy=PYT.split(w.py||'',chars
   const sur=PYT.surface(sy,chars),clips=TD[w.tgt]||[],clip=clips.length?clips[Math.floor(Math.random()*clips.length)]:null,c0=w.ctx[0];
   if(!clip&&!(c0&&c0.s!=null))return false;
   const ans=new Array(sy.length).fill(0);let cur=0,done=false;
-  let h='<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
+  let h=TAGS.banner()+'<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
   h+='<div class="front ear"><div class="lab">🎧 Listen · mark the tones</div><button class="pl big-pl" data-a="epl" aria-label="play">'+PLAY+'</button>';
   if(!clip)h+='<div class="hint">'+ctxText(c0,w,'gap')+'</div><div class="tapnote">The word is the gap in this sentence.</div>';
   h+='<div class="eslots">'+sy.map((s,i)=>'<div class="eslot'+(i===0?' cur':'')+'" data-i="'+i+'"><span class="esy">'+esc(s[0].replace(/v/g,'ü'))+'</span><div class="erow">'+[1,2,3,4,5].map(t=>'<button class="etb et'+t+'" data-t="'+t+'" aria-label="tone '+t+'" aria-pressed="false">'+ticon(t)+'</button>').join('')+'</div><span class="ewas"></span></div>').join('')+'</div>';
@@ -292,7 +595,7 @@ function earCard(k,w,M){const chars=[...w.tgt];const sy=PYT.split(w.py||'',chars
   const check=()=>{done=true;let all=true;const pairs=[];
     M.querySelectorAll('.eslot').forEach((el,i)=>{const ok=ans[i]===sur[i]||ans[i]===sy[i][1];if(!ok)all=false;pairs.push([sur[i],ans[i]]);el.classList.add(ok?'ok':'bad');
       el.querySelector('.esy').textContent=PYT.mark(sy[i][0],sur[i]);el.querySelector('.ewas').textContent=ok?'✓':'you: '+PYT.NAME[ans[i]]});
-    PYT.note(pairs,'card');M.querySelector('.eres').innerHTML='<div class="'+(all?'eok':'ebad')+'">'+(all?'✓ Tones right':'Tones: '+esc(sy.map((s,i)=>PYT.mark(s[0],sur[i])).join(' ')))+'</div>';
+    PYT.note(pairs,'card');if(all)TAGS.bump(k,'ear');M.querySelector('.eres').innerHTML='<div class="'+(all?'eok':'ebad')+'">'+(all?'✓ Tones right':'Tones: '+esc(sy.map((s,i)=>PYT.mark(s[0],sur[i])).join(' ')))+'</div>';
     const f=M.querySelector('[data-a="flip"]');if(f)try{f.focus({preventScroll:true})}catch(e){}doPlay()};
   const set=(i,t)=>{if(done)return;ans[i]=t;cur=ans.findIndex(x=>!x);if(cur<0){cur=sy.length;check()}paint()};
   M.onclick=e=>{const tb=e.target.closest('.etb');if(tb){set(+tb.closest('.eslot').dataset.i,+tb.dataset.t);return}
@@ -305,16 +608,16 @@ function earCard(k,w,M){const chars=[...w.tgt];const sy=PYT.split(w.py||'',chars
 document.addEventListener('keydown',e=>{if(!EAR||e.ctrlKey||e.altKey||e.metaKey)return;if(EAR.key(e))e.preventDefault()});
 
 function learn(){const M=document.getElementById('main');
-  const all=Object.keys(W).filter(k=>!st(k).a);
+  const all=Object.keys(W).filter(k=>!st(k).a).filter(TAGS.pass);
   if(!Object.keys(W).length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
   if(qi>=Q.length){const nd=all.filter(isDue).length;
-    M.innerHTML='<div class="card"><div class="done"><div class="n">'+(sess.ok+sess.no?sess.ok+' / '+(sess.ok+sess.no):'✓')+'</div><div>'+(sess.ok+sess.no?T.sessDone:(all.length?T.nothingDue:T.allArch))+'</div>'+
+    M.innerHTML=TAGS.banner()+'<div class="card"><div class="done"><div class="n">'+(sess.ok+sess.no?sess.ok+' / '+(sess.ok+sess.no):'✓')+'</div><div>'+(sess.ok+sess.no?T.sessDone:(all.length?T.nothingDue:(TAGS.active()?TAGS.noMatch:T.allArch)))+'</div>'+
       (nd?'<button class="big" data-a="due">'+T.again+' ('+nd+')</button>':'')+(all.length?'<button class="big" data-a="all">'+T.all+' ('+all.length+')</button>':'')+'</div>'+(all.length?FCS.picker(FCS_T):'')+'</div>';
     FCS.bind(M);M.onclick=e=>{const b=e.target.closest('[data-a]');if(b){build(b.dataset.a);learn()}};return}
   const k=Q[qi],w=W[k];if(!w){qi++;return learn()}
   const c0=w.ctx[0];const needHint=!w.en;
   EAR=null;if(OPT.ear&&!shown&&CFG.lang==='zh'&&earCard(k,w,M))return;
-  let h='<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
+  let h=TAGS.banner()+'<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
   h+='<div class="front" data-a="flip"><div class="lab">'+T.enLab+'</div><div class="en">'+enHTML(w.en)+'</div>';
   if(c0&&(hintOn||needHint))h+='<div class="hint">'+ctxText(c0,w,'gap')+'</div>';
   if(!shown)h+='<div class="tapnote">'+T.tap+'</div>';
@@ -324,7 +627,7 @@ function learn(){const M=document.getElementById('main');
     if(w.py)h+='<div class="py">'+esc(w.py)+'</div>';
     if(w.form)h+='<div class="form">'+T.heard+': <i>'+esc(w.form)+'</i></div>';
     if(w.ctx.length)h+='<div class="ctx">'+w.ctx.slice(0,3).map((c,i)=>'<div class="cx">'+(c.s!=null?'<button class="pl" data-a="pl" data-i="'+i+'" aria-label="play">'+PLAY+'</button>':'')+'<div class="t">'+ctxText(c,w,'mark')+'</div></div>').join('')+'</div>';
-    h+='</div><div class="grade"><button class="no" data-a="no">'+T.no+'</button><button class="yes" data-a="yes">'+T.yes+'</button></div>'}
+    h+='</div>'+TAGS.cardRow(k)+'<div class="grade"><button class="no" data-a="no">'+T.no+'</button><button class="yes" data-a="yes">'+T.yes+'</button></div>'}
   h+='</div>';if(qi===0&&!shown&&!(sess.ok+sess.no))h+=FCS.picker(FCS_T);M.innerHTML=h;FCS.bind(M,()=>{build(mode);learn()});
   if(shown&&OPT.auto&&c0&&c0.s!=null){const b=M.querySelector('[data-a="pl"]');setTimeout(()=>play(c0,b),120)}
   M.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
@@ -341,13 +644,14 @@ function grade(k,ok){const s=st(k);s.n=(s.n||0)+1;
 function list(){refresh();const M=document.getElementById('main');const ks=Object.keys(W);
   if(!ks.length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
   ks.sort((a,b)=>W[b].t-W[a].t);
-  const act=ks.filter(k=>!st(k).a),arch=ks.filter(k=>st(k).a);
-  const row=k=>{const w=W[k],s=st(k),d=(s.d||0)-today();
+  const act=ks.filter(k=>!st(k).a&&TAGS.pass(k)),arch=ks.filter(k=>st(k).a&&TAGS.pass(k));
+  const row0=k=>{const w=W[k],s=st(k),d=(s.d||0)-today();
     const due=s.a?'':(d<=0?'<span class="due now">'+T.dueNow+FCS.dots(s)+'</span>':'<span class="due">'+T.inDays(d)+'</span>');
     return '<div class="li'+(s.a?' arch':'')+'"><div class="w">'+(CFG.lang==='zh'?'<span class="zhw">'+esc(w.tgt)+'</span> '+esc(w.py):'<b>'+esc(w.tgt)+'</b>')+'<small>'+esc((w.en||'—').split(/;/)[0])+'</small></div>'+due+
       '<button data-a="'+(s.a?'un':'arch')+'" data-k="'+esc(k)+'">'+(s.a?T.restore:T.known)+'</button></div>'};
+  const row=k=>TAGS.wrapRow(k,row0(k));
   let h='<div class="opts"><button class="chip" data-o="hint" aria-pressed="'+OPT.hint+'">'+T.optHint+'</button><button class="chip" data-o="auto" aria-pressed="'+OPT.auto+'">'+T.optAuto+'</button></div>';
-  h+=FCS.picker(FCS_T)+'<p class="src">'+T.srcNote+'</p>'+ANKI.row('data-anki',"Export for Anki (CSV)","In Anki: File → Import, pick the file. Cards go into the deck “中文::生词卡”. For cards in both directions, choose the note type “Basic (and reversed card)”. Every card is exported, including the ones filed as learned (tag “learned”).")+'<div class="list">'+act.map(row).join('')+'</div>';
+  h+=FCS.picker(FCS_T)+'<p class="src">'+T.srcNote+'</p>'+ANKI.row('data-anki',"Export for Anki (CSV)","In Anki: File → Import, pick the file. Cards go into the deck “中文::生词卡”. For cards in both directions, choose the note type “Basic (and reversed card)”. Every card is exported, including the ones filed as learned (tag “learned”).")+TAGS.panel(ks)+TAGS.body(act,row)+TAGS.exportHTML();
   if(arch.length)h+='<div class="h2">'+T.archH+' ('+arch.length+')</div><div class="list">'+arch.map(row).join('')+'</div>';
   M.innerHTML=h;FCS.bind(M);
   M.onclick=e=>{const o=e.target.closest('[data-o]');if(o){OPT[o.dataset.o]=!OPT[o.dataset.o];sv('wk-opt',OPT);list();return}
@@ -373,6 +677,7 @@ function sync(){const g=sig();if(g===lastSig)return;lastSig=g;const before=new S
   if(VIEW==='list')list();else if(qi>=Q.length||!Q.length){build('due');learn()}
   else{const add=Object.keys(W).filter(k=>!before.has(k)&&isDue(k));if(add.length){Q.push(...add);learn()}}}
 addEventListener('storage',sync);addEventListener('focus',sync);document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});setInterval(sync,2500);
+TAGS.setOnChange(v=>{if(v==='list'){if(VIEW==='list')list();return}build(v==='learn'?'all':'due');show('learn')});
 lastSig=sig();build('due');show('learn');
 </script>
 </body></html>

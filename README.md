@@ -30,7 +30,7 @@ From then on it opens from the home screen and works with no connection.
 
 - **Sync between devices:** open ⋮ → *Sync between devices*, follow the link to create a *fine-grained* GitHub token whose only permission is **Gists: Read and write**, with an expiry date, paste it and tap *Connect GitHub sync*. Do the same on every device with the same token. Progress is kept in a private gist called `language-drills-sync.json` in your GitHub account. It syncs when the app opens, about every 20–30 seconds while you drill, and when you leave the app. Offline changes sync later. Without sync, use the backup option in ⋮ to move progress by hand.
 - **Flashcards** (听力 / 听力 2 / 神秘的电话 “My words”, 生词卡, Hören “Meine Wörter”, Meine Wörter · Karten): choose how many cards per round (10, 20, 30, 50, all, or type your own number). New or missed cards need “knew it” three times — they come back in the same round — and then return tomorrow, in 3 days, 7, 14, 30, 60 and 120 days.
-- **When you change files later**, open `sw.js`, raise `const VERSION='v44'` to `'v45'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
+- **When you change files later**, open `sw.js`, raise `const VERSION='v45'` to `'v46'` (and so on), and upload it too. Installed copies then show a "new version is ready → Reload" message.
 - **How it is built:** `index.html` is only the frame (navigation, Today, sync, settings, about 250 KB). Each drill is its own page in `apps/` and is loaded the first time you open it; the fonts are files in `fonts/` that every drill shares. To change a drill, edit its file in `apps/` directly. Drills you have not used for 20 minutes (or beyond the last four) are closed to save memory; they reopen where you were.
 - **Where progress is kept:** in the browser's IndexedDB database `language-drills` on each device (much roomier than localStorage, and not shared with your other apps' localStorage). A red notice appears if a save ever fails, for example when the device is full; the app keeps your changes and tries again. Updating from an older version moves existing progress over automatically.
 - **Other apps on the same address:** all your GitHub Pages projects share one web address (`<username>.github.io`), so they share the browser's offline storage. This app only touches its own offline files (named `drills-…`). The sync key is stored separately from your progress, is not in backups, and the page only talks to this site and GitHub (a Content-Security-Policy blocks everything else). For full separation, give each app its own address, for example a custom domain per project.
@@ -54,6 +54,15 @@ Answers: 1–4 or A–D, R / F / N for true · false · not mentioned; blocks by
 Listening: Space play/pause, ← → line by line, Shift+← → 5 seconds, T / E / P transcript · English · pinyin, M my words. Word cards: Space flips, 1 / 2 (or ← →) again / got it.
 Alt+0 Today, Alt+1…9 language, Alt+[ ] previous / next drill of the language, [ ] previous / next section of the drill, Ctrl+K jump anywhere.
 Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s: give ä ö ü ß in German, and Alt+L lets Latin keys type Cyrillic in the Russian, Belarusian and Church Slavonic drills.
+
+## Tags and filters for your words (生词卡 and Deutsch → Karten)
+
+The List tab of 生词卡 (words from 听力, 听力 2 and 神秘的电话) and of Deutsch → Karten (words from Hören) can group and filter your words:
+
+- **Automatic:** lesson or unit (听力 1 units, 听力 2 lessons, exam and part for German), the recording where you marked the word, word type (Chinese: verb, noun, adjective, measure word, time & place, grammar word, connector, chunk, name; German: noun der/die/das, verb, separable, reflexive, verb + preposition, connector, function word, phrase), character family (电话 · 电视) or word family (Arbeit · Arbeitsplatz), topic, and confusion sets (same sound with different tones, like 买 · 卖; or German prefix verbs, like bestehen · verstehen).
+- **Your own:** ear or meaning (👂 missed by ear / 📖 new meaning), stage (new → know it in text → catch it by ear → can use it), your own confusion sets and own tags. Set them with 🏷 on a word or under a flipped card. Any automatic tag can be corrected. Getting a word's tones right in 🎧 By ear moves it up to “catch it by ear”.
+- **Group by** any category, search, **Only these** to filter, and **▶ Learn** to practise just one group. The filter also applies in Learn until you clear it.
+- **Export with categories (CSV):** one Anki deck (中文::生词卡 or Deutsch::Meine Wörter) with a subdeck for every value of the category you choose. All the other categories go along as hierarchical tags (zh::type::Verb, de::thema::…). Tick “only the cards the filter shows” to export one group. The plain export is unchanged.
 
 ## Tones (中文 → 声调)
 

@@ -206,23 +206,326 @@ function play(c,btn){if(c.s==null)return;const u=audioURL(c);if(!u)return;
   au.pause();const go=()=>{au.currentTime=Math.max(0,c.s-0.05);stopAt=(c.e!=null?c.e:c.s+4)+0.15;curBtn=btn;if(btn)btn.classList.add('on');au.play().catch(()=>{})};
   if(!au.src.endsWith(u)){au.src=u;au.addEventListener('loadedmetadata',go,{once:true});au.load()}else go()}
 const PLAY='<svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg>';
+/* ---------- tags & filters: categories for memorising in context (same code in 生词卡 and Karten) ----------
+   Automatic tags come from the word itself and where you marked it (lesson, recording, word type, family, topic,
+   confusion set). Your own tags (ear or meaning, stage, own confusion sets and labels, and any correction of an
+   automatic tag) are kept in 'wk-tags'. Filters and grouping are kept in 'wk-filt'. Nothing here changes the
+   cards' progress ('wk-srs') or the words in the listening tabs. */
+const TAGS=(()=>{
+const ZH=CFG.lang==='zh';
+const SCN={"dehoer":{"01":["Goethe B2 · Einführung","01 Das Modul Hören",0],"02":["Goethe B2 · Modelltest 1","02 Teil 1 · Fünf kurze Texte",1],"03":["Goethe B2 · Modelltest 1","03 Teil 2 · Brauchen wir noch Bargeld?",2],"04":["Goethe B2 · Modelltest 1","04 Teil 3 · Stress am Arbeitsplatz",3],"05":["Goethe B2 · Modelltest 1","05 Teil 4 · Prüfungsängste überwinden",4],"06":["Goethe B2 · Modelltest 2","06 Teil 1 · Fünf kurze Texte",5],"07":["Goethe B2 · Modelltest 2","07 Teil 2 · Die Zukunft des Autos",6],"08":["Goethe B2 · Modelltest 2","08 Teil 3 · Haustiere",7],"09":["Goethe B2 · Modelltest 2","09 Teil 4 · Kann man Glück messen?",8],"10":["Goethe B2 · Modelltest 3","10 Teil 1 · Fünf kurze Texte",9],"11":["Goethe B2 · Modelltest 3","11 Teil 2 · Wohnen auf dem Wasser",10],"12":["Goethe B2 · Modelltest 3","12 Teil 3 · Sollen Geschäfte sonntags öffnen?",11],"13":["Goethe B2 · Modelltest 3","13 Teil 4 · Fernbeziehungen",12],"14":["Goethe B2 · Modelltest 4","14 Teil 1 · Fünf kurze Texte",13],"15":["Goethe B2 · Modelltest 4","15 Teil 2 · Crowdfunding für ein Stadtteilkino",14],"16":["Goethe B2 · Modelltest 4","16 Teil 3 · Frauenquote und Gleichstellung im Beruf",15],"17":["Goethe B2 · Modelltest 4","17 Teil 4 · Wölfe und Menschen",16],"a02":["TestDaF Training · Hörverstehen","a02 Interview · Sport an der Bundeswehr-Uni",17],"a05":["TestDaF Training · Hörverstehen","a05 Interview · Hochschulranking Eichstätt",18],"a08":["TestDaF Training · Mündlicher Ausdruck","a08 Anleitung · So funktioniert der mündliche Ausdruck",19],"a09":["TestDaF Training · Mündlicher Ausdruck","a09 Musterantwort · Grafik beschreiben",20],"a10":["TestDaF Training · Mündlicher Ausdruck","a10 Anwendungsaufgabe 3 · Grafik erläutern",21],"a13":["TestDaF Training · Mündlicher Ausdruck","a13 Anruf · Auskunft geben",22],"c12":["TestDaF Training · Hörverstehen","c12 Vortrag · Mehrsprachigkeit",23],"c14":["TestDaF Training · Hörverstehen","c14 Vortrag · Hirnforschung (Text 3)",24],"d06":["TestDaF Training · Mündlicher Ausdruck","d06 Lösungsbeispiele · Antworten von Prüfungsteilnehmenden",25],"d26":["TestDaF Training · Mündlicher Ausdruck","d26 Aufgabe 7 · Meinung sagen",26],"e17":["TestDaF Training · Mündlicher Ausdruck","e17 Aufgabe 7 + Musterantwort · Gastfamilie oder Apartment?",27],"e23":["TestDaF Training · Mündlicher Ausdruck","e23 Aufgabe 4 + Lösungsbeispiel · Stellung nehmen",28],"m11":["TestDaF Musterprüfungen · Musterprüfung 1","m11 Hörverstehen Text 1 · Gespräch in der Sprechstunde",29],"m12":["TestDaF Musterprüfungen · Musterprüfung 1","m12 Hörverstehen Text 2 · Radiointerview",30],"m13":["TestDaF Musterprüfungen · Musterprüfung 1","m13 Hörverstehen Text 3 · Vortrag",31],"m14":["TestDaF Musterprüfungen · Musterprüfung 1","m14 Mündlicher Ausdruck · Aufgaben 1–7",32],"m31":["TestDaF Musterprüfungen · Musterprüfung 3","m31 Hörverstehen Text 1 · Gespräch auf einer Party",33],"m32":["TestDaF Musterprüfungen · Musterprüfung 3","m32 Hörverstehen Text 2 · Interview",34],"m33":["TestDaF Musterprüfungen · Musterprüfung 3","m33 Hörverstehen Text 3 · Interview",35],"m34":["TestDaF Musterprüfungen · Musterprüfung 3","m34 Mündlicher Ausdruck · Aufgaben 1–7",36],"m51":["TestDaF Musterprüfungen · Musterprüfung 5","m51 Hörverstehen Text 1 · Gespräch am Bahnhof",37],"m52":["TestDaF Musterprüfungen · Musterprüfung 5","m52 Hörverstehen Text 2 · Interview",38],"m53":["TestDaF Musterprüfungen · Musterprüfung 5","m53 Hörverstehen Text 3 · Interview",39],"m54":["TestDaF Musterprüfungen · Musterprüfung 5","m54 Mündlicher Ausdruck · Aufgaben 1–7",40],"t02":["TestDaF digital · Hören","t02 Aufgabentyp 1 · Beratungsgespräch",41],"t03":["TestDaF digital · Hören","t03 Aufgabentyp 2 · Podiumsdiskussion",42],"t04":["TestDaF digital · Hören","t04 Aufgabentyp 3 · Vorlesung",43],"t05":["TestDaF digital · Hören","t05 Aufgabentyp 6 · Vortrag",44],"t06":["TestDaF digital · Hören","t06 Aufgabentyp 7 · Mitlesen",45],"t07":["TestDaF digital · Sprechen","t07 Aufgabentyp 1 · Rat geben",46],"t08":["TestDaF digital · Sprechen","t08 Aufgabentyp 2 · Meinung äußern",47],"t09":["TestDaF digital · Sprechen","t09 Aufgabentyp 3 · Text zusammenfassen",48],"t10":["TestDaF digital · Sprechen","t10 Aufgabentyp 4 · Stellung nehmen (Grafik)",49],"t11":["TestDaF digital · Sprechen","t11 Aufgabentyp 5 · Kurzpräsentation",50],"t12":["TestDaF digital · Sprechen","t12 Aufgabentyp 6 · Argumente wiedergeben und Stellung nehmen",51],"t13":["TestDaF digital · Sprechen","t13 Aufgabentyp 7 · Kritik äußern und Vorschläge machen",52]}};
+const L=ZH?{
+  cats:{lesson:'Lesson / unit',scene:'Recording',fn:'Word type',fam:'Character family',topic:'Topic',prob:'Ear or meaning',stage:'Stage',conf:'Confusion set',own:'Own tags'},
+  fn:{verb:'Verb',noun:'Noun',adj:'Adjective',mw:'Measure word',tp:'Time & place',gram:'Grammar word',conn:'Connector',phrase:'Chunk / idiom',name:'Name'},
+  prob:{mean:'📖 New meaning',ear:'👂 Missed by ear'},
+  stage:{new:'New',text:'Know it in text',ear:'Catch it by ear',use:'Can use it'},
+  topic:{people:'Family & people',food:'Food & drink',home:'Home & housing',travel:'Travel & directions',work:'Work & jobs',money:'Money & shopping',study:'Study & language',health:'Health & body',feel:'Feelings & character',time:'Time & festivals',nature:'Nature & weather',comm:'Phone, media & tech',society:'Society & culture',other:'Other'},
+  grp:'Group by',noGrp:'No groups',search:'Search: characters, pinyin or English',only:'Only these',learnG:'Learn',clear:'Clear filters',filt:'Filter',
+  learnF:n=>'Learn the filtered cards ('+n+')',none:'(none)',auto:'auto',tags:'🏷 Tags',close:'Close',
+  edProb:'Problem',edStage:'Stage',edFn:'Word type',edTopic:'Topic',edConf:'Confusion set',edOwn:'Own tags',
+  confPh:'e.g. 买/卖 — same name = same set',ownPh:'comma-separated, e.g. HSK3, exam',autoInfo:'Automatic',
+  cardEar:'👂 Missed by ear',cardStage:'Stage',
+  note:'Lesson, recording, word type, character family, topic and sound-alike sets are filled in automatically. Ear or meaning, stage, your own confusion sets and own tags are yours to set (🏷 on a word, or under a card once it is flipped). You can also correct any automatic tag. 🎧 By ear moves a word up to “Catch it by ear” when you get its tones right.',
+  expT:'Export for Anki with categories',expSub:'Subdecks by',expOnly:'Only the cards the filter shows',expBtn:'Export with categories (CSV)',
+  expNote:'One deck, “中文::生词卡”, with a subdeck for every value of the category you choose (for example 中文::生词卡::Verb). Every other category goes along as tags (zh::type::verb, zh::topic::…, zh::lesson::…), so in Anki you can browse them in the sidebar or build filtered decks from them. In Anki (2.1.55 or newer): File → Import, pick the file; the subdecks are created for you.',
+  ear:'Problem',stg:'Stage',fam:n=>n+' words',cnt:n=>n+(n===1?' word':' words'),deckRoot:'中文::生词卡',tagRoot:'zh',
+  fsum:'Filter'}:{
+  cats:{lesson:'Prüfung / Teil',scene:'Aufnahme',fn:'Wortart',fam:'Wortfamilie',topic:'Thema',prob:'Hören oder Bedeutung',stage:'Stufe',conf:'Verwechslungsgruppe',own:'Eigene Tags'},
+  fn:{n_der:'Nomen · der',n_die:'Nomen · die',n_das:'Nomen · das',verb:'Verb',sep:'Trennbares Verb',refl:'Reflexives Verb',vprep:'Verb + Präposition',adj:'Adjektiv / Adverb',conn:'Konnektor',func:'Funktionswort',phrase:'Ausdruck',name:'Name'},
+  prob:{mean:'📖 Bedeutung neu',ear:'👂 Beim Hören verpasst'},
+  stage:{new:'Neu',text:'Im Text erkannt',ear:'Beim Hören erkannt',use:'Kann ich benutzen'},
+  topic:{people:'Familie & Menschen',food:'Essen & Trinken',home:'Wohnen',travel:'Reisen & Verkehr',work:'Arbeit & Beruf',money:'Geld & Konsum',study:'Bildung & Sprache',health:'Gesundheit & Körper',feel:'Gefühle & Charakter',time:'Zeit',nature:'Natur & Umwelt',comm:'Medien & Technik',society:'Gesellschaft & Politik',science:'Wissenschaft & Forschung',other:'Sonstiges'},
+  grp:'Gruppieren nach',noGrp:'Keine Gruppen',search:'Suchen: Wort oder Bedeutung',only:'Nur diese',learnG:'Lernen',clear:'Filter löschen',filt:'Filter',
+  learnF:n=>'Gefilterte Karten lernen ('+n+')',none:'(keine)',auto:'automatisch',tags:'🏷 Tags',close:'Schließen',
+  edProb:'Problem',edStage:'Stufe',edFn:'Wortart',edTopic:'Thema',edConf:'Verwechslungsgruppe',edOwn:'Eigene Tags',
+  confPh:'z. B. bekommen/werden – gleicher Name = gleiche Gruppe',ownPh:'mit Komma getrennt, z. B. B2, Prüfung',autoInfo:'Automatisch',
+  cardEar:'👂 Beim Hören verpasst',cardStage:'Stufe',
+  note:'Prüfung/Teil, Aufnahme, Wortart, Wortfamilie, Thema und Präfix-Verwechslungen (bestehen · verstehen · entstehen) werden automatisch erkannt. Hören oder Bedeutung, Stufe, eigene Verwechslungsgruppen und eigene Tags legst du selbst fest (🏷 bei einem Wort oder unter der umgedrehten Karte). Jeden automatischen Tag kannst du auch korrigieren.',
+  expT:'Für Anki exportieren – mit Kategorien',expSub:'Unterstapel nach',expOnly:'Nur die Karten, die der Filter zeigt',expBtn:'Mit Kategorien exportieren (CSV)',
+  expNote:'Ein Stapel „Deutsch::Meine Wörter“ mit einem Unterstapel für jeden Wert der gewählten Kategorie (z. B. Deutsch::Meine Wörter::Trennbares Verb). Alle anderen Kategorien kommen als Tags mit (de::wortart::…, de::thema::…, de::aufnahme::…) – in Anki in der Seitenleiste durchsuchbar oder als gefilterte Stapel nutzbar. In Anki (ab 2.1.55): Datei → Importieren, Datei wählen; die Unterstapel werden automatisch angelegt.',
+  ear:'Problem',stg:'Stufe',fam:n=>n+' Wörter',cnt:n=>n+(n===1?' Wort':' Wörter'),deckRoot:'Deutsch::Meine Wörter',tagRoot:'de',
+  fsum:'Filter'};
+const CAT_IDS=['lesson','scene','fn','fam','topic','prob','stage','conf','own'];
+const TAGSLUG=ZH?{lesson:'lesson',scene:'recording',fn:'type',fam:'family',topic:'topic',prob:'problem',stage:'stage',conf:'confusion',own:'own'}:
+  {lesson:'pruefung',scene:'aufnahme',fn:'wortart',fam:'wortfamilie',topic:'thema',prob:'problem',stage:'stufe',conf:'verwechslung',own:'eigene'};
+let TG=ld('wk-tags',{});
+let F=Object.assign({g:'lesson',f:{},q:''},ld('wk-filt',{}));if(!F.f||typeof F.f!=='object')F.f={};
+const saveTG=()=>sv('wk-tags',TG),saveF=()=>sv('wk-filt',F);
+const tg=k=>TG[k]||{};
+function setTG(k,field,v){const o=Object.assign({},TG[k]||{});if(v==null||v==='')delete o[field];else o[field]=v;
+  if(Object.keys(o).length)TG[k]=o;else delete TG[k];saveTG();AUTO=null}
+
+/* ---------- automatic tags ---------- */
+const first=en=>String(en||'').split(/\s*[;/]\s*/).map(x=>x.replace(/^\((bound form|literary|coll\.|colloquial|formal|dialect|old)\)\s*/i,'').trim()).filter(Boolean)[0]||'';
+const ZH_CONN=new Set('因为 所以 但是 可是 虽然 而且 并且 或者 还是 如果 要是 假如 即使 尽管 不但 不仅 只要 只有 除非 于是 然后 因此 因而 而 否则 不然 不管 无论 既然 一边 一方面 另一方面 甚至 何况 况且 以便 以免 然而 不过 可见 总之 总而言之 接着 首先 其次 最后 另外 此外 同时 那么 也就是说 宁可 与其 哪怕 以及 从而 由于 只是 反而 而是 结果 就是说 再说 否则的话 的话 因为…所以 虽然…但是'.split(' '));
+const ZH_GRAM=new Set('了 着 过 的 地 得 吗 呢 吧 啊 呀 嘛 啦 哦 哇 就 才 还 都 也 又 再 已经 正在 正 在 刚 刚才 曾经 一直 总是 常常 往往 经常 竟然 居然 果然 到底 究竟 终于 毕竟 难道 简直 几乎 差点儿 差点 千万 根本 并 却 倒 偏偏 恐怕 大概 也许 似乎 好像 稍微 比较 更 最 太 挺 非常 十分 特别 越来越 把 被 让 叫 给 比 跟 和 对 向 往 从 离 为了 为 关于 对于 按照 根据 通过 除了 连 将 所 之 其 便 曾 正好 恰好 一定 必须 应该 可以 能 会 要 敢 肯 不 没 没有 别 很 只 光 仅 尤其 几 每 各 某 这 那 哪 什么 怎么 怎样 为什么 多少 谁 自己 一下 一些 一点儿 有点儿 有些 个 们 呗 嘞 么 啥 咋 甭 不用 好不容易 本来 原来 其实 当然 果真 难怪 怪不得 反正 随便 赶紧 赶快 马上 立刻 顿时 渐渐 逐渐 仍然 依然 还是 万一 幸亏 好在 只好 不得不 何必 未必 不必'.split(' '));
+const TIMEPLACE=/\b(yesterday|today|tomorrow|morning|afternoon|evening|night|noon|midnight|year|years|month|week|weekend|days?|hours?|minutes?|o'clock|period|recently|lately|future|past|nowadays|moment|soon|later|ago|season|street|road|lane|alley|hutong|city|town|village|countryside|place|area|region|side|north|south|east|west|inside|outside|above|below|front|behind|left|right|nearby|province|district|location|corner|downtown|suburbs?|abroad)\b/i;
+const ADJW=/^(very |rather |quite )|^[a-z-]+(ful|ous|ive|able|ible|ical|ic|ish|less|ent|ant|ary|al|ed|ing)$|^(happy|busy|tired|angry|pretty|lazy|easy|heavy|dirty|healthy|lucky|early|noisy|funny|ugly|empty|dry|crazy|dizzy|friendly|lonely|lively|sorry|ready|tidy|messy|silly|guilty|wealthy|worthy|salty|spicy|tasty|oily|greasy|rainy|sunny|cloudy|windy|snowy|stingy|thrifty|clumsy|steady|hungry|thirsty|fussy|cosy|cozy|good|bad|big|small|new|old|long|short|high|low|hot|cold|warm|cool|fast|slow|clean|quiet|loud|hard|soft|cheap|dear|rich|poor|young|strong|weak|thin|fat|tall|wide|narrow|deep|shallow|near|far|bright|dark|full|free|safe|true|false|right|wrong|real|clear|simple|strange|famous|popular|common|normal|special|serious|polite|rude|honest|kind|smart|clever|stupid|brave|proud|calm|nervous|strict|gentle|rare|fresh|sweet|sour|bitter|delicious|beautiful|ordinary|convenient|comfortable|terrible|wonderful|excellent|correct|similar|different|same|whole|enough|important|necessary|possible|impossible|complicated|exhausted|embarrassed|disappointed|satisfied|surprised|worried|excited|bored|interested|anxious|careful|lively|modest|frank|rough|smooth|thick|plain|fine|nice|great|awful|lonely|naughty|mature|stable|equal|fair|tough|busy)$/i;
+function fnZh(w){const k=w.tgt||w.k,en=String(w.en||''),fs=first(en),py=String(w.py||''),n=[...k].length;
+  if(/^[A-ZĀÁǍÀĒÉĚÈŌÓǑÒ]/.test(py)||/\b(surname|place name|personal name|given name)\b/i.test(fs))return 'name';
+  if(ZH_CONN.has(k))return 'conn';
+  if(/^(classifier|measure word|CL)\b|classifier for/i.test(fs))return 'mw';
+  if(ZH_GRAM.has(k)||/particle|^\(adverb\)|auxiliary|preposition|interjection/i.test(fs))return 'gram';
+  if(/\(idiom\)/i.test(en)||n>=4)return 'phrase';
+  if(/^to\s/i.test(fs))return 'verb';
+  if(/^(a|an|the)\s/i.test(fs))return TIMEPLACE.test(fs)?'tp':'noun';
+  if(TIMEPLACE.test(fs)&&fs.split(' ').length<=3)return 'tp';
+  if(ADJW.test(fs))return 'adj';
+  return 'noun'}
+const DE_CONN=new Set('weil obwohl obgleich deshalb darum deswegen daher trotzdem dennoch sodass damit indem während falls sofern sondern jedoch allerdings außerdem zudem folglich somit stattdessen nachdem bevor ehe seitdem sobald solange als wenn ob dass denn aber oder und sowohl weder entweder zwar je desto umso inzwischen schließlich anschließend einerseits andererseits dabei dagegen hingegen ebenfalls also nämlich beziehungsweise bzw sprich zumal wohingegen insofern insbesondere vielmehr ferner demnach demzufolge infolgedessen ansonsten sonst danach zuerst zunächst erstens zweitens drittens letztlich übrigens immerhin wobei weshalb wodurch womit worauf'.split(' '));
+const DE_FUNC=new Set('ab an auf aus bei bis durch für gegen hinter in mit nach neben ohne seit über um unter von vor wegen zu zwischen trotz statt anstatt innerhalb außerhalb laut gemäß dank mittels bezüglich hinsichtlich angesichts aufgrund ja doch eben halt mal wohl schon eigentlich etwa sogar nur erst noch auch bloß ganz gar überhaupt der die das ein eine kein man es sich wer was wie wo wann warum welche welcher dieser jener jeder alle einige manche viele wenige derselbe selbst einander beide irgendwie irgendwo eher kaum fast sehr ziemlich recht besonders genau gerade bereits immer nie niemals oft manchmal selten jetzt dann hier dort da'.split(' '));
+const DPRE=['zurück','zusammen','weiter','wieder','heraus','herein','hinaus','voraus','vorbei','entgegen','über','unter','durch','gegen','nach','mit','vor','auf','aus','ein','fest','los','weg','her','hin','ab','an','bei','be','ge','er','ent','emp','ver','zer','miss','um','zu'];
+const SEPRE=/^(zurück|zusammen|weiter|wieder|heraus|herein|hinaus|voraus|vorbei|entgegen|nach|mit|vor|auf|aus|ein|fest|los|weg|her|hin|ab|an|bei|zu|teil|statt|stand)/;
+function fnDe(w){const h=String(w.tgt||''),k=String(w.k||''),lk=k.toLowerCase(),en=first(w.en);
+  const m=h.match(/^(der|die|das)\b/);if(m)return 'n_'+m[1];
+  if(DE_CONN.has(lk))return 'conn';
+  if(DE_FUNC.has(lk))return 'func';
+  const verb=/^to\s/i.test(en)||(/^[a-zäöü]/.test(k)&&/(en|ern|eln)$/.test(k)&&/\(/.test(h));
+  if(verb){if(/\bsich\b/.test(h))return 'refl';
+    if(/\(\+\s*(Akk|Dat|Gen)|\((an|auf|über|für|mit|von|zu|nach|um|bei|aus|vor|in|gegen)\)|^(an|auf|über|für|mit|von|zu|nach|um|bei|aus|vor|in) (etw|jdn|jdm)\./.test(h))return 'vprep';
+    if(SEPRE.test(lk)&&new RegExp('\\b('+SEPRE.source.slice(2,-1)+')\\)').test(h))return 'sep';
+    if(SEPRE.test(lk)&&/^(ab|an|auf|aus|ein|mit|nach|vor|zu|zurück|weg|fest|los|her|hin|teil|zusammen|weiter|vorbei)[a-zäöüß]{3,}(en|ern|eln)$/.test(lk)&&!/^(an|auf|aus|ein|ab)(t|d)?(en)$/.test(lk))return 'sep';
+    return 'verb'}
+  if(/\s/.test(h.replace(/\s*\(.*$/,'').replace(/^(etw|jdn|jdm)\.\s*/,'').trim()))return 'phrase';
+  if(/^[A-ZÄÖÜ]/.test(k))return 'name';
+  return 'adj'}
+const TOPIC_RE=[
+ ['people',/\b(family|mother|father|mum|mom|dad|parents?|child(ren)?|kids?|sons?|daughters?|husband|wife|brother|sister|grand\w*|relatives?|friends?|colleagues?|neighbou?rs?|couples?|marri\w*|wedding|baby|babies|people|person|guests?|strangers?|classmates?|DINK|elderly|generation|relationship|partner|boyfriend|girlfriend|old man|old lady|aunt|uncle|cousin)\b/i],
+ ['food',/\b(eat\w*|food|dish(es)?|meals?|rice|noodles?|tea|coffee|drink\w*|cook\w*|restaurants?|menu|tastes?|delicious|vegetables?|fruits?|meat|pork|beef|chicken|fish|soup|dumplings?|breakfast|lunch|dinner|supper|bread|sugar|salt|wine|beer|spicy|sweet|sour|bitter|chopsticks|bowls?|banquet|appetite|snacks?|flavou?r|recipe|bake|fry|steam\w*|eggs?|milk|kitchen)\b/i],
+ ['home',/\b(home|houses?|housing|rooms?|apartments?|rent\w*|furniture|beds?|doors?|windows?|bathroom|landlord|buildings?|floor|courtyard|dormitor\w*|dorm|move house|decorat\w*|household|residen\w*|property)\b/i],
+ ['travel',/\b(travel\w*|trips?|tours?|tourist|tickets?|trains?|bus(es)?|cars?|taxi|subway|metro|planes?|flights?|airport|station|roads?|streets?|directions?|maps?|driv\w*|bicycle|bike|hotels?|passport|luggage|scenery|beach|visit\w*|lost|turn( left| right)?|cross\w*|traffic|journey|holiday|vacation|sightseeing|route|way to)\b/i],
+ ['work',/\b(work\w*|jobs?|office|company|companies|boss|employ\w*|salary|wages?|career|business|manager|meetings?|colleagues?|tasks?|profession\w*|interviews?|hire|resign\w*|unemploy\w*|staff|clients?|customers?|project|occupation|industry|factory|promotion|overtime|retire\w*)\b/i],
+ ['money',/\b(money|pay\w*|price|cost\w*|spend\w*|sav(e|ing)|buy\w*|sell\w*|cheap|expensive|bank|cash|yuan|dollars?|economy|economic|market|shop\w*|stores?|consum\w*|brands?|gifts?|thrift\w*|stingy|discount|bargain|budget|loan|debt|income|afford|wealth\w*|rich|poor|luxury|designer)\b/i],
+ ['study',/\b(stud\w*|school|students?|teachers?|class(es)?|lessons?|exams?|tests?|learn\w*|universit\w*|college|educat\w*|homework|grades?|degrees?|knowledge|books?|read\w*|writ\w*|languages?|dialects?|accents?|pronunc\w*|words?|characters?|grammar|Mandarin|Putonghua|vocabulary|textbook|course)\b/i],
+ ['health',/\b(health\w*|ill(ness)?|sick\w*|diseases?|doctors?|hospital|medicine|medical|pain|hurt|body|head\w*|stomach|fever|cough|sleep\w*|exercis\w*|sports?|fitness|diet|stress|injur\w*|heart|blood|tooth|teeth|eyes?|clinic|symptom|treatment|cure|recover\w*|lifestyle|traditional Chinese medicine|TCM|balance)\b/i],
+ ['feel',/\b(feel\w*|happy|glad|sad|angry|afraid|fear|worr\w*|anxious|nervous|surpris\w*|embarrass\w*|proud|lonely|love|hate|mood|emotion\w*|personality|polite|rude|honest|patient|shy|calm|excited|disappoint\w*|satisf\w*|regret|annoy\w*|bored|attitude|temper|pleased|upset|jealous|grateful|ashamed|confident|frank|stubborn|generous|modest|cheerful)\b/i],
+ ['time',/\b(time|day|week|month|year|hours?|minutes?|morning|evening|night|today|tomorrow|yesterday|early|late|soon|recent\w*|future|past|moment|always|often|seldom|never|festival|holiday|new year|spring festival|weekend|birthday|age|century|calendar|schedule|lunar)\b/i],
+ ['nature',/\b(weather|rain\w*|snow\w*|wind\w*|sun\w*|clouds?|climate|seasons?|nature|trees?|flowers?|mountains?|rivers?|lakes?|sea|ocean|animals?|dogs?|cats?|birds?|environment\w*|pollut\w*|air|earth|forest|grass|landscape|scenery|hill|island|plants?)\b/i],
+ ['comm',/\b(phones?|call\w*|telephone|message|internet|online|computers?|e-?mail|chat\w*|talk\w*|speak\w*|tell|news|media|TV|television|radio|newspapers?|network|apps?|video|technolog\w*|mobile|engaged|busy signal|dial\w*|wrong number|smartphone|website|digital|social media)\b/i],
+ ['society',/\b(society|social|tradition\w*|cultur\w*|customs?|government|law|polic(y|ies)|cities|city|urban\w*|rural|countryside|nation\w*|world|China|Chinese|foreign\w*|population|public|rules?|rights?|equal\w*|community|politic\w*|migra\w*|etiquette|values?)\b/i]];
+if(!ZH)TOPIC_RE.push(['science',/\b(science|scientific|research\w*|study|experiment\w*|brain|data|theory|technolog\w*|invent\w*|universit\w*|laborator\w*|analys\w*|sensor\w*|computer\w*|engineer\w*|patent)\b/i]);
+function topicOf(w){const en=String(w.en||'').split(/\s*;\s*/).slice(0,3).join('; ');if(!en)return 'other';let best='other',bs=0;
+  for(const [id,re] of TOPIC_RE){const m=en.match(new RegExp(re.source,'gi'));const s=m?m.length:0;if(s>bs){bs=s;best=id}}return best}
+const toneless=py=>String(py||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z]/g,'');
+function stemDe(k){let s=String(k||'').toLowerCase().replace(/^(der|die|das|sich)\s+/,'');
+  for(let i=0;i<3;i++){const p=DPRE.find(p=>s.startsWith(p)&&s.length-p.length>=4);if(!p)break;s=s.slice(p.length)}return s}
+const ZH_SKIPFAM=new Set('的 了 个 么 们 子 儿 着 过 吗 呢 吧 一 不 是 有 在'.split(' '));
+/* AUTO: computed once per set of words; AUTO=null after any change */
+let AUTO=null,AUTO_SIG='';
+function auto(){const ks=Object.keys(W),sig=ks.length+'|'+ks.slice(0,5).join(',')+'|'+ks.slice(-5).join(',');
+  if(AUTO&&AUTO_SIG===sig)return AUTO;AUTO_SIG=sig;const A={},fams={},conf={};
+  for(const k of ks){const w=W[k],a={lesson:[],scene:[],fn:ZH?fnZh(w):fnDe(w),topic:topicOf(w),fam:[],conf:[]};
+    const seen=new Set();
+    for(const c of (w.ctx||[])){const s=SCN[c.src]&&SCN[c.src][c.pid];const sk=c.src+':'+c.pid;if(seen.has(sk))continue;seen.add(sk);
+      a.scene.push(sk);const lv=s?s[0]:(c.src+' · ?');if(a.lesson.indexOf(lv)<0)a.lesson.push(lv)}
+    if(!a.scene.length&&w.src){a.lesson.push(w.src+' · ?')}
+    A[k]=a}
+  if(ZH){const cnt={};for(const k of ks)for(const ch of new Set([...(W[k].tgt||k)]))if(/[㐀-鿿]/.test(ch)&&!ZH_SKIPFAM.has(ch))(cnt[ch]=cnt[ch]||[]).push(k);
+    for(const ch in cnt)if(cnt[ch].length>=2){fams[ch]=cnt[ch].length;cnt[ch].forEach(k=>A[k].fam.push(ch))}
+    const snd={};for(const k of ks){const t=toneless(W[k].py);if(t)(snd[t]=snd[t]||[]).push(k)}
+    for(const t in snd){const g=snd[t];if(g.length>=2&&new Set(g.map(k=>W[k].tgt)).size>=2){conf['≈ '+t]=g.length;g.forEach(k=>A[k].conf.push('≈ '+t))}}}
+  else{const base={};for(const k of ks){const b=stemDe(W[k].k||k);base[k]=b}
+    const keys={};for(const k of ks){const b=base[k];if(b.length>=4)keys[b.slice(0,5)]=1}
+    for(const key in keys){const mem=ks.filter(k=>base[k].startsWith(key)||(key.length>=4&&base[k].length>key.length+2&&base[k].includes(key)));
+      if(mem.length>=2){const lab=mem.map(k=>W[k].k||k).sort((a,b)=>a.length-b.length)[0];if(fams[lab])continue;fams[lab]=mem.length;mem.forEach(k=>{if(A[k].fam.indexOf(lab)<0)A[k].fam.push(lab)})}}
+    /* verbs with the same root and different prefixes: bestehen · verstehen · entstehen */
+    const vr={};for(const k of ks){const f=A[k].fn;if(!/^(verb|sep|refl|vprep)$/.test(f))continue;const lk=String(W[k].k||k).toLowerCase(),r=stemDe(lk);if(r!==lk&&r.length>=4)(vr[r]=vr[r]||[]).push(k)}
+    for(const r in vr){const g=vr[r];const all=ks.filter(k=>String(W[k].k||k).toLowerCase()===r&&/^(verb|sep|refl|vprep)$/.test(A[k].fn)).concat(g);
+      if(new Set(all).size>=2){const lab='≈ -'+r;conf[lab]=new Set(all).size;new Set(all).forEach(k=>A[k].conf.push(lab))}}}
+  /* families: largest first, so a word's first family is its biggest */
+  for(const k of ks)A[k].fam.sort((a,b)=>(fams[b]||0)-(fams[a]||0));
+  AUTO={A,fams,conf};return AUTO}
+
+/* ---------- values of a word in each category (auto + your own) ---------- */
+function vals(k,cat){const a=(auto().A[k])||{},t=tg(k);
+  switch(cat){
+    case 'lesson':return a.lesson||[];
+    case 'scene':return a.scene||[];
+    case 'fn':return [t.fn||a.fn||(ZH?'noun':'adj')];
+    case 'topic':return [t.tp||a.topic||'other'];
+    case 'fam':return a.fam||[];
+    case 'prob':return [t.p||'mean'];
+    case 'stage':return [t.s||'new'];
+    case 'conf':return (t.cf?String(t.cf).split(',').map(x=>x.trim()).filter(Boolean):[]).concat(a.conf||[]);
+    case 'own':return t.o?String(t.o).split(',').map(x=>x.trim()).filter(Boolean):[]}
+  return []}
+function lab(cat,v){if(v==null||v==='')return L.none;
+  if(cat==='scene'){const [src,pid]=v.split(':');const s=SCN[src]&&SCN[src][pid];return s?s[1]:v}
+  if(cat==='fn')return L.fn[v]||v;if(cat==='topic')return L.topic[v]||v;if(cat==='prob')return L.prob[v]||v;if(cat==='stage')return L.stage[v]||v;
+  return v}
+function ordOf(cat,v){
+  if(cat==='scene'){const [src,pid]=v.split(':');const s=SCN[src]&&SCN[src][pid];return s?s[2]:1e6}
+  if(cat==='lesson'){let m=1e6;for(const src in SCN)for(const pid in SCN[src]){const s=SCN[src][pid];if(s[0]===v&&s[2]<m)m=s[2]}return m}
+  const O={fn:Object.keys(L.fn),topic:Object.keys(L.topic),prob:['ear','mean'],stage:['new','text','ear','use']}[cat];
+  return O?(O.indexOf(v)<0?99:O.indexOf(v)):null}
+/* ---------- filter ---------- */
+function active(){return Object.keys(F.f).length>0||!!(F.q&&F.q.trim())}
+function pass(k){for(const c in F.f){if(vals(k,c).indexOf(F.f[c])<0)return false}
+  const q=(F.q||'').trim().toLowerCase();if(q){const w=W[k]||{};const hay=[w.tgt,w.k,w.py,toneless(w.py),w.en,w.form].join(' ').toLowerCase();if(hay.indexOf(q)<0)return false}
+  return true}
+function summary(){const p=Object.keys(F.f).map(c=>L.cats[c]+': '+lab(c,F.f[c]));if(F.q&&F.q.trim())p.push('“'+F.q.trim()+'”');return p.join(' · ')}
+/* groups of keys for the list */
+function groups(keys,cat){const G=new Map(),none=[];
+  for(const k of keys){const v=vals(k,cat);if(!v.length){none.push(k);continue}for(const x of v){if(!G.has(x))G.set(x,[]);G.get(x).push(k)}}
+  let arr=[...G.entries()].map(([v,ks])=>({v,ks}));
+  if(cat==='fam'||cat==='conf'||cat==='own')arr.sort((a,b)=>b.ks.length-a.ks.length||String(a.v).localeCompare(String(b.v)));
+  else arr.sort((a,b)=>(ordOf(cat,a.v)-ordOf(cat,b.v))||String(a.v).localeCompare(String(b.v),undefined,{numeric:true}));
+  if(none.length)arr.push({v:'',ks:none});return arr}
+
+/* ---------- styles ---------- */
+const css=`.tgp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:14px 0 12px;display:grid;gap:9px}
+.tgp-h{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tgc{display:flex;flex-wrap:wrap;gap:6px}
+.tgc button,.tgb{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 11px;min-height:34px;cursor:pointer;font:inherit;font-size:13px}
+.tgc button[aria-pressed="true"],.tgb[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#fff}
+.tgq{width:100%;box-sizing:border-box;min-height:38px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 12px;font:inherit;font-size:14px}
+.tgact{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tgf{display:inline-flex;align-items:center;gap:6px;background:var(--jade-soft);color:var(--ink);border:1px solid var(--jade);border-radius:999px;padding:3px 4px 3px 11px;font-size:13px}
+.tgf button{border:0;background:transparent;color:var(--jade);font-size:15px;cursor:pointer;min-height:28px;min-width:28px;border-radius:999px}
+.tglearn{border:0;background:var(--jade);color:#fff;border-radius:999px;padding:7px 14px;min-height:38px;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.tgh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.tgh b{font-size:15px;flex:1 1 auto;min-width:0}.tgh .zh{font-family:var(--f-han)}
+.tgh span{font-size:12px;color:var(--muted)}
+.tgh button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;min-height:30px;cursor:pointer;font:inherit;font-size:12.5px}
+.tgh button.go{border-color:var(--jade);color:var(--jade);font-weight:700}
+.tgl{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tgl i{font-style:normal;font-size:11px;line-height:1.2;padding:2px 7px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tgl i.e{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.tgl i.s{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+.tgl i.f{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.tge{background:var(--surface);border:1px solid var(--jade);border-radius:12px;padding:10px 12px;margin:-4px 0 6px;display:grid;gap:8px}
+.tgr{display:grid;grid-template-columns:118px 1fr;gap:8px;align-items:center}
+.tgr>span{font-size:12.5px;color:var(--muted)}
+.tgr select,.tgr input{min-height:34px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:13.5px;width:100%;box-sizing:border-box}
+.tgauto{font-size:12px;color:var(--muted);line-height:1.5}
+.tgnote{font-size:12px;color:var(--muted);line-height:1.45}
+.tgban{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;background:var(--jade-soft);border:1px solid var(--jade);border-radius:10px;padding:6px 10px;margin:0 0 10px}
+.tgban b{flex:1 1 auto}.tgban button{border:1px solid var(--jade);background:var(--surface);color:var(--jade);border-radius:999px;min-height:30px;padding:2px 10px;cursor:pointer;font:inherit;font-size:12.5px}
+.tgcard{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-top:1px dashed var(--line);padding-top:10px}
+.tgcard small{font-size:12px;color:var(--muted);margin-right:2px}
+.tgx{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0;display:grid;gap:8px}
+.tgx label{display:flex;gap:8px;align-items:center;font-size:13.5px}
+.tgx select{min-height:36px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:14px}
+@media (max-width:520px){.tgr{grid-template-columns:1fr}.tgr>span{margin-bottom:-4px}}`;
+(()=>{const s=document.createElement('style');s.id='tg-css';s.textContent=css;document.head.appendChild(s)})();
+
+/* ---------- pieces of HTML ---------- */
+const OPEN=new Set();
+function chips(k){const a=(auto().A[k])||{},t=tg(k),out=[];
+  const fn=vals(k,'fn')[0],tp=vals(k,'topic')[0];
+  out.push('<i class="f">'+esc(lab('fn',fn))+'</i>');
+  if(tp!=='other')out.push('<i>'+esc(lab('topic',tp))+'</i>');
+  if((t.p||'mean')==='ear')out.push('<i class="e">'+esc(L.prob.ear)+'</i>');
+  if(t.s&&t.s!=='new')out.push('<i class="s">'+esc(L.stage[t.s])+'</i>');
+  vals(k,'conf').slice(0,2).forEach(c=>out.push('<i>'+esc(c)+'</i>'));
+  vals(k,'own').slice(0,3).forEach(c=>out.push('<i>#'+esc(c)+'</i>'));
+  return '<div class="tgl">'+out.join('')+'</div>'}
+function sel(field,cur,autoV,map){return '<select data-tgs="'+field+'"><option value="">'+esc(L.auto)+': '+esc(map[autoV]||autoV)+'</option>'+
+  Object.keys(map).map(v=>'<option value="'+v+'"'+(cur===v?' selected':'')+'>'+esc(map[v])+'</option>').join('')+'</select>'}
+function editor(k){const a=(auto().A[k])||{},t=tg(k);
+  const confList=[...new Set(Object.values(TG).map(x=>x.cf).filter(Boolean).flatMap(x=>String(x).split(',').map(s=>s.trim())).filter(Boolean))];
+  let h='<div class="tge" data-tgk="'+esc(k)+'">';
+  h+='<div class="tgr"><span>'+L.edProb+'</span><div class="tgc">'+['mean','ear'].map(v=>'<button type="button" data-tgset="p" data-v="'+v+'" aria-pressed="'+((t.p||'mean')===v)+'">'+esc(L.prob[v])+'</button>').join('')+'</div></div>';
+  h+='<div class="tgr"><span>'+L.edStage+'</span><div class="tgc">'+Object.keys(L.stage).map(v=>'<button type="button" data-tgset="s" data-v="'+v+'" aria-pressed="'+((t.s||'new')===v)+'">'+esc(L.stage[v])+'</button>').join('')+'</div></div>';
+  h+='<div class="tgr"><span>'+L.edFn+'</span>'+sel('fn',t.fn,a.fn,L.fn)+'</div>';
+  h+='<div class="tgr"><span>'+L.edTopic+'</span>'+sel('tp',t.tp,a.topic,L.topic)+'</div>';
+  h+='<div class="tgr"><span>'+L.edConf+'</span><input data-tgi="cf" list="tg-cfl" value="'+esc(t.cf||'')+'" placeholder="'+esc(L.confPh)+'"><datalist id="tg-cfl">'+confList.map(c=>'<option value="'+esc(c)+'">').join('')+'</datalist></div>';
+  h+='<div class="tgr"><span>'+L.edOwn+'</span><input data-tgi="o" value="'+esc(t.o||'')+'" placeholder="'+esc(L.ownPh)+'"></div>';
+  const info=[];if(a.lesson&&a.lesson.length)info.push(L.cats.lesson+': '+a.lesson.map(esc).join(' · '));
+  if(a.scene&&a.scene.length)info.push(L.cats.scene+': '+a.scene.map(v=>esc(lab('scene',v))).join(' · '));
+  if(a.fam&&a.fam.length)info.push(L.cats.fam+': '+a.fam.map(esc).join(' · '));
+  if(a.conf&&a.conf.length)info.push(L.cats.conf+': '+a.conf.map(esc).join(' · '));
+  h+='<div class="tgauto"><b>'+L.autoInfo+':</b><br>'+info.join('<br>')+'</div>';
+  h+='<div><button type="button" class="tgb" data-tgedit="'+esc(k)+'">'+L.close+'</button></div></div>';return h}
+/* one list row: the page's own row, then the tag chips and the 🏷 button inside it */
+function wrapRow(k,html){const i=html.indexOf('</small></div>');
+  if(i>=0)html=html.slice(0,i+8)+chips(k)+html.slice(i+8);
+  const j=html.lastIndexOf('<button');
+  html=html.slice(0,j)+'<button data-tgedit="'+esc(k)+'" aria-expanded="'+OPEN.has(k)+'">🏷</button>'+html.slice(j);
+  return html+(OPEN.has(k)?editor(k):'')}
+function panel(keysAll){const n=keysAll.filter(pass).length;
+  let h='<div class="tgp"><div class="tgp-h">'+L.grp+'</div><div class="tgc">'+CAT_IDS.map(c=>'<button type="button" data-tgg="'+c+'" aria-pressed="'+(F.g===c)+'">'+esc(L.cats[c])+'</button>').join('')+
+    '<button type="button" data-tgg="none" aria-pressed="'+(F.g==='none')+'">'+esc(L.noGrp)+'</button></div>';
+  h+='<input class="tgq" type="search" data-tgq value="'+esc(F.q||'')+'" placeholder="'+esc(L.search)+'" aria-label="'+esc(L.search)+'">';
+  if(active()){h+='<div class="tgact"><span class="tgp-h">'+L.filt+'</span>'+Object.keys(F.f).map(c=>'<span class="tgf">'+esc(L.cats[c])+': <b>'+esc(lab(c,F.f[c]))+'</b><button type="button" data-tgrm="'+c+'" aria-label="remove">✕</button></span>').join('')+
+    (F.q&&F.q.trim()?'<span class="tgf">“'+esc(F.q.trim())+'”<button type="button" data-tgrm="#q" aria-label="remove">✕</button></span>':'')+
+    '<button type="button" class="tgb" data-tgclr>'+L.clear+'</button></div><div><button type="button" class="tglearn" data-tglf>▶ '+esc(L.learnF(n))+'</button></div>'}
+  h+='<details class="tgnote"><summary>'+(ZH?'How tags work':'So funktionieren die Tags')+'</summary>'+L.note+'</details></div>';return h}
+function body(act,rowFn){if(F.g==='none'||!CAT_IDS.includes(F.g))return '<div class="list">'+act.map(rowFn).join('')+'</div>';
+  return groups(act,F.g).map(g=>{const v=g.v,l=lab(F.g,v),zh=ZH&&(F.g==='fam');
+    const btns=v===''?'':'<button type="button" data-tgonly="'+esc(F.g)+'" data-v="'+esc(v)+'">'+L.only+'</button><button type="button" class="go" data-tglg="'+esc(F.g)+'" data-v="'+esc(v)+'">▶ '+L.learnG+' ('+g.ks.length+')</button>';
+    return '<div class="tgh"><b'+(zh?' class="zh"':'')+'>'+esc(v===''?L.none:l)+'</b><span>'+L.cnt(g.ks.length)+'</span>'+btns+'</div><div class="list">'+g.ks.map(rowFn).join('')+'</div>'}).join('')}
+function banner(){if(!active())return '';return '<div class="tgban"><span>'+L.fsum+':</span><b>'+esc(summary())+'</b><button type="button" data-tgclr>✕ '+L.clear+'</button></div>'}
+function cardRow(k){const t=tg(k);
+  return '<div class="tgcard" data-tgk="'+esc(k)+'"><button type="button" class="tgb" data-tgset="p" data-v="'+((t.p||'mean')==='ear'?'mean':'ear')+'" aria-pressed="'+((t.p||'mean')==='ear')+'">'+esc(L.cardEar)+'</button>'+
+    '<small>'+L.cardStage+':</small>'+Object.keys(L.stage).map(v=>'<button type="button" class="tgb" data-tgset="s" data-v="'+v+'" aria-pressed="'+((t.s||'new')===v)+'">'+esc(L.stage[v])+'</button>').join('')+'</div>'}
+function exportHTML(){const sub=F.xs||'lesson';
+  return '<div class="tgx"><div class="tgp-h">'+L.expT+'</div><label>'+L.expSub+' <select data-tgxs>'+CAT_IDS.map(c=>'<option value="'+c+'"'+(sub===c?' selected':'')+'>'+esc(L.cats[c])+'</option>').join('')+'</select></label>'+
+    '<label><input type="checkbox" data-tgxo'+(F.xo?' checked':'')+'> '+L.expOnly+'</label>'+
+    '<div><button type="button" class="anki-btn" data-tgexp>⬇ '+L.expBtn+'</button></div><div class="anki-note">'+L.expNote+'</div></div>'}
+/* when you get a word's tones right by ear, it moves up to "catch it by ear" (never down) */
+function bump(k,to){const order=['new','text','ear','use'],cur=tg(k).s||'new';if(order.indexOf(to)>order.indexOf(cur))setTG(k,'s',to)}
+
+/* ---------- Anki export with subdecks + hierarchical tags ---------- */
+function q(v){v=String(v==null?'':v).replace(/\r?\n/g,'<br>');return /[",\r\n]/.test(v)||/^\s|\s$/.test(v)||v.charAt(0)==='#'?'"'+v.replace(/"/g,'""')+'"':v}
+const slug=s=>String(s||'').replace(/\s*·\s*/g,'_').replace(/::/g,'_').replace(/[\s,"]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+const deckPart=s=>String(s||'').replace(/::/g,':').replace(/"/g,'').trim()||L.none;
+function exportCats(){refresh();AUTO=null;const H=ANKI.h,sub=F.xs||'lesson';
+  let ks=Object.keys(W).sort((a,b)=>W[b].t-W[a].t);if(F.xo)ks=ks.filter(pass);
+  const lines=['#separator:Comma','#html:true','#columns:Front,Back,Tags,Deck','#tags column:3','#deck column:4'];
+  for(const k of ks){const w=W[k],s=st(k),cs=(w.ctx||[]).slice(0,2);
+    let back=(w.py?H(w.py)+'<br>':'')+(w.form?'<i>'+H(w.form)+'</i><br>':'')+H(w.en||'');
+    cs.forEach(c=>{const t=ZH?(c.h||''):(c.t||'');back+='<br><br>'+ANKI.mark(t,ZH?w.k:(c.w||w.form||''))+(c.p?'<br><i>'+H(c.p)+'</i>':'')+(c.en?'<br>'+H(c.en):'')});
+    const tags=['zanimavkavka',ZH?'zh_wordcards':'de_wortkarten'].concat(s.a?['learned']:s.b?['level_'+s.b]:['new']);
+    for(const c of CAT_IDS){for(const v of vals(k,c)){const l=lab(c,v).replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]\uFE0F?/gu,'').trim();tags.push(L.tagRoot+'::'+TAGSLUG[c]+'::'+slug(l))}}
+    const dv=vals(k,sub)[0];const deck=L.deckRoot+'::'+deckPart(dv==null?'':lab(sub,dv));
+    lines.push([H(w.tgt),back,tags.map(t=>String(t).trim().replace(/\s+/g,'_').replace(/[",]/g,'')).filter(Boolean).join(' '),deck].map(q).join(','))}
+  ANKI.save(ZH?'anki-zh-word-cards-categories':'anki-de-meine-woerter-kategorien',lines.join('\n')+'\n')}
+
+/* ---------- events (one listener for everything above, so the page's own handlers stay as they are) ---------- */
+let onChange=()=>{};
+document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;let b;
+  if(b=t.closest('[data-tgedit]')){e.stopPropagation();const k=b.dataset.tgedit;OPEN.has(k)?OPEN.delete(k):OPEN.add(k);onChange('list');return}
+  if(b=t.closest('[data-tgset]')){e.stopPropagation();const box=b.closest('[data-tgk]');if(!box)return;const k=box.dataset.tgk,f=b.dataset.tgset,v=b.dataset.v;
+    if(box.classList.contains('tgcard')){setTG(k,f,(f==='p'&&v==='mean')||(f==='s'&&v==='new')?'':v);box.outerHTML=cardRow(k);return}
+    setTG(k,f,(f==='p'&&v==='mean')||(f==='s'&&v==='new')?'':v);onChange('list');return}
+  if(b=t.closest('[data-tgg]')){e.stopPropagation();F.g=b.dataset.tgg;saveF();onChange('list');return}
+  if(b=t.closest('[data-tgonly]')){e.stopPropagation();F.f[b.dataset.tgonly]=b.dataset.v;saveF();onChange('list');return}
+  if(b=t.closest('[data-tglg]')){e.stopPropagation();F.f[b.dataset.tglg]=b.dataset.v;saveF();onChange('learn');return}
+  if(b=t.closest('[data-tgrm]')){e.stopPropagation();const c=b.dataset.tgrm;if(c==='#q')F.q='';else delete F.f[c];saveF();onChange(VIEW==='learn'?'learn-due':'list');return}
+  if(b=t.closest('[data-tgclr]')){e.stopPropagation();F.f={};F.q='';saveF();onChange(VIEW==='learn'?'learn-due':'list');return}
+  if(b=t.closest('[data-tglf]')){e.stopPropagation();onChange('learn');return}
+  if(b=t.closest('[data-tgexp]')){e.stopPropagation();exportCats();return}
+},true);
+document.addEventListener('change',e=>{const t=e.target;if(!t.closest)return;
+  if(t.matches('[data-tgs]')){const k=t.closest('[data-tgk]').dataset.tgk;setTG(k,t.dataset.tgs,t.value);onChange('list');return}
+  if(t.matches('[data-tgi]')){const k=t.closest('[data-tgk]').dataset.tgk;setTG(k,t.dataset.tgi,t.value.split(',').map(x=>x.trim()).filter(Boolean).join(', '));onChange('list');return}
+  if(t.matches('[data-tgxs]')){F.xs=t.value;saveF();return}
+  if(t.matches('[data-tgxo]')){F.xo=t.checked;saveF();return}},true);
+let qT=0;document.addEventListener('input',e=>{const t=e.target;if(!t.matches||!t.matches('[data-tgq]'))return;F.q=t.value;saveF();clearTimeout(qT);
+  qT=setTimeout(()=>{const pos=t.selectionStart;onChange('list');const n=document.querySelector('[data-tgq]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},250)},true);
+/* keep the page's keyboard shortcuts out of the tag boxes */
+document.addEventListener('keydown',e=>{const t=e.target;if(t&&t.closest&&t.closest('.tge,.tgp,.tgx')&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName))e.stopPropagation()},true);
+return {noMatch:ZH?'No cards match the filter.':'Keine Karte passt zum Filter.',pass,active,panel,body,wrapRow,banner,cardRow,exportHTML,bump,vals,lab,setOnChange:f=>{onChange=f},reset:()=>{AUTO=null}}
+})();
+
 /* ---------- learning session ---------- */
 let VIEW='learn',Q=[],qi=0,shown=false,hintOn=false,sess={ok:0,no:0},mode='due';
-function build(m){mode=m;refresh();let ks=Object.keys(W).filter(k=>!st(k).a);
+function build(m){mode=m;refresh();let ks=Object.keys(W).filter(k=>!st(k).a).filter(TAGS.pass);
   if(m==='due')ks=ks.filter(isDue);
   ks.sort(()=>Math.random()-.5);
   if(m==='due')ks.sort((a,b)=>(st(a).d||0)-(st(b).d||0));
   Q=FCS.cut(ks);qi=0;shown=false;hintOn=OPT.hint;sess={ok:0,no:0}}
 function learn(){const M=document.getElementById('main');
-  const all=Object.keys(W).filter(k=>!st(k).a);
+  const all=Object.keys(W).filter(k=>!st(k).a).filter(TAGS.pass);
   if(!Object.keys(W).length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
   if(qi>=Q.length){const nd=all.filter(isDue).length;
-    M.innerHTML='<div class="card"><div class="done"><div class="n">'+(sess.ok+sess.no?sess.ok+' / '+(sess.ok+sess.no):'✓')+'</div><div>'+(sess.ok+sess.no?T.sessDone:(all.length?T.nothingDue:T.allArch))+'</div>'+
+    M.innerHTML=TAGS.banner()+'<div class="card"><div class="done"><div class="n">'+(sess.ok+sess.no?sess.ok+' / '+(sess.ok+sess.no):'✓')+'</div><div>'+(sess.ok+sess.no?T.sessDone:(all.length?T.nothingDue:(TAGS.active()?TAGS.noMatch:T.allArch)))+'</div>'+
       (nd?'<button class="big" data-a="due">'+T.again+' ('+nd+')</button>':'')+(all.length?'<button class="big" data-a="all">'+T.all+' ('+all.length+')</button>':'')+'</div>'+(all.length?FCS.picker(FCS_T):'')+'</div>';
     FCS.bind(M);M.onclick=e=>{const b=e.target.closest('[data-a]');if(b){build(b.dataset.a);learn()}};return}
   const k=Q[qi],w=W[k];if(!w){qi++;return learn()}
   const c0=w.ctx[0];const needHint=!w.en;
-  let h='<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
+  let h=TAGS.banner()+'<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
   h+='<div class="front" data-a="flip"><div class="lab">'+T.enLab+'</div><div class="en">'+enHTML(w.en)+'</div>';
   if(c0&&(hintOn||needHint))h+='<div class="hint">'+ctxText(c0,w,'gap')+'</div>';
   if(!shown)h+='<div class="tapnote">'+T.tap+'</div>';
@@ -232,7 +535,7 @@ function learn(){const M=document.getElementById('main');
     if(w.py)h+='<div class="py">'+esc(w.py)+'</div>';
     if(w.form)h+='<div class="form">'+T.heard+': <i>'+esc(w.form)+'</i></div>';
     if(w.ctx.length)h+='<div class="ctx">'+w.ctx.slice(0,3).map((c,i)=>'<div class="cx">'+(c.s!=null?'<button class="pl" data-a="pl" data-i="'+i+'" aria-label="play">'+PLAY+'</button>':'')+'<div class="t">'+ctxText(c,w,'mark')+'</div></div>').join('')+'</div>';
-    h+='</div><div class="grade"><button class="no" data-a="no">'+T.no+'</button><button class="yes" data-a="yes">'+T.yes+'</button></div>'}
+    h+='</div>'+TAGS.cardRow(k)+'<div class="grade"><button class="no" data-a="no">'+T.no+'</button><button class="yes" data-a="yes">'+T.yes+'</button></div>'}
   h+='</div>';if(qi===0&&!shown&&!(sess.ok+sess.no))h+=FCS.picker(FCS_T);M.innerHTML=h;FCS.bind(M,()=>{build(mode);learn()});
   if(shown&&OPT.auto&&c0&&c0.s!=null){const b=M.querySelector('[data-a="pl"]');setTimeout(()=>play(c0,b),120)}
   M.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
@@ -248,13 +551,14 @@ function grade(k,ok){const s=st(k);s.n=(s.n||0)+1;
 function list(){refresh();const M=document.getElementById('main');const ks=Object.keys(W);
   if(!ks.length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
   ks.sort((a,b)=>W[b].t-W[a].t);
-  const act=ks.filter(k=>!st(k).a),arch=ks.filter(k=>st(k).a);
-  const row=k=>{const w=W[k],s=st(k),d=(s.d||0)-today();
+  const act=ks.filter(k=>!st(k).a&&TAGS.pass(k)),arch=ks.filter(k=>st(k).a&&TAGS.pass(k));
+  const row0=k=>{const w=W[k],s=st(k),d=(s.d||0)-today();
     const due=s.a?'':(d<=0?'<span class="due now">'+T.dueNow+FCS.dots(s)+'</span>':'<span class="due">'+T.inDays(d)+'</span>');
     return '<div class="li'+(s.a?' arch':'')+'"><div class="w">'+(CFG.lang==='zh'?'<span class="zhw">'+esc(w.tgt)+'</span> '+esc(w.py):'<b>'+esc(w.tgt)+'</b>')+'<small>'+esc((w.en||'—').split(/;/)[0])+'</small></div>'+due+
       '<button data-a="'+(s.a?'un':'arch')+'" data-k="'+esc(k)+'">'+(s.a?T.restore:T.known)+'</button></div>'};
+  const row=k=>TAGS.wrapRow(k,row0(k));
   let h='<div class="opts"><button class="chip" data-o="hint" aria-pressed="'+OPT.hint+'">'+T.optHint+'</button><button class="chip" data-o="auto" aria-pressed="'+OPT.auto+'">'+T.optAuto+'</button></div>';
-  h+=FCS.picker(FCS_T)+'<p class="src">'+T.srcNote+'</p>'+ANKI.row('data-anki',"Für Anki exportieren (CSV)","In Anki: Datei → Importieren, Datei wählen. Die Karten landen im Stapel „Deutsch::Wortkarten“. Für beide Richtungen den Notiztyp „Einfach (beide Richtungen)“ wählen. Alle Karten werden exportiert, auch die abgelegten (Tag „learned“).")+'<div class="list">'+act.map(row).join('')+'</div>';
+  h+=FCS.picker(FCS_T)+'<p class="src">'+T.srcNote+'</p>'+ANKI.row('data-anki',"Für Anki exportieren (CSV)","In Anki: Datei → Importieren, Datei wählen. Die Karten landen im Stapel „Deutsch::Wortkarten“. Für beide Richtungen den Notiztyp „Einfach (beide Richtungen)“ wählen. Alle Karten werden exportiert, auch die abgelegten (Tag „learned“).")+TAGS.panel(ks)+TAGS.body(act,row)+TAGS.exportHTML();
   if(arch.length)h+='<div class="h2">'+T.archH+' ('+arch.length+')</div><div class="list">'+arch.map(row).join('')+'</div>';
   M.innerHTML=h;FCS.bind(M);
   M.onclick=e=>{const o=e.target.closest('[data-o]');if(o){OPT[o.dataset.o]=!OPT[o.dataset.o];sv('wk-opt',OPT);list();return}
@@ -280,6 +584,7 @@ function sync(){const g=sig();if(g===lastSig)return;lastSig=g;const before=new S
   if(VIEW==='list')list();else if(qi>=Q.length||!Q.length){build('due');learn()}
   else{const add=Object.keys(W).filter(k=>!before.has(k)&&isDue(k));if(add.length){Q.push(...add);learn()}}}
 addEventListener('storage',sync);addEventListener('focus',sync);document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});setInterval(sync,2500);
+TAGS.setOnChange(v=>{if(v==='list'){if(VIEW==='list')list();return}build(v==='learn'?'all':'due');show('learn')});
 lastSig=sig();build('due');show('learn');
 </script>
 </body></html>
