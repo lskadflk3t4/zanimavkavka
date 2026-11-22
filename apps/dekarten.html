@@ -1,0 +1,285 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Word cards</title>
+<style>
+:root{
+  --bg:#F2F5F3;--surface:#FFFFFF;--ink:#1B2421;--muted:#5D6B66;--line:#D8E0DC;
+  --jade:#2B7A5E;--jade-soft:#E1EFE9;--seal:#B5442F;--seal-soft:#F7E5E0;--gold:#9A6A12;--gold-soft:#F6ECD6;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-han:"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+button{font:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 80px}
+header.top{padding:22px 0 10px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+header.top>div{flex:1;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-read);font-weight:600;font-size:clamp(22px,5vw,30px);line-height:1.2;margin:0}
+.stats{display:flex;gap:14px}
+.stat{text-align:center}.stat b{display:block;font-size:1.15rem;color:var(--jade)}.stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.stat.due b{color:var(--seal)}
+.seg{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:6px 0 16px;overflow-x:auto;scrollbar-width:none}
+.seg button{appearance:none;border:0;background:none;font-weight:600;color:var(--muted);padding:10px 12px 9px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;min-height:44px}
+.seg button[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-size:13.5px;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--jade-soft);border-color:var(--jade);color:var(--jade);font-weight:600}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 20px;min-height:260px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 22px -18px rgba(0,0,0,.4)}
+.prog{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between}
+.front{cursor:pointer;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px;padding:10px 0;user-select:none}
+.lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.en{font-family:var(--f-read);font-size:clamp(20px,5.4vw,26px);line-height:1.3;max-width:30ch}
+.en .alt{display:block;font-family:var(--f-ui);font-size:14px;color:var(--muted);margin-top:4px}
+.tapnote{font-size:13px;color:var(--muted)}
+.hint{font-size:14.5px;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 12px;max-width:100%}
+.hint .gap{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--gold);margin:0 2px}
+.back{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.tgt{font-family:var(--f-read);font-size:clamp(26px,7vw,36px);font-weight:600;line-height:1.2;color:var(--jade)}
+.tgt.han{font-family:var(--f-han);font-size:clamp(38px,11vw,54px);font-weight:500;letter-spacing:.04em}
+.py{font-size:clamp(18px,5vw,22px);color:var(--ink);letter-spacing:.02em}
+.form{font-size:13.5px;color:var(--muted)}
+.ctx{width:100%;text-align:left;margin-top:8px;display:grid;gap:8px}
+.cx{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border-radius:10px;padding:8px 10px;font-size:14.5px}
+.cx .t{flex:1;min-width:0}.cx .t mark{background:var(--gold-soft);color:inherit;border-radius:3px;padding:0 2px}
+.cx .t .zh{font-family:var(--f-han);font-size:16px}.cx .t small{display:block;color:var(--muted);font-size:12.5px}
+.pl{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--jade);background:var(--surface);color:var(--jade);cursor:pointer;display:grid;place-items:center}
+.pl svg{width:11px;height:11px;fill:currentColor}.pl.on{background:var(--jade);color:var(--surface)}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.grade button,.big{border-radius:12px;min-height:50px;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:var(--surface);font-size:15px}
+.grade .no{border-color:var(--seal);color:var(--seal)}.grade .yes{border-color:var(--jade);background:var(--jade);color:var(--surface)}
+.big{width:100%;border-color:var(--jade);color:var(--jade)}
+.row2{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.lnk{border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;padding:6px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted)}
+.empty b{color:var(--ink)}
+.done{text-align:center;display:grid;gap:12px;padding:24px 10px}
+.done .n{font-family:var(--f-read);font-size:40px;color:var(--jade)}
+.list{display:grid;gap:8px}
+.li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.li .w{flex:1;min-width:0}.li .w b{font-weight:700}.li .w .zhw{font-family:var(--f-han);font-size:19px;font-weight:500}
+.li .w small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .due{font-size:12px;color:var(--muted);white-space:nowrap}
+.li .due.now{color:var(--seal);font-weight:700}
+.li button{border:1px solid var(--line);background:var(--surface);border-radius:8px;min-height:36px;padding:4px 10px;cursor:pointer;font-size:13px}
+.li.arch{opacity:.6}
+.h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.src{font-size:11.5px;color:var(--muted)}
+</style>
+</head><body>
+<div class="wrap">
+<header class="top"><div><div class="eyebrow" id="eb"></div><h1 id="ttl"></h1></div>
+<div class="stats"><div class="stat due"><b id="nDue">0</b><span id="lDue"></span></div><div class="stat"><b id="nAll">0</b><span id="lAll"></span></div></div></header>
+<nav class="seg" role="tablist"><button role="tab" data-v="learn" aria-selected="true" id="tLearn"></button><button role="tab" data-v="list" aria-selected="false" id="tList"></button></nav>
+<main id="main"></main>
+</div>
+<script>
+/* ---------- flashcards: cards per round + learning steps (same in every card section) ----------
+   New or forgotten cards must be answered "known" 3 times; they come back in the same round
+   until then. After that: tomorrow, then 3, 7, 14, 30, 60, 120 days. A miss starts the card over. */
+/* ---------- export cards as a CSV file for Anki (same in every card section) ----------
+   Columns: Front, Back, Tags. The header lines tell Anki (2.1.55+) the separator, that the fields are HTML,
+   the deck and which column holds the tags; older Anki skips lines that start with #. */
+var ANKI=(function(){
+  function h(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function q(v){v=String(v==null?'':v).replace(/\r?\n/g,'<br>');return /[",\r\n]/.test(v)||/^\s|\s$/.test(v)||v.charAt(0)==='#'?'"'+v.replace(/"/g,'""')+'"':v}
+  function tag(s){return String(s||'').trim().replace(/\s+/g,'_').replace(/[",]/g,'')}
+  function mark(sent,word){sent=h(sent);if(!word)return sent;var w=h(word),i=sent.indexOf(w);return i<0?sent:sent.slice(0,i)+'<b>'+w+'</b>'+sent.slice(i+w.length)}
+  function csv(rows,deck){var L=['#separator:Comma','#html:true','#deck:'+deck,'#columns:Front,Back,Tags','#tags column:3'];
+    rows.forEach(function(r){L.push([r[0],r[1],(r[2]||[]).map(tag).filter(Boolean).join(' ')].map(q).join(','))});return L.join('\n')+'\n'}
+  function stamp(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+  function save(name,text){var blob=new Blob([text],{type:'text/csv;charset=utf-8'}),file=name.replace(/\.csv$/,'')+'-'+stamp()+'.csv';
+    if(window.navigator&&navigator.msSaveBlob){navigator.msSaveBlob(blob,file);return}
+    var a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=file;a.style.display='none';document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(u);a.remove()},4000)}
+  var css='.anki-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:16px 0 6px}'+
+    '.anki-btn{border:1px solid var(--jade,#2B7A5E);background:var(--surface,#fff);color:var(--jade,#2B7A5E);border-radius:999px;padding:7px 14px;min-height:38px;cursor:pointer;font:inherit;font-size:14px;font-weight:600}'+
+    '.anki-btn:hover{background:var(--jade,#2B7A5E);color:#fff}'+
+    '.anki-note{font-size:12.5px;color:var(--muted,#667);line-height:1.45;flex:1 1 260px}';
+  function style(){if(document.getElementById('anki-css'))return;var s=document.createElement('style');s.id='anki-css';s.textContent=css;document.head.appendChild(s)}
+  /* attrs: the data attribute the page's own click handler listens to, e.g. 'data-w="anki"' */
+  function row(attrs,label,note){style();return '<div class="anki-row"><button type="button" class="anki-btn" '+attrs+'>⬇ '+label+'</button><span class="anki-note">'+note+'</span></div>'}
+  return {h:h,mark:mark,csv:csv,save:save,row:row}
+})();
+var FCS=(function(){
+  var KEY='fc-round-n',STEPS=3,LADDER=[1,3,7,14,30,60,120],PRESETS=[10,20,30,50];
+  function get(){try{var v=JSON.parse(localStorage.getItem(KEY));if(v===0||(v>0&&v<10000))return Math.floor(v)}catch(e){}return 20}
+  function set(n){try{localStorage.setItem(KEY,JSON.stringify(n))}catch(e){}}
+  function cut(a){var n=get();return n?a.slice(0,n):a.slice()}
+  /* r = card record {b: level (0 = learning), k: knowns so far while learning, d: due day}.
+     Returns true when the card should come back later in this round. */
+  function grade(r,ok,day){
+    if(!ok){r.b=0;r.k=0;r.d=day;return true}
+    if(!(r.b>0)){r.k=(r.k||0)+1;if(r.k<STEPS){r.d=day;return true}r.b=1;r.k=0;r.d=day+LADDER[0];return false}
+    r.b=Math.min(LADDER.length,r.b+1);r.k=0;r.d=day+LADDER[r.b-1];return false}
+  /* put a card back a few places later in the queue */
+  function requeue(Q,pos,k){Q.splice(Math.min(Q.length,pos+4),0,k)}
+  function learning(r){return !(r&&r.b>0)}
+  function steps(r){return learning(r)?(r&&r.k)||0:STEPS}
+  var css='.fcn{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:12px 0 4px;font-size:13.5px;color:var(--muted,#667)}'+
+    '.fcn b{font-weight:600;color:var(--ink,#222);margin-right:2px}'+
+    '.fcn button{border:1px solid var(--line,#ccd);background:var(--surface,#fff);color:var(--ink,#222);border-radius:999px;padding:5px 12px;min-height:34px;min-width:42px;cursor:pointer;font:inherit;font-size:13.5px}'+
+    '.fcn button[aria-pressed="true"]{background:var(--jade,#2B7A5E);border-color:var(--jade,#2B7A5E);color:#fff}'+
+    '.fcn input{width:78px;min-height:34px;border:1px solid var(--line,#ccd);background:var(--surface,#fff);color:var(--ink,#222);border-radius:999px;padding:4px 10px;font:inherit;font-size:13.5px;text-align:center}'+
+    '.fcn input.on{border-color:var(--jade,#2B7A5E);box-shadow:0 0 0 1px var(--jade,#2B7A5E)}'+
+    '.fcn-note{font-size:12.5px;color:var(--muted,#667);margin:2px 0 8px;line-height:1.45}'+
+    '.fcs-dots{display:inline-flex;gap:3px;vertical-align:middle;margin-left:6px}.fcs-dots i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--jade,#2B7A5E);display:inline-block}.fcs-dots i.on{background:var(--jade,#2B7A5E)}';
+  function style(){if(document.getElementById('fcn-css'))return;var s=document.createElement('style');s.id='fcn-css';s.textContent=css;document.head.appendChild(s)}
+  /* T = {lab,all,custom,note} */
+  function picker(T){style();var n=get(),preset=!n||PRESETS.indexOf(n)>=0;
+    return '<div class="fcn" role="group" aria-label="'+T.lab+'"><b>'+T.lab+'</b>'+
+      PRESETS.map(function(p){return '<button type="button" data-fcn="'+p+'" aria-pressed="'+(n===p)+'">'+p+'</button>'}).join('')+
+      '<button type="button" data-fcn="0" aria-pressed="'+(n===0)+'">'+T.all+'</button>'+
+      '<input type="number" inputmode="numeric" min="1" max="9999" step="1" data-fcn-in placeholder="'+T.custom+'" aria-label="'+T.custom+'"'+(preset?'':' class="on" value="'+n+'"')+'></div>'+
+      (T.note?'<div class="fcn-note">'+T.note+'</div>':'')}
+  /* wire every picker inside root; cb(n) runs after a change */
+  function bind(root,cb){if(!root)return;var ps=root.querySelectorAll('.fcn');
+    Array.prototype.forEach.call(ps,function(p){
+      function paint(){var n=get(),inp=p.querySelector('[data-fcn-in]');
+        Array.prototype.forEach.call(p.querySelectorAll('[data-fcn]'),function(b){b.setAttribute('aria-pressed',String(+b.dataset.fcn===n))});
+        var pre=!n||PRESETS.indexOf(n)>=0;inp.classList.toggle('on',!pre);if(pre&&document.activeElement!==inp)inp.value=''}
+      p.addEventListener('click',function(e){var b=e.target.closest('[data-fcn]');if(!b)return;e.stopPropagation();set(+b.dataset.fcn);paint();if(cb)cb(get())});
+      var inp=p.querySelector('[data-fcn-in]');
+      inp.addEventListener('click',function(e){e.stopPropagation()});
+      function take(){var v=parseInt(inp.value,10);if(v>0){set(Math.min(9999,v));paint();if(cb)cb(get())}}
+      inp.addEventListener('change',take);inp.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Enter'){take();inp.blur()}})})}
+  function dots(r){if(!learning(r))return '';var k=steps(r),h='<span class="fcs-dots" aria-hidden="true">';for(var i=0;i<STEPS;i++)h+='<i'+(i<k?' class="on"':'')+'></i>';return h+'</span>'}
+  return {get:get,set:set,cut:cut,grade:grade,requeue:requeue,learning:learning,steps:steps,STEPS:STEPS,picker:picker,bind:bind,dots:dots}
+})();
+const FCS_T={lab:'Karten pro Runde',all:'Alle',custom:'eigene',note:'Neue Karten brauchen 3× „Gewusst“ (sie kommen in derselben Runde wieder); dann morgen, in 3 Tagen, 7, 14, 30 … Ein Fehler setzt die Karte zurück.'};
+const CFG={lang:'de',src:[{id:'dehoer',key:'dh-words',audio:'audio-de/{id}.webm'}],ui:{"title": "Meine Wörter · Karten", "eyebrow": "Deutsch · aus Hören", "dueS": "fällig", "allS": "Wörter", "learnTab": "Lernen", "listTab": "Liste", "enLab": "English", "tgtLab": "Deutsch", "tap": "Tippen zum Umdrehen", "show": "Deutsch zeigen", "hint": "Satz als Hinweis", "heard": "gehört als", "no": "Nicht gewusst", "yes": "Gewusst", "dueL": "fällige Karten", "allL": "alle Karten", "noEn": "(keine Übersetzung – siehe Satz)", "empty": "Noch keine Wörter. Tippe im Tab <b>Hören</b> auf ein Wort und dann auf <b>★ Kenne ich nicht</b> – es erscheint hier als Karte: vorne Englisch, hinten Deutsch.", "sessDone": "Runde fertig.", "nothingDue": "Heute ist nichts mehr fällig.", "allArch": "Alle Wörter sind als gelernt abgelegt.", "again": "Fällige wiederholen", "all": "Alle Karten üben", "dueNow": "fällig", "restore": "Zurückholen", "known": "Kann ich", "archH": "Gelernt (abgelegt)", "optHint": "Satz immer als Hinweis zeigen", "optAuto": "Satz beim Umdrehen abspielen", "srcNote": "Die Liste kommt aus dem Tab Hören (★). „Kann ich“ legt eine Karte ab, ohne sie dort zu löschen.",inDays:function(d){return 'in '+d+(d===1?' Tag':' Tagen')}}};
+const T=CFG.ui;
+/* ---------- storage: words come from the listening tabs; card progress stays here ---------- */
+const REAL=(()=>{try{for(let w=window;;w=w.parent){if(w.__dpShell)return w.localStorage;if(w===w.parent)break}}catch(e){}try{return window.top.localStorage}catch(e){}return window.localStorage})();
+const rd=(st,k,d)=>{try{const v=JSON.parse(st.getItem(k)||'null');return v&&typeof v==='object'?v:d}catch(e){return d}};
+const ld=(k,d)=>rd(localStorage,k,d),sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);
+const IV=[0,1,3,7,14,30,60,120];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let OPT=Object.assign({hint:false,auto:true},ld('wk-opt',{}));
+function words(){
+  const out={};
+  for(const s of CFG.src){
+    const W=rd(REAL,'drillpack:'+s.id+':'+s.key,{});
+    for(const k in W){const r=W[k];if(!r)continue;
+      const o=out[k]||(out[k]={k,ctx:[],t:r.t||0,src:s.id});
+      if(CFG.lang==='de'){o.tgt=r.h||k;o.form=r.w&&r.w!==k&&(r.h||'').indexOf(r.w)<0?r.w:'';o.en=o.en||r.g||''}
+      else{o.tgt=k;o.py=o.py||r.py||'';o.en=o.en||r.en||''}
+      o.t=Math.max(o.t,r.t||0);
+      for(const c of (r.c||[]))o.ctx.push(Object.assign({src:s.id,word:r.w||k},c))}}
+  return out}
+let W={},S=ld('wk-srs',{});
+const saveS=()=>sv('wk-srs',S);
+function st(k){return S[k]||{b:0,d:0,n:0,a:0}}
+function isDue(k){const s=st(k);return !s.a&&(s.d||0)<=today()}
+function refresh(){W=words();const ks=Object.keys(W).filter(k=>!st(k).a);
+  document.getElementById('nDue').textContent=ks.filter(isDue).length;
+  document.getElementById('nAll').textContent=ks.length}
+/* ---------- English side: first few senses ---------- */
+function enHTML(en){if(!en)return '<span class="alt">'+esc(T.noEn)+'</span>';
+  const p=String(en).split(/\s*[;/]\s*/).map(x=>x.trim()).filter(Boolean);const seen=new Set(),u=[];
+  for(const x of p){const y=x.replace(/^\((.*)\)$/,'$1');if(!seen.has(y.toLowerCase())){seen.add(y.toLowerCase());u.push(y)}}
+  return esc(u[0]||en)+(u.length>1?'<span class="alt">'+esc(u.slice(1,4).join(' · '))+'</span>':'')}
+/* sentence with the word blanked out (hint) or highlighted (answer) */
+function ctxText(c,w,mode){
+  if(CFG.lang==='de'){const t=c.t||'',f=c.w||w.form||'';if(!f)return esc(t);
+    const re=new RegExp('(^|[^\\p{L}])('+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?=[^\\p{L}]|$)','u');
+    return esc(t).replace(re,(m,a,b)=>a+(mode==='gap'?'<span class="gap"></span>':'<mark>'+b+'</mark>'))}
+  const h=c.h||'',i=h.indexOf(w.k);let zh;
+  if(i<0)zh=esc(h);else zh=esc(h.slice(0,i))+(mode==='gap'?'<span class="gap"></span>':'<mark>'+esc(w.k)+'</mark>')+esc(h.slice(i+w.k.length));
+  return '<span class="zh">'+zh+'</span>'+(mode!=='gap'&&c.p?'<small>'+esc(c.p)+'</small>':'')+(c.en?'<small>'+esc(c.en)+'</small>':'')}
+/* ---------- audio: the sentence from the recording ---------- */
+const au=new Audio();au.preload='none';let stopAt=null,curBtn=null;
+au.addEventListener('timeupdate',()=>{if(stopAt!=null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener('pause',()=>{if(curBtn){curBtn.classList.remove('on');curBtn=null}});
+function audioURL(c){const f=CFG.src.find(s=>s.id===c.src);return f?f.audio.replace(/\{(\d)\|(\d)\|(\d+)\}/,(m,a,b,n)=>(+c.pid<=+n?a:b)).replace('{id}',c.pid):''}
+function play(c,btn){if(c.s==null)return;const u=audioURL(c);if(!u)return;
+  if(curBtn===btn&&!au.paused){au.pause();return}
+  au.pause();const go=()=>{au.currentTime=Math.max(0,c.s-0.05);stopAt=(c.e!=null?c.e:c.s+4)+0.15;curBtn=btn;if(btn)btn.classList.add('on');au.play().catch(()=>{})};
+  if(!au.src.endsWith(u)){au.src=u;au.addEventListener('loadedmetadata',go,{once:true});au.load()}else go()}
+const PLAY='<svg viewBox="0 0 10 10"><path d="M1 0l9 5-9 5z"/></svg>';
+/* ---------- learning session ---------- */
+let VIEW='learn',Q=[],qi=0,shown=false,hintOn=false,sess={ok:0,no:0},mode='due';
+function build(m){mode=m;refresh();let ks=Object.keys(W).filter(k=>!st(k).a);
+  if(m==='due')ks=ks.filter(isDue);
+  ks.sort(()=>Math.random()-.5);
+  if(m==='due')ks.sort((a,b)=>(st(a).d||0)-(st(b).d||0));
+  Q=FCS.cut(ks);qi=0;shown=false;hintOn=OPT.hint;sess={ok:0,no:0}}
+function learn(){const M=document.getElementById('main');
+  const all=Object.keys(W).filter(k=>!st(k).a);
+  if(!Object.keys(W).length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
+  if(qi>=Q.length){const nd=all.filter(isDue).length;
+    M.innerHTML='<div class="card"><div class="done"><div class="n">'+(sess.ok+sess.no?sess.ok+' / '+(sess.ok+sess.no):'✓')+'</div><div>'+(sess.ok+sess.no?T.sessDone:(all.length?T.nothingDue:T.allArch))+'</div>'+
+      (nd?'<button class="big" data-a="due">'+T.again+' ('+nd+')</button>':'')+(all.length?'<button class="big" data-a="all">'+T.all+' ('+all.length+')</button>':'')+'</div>'+(all.length?FCS.picker(FCS_T):'')+'</div>';
+    FCS.bind(M);M.onclick=e=>{const b=e.target.closest('[data-a]');if(b){build(b.dataset.a);learn()}};return}
+  const k=Q[qi],w=W[k];if(!w){qi++;return learn()}
+  const c0=w.ctx[0];const needHint=!w.en;
+  let h='<div class="card"><div class="prog"><span>'+(qi+1)+' / '+Q.length+'</span><span>'+(mode==='due'?T.dueL:T.allL)+FCS.dots(st(k))+'</span></div>';
+  h+='<div class="front" data-a="flip"><div class="lab">'+T.enLab+'</div><div class="en">'+enHTML(w.en)+'</div>';
+  if(c0&&(hintOn||needHint))h+='<div class="hint">'+ctxText(c0,w,'gap')+'</div>';
+  if(!shown)h+='<div class="tapnote">'+T.tap+'</div>';
+  h+='</div>';
+  if(!shown){h+='<div class="row2">'+(c0&&!hintOn&&!needHint?'<button class="chip" data-a="hint">'+T.hint+'</button>':'')+'</div><button class="big" data-a="flip">'+T.show+'</button>'}
+  else{h+='<div class="back"><div class="lab">'+T.tgtLab+'</div><div class="tgt'+(CFG.lang==='zh'?' han':'')+'">'+esc(w.tgt)+'</div>';
+    if(w.py)h+='<div class="py">'+esc(w.py)+'</div>';
+    if(w.form)h+='<div class="form">'+T.heard+': <i>'+esc(w.form)+'</i></div>';
+    if(w.ctx.length)h+='<div class="ctx">'+w.ctx.slice(0,3).map((c,i)=>'<div class="cx">'+(c.s!=null?'<button class="pl" data-a="pl" data-i="'+i+'" aria-label="play">'+PLAY+'</button>':'')+'<div class="t">'+ctxText(c,w,'mark')+'</div></div>').join('')+'</div>';
+    h+='</div><div class="grade"><button class="no" data-a="no">'+T.no+'</button><button class="yes" data-a="yes">'+T.yes+'</button></div>'}
+  h+='</div>';if(qi===0&&!shown&&!(sess.ok+sess.no))h+=FCS.picker(FCS_T);M.innerHTML=h;FCS.bind(M,()=>{build(mode);learn()});
+  if(shown&&OPT.auto&&c0&&c0.s!=null){const b=M.querySelector('[data-a="pl"]');setTimeout(()=>play(c0,b),120)}
+  M.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+    if(a==='flip'){if(!shown){shown=true;learn()}}
+    else if(a==='hint'){hintOn=true;learn()}
+    else if(a==='pl')play(w.ctx[+b.dataset.i],b);
+    else if(a==='yes'||a==='no')grade(k,a==='yes')}}
+function grade(k,ok){const s=st(k);s.n=(s.n||0)+1;
+  if(ok)sess.ok++;else sess.no++;
+  if(FCS.grade(s,ok,today()))FCS.requeue(Q,qi,k);
+  S[k]=s;saveS();au.pause();qi++;shown=false;hintOn=OPT.hint;refresh();learn()}
+/* ---------- list ---------- */
+function list(){refresh();const M=document.getElementById('main');const ks=Object.keys(W);
+  if(!ks.length){M.innerHTML='<div class="empty">'+T.empty+'</div>';return}
+  ks.sort((a,b)=>W[b].t-W[a].t);
+  const act=ks.filter(k=>!st(k).a),arch=ks.filter(k=>st(k).a);
+  const row=k=>{const w=W[k],s=st(k),d=(s.d||0)-today();
+    const due=s.a?'':(d<=0?'<span class="due now">'+T.dueNow+FCS.dots(s)+'</span>':'<span class="due">'+T.inDays(d)+'</span>');
+    return '<div class="li'+(s.a?' arch':'')+'"><div class="w">'+(CFG.lang==='zh'?'<span class="zhw">'+esc(w.tgt)+'</span> '+esc(w.py):'<b>'+esc(w.tgt)+'</b>')+'<small>'+esc((w.en||'—').split(/;/)[0])+'</small></div>'+due+
+      '<button data-a="'+(s.a?'un':'arch')+'" data-k="'+esc(k)+'">'+(s.a?T.restore:T.known)+'</button></div>'};
+  let h='<div class="opts"><button class="chip" data-o="hint" aria-pressed="'+OPT.hint+'">'+T.optHint+'</button><button class="chip" data-o="auto" aria-pressed="'+OPT.auto+'">'+T.optAuto+'</button></div>';
+  h+=FCS.picker(FCS_T)+'<p class="src">'+T.srcNote+'</p>'+ANKI.row('data-anki',"Für Anki exportieren (CSV)","In Anki: Datei → Importieren, Datei wählen. Die Karten landen im Stapel „Deutsch::Wortkarten“. Für beide Richtungen den Notiztyp „Einfach (beide Richtungen)“ wählen. Alle Karten werden exportiert, auch die abgelegten (Tag „learned“).")+'<div class="list">'+act.map(row).join('')+'</div>';
+  if(arch.length)h+='<div class="h2">'+T.archH+' ('+arch.length+')</div><div class="list">'+arch.map(row).join('')+'</div>';
+  M.innerHTML=h;FCS.bind(M);
+  M.onclick=e=>{const o=e.target.closest('[data-o]');if(o){OPT[o.dataset.o]=!OPT[o.dataset.o];sv('wk-opt',OPT);list();return}
+    if(e.target.closest('[data-anki]')){ankiAll();return}
+    const b=e.target.closest('[data-a]');if(!b)return;const k=b.dataset.k,s=st(k);
+    if(b.dataset.a==='arch'){s.a=1}else{s.a=0;s.d=today();s.b=0;s.k=0}S[k]=s;saveS();list()}}
+function ankiAll(){refresh();const H=ANKI.h,ks=Object.keys(W).sort((a,b)=>W[b].t-W[a].t);
+  const rows=ks.map(k=>{const w=W[k],s=st(k),cs=w.ctx.slice(0,2);
+    let back=H(w.en||'');if(w.form)back+='<br><i>gehört als: '+H(w.form)+'</i>';
+    cs.forEach(c=>{back+='<br><br>'+ANKI.mark(c.t||'',c.w||w.form||'')});
+    return [H(w.tgt),back,['zanimavkavka',"de_wortkarten",'from_'+w.src].concat(s.a?['learned']:s.b?['level_'+s.b]:['new'])]});
+  ANKI.save("anki-deutsch-wortkarten",ANKI.csv(rows,"Deutsch::Wortkarten"))}
+/* ---------- shell ---------- */
+function show(v){VIEW=v;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v===v)));
+  au.pause();if(v==='learn'){if(qi>=Q.length)build('due');learn()}else list();scrollTo(0,0)}
+document.querySelector('.seg').onclick=e=>{const b=e.target.closest('[data-v]');if(b)show(b.dataset.v)};
+document.title=T.title;document.getElementById('ttl').textContent=T.title;document.getElementById('eb').textContent=T.eyebrow;
+document.getElementById('lDue').textContent=T.dueS;document.getElementById('lAll').textContent=T.allS;
+document.getElementById('tLearn').textContent=T.learnTab;document.getElementById('tList').textContent=T.listTab;
+/* pick up words marked in the listening tabs while this one was open */
+let lastSig='';function sig(){return CFG.src.map(s=>{try{return (REAL.getItem('drillpack:'+s.id+':'+s.key)||'').length}catch(e){return 0}}).join(',')}
+function sync(){const g=sig();if(g===lastSig)return;lastSig=g;const before=new Set(Object.keys(W));refresh();
+  if(VIEW==='list')list();else if(qi>=Q.length||!Q.length){build('due');learn()}
+  else{const add=Object.keys(W).filter(k=>!before.has(k)&&isDue(k));if(add.length){Q.push(...add);learn()}}}
+addEventListener('storage',sync);addEventListener('focus',sync);document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});setInterval(sync,2500);
+lastSig=sig();build('due');show('learn');
+</script>
+</body></html>

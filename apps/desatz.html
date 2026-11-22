@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sätze nachbauen · Hören</title>
+<style>
+:root{
+  --bg:#F2F5F3;--surface:#FFFFFF;--ink:#1B2421;--muted:#5D6B66;--line:#D8E0DC;
+  --jade:#2B7A5E;--jade-soft:#E1EFE9;--seal:#B5442F;--seal-soft:#F7E5E0;--gold:#9A6A12;--gold-soft:#F6ECD6;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-han:"Noto Serif SC","Songti SC","PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111715;--surface:#19211F;--ink:#E3EBE7;--muted:#93A39C;--line:#2B3632;
+  --jade:#62C39C;--jade-soft:#1D3229;--seal:#E58169;--seal-soft:#3A221D;--gold:#E0B357;--gold-soft:#3A2F17;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55}
+button,input,textarea{font:inherit;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 90px}
+header.top{padding:22px 0 8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-read);font-weight:600;font-size:clamp(22px,5vw,30px);line-height:1.2;margin:2px 0 4px}
+h1 .zh{font-family:var(--f-han)}
+.lede{color:var(--muted);margin:0 0 6px;max-width:60ch}
+.seg{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:10px 0 14px;overflow-x:auto;scrollbar-width:none}
+.seg button{appearance:none;border:0;background:none;font-weight:600;color:var(--muted);padding:10px 12px 9px;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;min-height:44px}
+.seg button[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px;align-items:center}
+.opts .lab{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);min-width:64px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-size:13.5px;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--jade-soft);border-color:var(--jade);color:var(--jade);font-weight:600}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;min-height:44px}
+.btn:hover{border-color:var(--jade)}
+.btn.pri{background:var(--jade);border-color:var(--jade);color:var(--bg)}
+.btn:disabled{opacity:.45;cursor:default}
+h2{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);margin:22px 0 8px;font-weight:700}
+.sets{display:grid;gap:8px}
+.set{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:4px 12px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;cursor:pointer;width:100%}
+.set:hover{border-color:var(--jade)}
+.set .no{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--muted);line-height:1.2}
+.set .no b{display:block;font-family:var(--f-han);font-size:15px;color:var(--jade);font-weight:600}
+.set .t{font-weight:600;line-height:1.3}
+.set .t small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.set .sc{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.set .sc b{color:var(--jade)}
+.bar{grid-column:1/-1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--jade)}
+.special{display:flex;gap:8px;flex-wrap:wrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 22px -18px rgba(0,0,0,.4)}
+.prog{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.prog .pbar{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog .pbar i{display:block;height:100%;background:var(--jade);transition:width .25s}
+.play{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pb{width:52px;height:52px;border-radius:50%;border:0;background:var(--jade);color:var(--bg);cursor:pointer;display:grid;place-items:center;flex:none}
+.pb svg{width:20px;height:20px;fill:currentColor}
+.pb.on{box-shadow:0 0 0 5px var(--jade-soft)}
+.small{font-size:13px;color:var(--muted)}
+.prompt-en{font-family:var(--f-read);font-size:17px;line-height:1.4}
+.prompt-en.off{color:var(--muted);font-style:italic;font-size:14px;font-family:var(--f-ui)}
+.pyhint{color:var(--jade);font-size:14px}
+.ans{min-height:64px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.ans.empty::before{content:"Tap the blocks in order";color:var(--muted);font-size:13.5px;padding:6px}
+.bank{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.tile{font-family:var(--f-han);font-size:19px;line-height:1.2;border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 11px;cursor:pointer;min-height:44px;min-width:44px;user-select:none;box-shadow:0 1px 0 var(--line)}
+.tile:hover{border-color:var(--jade)}
+.tile.used{visibility:hidden}
+.tile.ok{background:var(--jade-soft);border-color:var(--jade);color:var(--jade)}
+.tile.bad{background:var(--seal-soft);border-color:var(--seal);color:var(--seal)}
+.tile.given{background:var(--gold-soft);border-color:var(--gold);color:var(--gold)}
+textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px 12px;font-family:var(--f-han);font-size:20px;line-height:1.5;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row .sp{flex:1}
+.fb{border-radius:12px;padding:12px 14px;display:grid;gap:4px}
+.fb.ok{background:var(--jade-soft)}
+.fb.bad{background:var(--seal-soft)}
+.fb .v{font-weight:700}
+.fb.ok .v{color:var(--jade)}.fb.bad .v{color:var(--seal)}
+.han{font-family:var(--f-han);font-size:20px;line-height:1.55}
+.han .m{color:var(--seal);text-decoration:underline wavy;text-underline-offset:4px}
+.han .x{color:var(--seal);text-decoration:line-through}
+.han .g{color:var(--jade)}
+.fb .py{color:var(--jade);font-size:14px}
+.fb .en{color:var(--muted);font-size:14px}
+.done{text-align:center;padding:26px 10px;display:grid;gap:10px;justify-items:center}
+.done .big{font-family:var(--f-read);font-size:40px;color:var(--jade);line-height:1}
+.mini{display:grid;gap:6px;text-align:left;width:100%;margin-top:8px}
+.mini div{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;font-size:14px}
+.mini .han{font-size:16px}
+.mk{font-weight:700}.mk.g1{color:var(--jade)}.mk.g0{color:var(--seal)}.mk.gh{color:var(--gold)}
+.back{border:0;background:none;color:var(--jade);font-weight:600;cursor:pointer;padding:6px 0;min-height:40px}
+.note{font-size:12.5px;color:var(--muted)}
+body.inround header.top{display:none}body.inround .wrap{padding-top:8px}
+.cfg{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:0 0 12px}
+.cfg>summary{cursor:pointer;list-style:none;padding:11px 14px;font-weight:600;min-height:44px}
+.cfg>summary::-webkit-details-marker{display:none}
+.cfg>summary small{font-weight:400;color:var(--muted);margin-left:6px}
+.cfg[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.cfg .opts{padding:0 12px}
+.tile,.han,textarea{font-family:var(--f-read)}
+.tile{font-size:17px}.han{font-size:18px}textarea{font-size:18px}
+.han .w{cursor:pointer;border-bottom:1px dotted var(--muted)}
+.ans.empty::before{content:"Bausteine der Reihe nach antippen"}
+.gloss{font-size:13.5px;color:var(--ink);background:var(--bg);border-radius:8px;padding:6px 10px;margin-top:4px}
+.gloss b{color:var(--jade)}
+.ctx{font-family:var(--f-read);font-size:14.5px;color:var(--muted);border-left:3px solid var(--line);padding-left:10px}
+.spk{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+h3{font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:600}
+@media (max-width:480px){.tile{font-size:16px!important}}
+@media (max-width:480px){.tile{font-size:18px;padding:7px 9px}.han{font-size:18px}textarea{font-size:18px}}
+</style></head><body>
+<div class="wrap">
+<header class="top" id="hd">
+  <div class="eyebrow">Deutsch · Hören · Goethe B2 · TestDaF</div>
+  <h1>Sätze nachbauen</h1>
+  <p class="lede">Jeder Hörtext aus „Hören“ als eigene Übung: Satz anhören, dann aus Bausteinen zusammensetzen oder ganz eintippen.</p>
+</header>
+<div id="app"></div>
+</div>
+<audio id="au" preload="none"></audio>
+<script>
+const LSK='desatz-v1';
+const S=(()=>{try{return JSON.parse(localStorage.getItem(LSK))||{}}catch(e){return {}}})();
+S.opt=Object.assign({mode:'blocks',size:'words',ctx:true,cnt:true,auto:true,rate:1,order:'seq',per:10},S.opt||{});
+S.res=S.res||{};S.ex=S.ex||'all';
+function save(){try{localStorage.setItem(LSK,JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let SETS=[],BYKEY={},LEX={f:{},g:{}};
+
+/* ---------- turn the listening transcripts into sentences ---------- */
+const SKIPB=/^(Ansage|Ende|Pause)$/;
+const ABBR=/(?:^|\s)(?:Dr|Prof|Hr|Fr|bzw|ca|usw|vgl|Nr|St|evtl|ggf|inkl|z|B|d|h|u|a|o|s|v|Chr|Jh|Mio|Mrd|Std|Min|Abs|Tel|etc|S)\.$/;
+function splitSentences(t){
+  const out=[];let start=0;const re=/[.!?…]["“”»«']?\s+(?=["„“»«(]?[A-ZÄÖÜ0-9])/g;let m;
+  while((m=re.exec(t))){const end=m.index+m[0].length,chunk=t.slice(start,end).trim();
+    const before=' '+t.slice(start,m.index+1);if(ABBR.test(before)||/\s\d{1,2}\.$/.test(before))continue;
+    out.push([start,start+chunk.length]);start=end}
+  if(start<t.length)out.push([start,t.length]);
+  /* glue very short pieces (≤3 words) onto a neighbour */
+  const words=([a,b])=>t.slice(a,b).trim().split(/\s+/).length;
+  for(let i=0;i<out.length;i++){if(out.length>1&&words(out[i])<=3){if(i+1<out.length){out[i+1][0]=out[i][0];out.splice(i,1);i--}else{out[i-1][1]=out[i][1];out.splice(i,1)}}}
+  return out.map(([a,b])=>[a,b,t.slice(a,b).trim()]);
+}
+function buildSets(D){
+  const sets=[];
+  D.parts.forEach(p=>{
+    if(p.group==='Einführung')return;
+    const items=[],seen=new Set();let prevText='';
+    p.blocks.forEach(bl=>{
+      if(SKIPB.test(bl.label||''))return;
+      bl.lines.forEach(l=>{
+        const [s,e,text,spk]=l;if(spk==='*'||spk==='Ansage')return;
+        if(seen.has(text))return;seen.add(text);
+        const parts=splitSentences(text),L=text.length,d=e-s;
+        parts.forEach(([a,b,zh],k)=>{
+          const n=zh.split(/\s+/).length;
+          if(n>=4&&n<=40){
+            const cs=parts.length===1?s:Math.max(s,s+d*a/L-0.3),ce=parts.length===1?e:Math.min(e,s+d*b/L+0.45);
+            items.push({set:p.id,i:items.length,s:cs,e:ce,ls:s,le:e,t:zh,spk:spk&&spk!=='*'?spk:'',blk:bl.label||'',prev:prevText,k:p.id+':'+zh.slice(0,60)});
+          }
+          prevText=zh;
+        });
+      });
+    });
+    if(items.length>=3)sets.push({key:p.id,id:p.id,ex:p.ex,group:p.group,title:p.title,sub:p.sub||'',items});
+  });
+  return sets;
+}
+
+/* ---------- words ---------- */
+const PUNC=/^[„“”"'‚‘’»«()\[\],.;:!?…–—-]+|[„“”"'‚‘’»«()\[\],.;:!?…–—-]+$/g;
+const bare=w=>w.replace(PUNC,'');
+const fold=w=>bare(w).toLowerCase().replace(/ß/g,'ss').replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue');
+const toks=t=>t.split(/\s+/).filter(w=>bare(w));
+function gloss(w){const b=bare(w),g=LEX.g,f=LEX.f;const k=g[b]?b:g[f[b]]?f[b]:g[b.toLowerCase()]?b.toLowerCase():g[f[b.toLowerCase()]]?f[b.toLowerCase()]:null;return k?g[k]:null}
+function lcs(a,b){const n=a.length,m=b.length,d=Array.from({length:n+1},()=>new Uint16Array(m+1));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)d[i][j]=a[i]===b[j]?d[i+1][j+1]+1:Math.max(d[i+1][j],d[i][j+1]);
+  const ia=new Set(),ib=new Set();let i=0,j=0;while(i<n&&j<m){if(a[i]===b[j]){ia.add(i);ib.add(j);i++;j++}else if(d[i+1][j]>=d[i][j+1])i++;else j++}return {ia,ib}}
+function compare(typed,target){
+  const u=toks(typed),t=toks(target),uf=u.map(fold),tf=t.map(fold),{ia,ib}=lcs(uf,tf);
+  const ok=uf.length===tf.length&&ia.size===tf.length;
+  const exact=ok&&u.every((w,k)=>bare(w)===bare(t[k]));
+  const yours=u.map((w,k)=>ia.has(k)?`<span class="g">${esc(w)}</span>`:`<span class="x">${esc(w)}</span>`).join(' ');
+  const right=t.map((w,k)=>ib.has(k)?esc(w):`<span class="m">${esc(w)}</span>`).join(' ');
+  return {ok,exact,yours,right,miss:t.length-ib.size,extra:u.length-ia.size};
+}
+function wordsHTML(t){return toks(t).map((w,k)=>`<span class="w" data-w="${esc(w)}">${esc(w)}</span>`).join(' ')}
+function bindGloss(root,box){root.querySelectorAll('.w').forEach(el=>el.onclick=()=>{const g=gloss(el.dataset.w);box.innerHTML=g?`<div class="gloss"><b>${esc(g[0])}</b> — ${esc(g[1])}</div>`:`<div class="gloss">${esc(bare(el.dataset.w))} — keine Angabe im Wörterbuch</div>`})}
+
+/* ---------- audio ---------- */
+const au=$('au');let stopAt=0,curSrc='';
+function playClip(it,whole,btn){
+  const src='audio-de/'+it.set+'.webm';if(curSrc!==src){au.src=src;curSrc=src}
+  au.playbackRate=S.opt.rate;const s=whole?it.ls:it.s,e=whole?it.le:it.e;
+  const go=()=>{try{au.currentTime=Math.max(0,s-0.1)}catch(x){}stopAt=e+0.25;const p=au.play();if(p&&p.catch)p.catch(()=>{});if(btn)btn.classList.add('on')};
+  if(au.readyState>=1)go();else{au.addEventListener('loadedmetadata',go,{once:true});au.load()}
+}
+au.addEventListener('timeupdate',()=>{if(stopAt&&au.currentTime>=stopAt){au.pause();stopAt=0}});
+au.addEventListener('pause',()=>document.querySelectorAll('.pb.on').forEach(b=>b.classList.remove('on')));
+
+/* ---------- screens ---------- */
+const ik=it=>it.k;
+function setStats(s){let m=0,t=0;s.items.forEach(it=>{const r=S.res[ik(it)];if(r!=null){t++;if(r===2)m++}});return {m,t,n:s.items.length}}
+let R=null;
+function home(){
+  R=null;au.pause();document.body.classList.remove('inround');
+  const exs=[...new Set(SETS.map(s=>s.ex))];
+  const tabs=[['all','Alle']].concat(exs.map(x=>[x,x.replace('Goethe-Zertifikat','Goethe')]));
+  const list=SETS.filter(s=>S.ex==='all'||s.ex===S.ex);
+  const missN=SETS.reduce((a,s)=>a+s.items.filter(it=>{const r=S.res[ik(it)];return r!=null&&r<2}).length,0);
+  let h=`<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button role="tab" data-c="${esc(k)}" aria-selected="${S.ex===k}">${esc(l)}</button>`).join('')}</div>`;
+  h+=optsHTML();
+  h+=`<div class="special"><button class="btn" id="mix" type="button">🎲 10 zufällige Sätze</button><button class="btn" id="miss" type="button" ${missN?'':'disabled'}>↺ Noch nicht sicher (${missN})</button></div>`;
+  let lastEx='',lastGr='';
+  h+=list.map(s=>{const st=setStats(s);let head='';
+    if(s.ex!==lastEx){lastEx=s.ex;lastGr='';head+=`<h2>${esc(s.ex)}</h2>`}
+    if(s.group!==lastGr){lastGr=s.group;head+=`<h3>${esc(s.group)}</h3>`}
+    return head+`<button class="set" type="button" data-k="${esc(s.key)}"><span class="no"><b>${esc(s.id)}</b></span><span class="t">${esc(s.title)}<small>${s.items.length} Sätze${s.sub?' · '+esc(s.sub):''}</small></span><span class="sc">${st.t?`<b>${st.m}</b>/${st.n} ✓`:'neu'}</span><span class="bar"><i style="width:${Math.round(100*st.m/st.n)}%"></i></span></button>`}).join('');
+  h+=`<p class="note" style="margin-top:18px">✓ zählt Sätze, die beim ersten Versuch richtig waren. Beim Tippen zählen Satzzeichen nicht; ss statt ß und ae/oe/ue statt ä/ö/ü sowie Groß-/Kleinschreibung werden akzeptiert, aber angemerkt. Lange Hörtexte werden in Runden zu ${S.opt.per} Sätzen geübt.</p>`;
+  $('app').innerHTML=h;
+  $('app').querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{S.ex=b.dataset.c;save();home()});
+  $('app').querySelectorAll('.set').forEach(b=>b.onclick=()=>startSet(BYKEY[b.dataset.k]));
+  $('mix').onclick=()=>{const pool=SETS.filter(s=>S.ex==='all'||s.ex===S.ex).flatMap(s=>s.items);start(shuffle(pool).slice(0,10),null,'🎲 Zufallsmix')};
+  $('miss').onclick=()=>{const pool=SETS.flatMap(s=>s.items).filter(it=>{const r=S.res[ik(it)];return r!=null&&r<2});start(shuffle(pool).slice(0,20),null,'↺ Noch nicht sicher')};
+  bindOpts(home);scrollTo(0,0);
+}
+function optsHTML(){const o=S.opt,c=(k,v,l)=>`<button class="chip" type="button" data-o="${k}" data-v="${v}" aria-pressed="${String(o[k])===String(v)}">${l}</button>`;
+  const sum=[o.mode==='blocks'?'🧩 Bausteine':'⌨️ Tippen',o.mode==='blocks'?(o.size==='words'?'Wörter':'Wortgruppen'):'',o.ctx?'Kontext':'',o.auto?'Autoplay':'',o.rate+'×',o.order==='seq'?'':'gemischt',o.per+' pro Runde'].filter(Boolean).join(' · ');
+  return `<details class="cfg" id="cfg"${S.cfgOpen?' open':''}><summary>⚙︎ Einstellungen <small>${sum}</small></summary>
+  <div class="opts"><span class="lab">Antwort</span>${c('mode','blocks','🧩 Bausteine')}${c('mode','type','⌨️ Ganzen Satz tippen')}</div>
+  <div class="opts"><span class="lab">Bausteine</span>${c('size','words','Einzelne Wörter')}${c('size','chunks','Wortgruppen')}</div>
+  <div class="opts"><span class="lab">Hilfe</span>${c('ctx',true,'Vorheriger Satz')}${c('ctx',false,'Nur Audio')}${c('cnt',true,'Wortzahl zeigen')}${c('cnt',false,'ohne Wortzahl')}</div>
+  <div class="opts"><span class="lab">Audio</span>${c('auto',true,'Autoplay')}${c('auto',false,'Antippen')}${c('rate',1,'1×')}${c('rate',0.85,'0.85×')}${c('rate',0.7,'0.7×')}</div>
+  <div class="opts"><span class="lab">Runde</span>${c('per',10,'10 Sätze')}${c('per',20,'20 Sätze')}${c('per',999,'ganzer Text')}${c('order','seq','Reihenfolge')}${c('order','shuf','gemischt')}</div></details>`}
+function bindOpts(after){const cf=$('cfg');if(cf)cf.addEventListener('toggle',()=>{S.cfgOpen=cf.open;save()});
+  $('app').querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{const k=b.dataset.o;let v=b.dataset.v;if(v==='true')v=true;else if(v==='false')v=false;else if(!isNaN(+v))v=+v;S.opt[k]=v;save();after()})}
+function startSet(set,from){
+  /* rounds of N: start at the first sentence not yet ✓ (or where asked) */
+  const its=set.items,N=Math.min(S.opt.per,its.length);let a=from;
+  if(a==null){a=its.findIndex(it=>S.res[ik(it)]!==2);if(a<0)a=0}
+  if(a+N>its.length)a=Math.max(0,its.length-N);
+  const slice=its.slice(a,a+N),label=`${set.id} · ${set.title}`+(N<its.length?` · ${a+1}–${a+slice.length} von ${its.length}`:'');
+  start(S.opt.order==='shuf'?shuffle(slice):slice,set,label,a+slice.length);
+}
+function start(items,set,label,nextFrom){
+  if(!items.length)return;document.body.classList.add('inround');
+  R={items,set,label,k:0,log:[],nextFrom};item();
+}
+function chunksOf(ws){const out=[];let cur=[];ws.forEach(w=>{cur.push(w);if(/[,.;:!?…–]["“”]?$/.test(w)||cur.length>=3){out.push(cur.join(' '));cur=[]}});if(cur.length)out.push(cur.join(' '));return out}
+function item(){
+  const it=R.items[R.k],o=S.opt,set=BYKEY[it.set],ws=toks(it.t);
+  const blocks=o.size==='chunks'?chunksOf(ws):ws;
+  let order=shuffle(blocks.map((t,i)=>i));if(blocks.length>1){let g=0;while(order.every((v,i)=>v===i)&&g++<9)order=shuffle(order)}
+  R.cur={it,blocks,order,placed:[],tries:0,hint:0,done:false,given:0};
+  const pct=Math.round(100*R.k/R.items.length);
+  let h=`<button class="back" type="button" id="bk">← Alle Texte</button>
+  <div class="card">
+   <div class="prog"><span>${esc(R.label)}</span></div>
+   <div class="prog"><span>${R.k+1} / ${R.items.length}</span><span class="pbar"><i style="width:${pct}%"></i></span><span>${!R.set?esc(set.id):''}</span></div>
+   ${o.ctx&&it.prev?`<div class="ctx">… ${esc(it.prev)}</div>`:''}
+   <div class="play"><button class="pb" id="pl" type="button" aria-label="Satz abspielen"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z"/></svg></button>
+     <div style="flex:1;min-width:0"><div class="spk">${esc([it.spk,it.blk].filter(Boolean).join(' · '))}</div><div class="prompt-en off">Hören und den Satz nachbauen.${o.cnt?` <b>${ws.length} Wörter.</b>`:''}</div>
+     <button class="back" type="button" id="whole" style="font-size:13px">▶ ganzen Abschnitt hören</button></div></div>`;
+  if(o.mode==='blocks')h+=`<div class="ans empty" id="ans" aria-label="Dein Satz"></div><div class="bank" id="bank">${order.map(i=>`<button class="tile" type="button" data-i="${i}">${esc(blocks[i])}</button>`).join('')}</div>`;
+  else h+=`<textarea id="ta" placeholder="Den ganzen Satz tippen" autocomplete="off" autocapitalize="sentences" spellcheck="false" lang="de"></textarea>`;
+  h+=`<div id="fb"></div>
+   <div class="row" id="acts"><button class="btn pri" id="ck" type="button">Prüfen</button>${o.mode==='blocks'?`<button class="btn" id="ht" type="button">Tipp</button><button class="btn" id="cl" type="button">Leeren</button>`:''}<button class="btn" id="sh" type="button">Zeigen</button><span class="sp"></span><button class="btn" id="sk" type="button">Weiter →</button></div>
+  </div>`;
+  $('app').innerHTML=h;
+  $('bk').onclick=home;
+  $('pl').onclick=()=>playClip(it,false,$('pl'));$('whole').onclick=()=>playClip(it,true,$('pl'));
+  $('ck').onclick=check;$('sh').onclick=()=>finish(0);$('sk').onclick=()=>{R.log.push([it,null]);next()};
+  if(o.mode==='blocks'){
+    $('bank').querySelectorAll('.tile').forEach(b=>b.onclick=()=>place(+b.dataset.i));
+    $('ht').onclick=hint;$('cl').onclick=()=>{R.cur.placed=R.cur.placed.slice(0,R.cur.given);drawAns()};
+  }else{const ta=$('ta');ta.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();R.cur.done?next():check()}});setTimeout(()=>{try{ta.focus({preventScroll:true})}catch(e){}},50)}
+  if(o.auto)setTimeout(()=>playClip(it,false,$('pl')),250);
+}
+function place(i){const c=R.cur;if(c.done||c.placed.includes(i))return;c.placed.push(i);$('fb').innerHTML='';drawAns()}
+function drawAns(){const c=R.cur,a=$('ans');
+  a.innerHTML=c.placed.map((i,p)=>`<button class="tile${p<c.given?' given':''}" type="button" data-p="${p}">${esc(c.blocks[i])}</button>`).join('');
+  a.classList.toggle('empty',!c.placed.length);
+  a.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{if(c.done)return;const p=+b.dataset.p;if(p<c.given)return;c.placed.splice(p,1);$('fb').innerHTML='';drawAns()});
+  $('bank').querySelectorAll('.tile').forEach(b=>b.classList.toggle('used',c.placed.includes(+b.dataset.i)));
+  if(c.placed.length===c.blocks.length&&!c.done)check();
+}
+function hint(){const c=R.cur;if(c.done)return;
+  let k=0;while(k<c.placed.length&&c.blocks[c.placed[k]]===c.blocks[k])k++;
+  const keep=c.placed.slice(0,k),rest=[...Array(c.blocks.length).keys()].filter(i=>!keep.includes(i));
+  const nxt=rest.find(i=>c.blocks[i]===c.blocks[k]);if(nxt==null)return;
+  c.placed=keep.concat([nxt]);c.given=Math.max(c.given,k+1);c.hint++;$('fb').innerHTML='';drawAns()}
+function check(){const c=R.cur;if(c.done)return;const it=c.it;
+  if(S.opt.mode==='blocks'){
+    if(!c.placed.length)return;
+    const ok=c.placed.length===c.blocks.length&&c.placed.every((i,p)=>c.blocks[i]===c.blocks[p]);
+    if(ok)return finish(c.tries===0&&c.hint===0?2:1);
+    c.tries++;
+    $('ans').querySelectorAll('.tile').forEach((b,p)=>{if(p<c.given)return;b.classList.add(c.blocks[c.placed[p]]===c.blocks[p]?'ok':'bad')});
+    $('fb').innerHTML=`<div class="fb bad"><span class="v">${c.placed.length<c.blocks.length?'Noch nicht fertig':'Noch nicht ganz'}</span><span class="small">Grüne Bausteine stehen richtig. Tippe einen Baustein in deinem Satz an, um ihn zurückzulegen, oder nimm einen Tipp.</span></div>`;
+  }else{
+    const v=$('ta').value.trim();if(!v)return;const r=compare(v,it.t);
+    if(r.ok)return finish(c.tries===0?2:1,r.exact?'':'Richtig – achte aber auf Groß-/Kleinschreibung bzw. ä/ö/ü/ß.');
+    c.tries++;
+    $('fb').innerHTML=`<div class="fb bad"><span class="v">Noch nicht ganz</span><div class="small">Deine Antwort – grün stimmt, rot gehört nicht hinein:</div><div class="han">${r.yours||'—'}</div><div class="small">${r.miss?`${r.miss} ${r.miss>1?'Wörter fehlen':'Wort fehlt'} noch. `:''}${r.extra&&!r.miss?'Streiche die roten Wörter. ':''}Hör noch einmal hin und verbessere, oder tippe auf „Zeigen“.</div></div>`;
+  }
+}
+function finish(g,note){const c=R.cur,it=c.it;if(c.done)return;c.done=true;
+  S.res[ik(it)]=g;save();R.log.push([it,g]);
+  if(S.opt.mode==='blocks'){c.placed=c.blocks.map((b,i)=>i);c.given=0;drawAns();$('ans').querySelectorAll('.tile').forEach(b=>b.classList.add(g?'ok':'given'))}
+  let extra='';const tv=S.opt.mode==='type'?$('ta').value.trim():'';
+  if(tv&&!g){const r=compare(tv,it.t);extra=`<div class="small">Deine Antwort:</div><div class="han">${r.yours||'—'}</div><div class="small">Der Satz (unterstrichen = gefehlt):</div><div class="han">${r.right}</div>`}
+  const v=g===2?'✓ Beim ersten Versuch richtig':g===1?'✓ Richtig':'So lautet der Satz';
+  $('fb').innerHTML=`<div class="fb ${g?'ok':'bad'}"><span class="v">${v}</span>${note?`<span class="small">${esc(note)}</span>`:''}${extra}<div class="han" id="sent">${wordsHTML(it.t)}</div><div class="small">Wort antippen → Bedeutung</div><div id="gl"></div></div>`;
+  bindGloss($('sent'),$('gl'));
+  if(S.opt.mode==='type')$('ta').readOnly=true;
+  $('acts').innerHTML=`<button class="btn" id="pl2" type="button">🔊 Noch einmal</button><span class="sp"></span><button class="btn pri" id="nx" type="button">${R.k+1<R.items.length?'Weiter →':'Fertig'}</button>`;
+  $('pl2').onclick=()=>playClip(it,false,$('pl'));$('nx').onclick=next;setTimeout(()=>{try{$('nx').focus({preventScroll:true})}catch(e){}},30);
+  if(g)playClip(it,false,$('pl'));
+}
+function next(){R.k++;if(R.k<R.items.length)item();else summary()}
+function summary(){
+  const L=R.log,f=L.filter(x=>x[1]===2).length,ok=L.filter(x=>x[1]>=1).length;
+  const wrong=L.filter(x=>x[1]!==2).map(x=>x[0]);
+  const set=R.set,more=set&&R.nextFrom<set.items.length;
+  const idx=set?SETS.indexOf(set):-1,nextSet=idx>=0&&idx+1<SETS.length?SETS[idx+1]:null;
+  let h=`<button class="back" type="button" id="bk">← Alle Texte</button><div class="card"><div class="done"><div class="big">${f}/${L.length}</div><div>beim ersten Versuch richtig · ${ok} am Ende richtig</div>
+   <div class="row" style="justify-content:center">${more?`<button class="btn pri" id="more" type="button">Nächste Sätze →</button>`:''}${wrong.length?`<button class="btn${more?'':' pri'}" id="again-w" type="button">Die ${wrong.length} noch einmal</button>`:''}<button class="btn" id="again" type="button">Runde wiederholen</button>${!more&&nextSet?`<button class="btn" id="nxs" type="button">Nächster Text →</button>`:''}</div>
+   <div class="mini">${L.map(([it,g])=>`<div><span class="mk ${g===2?'g1':g===1?'gh':'g0'}">${g===2?'✓':g===1?'~':g===0?'✗':'–'}</span><span class="han">${esc(it.t)}</span></div>`).join('')}</div></div></div>`;
+  $('app').innerHTML=h;$('bk').onclick=home;
+  const items=R.items,label=R.label,nf=R.nextFrom;
+  if(more)$('more').onclick=()=>startSet(set,nf);
+  if(wrong.length)$('again-w').onclick=()=>start(wrong,null,label+' · Wiederholung');
+  $('again').onclick=()=>start(items.slice(),set,label,nf);
+  if(!more&&nextSet)$('nxs').onclick=()=>startSet(nextSet,0);
+  scrollTo(0,0);
+}
+(async function init(){
+  $('app').innerHTML='<p class="note">Wird geladen…</p>';
+  try{const D=await (await fetch('dehoer-data.json')).json();LEX=D.lex||LEX;SETS=buildSets(D);SETS.forEach(s=>BYKEY[s.key]=s);home()}
+  catch(e){$('app').innerHTML='<p class="note">Die Hördaten konnten nicht geladen werden. Einmal online öffnen, danach geht es offline.</p>'}
+})();
+</script>
+</body></html>
