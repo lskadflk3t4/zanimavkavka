@@ -49,3 +49,8 @@ Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s
 
 Real word clips cut from Listening 1 and 2 (`tones-data.json`, about 4,750 words and 1,100 tone-change examples): Tone ID (mark each syllable 1–4 or neutral), minimal pairs, odd one out, tone changes (不, 一, 3 + 3) and a chart of which tones you mix up. Tone ID and Pairs give you more of the tones you mix up. 句子 has a "tones must be right" option for typed pinyin, and 生词卡 has a 🎧 By ear mode (hear the word, mark its tones, then flip). Answers from all three feed the same chart.
 
+## Connectors (Связки · Konnektoren · Connecteurs · Connectors · 关联词)
+
+One sub-tab per language with three ways to practise: combine two sentences with the given connector (typed), build the sentence from blocks (two wrong connectors as traps), or pick the connector for the gap. A Learn list explains every connector (meaning, register, level, word order or mood). Filters for level and register.
+Russian B1–C1, everyday spoken (72 connectors, 125 pairs); German B1–C2, colloquial to literary (88 connectors, 143 pairs + 111 sentences from Hören with audio); French C1–C2, soutenu and littéraire (59 connectors, 90 pairs); English C1–C2, formal and literary (61 connectors, 101 pairs); Chinese HSK 2–5, everyday (61 connectors, 105 pairs + 318 sentences from 听力 1 + 2 with audio, translation and pinyin). French and English are now groups (grammar + connectors).
+
