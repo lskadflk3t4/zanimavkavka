@@ -36,13 +36,19 @@ From then on it opens from the home screen and works with no connection.
 
 Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听力 2 and 神秘的电话 (My words), 生词卡, 看图 (Wörter tab: exports what the filters show), Deutsch Hören (Meine Wörter) and Wortkarten. The file has the columns Front, Back, Tags (HTML: pinyin, meaning, up to two example sentences). In Anki (2.1.55 or newer): File → Import, choose the file; the cards go into the deck named in the file. Choose the note type “Basic (and reversed card)” for both directions.
 
+## Finding your way
+
+- **Today** opens first. It shows your day streak, what is due for review and which mistakes are waiting across all drills, with **Continue** (back to the last drill you practised), **Review** and **Redo** buttons, and every language with its counts. Counts come from drills already opened on that device.
+- **Two levels only.** The top row is the language (and Today). The second row is the open drill: tap its name (▾) to switch to another drill of that language, and its sections sit right next to it (Nouns · Adjectives · …, or Practise · Mistakes · Stats …). On a phone both levels share the single bar at the bottom: flag ▴ for the language or Today, the drill name ▾, then the sections.
+- **Same header everywhere.** Every drill opens with its name (the same name as in the navigation) and its score in the same style: Correct · Answered · Accuracy · Streak for grammar drills, Due · Mistakes · Practised for the review drills, Due · Words for word cards.
+
 ## Keyboard
 
 With a physical keyboard every tab works without the mouse; press **?** in any drill for the full list.
 Enter checks then goes on, Esc goes back, Alt+→ skips, H / S hint and show, Space or R replays the audio (Shift+Space the whole section), Alt+↑/↓ changes the speed.
 Answers: 1–4 or A–D, R / F / N for true · false · not mentioned; blocks by number or by typing the start of the word (pinyin for Chinese), Backspace takes one back.
 Listening: Space play/pause, ← → line by line, Shift+← → 5 seconds, T / E / P transcript · English · pinyin, M my words. Word cards: Space flips, 1 / 2 (or ← →) again / got it.
-Alt+1…9 language, Alt+[ ] sub-tab, [ ] tab inside a drill, Ctrl+K jump anywhere.
+Alt+0 Today, Alt+1…9 language, Alt+[ ] previous / next drill of the language, [ ] previous / next section of the drill, Ctrl+K jump anywhere.
 Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s: give ä ö ü ß in German, and Alt+L lets Latin keys type Cyrillic in the Russian, Belarusian and Church Slavonic drills.
 
 ## Tones (中文 → 声调)
