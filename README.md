@@ -47,6 +47,12 @@ Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听�
 - **Two levels only.** The top row is the language (and Today). The second row is the open drill: tap its name (▾) to switch to another drill of that language, and its sections sit right next to it (Nouns · Adjectives · …, or Practise · Mistakes · Stats …). On a phone both levels share the single bar at the bottom: flag ▴ for the language or Today, the drill name ▾, then the sections.
 - **Same header everywhere.** Every drill opens with its name (the same name as in the navigation) and its score in the same style: Correct · Answered · Accuracy · Streak for grammar drills, Due · Mistakes · Practised for the review drills, Due · Words for word cards.
 
+## Custom sessions with your own words (Русский and Deutsch grammar drills)
+
+In the Russian and German grammar drills, Settings → **My words** lets you build a session from words you pick out of the drill's word bank: tick them in the list (with search), or paste/type a list (one per line or comma-separated — words not in the bank are reported). Then choose **Only my words**: every exercise uses just those words, going through them in shuffled order without repeats before a new round starts (the tag shows e.g. *my words · 3/12*). **Whole word bank** switches back without losing the list; **Clear list** starts a fresh one.
+
+Each tab has its own bank — Russian: nouns, adjectives, verbs, pronouns, verb government, prepositions (Adj. + Noun, Pron. + Adj. + Noun and Endings use your nouns and adjectives); German: nouns, adjectives (also used by Article + Adj. + Noun and Pronoun + Adj. + Noun), verbs, prefixed verbs, verbs + preposition and prepositions, pronouns. Your list overrides the word filters (Words, Gender, verb groups…); cases, number and tenses still apply. Lists are stored on the device.
+
 ## Keyboard
 
 With a physical keyboard every tab works without the mouse; press **?** in any drill for the full list.

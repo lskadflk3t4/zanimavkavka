@@ -3971,4 +3971,221 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
     S.mode='miss';save();renderTabs();renderSettings();rvStart(ks,'Redo your mistakes')}
 });
 </script>
+<script>
+window.MW_CFG=(function(){const PTY={dem:'demonstrative',rel:'relative',pos:'possessive',posp:'possessive pronoun'};
+ const pdup={};PRONS.forEach(p=>{pdup[p.w]=(pdup[p.w]||0)+1;});
+ const pkey=p=>pdup[p.w]>1?`${p.w} · ${p.ty==="pos"||p.ty==="posp"?String(p.lab||"").replace(/^.*for /,""):PTY[p.ty]}`:p.w;
+ return {lang:'de',store:'dgd-mywords-v1',
+ pasteHint:'One word per line or separated by commas, e.g.\nTisch, die Zeitung, alt\nfahren, ankommen\ndenken an',
+ ovNote:'Your list replaces the word filters (Words, Gender, Verb groups, Verb families, Pronoun type); cases, number and tenses below still apply.',
+ banks:{
+  noun:{label:'Nouns',arr:()=>NOUNS,key:n=>(n.g==='pl'?'die ':GART[n.g]+' ')+n.w+(n.g==='pl'?' (pl.)':''),gloss:n=>n.tr,info:n=>[GN[n.g],n.t?'exception':''].filter(Boolean).join(' · ')},
+  adj:{label:'Adjectives',arr:()=>ADJS,key:a=>a.w,gloss:a=>a.tr,info:a=>a.t?'exception':''},
+  verb:{label:'Verbs',arr:()=>VERBS,key:v=>v.w,gloss:v=>v.tr,info:v=>(VGRP[v.grp]||[''])[0]},
+  pref:{label:'Prefixed verbs',arr:()=>PREF,key:e=>e.v+(e.dup?' ('+SEPL[e.s]+')':''),gloss:e=>e.g,info:e=>SEPL[e.s]+' · '+e.b},
+  coll:{label:'Verbs + preposition',arr:()=>COLL,key:e=>e.v+' '+e.p,gloss:e=>e.ex.replace('___',e.p),info:e=>e.p+' + '+CN[e.c]},
+  prep:{label:'Prepositions',arr:()=>PREPS,key:e=>e.p,gloss:e=>e.m,info:e=>e.main.map(c=>CN[c]).join(' / ')},
+  pron:{label:'Pronouns',arr:()=>PRONS,key:pkey,gloss:p=>p.lab||'',info:p=>PTY[p.ty]||''}
+ },
+ modes:{
+  noun:{banks:['noun'],deck:'single',ov:{'noun.set':'all','noun.gen':['m','f','n','pl']}},
+  adj:{banks:['adj','noun'],deck:'always',ov:{'adj.set':'all','adj.gen':['m','f','n']}},
+  pan:{banks:['adj','noun'],deck:'always',ov:{'pan.set':'all','pan.gen':['m','f','n','pl']}},
+  verb:{banks:['verb'],deck:'always',ov:{'verb.cats':()=>Object.keys(VGRP)}},
+  pref:{banks:['pref'],deck:'always',ov:{'pref.bases':()=>PBASES.slice(),'pref.tasks':()=>S.pref.tasks.length?S.pref.tasks:['form','meaning','case','sep']},
+   custom:ctx=>{const P=S.pref;const pool=ctx.sel('pref');if(!pool.length||!P.tasks.length)return null;
+    let picks;if(ctx.single)picks=[ctx.next('pref')];else{const k=pool.slice();for(let i=k.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[k[i],k[j]]=[k[j],k[i]];}picks=k.slice(0,8);}
+    picks=picks.filter(Boolean);if(!picks.length)return null;
+    const prompts=picks.map((e,i)=>prefPrompt(e,rnd(P.tasks),i));
+    return {multi:true,word:picks.length===1?picks[0].v:'Meine Verben',tags:['my prefixed verbs'],lead:picks.length===1?`Verb family: ${picks[0].b}`:'Your prefixed verbs',prompts,note:PREFNOTE,
+     ref:[{cols:['verb','type','meaning','case','example'],rows:picks.map((e,i)=>({h:e.v,cells:[{v:SEPL[e.s],key:'r|'+i},{v:e.g},{v:[...e.c.map(c=>CN[c]),...e.x.map(c=>'('+CN[c]+')')].join(' + ')},{v:e.ex}]}))}]};}},
+  gov:{banks:['coll','prep'],deck:'never',ov:{'gov.pcats':['A','D','W','G'],
+   'gov.tasks':()=>{const A=window.__mw?window.__mw.act('gov'):[];const t=[];if(A.includes('coll'))t.push('colloc');if(A.includes('prep'))t.push('prep');return t;}}},
+  pron:{banks:['pron'],deck:'always',ov:{'pron.types':()=>[...new Set(PRONS.map(p=>p.ty))]}}
+ }}})();
+
+/* ===== My words: drill a hand-picked set of words from the word bank (added) =====
+   Settings → "My words": choose words from the bank (tick them, search, or paste a list),
+   then "Only my words". Every exercise then uses only those words, going through them
+   in a shuffled order without repeats before starting a new round.
+   The list is kept on this device (localStorage) until you clear it. */
+(function(){
+const C=window.MW_CFG;if(!C||typeof GEN==='undefined')return;
+const LS=C.store;
+let st={on:{},sel:{}};
+try{const o=JSON.parse(localStorage.getItem(LS)||'null');if(o&&typeof o==='object'){st.on=o.on||{};st.sel=o.sel||{};}}catch(e){}
+const saveSt=()=>{try{localStorage.setItem(LS,JSON.stringify(st));}catch(e){}};
+const H=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nrm=s=>String(s).toLowerCase().normalize('NFD').replace(/́/g,'').normalize('NFC').replace(/ё/g,'е')
+  .replace(/\(pl\.\)/g,'').replace(/^(der|die|das|ein|eine|sich)\s+/,'').replace(/[.,!?;:"«»„“”()]/g,' ').replace(/\s+/g,' ').trim();
+/* ---- banks ---- */
+const BK={};
+function bank(b){if(BK[b])return BK[b];const d=C.banks[b];const m=new Map();
+  d.arr().forEach(x=>{const k=d.key(x);if(!m.has(k))m.set(k,{k,g:(d.gloss&&d.gloss(x))||'',i:(d.info&&d.info(x))||'',n:nrm(k)});});
+  const list=[...m.values()].sort((a,c)=>a.n.localeCompare(c.n,C.lang));
+  return BK[b]={list,has:new Set(list.map(x=>x.k))};}
+const sel=b=>(st.sel[b]=st.sel[b]||[]);
+Object.keys(C.banks).forEach(b=>{if(st.sel[b])st.sel[b]=st.sel[b].filter(k=>bank(b).has.has(k));});
+const modeBanks=m=>(C.modes[m]&&C.modes[m].banks)||[];
+const isOn=m=>!!st.on[m];
+const act=m=>isOn(m)?modeBanks(m).filter(b=>sel(b).length):[];
+/* ---- shuffled deck per bank: every chosen word once per round ---- */
+const decks={};
+function resetDecks(b){if(b)delete decks[b];else Object.keys(decks).forEach(k=>delete decks[k]);}
+function nextKey(b){let d=decks[b];const s=sel(b);
+  if(!d||!d.left.length||d.sig!==s.join('\u0001')){const left=[...s];for(let i=left.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[left[i],left[j]]=[left[j],left[i]];}
+    if(d&&d.last&&left.length>1&&left[0]===d.last)left.push(left.shift());
+    d=decks[b]={left,sig:s.join('\u0001'),round:(d&&d.sig===s.join('\u0001')?d.round:0)+1,total:s.length,last:d&&d.last};}
+  const k=d.left.shift();d.last=k;return k;}
+/* ---- settings overrides while a custom item is built ---- */
+const getP=p=>p.split('.').reduce((o,k)=>o==null?o:o[k],S);
+const setP=(p,v)=>{const ks=p.split('.');const last=ks.pop();const o=ks.reduce((x,k)=>x[k],S);o[last]=v;};
+const clone=v=>JSON.parse(JSON.stringify(v));
+function withOv(ov,fn){const saved=[];
+  Object.keys(ov||{}).forEach(p=>{let v=ov[p];if(typeof v==='function')v=v();if(v===undefined)return;saved.push([p,clone(getP(p))]);setP(p,clone(v));});
+  try{return fn();}finally{for(let i=saved.length-1;i>=0;i--)setP(saved[i][0],saved[i][1]);}}
+/* ---- wrap the generators ---- */
+Object.keys(C.modes).forEach(mode=>{const orig=GEN[mode];if(typeof orig!=='function')return;const M=C.modes[mode];
+  GEN[mode]=function(){
+    const A=act(mode);if(!A.length)return orig.apply(this,arguments);
+    const keep={};A.forEach(b=>{keep[b]=C.banks[b].arr().slice();});
+    const setArr=(b,keys)=>{const arr=C.banks[b].arr(),ks=new Set(keys),key=C.banks[b].key;arr.length=0;keep[b].forEach(x=>{if(ks.has(key(x)))arr.push(x);});};
+    const useDeck=M.deck==='always'||(M.deck==='single'&&S.style==='single');
+    const prim=useDeck?A[0]:null;let item=null,used=null;
+    try{
+      A.forEach(b=>setArr(b,sel(b)));
+      const ctx={sel:b=>C.banks[b].arr().slice(),next:b=>{const k=nextKey(b);used=k;return keep[b].find(x=>C.banks[b].key(x)===k);},active:A,single:S.style==='single'};
+      const run=()=>withOv(M.ov,()=>M.custom?M.custom(ctx):orig());
+      if(prim&&!M.custom){const n=Math.min(sel(prim).length,15);
+        for(let t=0;t<n&&!item;t++){const k=nextKey(prim);setArr(prim,[k]);item=run();if(item)used=k;}
+        setArr(prim,sel(prim));}
+      if(!item)item=run();
+    }finally{A.forEach(b=>{const arr=C.banks[b].arr();arr.length=0;keep[b].forEach(x=>arr.push(x));});}
+    if(item){const d=prim&&decks[prim];
+      const tag=d&&used?`my words · ${d.total-d.left.length}/${d.total}${d.round>1?' · round '+d.round:''}`:'my words';
+      item.tags=[...(item.tags||[]),tag];}
+    return item;};
+});
+/* ---- settings panel group ---- */
+const LBL=b=>C.banks[b].label;
+function summary(m){const bs=modeBanks(m);
+  return bs.map(b=>{const s=sel(b);if(!s.length)return '';const show=s.slice(0,10).map(H).join(', ');
+    return `<div><b>${H(LBL(b))} (${s.length}):</b> <span lang="${C.lang}">${show}${s.length>10?' …':''}</span></div>`;}).join('');}
+function groupHtml(m){const bs=modeBanks(m);const n=bs.reduce((a,b)=>a+sel(b).length,0);const on=isOn(m);
+  return `<div class="grp mw-grp"><h3>My words</h3><div class="chips">
+    <button class="chip" data-mw="off" aria-pressed="${!on}">Whole word bank</button>
+    <button class="chip" data-mw="on" aria-pressed="${on}">Only my words${n?' · '+n:''}</button></div>
+    ${n?`<div class="mw-sum">${summary(m)}</div>`:`<p class="mw-sum muted">Pick the ${bs.map(b=>LBL(b).toLowerCase()).join(' and ')} you want to drill — tick them in the list, search, or paste a list.</p>`}
+    ${on&&!n?'<p class="mw-sum mw-warn">No words chosen yet, so the whole word bank is used.</p>':''}
+    ${on&&n?`<p class="mw-sum muted">${H(C.ovNote||'Your list replaces the word filters (words, gender, groups); cases, numbers and forms below still apply.')}</p>`:''}
+    <div class="quick"><button data-mw="pick">${n?'Edit my words…':'Choose words…'}</button>${n?'<button data-mw="clear">Clear list</button>':''}</div></div>`;}
+const rs0=renderSettings;
+renderSettings=function(){rs0.apply(this,arguments);if(!C.modes[S.mode])return;
+  const body=document.getElementById('settings-body');if(!body)return;
+  const t=document.createElement('div');t.innerHTML=groupHtml(S.mode);const g=t.firstElementChild;
+  const first=body.querySelector('.grp');if(first)body.insertBefore(g,first.nextSibling);else body.prepend(g);};
+/* ---- styles ---- */
+const css=document.createElement('style');css.textContent=`
+.mw-sum{font-size:.82rem;line-height:1.45;margin:0;overflow-wrap:anywhere}.mw-sum b{font-weight:700}.mw-sum.muted{color:var(--muted)}.mw-warn{color:var(--red)}
+.mw-ov{position:fixed;inset:0;z-index:2147483100;background:rgba(10,14,20,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.mw-ov[hidden]{display:none}
+.mw-box{background:var(--sheet);color:var(--ink);border:1px solid var(--line);border-radius:14px;width:min(680px,100%);max-height:min(88vh,900px);display:flex;flex-direction:column;box-shadow:0 18px 50px -20px rgba(0,0,0,.5);overflow:hidden}
+.mw-hd{display:flex;align-items:center;gap:10px;padding:14px 16px 8px}.mw-hd h2{margin:0;font-family:var(--f-display);font-size:1.3rem;flex:1}
+.mw-x{appearance:none;border:0;background:none;color:var(--muted);font-size:1.6rem;line-height:1;cursor:pointer;padding:4px 8px;min-width:44px;min-height:44px}
+.mw-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 8px}
+.mw-tools{display:flex;flex-direction:column;gap:8px;padding:0 16px 10px;border-bottom:1px solid var(--line)}
+.mw-q{font:inherit;font-size:1rem;padding:9px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);width:100%}
+.mw-q:focus,.mw-paste textarea:focus{border-color:var(--accent);outline:none}
+.mw-row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mw-paste summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:.88rem}
+.mw-paste textarea{width:100%;min-height:72px;margin-top:6px;font:inherit;font-size:.95rem;padding:8px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--sheet);color:var(--ink);resize:vertical}
+.mw-msg{font-size:.82rem;color:var(--muted);margin:4px 0 0;overflow-wrap:anywhere}.mw-msg b{color:var(--ink)}
+.mw-list{overflow-y:auto;flex:1;min-height:120px;padding:4px 8px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.mw-it{appearance:none;display:flex;width:100%;align-items:baseline;gap:10px;text-align:left;border:0;border-bottom:1px dashed var(--line);background:none;color:var(--ink);font:inherit;padding:8px 8px;cursor:pointer;min-height:42px}
+.mw-it::before{content:"";flex:none;width:18px;height:18px;border:1.5px solid var(--line);border-radius:5px;align-self:center;background:var(--sheet)}
+.mw-it[aria-pressed="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--sheet)}
+.mw-it[aria-pressed="true"] .mw-w{color:var(--accent)}
+.mw-w{font-family:var(--f-display);font-weight:700;font-size:1.05rem}.mw-g{color:var(--muted);font-size:.86rem;flex:1;min-width:0}.mw-i{font-size:.7rem;color:var(--muted);white-space:nowrap}
+.mw-empty{color:var(--muted);padding:18px 8px;font-size:.9rem}
+.mw-ft{display:flex;gap:10px;align-items:center;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.mw-ft .mw-n{flex:1;font-size:.88rem;color:var(--muted)}.mw-ft .mw-n b{color:var(--ink)}
+body.mw-open{overflow:hidden}body.mw-open .dp-kbrow{display:none!important}
+@media (max-width:640px){.mw-ov{padding:0}.mw-box{width:100%;height:100%;max-height:none;border-radius:0;border:0}}`;
+(document.head||document.documentElement).appendChild(css);
+/* ---- picker ---- */
+let ov=null,curB=null,onlySel=false,openMode=null,dirty=false;
+function build(){ov=document.createElement('div');ov.className='mw-ov';ov.hidden=true;ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','My words');
+  ov.innerHTML=`<div class="mw-box"><div class="mw-hd"><h2>My words</h2><button class="mw-x" data-mwx="close" aria-label="Close">×</button></div>
+  <div class="mw-tabs chips" role="tablist"></div>
+  <div class="mw-tools"><input class="mw-q" type="search" placeholder="Search the word bank (word or meaning)…" autocomplete="off" spellcheck="false" lang="${C.lang}">
+   <div class="mw-row2"><button class="chip" data-mwx="only" aria-pressed="false">Show chosen only</button><button class="chip" data-mwx="all">Tick all shown</button><button class="chip" data-mwx="none">Untick all shown</button></div>
+   <details class="mw-paste"><summary>Paste or type a list of words</summary><textarea lang="${C.lang}" placeholder="${H(C.pasteHint||'One word per line, or separated by commas')}"></textarea>
+   <div class="mw-row2"><button class="btn small" data-mwx="add">Add to my words</button><button class="btn small ghost" data-mwx="replace">Replace my words with this list</button></div><p class="mw-msg" aria-live="polite"></p></details></div>
+  <div class="mw-list" role="group"></div>
+  <div class="mw-ft"><span class="mw-n"></span><button class="btn ghost small" data-mwx="clear">Clear</button><button class="btn" data-mwx="go">Drill my words</button></div></div>`;
+  document.body.appendChild(ov);
+  ['touchstart','touchend','touchmove'].forEach(t=>ov.addEventListener(t,e=>e.stopPropagation(),{passive:true}));
+  ov.addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Escape'){e.preventDefault();close(false);}
+    else if(e.key==='Enter'&&e.target.classList.contains('mw-q')){e.preventDefault();const f=ov.querySelector('.mw-it');if(f)f.click();}});
+  ov.addEventListener('click',e=>{e.stopPropagation();if(e.target===ov){close(false);return;}
+    const it=e.target.closest('.mw-it');if(it){toggle(curB,it.dataset.k,it);return;}
+    const t=e.target.closest('[data-mwtab]');if(t){curB=t.dataset.mwtab;ov.querySelector('.mw-q').value='';draw();return;}
+    const b=e.target.closest('[data-mwx]');if(!b)return;const a=b.dataset.mwx;
+    if(a==='close')close(false);
+    else if(a==='go')close(true);
+    else if(a==='only'){onlySel=!onlySel;draw();}
+    else if(a==='all'||a==='none'){const s=new Set(sel(curB));shown().forEach(x=>a==='all'?s.add(x.k):s.delete(x.k));setSel(curB,[...s]);draw();}
+    else if(a==='clear'){modeBanks(openMode).forEach(bb=>setSel(bb,[]));draw();}
+    else if(a==='add'||a==='replace')paste(a==='replace');});
+  ov.querySelector('.mw-q').addEventListener('input',()=>drawList());}
+function setSel(b,arr){const order=new Map(bank(b).list.map((x,i)=>[x.k,i]));st.sel[b]=[...new Set(arr)].filter(k=>order.has(k)).sort((x,y)=>order.get(x)-order.get(y));resetDecks(b);dirty=true;saveSt();}
+function toggle(b,k,el){const s=new Set(sel(b));s.has(k)?s.delete(k):s.add(k);setSel(b,[...s]);if(el)el.setAttribute('aria-pressed',String(s.has(k)));if(onlySel&&!s.has(k)&&el)el.remove();drawCount();drawTabs();}
+function shown(){const q=nrm(ov.querySelector('.mw-q').value);const s=new Set(sel(curB));
+  return bank(curB).list.filter(x=>(!onlySel||s.has(x.k))&&(!q||x.n.includes(q)||nrm(x.g).includes(q)));}
+function drawTabs(){const bs=modeBanks(openMode);
+  ov.querySelector('.mw-tabs').innerHTML=bs.length>1?bs.map(b=>`<button class="chip" data-mwtab="${b}" aria-pressed="${b===curB}">${H(LBL(b))} · ${sel(b).length}/${bank(b).list.length}</button>`).join(''):'';}
+function drawCount(){const n=modeBanks(openMode).reduce((a,b)=>a+sel(b).length,0);
+  ov.querySelector('.mw-n').innerHTML=`<b>${n}</b> chosen${modeBanks(openMode).length>1?'':' of '+bank(curB).list.length}`;
+  ov.querySelector('[data-mwx="go"]').disabled=!n;}
+function drawList(){const s=new Set(sel(curB)),L=shown();
+  ov.querySelector('.mw-list').innerHTML=L.length?L.map(x=>`<button type="button" class="mw-it" data-k="${H(x.k)}" aria-pressed="${s.has(x.k)}"><span class="mw-w" lang="${C.lang}">${H(x.k)}</span><span class="mw-g">${H(x.g)}</span>${x.i?`<span class="mw-i">${H(x.i)}</span>`:''}</button>`).join('')
+    :`<p class="mw-empty">${onlySel&&!s.size?'Nothing chosen yet — untick “Show chosen only” to see the whole bank.':'No word in the bank matches.'}</p>`;}
+function draw(){ov.querySelector('[data-mwx="only"]').setAttribute('aria-pressed',String(onlySel));
+  ov.querySelector('.mw-q').placeholder=`Search ${bank(curB).list.length} ${LBL(curB).toLowerCase()} (word or meaning)…`;
+  drawTabs();drawCount();drawList();}
+function paste(replace){const ta=ov.querySelector('.mw-paste textarea'),msg=ov.querySelector('.mw-msg');
+  const toks=ta.value.split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);if(!toks.length){msg.textContent='Type or paste some words first.';return;}
+  const bs=modeBanks(openMode);const add={};bs.forEach(b=>add[b]=new Set(replace?[]:sel(b)));
+  const idx=bs.map(b=>{const m=new Map();const put=(n,k)=>{if(!n)return;if(!m.has(n))m.set(n,[]);if(!m.get(n).includes(k))m.get(n).push(k);};
+    bank(b).list.forEach(x=>{put(x.n,x.k);const base=nrm(x.k.replace(/\s*\([^)]*\)/g,''));put(base,x.k);(x.k.match(/\(([^)]*)\)/g)||[]).forEach(v=>put(nrm(v),x.k));
+      x.k.replace(/\s*\([^)]*\)/g,'').split(/\s*\/\s*/).forEach(v=>{put(nrm(v),x.k);put(nrm(v).replace(/-$/,''),x.k);});});return [b,m];});
+  const find=t=>{const n=nrm(t);let hit=false;idx.forEach(([b,m])=>{(m.get(n)||[]).forEach(k=>{add[b].add(k);hit=true;});});return hit;};
+  const miss=[];let got=0;
+  toks.forEach(t=>{if(find(t)){got++;return;}const parts=t.split(/\s+/);if(parts.length>1){let any=false;const bad=[];parts.forEach(p=>{if(find(p)){any=true;got++;}else bad.push(p);});if(any){miss.push(...bad);return;}}miss.push(t);});
+  bs.forEach(b=>setSel(b,[...add[b]]));
+  msg.innerHTML=`<b>${got}</b> word${got===1?'':'s'} found in the bank.`+(miss.length?` Not in the word bank: <span lang="${C.lang}">${H(miss.join(', '))}</span>`:'');
+  if(!miss.length)ta.value='';else ta.value=miss.join('\n');draw();}
+function open(m){if(!ov)build();openMode=m;const bs=modeBanks(m);curB=bs.find(b=>sel(b).length)||bs[0];onlySel=false;dirty=false;
+  ov.querySelector('.mw-q').value='';ov.querySelector('.mw-msg').textContent='';draw();ov.hidden=false;document.body.classList.add('mw-open');
+  setTimeout(()=>{try{if(!matchMedia('(pointer:coarse)').matches)ov.querySelector('.mw-q').focus();else ov.querySelector('.mw-x').focus();}catch(e){}},30);}
+function close(go){ov.hidden=true;document.body.classList.remove('mw-open');const m=openMode;
+  const n=modeBanks(m).reduce((a,b)=>a+sel(b).length,0);
+  if(go&&n){st.on[m]=true;saveSt();}
+  if(!n&&st.on[m]){st.on[m]=false;saveSt();}
+  renderSettings();if(go||(dirty&&isOn(m))){resetDecks();newItem();}}
+/* ---- settings clicks (capture, so the drill's own handler does not regenerate) ---- */
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#settings-body [data-mw]');if(!b)return;
+  e.stopPropagation();e.preventDefault();const a=b.dataset.mw,m=S.mode;if(!C.modes[m])return;
+  const n=modeBanks(m).reduce((x,bb)=>x+sel(bb).length,0);
+  if(a==='pick'){open(m);return;}
+  if(a==='on'){if(!n){open(m);return;}if(!isOn(m)){st.on[m]=true;saveSt();resetDecks();renderSettings();newItem();}return;}
+  if(a==='off'){if(isOn(m)){st.on[m]=false;saveSt();renderSettings();newItem();}return;}
+  if(a==='clear'){modeBanks(m).forEach(bb=>{st.sel[bb]=[];});st.on[m]=false;resetDecks();saveSt();renderSettings();newItem();}
+},true);
+window.__mw={st,open,bank,act};
+/* first render already happened before this script ran: add the group now */
+try{renderSettings();if(act(S.mode).length)newItem();}catch(e){}
+})();
+
+</script>
 </body></html>
