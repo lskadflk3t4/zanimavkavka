@@ -223,7 +223,7 @@ function lemmaOf(w){const f=LEX.f;return f[w]||f[w.toLowerCase()]||(LEX.g[w]?w:n
 function gloss(l){return LEX.g[l]||null}
 function tok(text){let out='',i=0;text.replace(WRE,(m,at)=>{out+=esc(text.slice(i,at))+'<span class="w">'+esc(m)+'</span>';i=at+m.length;return m});return out+esc(text.slice(i))}
 function allLines(p){const r=[];p.blocks.forEach((b,bi)=>b.lines.forEach((l,li)=>r.push({s:l[0],e:l[1],t:l[2],sp:l[3]||'',bi,li})));return r}
-const EX_ORDER=['Goethe-Zertifikat B2','TestDaF digital','TestDaF Musterprüfungen','TestDaF Training','13 Fragen'];
+const EX_ORDER=['Goethe-Zertifikat B2','TestDaF digital','TestDaF Musterprüfungen','TestDaF Training','13 Fragen','Podcasts'];
 const EXAMS=()=>[...new Set(DATA.parts.map(p=>p.ex||'Goethe-Zertifikat B2'))].sort((a,b)=>((EX_ORDER.indexOf(a)+1)||99)-((EX_ORDER.indexOf(b)+1)||99));
 const pnum=p=>/^\d/.test(p.id)?p.id+' · ':/^t\d/.test(p.id)?p.id.slice(1)+' · ':'';
 const curEx=()=>EXAMS().includes(S.ex)?S.ex:EXAMS()[0];
@@ -278,8 +278,8 @@ function fillEx(){const E=EXAMS(),el=$('exsw');el.hidden=E.length<2;
   el.innerHTML=E.map(x=>{const n=DATA.parts.filter(p=>(p.ex||'Goethe-Zertifikat B2')===x).length;return `<button type="button" role="tab" data-ex="${esc(x)}" aria-selected="${x===curEx()}">${esc(x)}<small>${n}</small></button>`}).join('')}
 $('exsw').onclick=e=>{const b=e.target.closest('[data-ex]');if(!b||b.dataset.ex===curEx()&&MODE==='part')return;S.ex=b.dataset.ex;const L=PARTS(),k='last:'+S.ex;
   const id=S[k]&&L.some(p=>p.id===S[k])?S[k]:L[0].id;save();fillEx();fillSel();show(id);scrollTo(0,0)};
-const FOOT={'Goethe-Zertifikat B2':'Aufnahmen: Cornelsen, Prüfungstraining Goethe-Zertifikat B2 (2018), Modul Hören.','TestDaF digital':'Aufnahmen: Cornelsen, Prüfungstraining TestDaF digital (2024).','TestDaF Musterprüfungen':'Aufnahmen: TestDaF-Institut, Musterprüfungen 1, 3 und 5 (Hörverstehen, Mündlicher Ausdruck).','TestDaF Training':'Aufnahmen: Training TestDaF, Langenscheidt (Neubearbeitung), Audio-CDs, Auszüge.','13 Fragen':'Aufnahmen: „13 Fragen“, Debattenformat von unbubble (ZDF/funk), sechs Folgen.'};
-const FNOTE={'13 Fragen':'Transkripte mit einem Spracherkennungsmodell (Whisper) erstellt und durchgesehen; bei schnellem, gleichzeitigem Sprechen können einzelne Wörter abweichen. Sprecherwechsel sind nicht markiert – wer mitdiskutiert, steht über dem Transkript. Die Aufgaben sind eigene Übungen zur Diskussion.'};
+const FOOT={'Goethe-Zertifikat B2':'Aufnahmen: Cornelsen, Prüfungstraining Goethe-Zertifikat B2 (2018), Modul Hören.','TestDaF digital':'Aufnahmen: Cornelsen, Prüfungstraining TestDaF digital (2024).','TestDaF Musterprüfungen':'Aufnahmen: TestDaF-Institut, Musterprüfungen 1, 3 und 5 (Hörverstehen, Mündlicher Ausdruck).','TestDaF Training':'Aufnahmen: Training TestDaF, Langenscheidt (Neubearbeitung), Audio-CDs, Auszüge.','13 Fragen':'Aufnahmen: „13 Fragen“, Debattenformat von unbubble (ZDF/funk), sechs Folgen.','Podcasts':'Aufnahmen: ZDF True Crime („Deutscher Serienmörder Kurt-Werner Wichmann – Wie viele Menschen hat er getötet?“) und Breaking Lab („Pro und Contra: Was wirklich für und gegen Atomkraft spricht“).'};
+const FNOTE={'13 Fragen':'Transkripte mit einem Spracherkennungsmodell (Whisper) erstellt und durchgesehen; bei schnellem, gleichzeitigem Sprechen können einzelne Wörter abweichen. Sprecherwechsel sind nicht markiert – wer mitdiskutiert, steht über dem Transkript. Die Aufgaben sind eigene Übungen zur Diskussion.','Podcasts':'Transkripte mit einem Spracherkennungsmodell (Whisper) erstellt und durchgesehen; Werbung und unverständliche Einwürfe sind ausgelassen, einzelne Wörter können abweichen. Sprecherwechsel sind nicht markiert.'};
 function fillSel(){$('psel').innerHTML=PARTS().map(p=>`<option value="${p.id}">${esc(optLabel(p))}</option>`).join('');if(part)$('psel').value=part.id}
 $('psel').onchange=e=>show(e.target.value);
 function step(d){const L=PARTS(),i=part?L.indexOf(part):0,n=L[i+d];if(n){show(n.id);scrollTo(0,0)}}
@@ -293,7 +293,7 @@ function show(id){const p=pById(id)||PARTS()[0];part=p;MODE='part';S.last=p.id;c
   $('pm').textContent='▶ Alles';$('endnav').hidden=false;document.querySelector('.bar').hidden=false;$('pm').disabled=false;
   $('eb').textContent=ex+' · '+(/^Goethe/.test(ex)?'Hören · ':'')+p.group;
   $('h1').innerHTML=esc(p.title)+'<small>'+esc(p.sub||'')+'</small>';
-  if(!$('lede').dataset.d)$('lede').dataset.d=$('lede').textContent;$('lede').textContent=ex==='13 Fragen'&&p.note?p.note:$('lede').dataset.d;
+  if(!$('lede').dataset.d)$('lede').dataset.d=$('lede').textContent;$('lede').textContent=(ex==='13 Fragen'||ex==='Podcasts')&&p.note?p.note:$('lede').dataset.d;
   $('psel').value=p.id;
   LINES=allLines(p);hiK=-2;
   let h=`<h2 id="aufgaben">Aufgaben</h2><p class="sec-note">${esc(p.qnote||'Richtig, falsch oder nicht erwähnt? Lesen Sie die Aussagen zuerst und hören Sie dann. Bei den offenen Fragen schreiben Sie selbst eine Antwort; danach sehen Sie, welche Punkte Sie getroffen haben.')}</p>`;
