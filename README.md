@@ -43,8 +43,14 @@ Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听�
 
 ## Finding your way
 
-- **Today** opens first. It shows your day streak, what is due for review and which mistakes are waiting across all drills, with **Continue** (back to the last drill you practised), **Review** and **Redo** buttons, and every language with its counts. Counts come from drills already opened on that device.
+- **Today** opens first. It shows your day streak, what is due for review and which mistakes are waiting across all drills, with **Continue** (back to the last drill you practised), **Review** and **Redo** buttons, and every language with its counts. While Today is open, drills with saved progress that you haven't opened yet today are read quietly in the background, so their reviews and mistakes are counted too.
+- **Start today's session** (on Today) mixes reviews and mistakes from every language into one run of 10–45 minutes (15 by default): it opens each drill in turn, starts its review or mistakes, and moves on by itself when that drill is cleared (or press **Next ▸** in the small session bar).
 - **Two levels only.** The top row is the language (and Today). The second row is the open drill: tap its name (▾) to switch to another drill of that language, and its sections sit right next to it (Nouns · Adjectives · …, or Practise · Mistakes · Stats …). On a phone both levels share the single bar at the bottom: flag ▴ for the language or Today, the drill name ▾, then the sections.
+- **Pinned drills.** Press ☆ next to a drill's name (or *Pin this drill* in its ▾ menu, or Ctrl+K → Pin) to put up to six drills in the top bar; on a phone they appear at the top of the language sheet.
+- **Ctrl+K finds everything**, also in drills you haven't opened yet: sections (e.g. *Satzbau · Review*), listening parts and episodes (*zhl2 045*, *996*), German Hören parts (*13 Fragen AfD*).
+- **Task first.** Long explanations above an exercise fold to one line (tap *more ▾*), and long rows of section chips show only the chosen one (*▾ 18 more*).
+- **Listening lists** (听力, 听力 2, 电话, 播客) show each part's status: started, listened (85 %+ of the audio) or marked done (○ / ✓ next to the part picker), and a red count for mistakes to redo. 听力 and 听力 2 are grouped by lesson with progress per lesson. **▶ Continue** jumps to the part you were in the middle of, or the next one you haven't finished. Once you have progress, the list stays folded so the player and text come first.
+- **Phones:** the open drill's sections fold into one button in the bottom bar (tap it for the list), and swiping the bottom bar left / right steps through them. Swiping the exercise itself still goes to the next question / the explanation.
 - **Same header everywhere.** Every drill opens with its name (the same name as in the navigation) and its score in the same style: Correct · Answered · Accuracy · Streak for grammar drills, Due · Mistakes · Practised for the review drills, Due · Words for word cards.
 
 ## Custom sessions with your own words (Русский and Deutsch grammar drills)
@@ -60,6 +66,7 @@ Enter checks then goes on, Esc goes back, Alt+→ skips, H / S hint and show, Sp
 Answers: 1–4 or A–D, R / F / N for true · false · not mentioned; blocks by number or by typing the start of the word (pinyin for Chinese), Backspace takes one back.
 Listening: Space play/pause, ← → line by line, Shift+← → 5 seconds, T / E / P transcript · English · pinyin, M my words. Word cards: Space flips, 1 / 2 (or ← →) again / got it.
 Alt+0 Today, Alt+1…9 language, Alt+[ ] previous / next drill of the language, [ ] previous / next section of the drill, Ctrl+K jump anywhere.
+On a computer, a small bar at the bottom left always shows the keys that work right now (Enter Check · H Hint · S Answer …); Alt+K or its × hides it, and buttons carry their key from the start.
 Typing: tone numbers become tone marks in pinyin boxes (ni3 → nǐ), a: o: u: s: give ä ö ü ß in German, and Alt+L lets Latin keys type Cyrillic in the Russian, Belarusian and Church Slavonic drills.
 
 ## Tags and filters for your words (生词卡 and Deutsch → Karten)
