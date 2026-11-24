@@ -383,6 +383,40 @@ header .score{flex-wrap:wrap}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
 .dot.k1{background:var(--gold)}
 .dot.k2{background:var(--ok)}
+/* flashcards (说明 → List / Flashcards) */
+.fcwrap{display:flex;flex-direction:column;gap:12px}
+.fcbar{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.fcbar .fcprog{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.fcbar .fcprog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.fcstage{perspective:1400px}
+.fc{display:grid;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,.7,.25,1);
+  -webkit-tap-highlight-color:transparent;outline:none;border-radius:16px}
+.fc:focus-visible{box-shadow:0 0 0 3px var(--accent)}
+.fc.flipped{transform:rotateY(180deg)}
+.fcface{grid-area:1/1;min-height:260px;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 22px rgba(0,0,0,.08);
+  padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;min-width:0}
+.fcback{transform:rotateY(180deg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px;background-position:-1px -1px}
+.fcface .fctag{position:absolute;top:10px;left:14px;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.fcface .fchint{position:absolute;bottom:10px;left:0;right:0;font-size:.75rem;color:var(--muted)}
+.fcbig{font:700 clamp(2.6rem,11vw,4.2rem)/1.1 var(--f-zh);overflow-wrap:anywhere}
+.fcmid{font:700 clamp(1.6rem,6vw,2.2rem)/1.2 var(--f-zh);color:var(--accent);overflow-wrap:anywhere}
+.fcen{font:600 1.25rem/1.35 var(--f-display);text-wrap:balance;overflow-wrap:anywhere}
+.fcpy{font-size:1.15rem;color:var(--accent)}
+.fcsm{font-size:.9rem;color:var(--muted)}
+.fctext{font-size:.98rem;max-width:34em}
+.fcex{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:2px;align-items:center;width:100%}
+.fcex .zh{font-size:1.1rem}
+.fcface .spk{margin:0}
+.fcrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.fcrow .btn{min-width:8.5em;justify-content:center}
+.grade[hidden]{display:none}
+.fcbtn-no{border-color:var(--bad)!important;color:var(--bad)!important}
+.fcbtn-yes{border-color:var(--ok)!important;color:var(--ok)!important}
+.fc.enter{animation:fcin .28s ease-out}
+@keyframes fcin{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+.fcdone{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+@media (prefers-reduced-motion:reduce){.fc{transition:transform .01s}.fc.enter{animation:none}}
 /* review */
 .sect{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
 .sect h3{margin:0;font:700 1.05rem var(--f-display)}
@@ -1325,12 +1359,21 @@ function gRef(p){
   const sub=opt('refSub','gram');
   p.append(...head('Explanations & dictionary','说明',null));
   p.append(chips('Part',[['gram','Quick explanations'],['vocab','Dictionary · '+V.length+' words']],sub,k=>{setOpt('refSub',k);renderPanel()}));
+  p.append(chips('View',[['list','☰ List'],['cards','🂠 Flashcards']],opt('refView','list'),k=>{setOpt('refView',k);renderPanel()}));
   sub==='gram'?refGram(p):refVocab(p);
 }
 function refGram(p){
   p.append(h('p',{class:'sub'},'Short explanations of the grammar used in the games, each with an example you can listen to.'));
   const q=h('input',{class:'search',type:'search',id:'gsearch',placeholder:'Search: 了, 把, complement, comparison…','aria-label':'Search the explanations'});
   q.value=opt('gq','');const list=h('div',{class:'glist'});p.append(h('div',{class:'opts'},q),list);
+  if(opt('refView','list')==='cards'){
+    const pool=()=>{const s=q.value.trim().toLowerCase();setOpt('gq',q.value);return GR.filter(g=>!s||[g.term,g.name,g.ex,g.zh,g.en].join(' ').toLowerCase().includes(s))};
+    const mk=()=>flashDeck(list,pool(),{kind:'g',
+      front:(g,zhFirst)=>zhFirst?[h('span',{class:'fctag'},g.sec),h('div',{class:'fcmid'},g.term),h('div',{class:'fcsm'},'What does it do? Give an example.')]
+        :[h('span',{class:'fctag'},g.sec),h('div',{class:'fcen'},g.name),h('div',{class:'fcsm'},g.en)],
+      back:(g,zhFirst)=>[h('span',{class:'fctag'},g.sec),h('div',{class:'fcmid'},g.term),zhFirst?h('div',{class:'fcen'},g.name):null,h('p',{class:'fctext'},g.ex),
+        h('div',{class:'fcex'},zhLine(g.zh,g.py),h('span',{class:'gen'},g.en))]});
+    let t=null;q.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(mk,300)});mk();return}
   const draw=()=>{const s=q.value.trim().toLowerCase();setOpt('gq',q.value);list.replaceChildren();
     const secs=[...new Set(GR.map(g=>g.sec))];
     secs.forEach(sc=>{const its=GR.filter(g=>g.sec===sc&&(!s||[g.term,g.name,g.ex,g.zh,g.en].join(' ').toLowerCase().includes(s)));if(!its.length)return;
@@ -1349,11 +1392,22 @@ function refVocab(p){
   const cnt=h('span',{class:'lbl'});const list=h('div',{class:'vlist'});const more=h('button',{class:'btn',type:'button'},'Show more');
   p.append(h('div',{class:'opts'},q,st),h('div',{class:'opts between'},cnt,legend),list,h('div',{class:'opts center'},more));
   let lim=150;
-  const draw=()=>{setOpt('vq',q.value);setOpt('vst',st.value);
+  const filt=()=>{setOpt('vq',q.value);setOpt('vst',st.value);
     const s=q.value.trim().toLowerCase(),sp=toneless(s);
-    const r=V.filter(v=>{if(!okLv(v.l))return false;const m=S.w[v.w]||0;
+    return V.filter(v=>{if(!okLv(v.l))return false;const m=S.w[v.w]||0;
       if(st.value==='new'&&S.w[v.w]!=null)return false;if(st.value==='lr'&&!(S.w[v.w]!=null&&m<2))return false;if(st.value==='ok'&&m<2)return false;
-      if(!s)return true;return v.w.includes(s)||v.en.toLowerCase().includes(s)||(sp&&toneless(v.py).startsWith(sp))});
+      if(!s)return true;return v.w.includes(s)||v.en.toLowerCase().includes(s)||(sp&&toneless(v.py).startsWith(sp))})};
+  if(opt('refView','list')==='cards'){
+    legend.hidden=true;more.hidden=true;
+    const mk=()=>{const r=filt();cnt.textContent=`${r.length} words`;
+      flashDeck(list,r,{kind:'v',
+        front:(v,zhFirst)=>zhFirst?[h('span',{class:'fctag'},'HSK '+v.l),h('div',{class:'fcbig',lang:'zh-CN'},v.w)]
+          :[h('span',{class:'fctag'},'HSK '+v.l),h('div',{class:'fcen'},v.en),v.cl?h('div',{class:'fcsm'},'measure word '+v.cl):null],
+        back:(v)=>[h('span',{class:'fctag'},'HSK '+v.l),h('div',{class:'fcbig',lang:'zh-CN'},v.w),h('div',{class:'fcpy'},v.py,' ',spk(v.w)),
+          h('div',{class:'fcen'},v.en),v.cl?h('div',{class:'fcsm'},'measure word '+v.cl):null],
+        say:v=>v.w})};
+    let t=null;q.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(mk,300)});st.addEventListener('change',mk);mk();return}
+  const draw=()=>{const r=filt();
     cnt.textContent=`${r.length} words`;
     list.replaceChildren(...r.slice(0,lim).map(v=>{const m=S.w[v.w];
       return h('div',{class:'vrow'},h('span',{class:'vw',lang:'zh-CN','data-say':v.w},v.w),h('div',{class:'vm'},h('div',{class:'vpy'},v.py),h('div',{class:'ven'},v.en+(v.cl?`  · measure word ${v.cl}`:''))),
@@ -1361,6 +1415,66 @@ function refVocab(p){
     more.hidden=r.length<=lim;};
   let t=null;q.addEventListener('input',()=>{lim=150;clearTimeout(t);t=setTimeout(draw,120)});st.addEventListener('change',()=>{lim=150;draw()});
   more.addEventListener('click',()=>{lim+=300;draw()});draw();
+}
+
+/* ---------- flashcards: the list you are looking at, as cards that turn over ----------
+   Space / Enter / tap = turn over · 1 or ← = again (comes back later this round) · 2 or → = got it */
+let FC=null;
+function flashDeck(box,items,cfg){
+  if(FC&&FC.off)FC.off();FC=null;
+  const zhFirst=opt('fcFront','zh')==='zh',N=opt('fcN','20'),shuf=opt('fcShuf',true);
+  const ctl=h('div',{class:'fcwrap'});
+  const re=()=>flashDeck(box,items,cfg);
+  ctl.append(h('div',{class:'opts'},
+    chips('Front',[['zh','Front: 中文'],['en','Front: English']],zhFirst?'zh':'en',k=>{setOpt('fcFront',k);re()}),
+    chips('Cards per round',[['20','20'],['50','50'],['all','All']],N,k=>{setOpt('fcN',k);re()}),
+    toggle('fcShuf','Shuffle',true,re)));
+  const area=h('div',{class:'fcwrap'});ctl.append(area);box.replaceChildren(ctl);
+  if(!items.length){area.append(h('p',{class:'empty'},'No cards here. Change the search, the filter or the level.'));return}
+  let deck=items.slice();if(shuf)for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+  if(N!=='all')deck=deck.slice(0,+N);
+  const total=deck.length;let queue=deck.map((_,i)=>i),known=0,again=new Set(),flipped=false,card=null;
+  const st={off:null};FC=st;
+  const bar=h('div',{class:'fcbar'}),prog=h('div',{class:'fcprog'},h('i')),lab=h('span');bar.append(lab,prog);
+  const stage=h('div',{class:'fcstage'});
+  const flipB=h('button',{class:'btn',type:'button','data-a':'flip',onclick:()=>flip()},'⟲ Turn over');
+  const noB=h('button',{class:'btn fcbtn-no',type:'button','data-a':'no',onclick:()=>grade(false)},'↺ Again');
+  const yesB=h('button',{class:'btn fcbtn-yes',type:'button','data-a':'yes',onclick:()=>grade(true)},'✓ Got it');
+  const gr=h('div',{class:'fcrow grade'},noB,yesB);
+  area.append(bar,stage,h('div',{class:'fcrow'},flipB),gr);
+  const paint=()=>{lab.textContent=`${known} / ${total} known`+(queue.length?` · ${queue.length} left`:'');prog.firstChild.style.width=(100*known/total)+'%';gr.hidden=!flipped};
+  function show(){
+    if(!queue.length){done();return}
+    const it=deck[queue[0]];flipped=false;
+    card=h('div',{class:'fc enter',role:'button',tabindex:'0','aria-label':'Flashcard — press Space to turn it over'},
+      h('div',{class:'fcface fcfront'},...cfg.front(it,zhFirst),h('span',{class:'fchint'},'tap to turn over')),
+      h('div',{class:'fcface fcback','aria-hidden':'true'},...cfg.back(it,zhFirst)));
+    card.addEventListener('click',e=>{if(e.target.closest('.spk'))return;flip()});
+    stage.replaceChildren(card);paint();
+  }
+  function flip(){if(!card)return;flipped=!flipped;card.classList.remove('enter');card.classList.toggle('flipped',flipped);
+    card.children[0].setAttribute('aria-hidden',String(flipped));card.children[1].setAttribute('aria-hidden',String(!flipped));
+    if(flipped&&!zhFirst&&cfg.say)say(cfg.say(deck[queue[0]]));paint()}
+  function grade(ok){if(!flipped||!queue.length)return;const i=queue.shift();
+    if(ok){known++}else{again.add(i);queue.splice(Math.min(queue.length,3+Math.floor(Math.random()*3)),0,i)}
+    vib(ok);show()}
+  function done(){card=null;flipped=false;stage.replaceChildren();flipB.hidden=true;paint();
+    const miss=[...again].map(i=>deck[i]);
+    area.append(h('div',{class:'sect fcdone'},h('h3',null,'Round done 🎉'),
+      h('p',null,miss.length?`${total} cards · ${total-miss.length} right the first time, ${miss.length} needed another go.`:`${total} cards, all right the first time.`),
+      h('div',{class:'fcrow'},
+        miss.length?h('button',{class:'btn primary',type:'button',onclick:()=>flashDeck(box,miss,cfg)},`Only the ${miss.length} I missed`):null,
+        h('button',{class:miss.length?'btn':'btn primary',type:'button','data-a':'next',onclick:re},'New round'),
+        h('button',{class:'btn',type:'button',onclick:()=>{setOpt('refView','list');renderPanel()}},'Back to the list'))))}
+  const key=e=>{if(!ctl.isConnected){off();return}
+    const t=e.target;if(e.ctrlKey||e.metaKey||e.altKey||t.tagName==='INPUT'||t.tagName==='SELECT'||t.tagName==='TEXTAREA')return;
+    if(!card)return;const k=e.key,c=e.code||'';
+    if(k===' '||(k==='Enter'&&!(t.tagName==='BUTTON'&&t!==card))){e.preventDefault();flip()}
+    else if(flipped&&(c==='Digit1'||c==='Numpad1'||k==='ArrowLeft')){e.preventDefault();grade(false)}
+    else if(flipped&&(c==='Digit2'||c==='Numpad2'||k==='ArrowRight')){e.preventDefault();grade(true)}};
+  function off(){document.removeEventListener('keydown',key)}
+  st.off=off;document.addEventListener('keydown',key);
+  show();
 }
 
 /* ================= 7. review & mistakes ================= */

@@ -38,6 +38,10 @@ From then on it opens from the home screen and works with no connection.
 - **Other apps on the same address:** all your GitHub Pages projects share one web address (`<username>.github.io`), so they share the browser's offline storage. This app only touches its own offline files (named `drills-…`). The sync key is stored separately from your progress, is not in backups, and the page only talks to this site and GitHub (a Content-Security-Policy blocks everything else). For full separation, give each app its own address, for example a custom domain per project.
 - `.nojekyll` tells GitHub to serve the files exactly as they are, so keep it.
 
+## Flashcards in 说明 (HSK → Explanations & dictionary)
+
+Both parts of 说明 — Quick explanations and the dictionary — have a **☰ List / 🂠 Flashcards** switch. Flashcards turn whatever the list shows (your search, the *All / Not practised / Learning / Learned* filter and the HSK level) into classic cards that turn over: choose the front (中文 or English), 20 / 50 / all cards per round and shuffle. Tap the card or press Space to turn it over, then **↺ Again** (1 or ←, it comes back a few cards later) or **✓ Got it** (2 or →). At the end you can repeat only the cards you missed.
+
 ## Export flashcards to Anki
 
 Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听力 2, 神秘的电话 and 播客 (My words), 生词卡, 看图 (Wörter tab: exports what the filters show), Deutsch Hören (Meine Wörter) and Wortkarten. The file has the columns Front, Back, Tags (HTML: pinyin, meaning, up to two example sentences). In Anki (2.1.55 or newer): File → Import, choose the file; the cards go into the deck named in the file. Choose the note type “Basic (and reversed card)” for both directions.
