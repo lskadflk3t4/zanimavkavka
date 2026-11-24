@@ -15,6 +15,7 @@ An installable web app (PWA) with Russian, German, Chinese (HSK), French and Eng
    - the `audio-5` folder (the audiobook 神秘的电话);
    - the `audio-6` folder (the 播客 podcasts);
    - the `audio-de` folder (German listening, including the 13 Fragen debates `u01`–`u06` and the podcasts `v01`–`v05`).
+   - the `audio-ru` folder (Русский → Аудирование, the Russian listening course).
    Commit after each upload. (With git you can push everything in one go.)
 3. Go to **Settings → Pages**, set *Source* to **Deploy from a branch**, and choose `main` and `/ (root)`. Save.
 4. After a minute the site is live at `https://<your-username>.github.io/<repo-name>/`.
@@ -52,6 +53,10 @@ Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听�
 - **Listening lists** (听力, 听力 2, 电话, 播客) show each part's status: started, listened (85 %+ of the audio) or marked done (○ / ✓ next to the part picker), and a red count for mistakes to redo. 听力 and 听力 2 are grouped by lesson with progress per lesson. **▶ Continue** jumps to the part you were in the middle of, or the next one you haven't finished. Once you have progress, the list stays folded so the player and text come first.
 - **Phones:** the open drill's sections fold into one button in the bottom bar (tap it for the list), and swiping the bottom bar left / right steps through them. Swiping the exercise itself still goes to the next question / the explanation.
 - **Same header everywhere.** Every drill opens with its name (the same name as in the navigation) and its score in the same style: Correct · Answered · Accuracy · Streak for grammar drills, Due · Mistakes · Practised for the review drills, Due · Words for word cards.
+
+## Russian listening (Русский → Аудирование)
+
+*Cours de russe — compréhension orale*: five long Russian recordings (communal flats, Gen Z protests, Rosstat's 720,000 deaths, the Nvidia CEO scandal, the history of “The Hunger Games”), with the transcript following the audio word by word, French translation, tap-a-word grammar and translation, gap-fill exercises, true / false / not-mentioned questions and a vocabulary list with Anki export. Its interface is in French. The audio is in `audio-ru/`.
 
 ## Custom sessions with your own words (Русский and Deutsch grammar drills)
 
