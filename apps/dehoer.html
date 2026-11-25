@@ -165,6 +165,28 @@ footer{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid va
 @media (min-width:521px){.sh{display:none}}
 /* phones: gap boxes inside the text are tall enough to tap */
 @media (max-width:640px){input[type=text][data-g]{min-height:34px}}
+
+/* desktop: the dock-only ‹ › stay hidden */
+.player #prevDock,.player #nextDock{display:none}
+/* phones: same layout as the Chinese listening — one slim swipeable row of toggles + section links on top,
+   the player docked at the bottom within thumb reach */
+@media (max-width:640px){
+  .wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .bar{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-top:7px;padding-bottom:7px}
+  .bar::-webkit-scrollbar{display:none}
+  .bar-in,.toggles,nav.jump{flex-wrap:nowrap;flex:none}
+  .bar-in{gap:6px}.toggles{gap:6px}
+  .bar button{min-height:36px;padding:6px 12px;white-space:nowrap}
+  nav.jump{padding-top:0;gap:2px;border-left:1px solid var(--line);padding-left:6px;margin-left:2px;overflow:visible}
+  nav.jump a{white-space:nowrap;display:inline-flex;align-items:center;min-height:36px;padding:0 9px;border-radius:999px;font-size:13px}
+  nav.jump a:active{background:var(--jade-soft)}
+  .player{position:fixed;left:0;right:0;bottom:0;z-index:20;flex-wrap:nowrap;gap:8px;background:var(--surface);border-top:1px solid var(--line);
+    padding:8px max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));box-shadow:0 -6px 16px -10px rgba(0,0,0,.25)}
+  .player #prevDock,.player #nextDock{display:inline-block;min-height:44px;min-width:44px;border-radius:999px;padding:0}
+  .player .play-main{flex:1;min-height:44px;font-size:15px;border-radius:12px}
+  .player .time{min-width:0;font-size:11.5px;text-align:center;line-height:1.2}
+  .player select{font-size:16px;min-height:44px;border-radius:10px;padding:0 4px}
+}
 </style>
 
 <div class="wrap">
@@ -183,10 +205,10 @@ footer{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid va
   </div>
   <div class="bar">
     <div class="bar-in">
-      <div class="player">
+      <div class="player"><button class="nbtn" id="prevDock" type="button" aria-label="Vorheriger Teil">‹</button>
         <button class="play-main" id="pm" type="button">▶ Alles</button>
         <span class="time" id="tm">0:00</span>
-        <select id="spd" aria-label="Tempo"><option value="0.75">0.75×</option><option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option></select>
+        <select id="spd" aria-label="Tempo"><option value="0.75">0.75×</option><option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option></select><button class="nbtn" id="nextDock" type="button" aria-label="Nächster Teil">›</button>
       </div>
       <div class="toggles">
         <button class="tg" id="t-tr" type="button" aria-pressed="false" title="Transkript ein/aus"><span class="lg">Transkript</span><span class="sh">Text</span></button>
@@ -285,7 +307,7 @@ const FNOTE={'13 Fragen':'Transkripte mit einem Spracherkennungsmodell (Whisper)
 function fillSel(){$('psel').innerHTML=PARTS().map(p=>`<option value="${p.id}">${esc(optLabel(p))}</option>`).join('');if(part)$('psel').value=part.id}
 $('psel').onchange=e=>show(e.target.value);
 function step(d){const L=PARTS(),i=part?L.indexOf(part):0,n=L[i+d];if(n){show(n.id);scrollTo(0,0)}}
-$('prevTop').onclick=$('prevEnd').onclick=()=>step(-1);$('nextTop').onclick=$('nextEnd').onclick=()=>step(1);
+$('prevTop').onclick=$('prevEnd').onclick=$('prevDock').onclick=()=>step(-1);$('nextTop').onclick=$('nextEnd').onclick=$('nextDock').onclick=()=>step(1);
 function badge(){const m=Object.keys(S.miss).length,W=wLoad(),n=Object.keys(W).length;$('missN').textContent=m||'';$('wordsN').textContent=n||'';
   const due=Object.values(W).filter(r=>(r.d||0)<=today()).length;$('wordsBtn').title=n?`${n} Wörter · ${due} heute fällig`:'Wörter, die Sie markiert haben'}
 /* ---------- render a part ---------- */
