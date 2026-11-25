@@ -820,6 +820,9 @@ window.addEventListener('hashchange',route);route();zBadge();
 .zw-list{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
 .zw-li{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:center;padding:9px 12px;border-top:1px solid var(--line)}
 .zw-li:first-child{border-top:0}
+.zw-sel{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:14px 0 2px}.zw-sel label{font-weight:600;font-size:14px}.zw-sel select{flex:1 1 220px;max-width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:inherit;font:inherit;font-size:15px;padding:6px 10px}
+.zw-selnote{font-size:12.5px;color:var(--muted);margin:4px 0 6px}
+.zw-gh{padding:8px 12px 6px;font-size:13px;font-weight:700;color:var(--jade);background:var(--bg,transparent);border-top:1px solid var(--line)}.zw-gh:first-child{border-top:0}.zw-gh span{font-weight:400;color:var(--muted)}.zw-gh+.zw-li{border-top:0}
 .zw-li .lh{font-family:var(--f-han);font-size:21px;grid-row:span 2;appearance:none;border:0;background:none;color:inherit;cursor:pointer;padding:0}
 .zw-li .lp{color:var(--jade);font-weight:600;font-size:14px}
 .zw-li .le{font-size:13.5px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -928,7 +931,7 @@ function sylFrom(w,py){const s=split(py.replace(/[\s']/g,''));return s&&s.length
 function toggle(rec,d){const W=wLoad();
   if(W[rec.w]){delete W[rec.w]}
   else{const c=rec.s!=null&&rec.h?[{pid:rec.pid,s:rec.s,e:rec.e,h:rec.h,p:rec.p||'',en:rec.en||''}]:[];
-    W[rec.w]={py:d.py||'',en:d.en||d.sumEn||'',c,t:Date.now(),b:0,d:0}}
+    W[rec.w]={py:d.py||'',en:d.en||d.sumEn||'',c,pid:rec.pid||(part&&part.id)||'',t:Date.now(),b:0,d:0}}
   wSave(W);paintUnk();badge()}
 /* add another sentence where the word appears (up to 3), when it's tapped again in a new line */
 function addCtx(rec){const W=wLoad(),r=W[rec.w];if(!r||rec.s==null||!rec.h)return;r.c=r.c||[];
@@ -958,37 +961,52 @@ new MutationObserver(()=>{if(!paintUnk._q){paintUnk._q=1;requestAnimationFrame((
 /* ---------- the "My words" button and view ---------- */
 const btn=document.createElement('button');btn.className='nbtn missbtn zwb';btn.id='wordsBtn';btn.type='button';btn.title='Words you marked as unknown';
 btn.innerHTML='<span aria-hidden="true">★</span><span class="ml">My words</span><span id="wordsN"></span>';$('missBtn').after(btn);
+/* words are grouped by the recording they were marked in (older words: the first sentence saved with them) */
+const wPid=r=>(r&&(r.pid||((r.c||[])[0]||{}).pid))||'';
+const PT={};try{PARTS.forEach(p=>PT[p[0]]=p[1])}catch(e){}
+const ONE='part',MANY='parts';
+let WSEL=null;try{WSEL=localStorage.getItem('zhl-words-sel')||null}catch(e){}
+function wSel(v){WSEL=v||null;try{if(WSEL)localStorage.setItem('zhl-words-sel',WSEL);else localStorage.removeItem('zhl-words-sel')}catch(e){}}
+function selKeys(W){const k=Object.keys(W);return WSEL?k.filter(x=>wPid(W[x])===WSEL):k}
+function pLabel(p){return p?(p+(PT[p]?' · '+PT[p]:'')):'(no part)'}
 function badge(){const W=wLoad(),n=Object.keys(W).length,due=Object.values(W).filter(r=>(r.d||0)<=today()).length;$('wordsN').textContent=n?String(n):'';btn.title=n?`${n} words · ${due} due today`:'Words you marked as unknown'}
 badge();
 let WV=false,WVret=null,dir='zh';try{dir=localStorage.getItem('zhl-words-dir')||'zh'}catch(e){}
 window.__zwInView=()=>WV;
-btn.onclick=()=>{closeSheet();showWords()};
+btn.onclick=()=>{closeSheet();const W=wLoad(),here=part&&part.id;if(here&&Object.keys(W).some(k=>wPid(W[k])===here))wSel(here);else if(WSEL&&!Object.keys(W).some(k=>wPid(W[k])===WSEL))wSel(null);showWords()};
 /* leaving the view: any part navigation re-renders #main through show() */
 const _show=show;window.show=function(id){if(WV||($('main').onclick&&$('main').onclick.__zw))$('main').onclick=null;WV=false;closeSheet();return _show(id)};
 const mine=f=>{f.__zw=1;return f};
 function head(t,s){$('eb').textContent='Mandarin listening 2 · my words';$('h1').innerHTML=`${t}<small>${s}</small>`;$('jump').innerHTML='';$('t-ans').hidden=true}
 async function showWords(){au.pause();await lex();WV=true;if(part)WVret=part.id;MV=false;
   head('生词本','Words you marked while listening');
-  const W=wLoad(),keys=Object.keys(W).sort((a,b)=>W[b].t-W[a].t),due=keys.filter(k=>(W[k].d||0)<=today()).length;
+  const W=wLoad(),all=Object.keys(W);if(WSEL&&!all.some(k=>wPid(W[k])===WSEL))wSel(null);
+  const ord=p=>{const i=Object.keys(PT).indexOf(p);return i<0?1e6:i};
+  const keys=selKeys(W).sort((a,b)=>WSEL?W[b].t-W[a].t:(ord(wPid(W[a]))-ord(wPid(W[b])))||(W[b].t-W[a].t)),due=keys.filter(k=>(W[k].d||0)<=today()).length;
+  const G={};all.forEach(k=>{const p=wPid(W[k]);(G[p]=G[p]||[]).push(k)});const gp=Object.keys(G).sort((a,b)=>ord(a)-ord(b));
   let h=`<h2 id="mywords">My words</h2><p class="sec-note">Tap any word in a transcript to see its pinyin and meaning, then tap “I don’t know this” to collect it here. Words you know well come back less often; remove a word once you’re sure of it.</p>`;
+  if(all.length)h+=`<div class="zw-sel"><label for="zwSel">Words from</label><select id="zwSel"><option value="">All ${MANY} · ${all.length} words</option>${gp.map(p=>{const n=G[p].length,d=G[p].filter(k=>(W[k].d||0)<=today()).length;return `<option value="${esc(p)}"${p===WSEL?' selected':''}>${esc(pLabel(p))} · ${n}${d?` (${d} due)`:''}</option>`}).join('')}</select>${WSEL?`<button class="zw-btn" type="button" data-w="all">Show all</button>`:''}</div><p class="zw-selnote">${WSEL?`Flashcards, In context and the Anki export use only the words from this ${ONE}.`:`Flashcards, In context and the Anki export use the words from every ${ONE}; pick one above to practise just that ${ONE}.`}</p>`;
   if(keys.length)h+=FCS.picker(FCS_T);
   h+=`<div class="zw-modes">${keys.length?`<button class="zw-btn pri" type="button" data-w="fc">Flashcards${due?` · ${due} due`:''}</button><button class="zw-btn pri" type="button" data-w="cx">In context · listen and fill the gap</button>`:''}<button class="zw-btn" type="button" data-w="back">‹ Back to part ${esc(WVret||'001')}</button></div>`;
   if(!keys.length)h+='<p class="zw-empty">No words yet. Open a part, tap a word you don’t know, and add it.</p>';
-  else h+=`<div class="zw-list">${keys.map(k=>{const r=W[k],c=(r.c||[])[0],lv=r.b?`level ${r.b}`:`new · ${FCS.steps(r)}/${FCS.STEPS}`;return `<div class="zw-li"><button class="lh" type="button" data-w="look" data-k="${esc(k)}" lang="zh">${esc(k)}</button><span class="lp">${esc(r.py)}</span><span class="lr">${c?`<a href="#p${esc(c.pid)}">${esc(c.pid)}</a>`:''}<button class="rm" type="button" data-w="rm" data-k="${esc(k)}" aria-label="Remove ${esc(k)}" title="I know it now · remove">✓</button></span><span class="le">${esc(r.en||'')} <span class="zw-lvl">· ${lv}</span></span></div>`}).join('')}</div>`;
-  if(keys.length)h+=ANKI.row('data-w="anki"','Export for Anki (CSV)',"In Anki: File → Import, pick the file. Cards go into the deck “中文::听力 2”. For cards in both directions, choose the note type “Basic (and reversed card)”.");
+  else h+=`<div class="zw-list">${keys.map((k,ix)=>{const r=W[k],gh=!WSEL&&(ix===0||wPid(W[keys[ix-1]])!==wPid(r))?`<div class="zw-gh">${esc(pLabel(wPid(r)))} <span>· ${G[wPid(r)].length}</span></div>`:'',c=(r.c||[])[0],lv=r.b?`level ${r.b}`:`new · ${FCS.steps(r)}/${FCS.STEPS}`;return gh+`<div class="zw-li"><button class="lh" type="button" data-w="look" data-k="${esc(k)}" lang="zh">${esc(k)}</button><span class="lp">${esc(r.py)}</span><span class="lr">${c?`<a href="#p${esc(c.pid)}">${esc(c.pid)}</a>`:''}<button class="rm" type="button" data-w="rm" data-k="${esc(k)}" aria-label="Remove ${esc(k)}" title="I know it now · remove">✓</button></span><span class="le">${esc(r.en||'')} <span class="zw-lvl">· ${lv}</span></span></div>`}).join('')}</div>`;
+  if(keys.length)h+=ANKI.row('data-w="anki"','Export for Anki (CSV)',"In Anki: File → Import, pick the file. Cards go into the deck “中文::听力 2”, with one subdeck per part. For cards in both directions, choose the note type “Basic (and reversed card)”.");
   h+=`<p class="zw-note">Meanings come from the course word lists where the course gives one, otherwise from CC-CEDICT (CC BY-SA 4.0, cc-cedict.org).</p>`;
   $('main').innerHTML=h;FCS.bind($('main'));scrollTo(0,0);indexLines();
+  const zs=$('zwSel');if(zs)zs.onchange=()=>{wSel(zs.value);showWords()};
   $('main').onclick=mine(e=>{const b=e.target.closest('[data-w]');if(!b)return;const a=b.dataset.w,k=b.dataset.k;
+    if(a==='all'){wSel(null);showWords();return}
     if(a==='back'){WV=false;$('main').onclick=null;_show(WVret||'001')}
     else if(a==='rm'){const o=wLoad();delete o[k];wSave(o);badge();showWords()}
     else if(a==='look'){const r=wLoad()[k];if(r){const c=(r.c||[])[0]||{};openSheet({w:k,ctxSyl:sylFrom(k,r.py||''),pid:c.pid,s:c.s,e:c.e,h:c.h,p:c.p,en:c.en})}}
     else if(a==='anki')ankiMine();else if(a==='fc')practise('fc');else if(a==='cx')practise('cx')});}
-function ankiMine(){const W=wLoad(),keys=Object.keys(W).sort((a,b)=>W[b].t-W[a].t),H=ANKI.h;
+const deckOf=r=>"中文::听力 2::"+pLabel(wPid(r)).replace(/::/g,':');
+function ankiMine(){const W=wLoad(),keys=selKeys(W).sort((a,b)=>W[b].t-W[a].t),H=ANKI.h;
   const rows=keys.map(k=>{const r=W[k],cs=(r.c||[]).slice(0,2);
     let back=(r.py?H(r.py)+'<br>':'')+H(r.en||'');
     cs.forEach(c=>{back+='<br><br>'+ANKI.mark(c.h||'',k)+(c.p?'<br><i>'+H(c.p)+'</i>':'')+(c.en?'<br>'+H(c.en):'')});
     return [H(k),back,['zanimavkavka',"zh_listening2"].concat(cs[0]&&cs[0].pid?['part_'+cs[0].pid]:[],r.b?['level_'+r.b]:['new'])]});
-  ANKI.save("anki-zh-listening-2",ANKI.csv(rows,"中文::听力 2"))}
+  ANKI.save("anki-zh-listening-2"+(WSEL?"-"+WSEL:""),ANKI.csv(rows.map((r,i)=>r.concat([deckOf(W[keys[i]])])),"中文::听力 2"))}
 window.addEventListener('hashchange',()=>{if(WV||($('main').onclick&&$('main').onclick.__zw)){WV=false;$('main').onclick=null}closeSheet()},true);
 /* ---------- practice: flashcards and in-context gap ---------- */
 /* ---------- flashcards: cards per round + learning steps (same in every card section) ----------
@@ -1002,8 +1020,8 @@ var ANKI=(function(){
   function q(v){v=String(v==null?'':v).replace(/\r?\n/g,'<br>');return /[",\r\n]/.test(v)||/^\s|\s$/.test(v)||v.charAt(0)==='#'?'"'+v.replace(/"/g,'""')+'"':v}
   function tag(s){return String(s||'').trim().replace(/\s+/g,'_').replace(/[",]/g,'')}
   function mark(sent,word){sent=h(sent);if(!word)return sent;var w=h(word),i=sent.indexOf(w);return i<0?sent:sent.slice(0,i)+'<b>'+w+'</b>'+sent.slice(i+w.length)}
-  function csv(rows,deck){var L=['#separator:Comma','#html:true','#deck:'+deck,'#columns:Front,Back,Tags','#tags column:3'];
-    rows.forEach(function(r){L.push([r[0],r[1],(r[2]||[]).map(tag).filter(Boolean).join(' ')].map(q).join(','))});return L.join('\n')+'\n'}
+  function csv(rows,deck){var dc=rows.some(function(r){return r[3]});var L=['#separator:Comma','#html:true','#deck:'+deck,dc?'#columns:Front,Back,Tags,Deck':'#columns:Front,Back,Tags','#tags column:3'].concat(dc?['#deck column:4']:[]);
+    rows.forEach(function(r){var a=[r[0],r[1],(r[2]||[]).map(tag).filter(Boolean).join(' ')];if(dc)a.push(r[3]||deck);L.push(a.map(q).join(','))});return L.join('\n')+'\n'}
   function stamp(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
   function save(name,text){var blob=new Blob([text],{type:'text/csv;charset=utf-8'}),file=name.replace(/\.csv$/,'')+'-'+stamp()+'.csv';
     if(window.navigator&&navigator.msSaveBlob){navigator.msSaveBlob(blob,file);return}
@@ -1066,7 +1084,7 @@ var FCS=(function(){
 const FCS_T={lab:'Cards per round',all:'All',custom:'own',note:'New cards need “knew it” 3 times (they come back in the same round); then tomorrow, in 3 days, 7, 14, 30… A miss starts the card over.'};
 function grade(k,ok){const o=wLoad(),r=o[k];if(!r)return false;const back=FCS.grade(r,ok,today());r.n=(r.n||0)+1;wSave(o);badge();return back}
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-function deck(mode){const W=wLoad();let k=Object.keys(W);if(mode==='cx')k=k.filter(x=>(W[x].c||[]).length);
+function deck(mode){const W=wLoad();let k=selKeys(W);if(mode==='cx')k=k.filter(x=>(W[x].c||[]).length);
   const d=k.filter(x=>(W[x].d||0)<=today());const use=d.length?d:k;return FCS.cut(shuf(use).sort((a,b)=>(W[a].b||0)-(W[b].b||0)))}
 function ctxHTML(c,w,gap){let hh=esc(c.h);if(w){const i=c.h.indexOf(w);if(i>=0)hh=esc(c.h.slice(0,i))+(gap?'<span class="zw-gap">？</span>':`<mark>${esc(w)}</mark>`)+esc(c.h.slice(i+w.length))}
   return `<div class="zw-ctx"><div class="ch" lang="zh">${hh}</div>${gap?'':`<div class="cp">${esc(c.p)}</div>`}<div class="ce">${esc(c.en)}</div></div>`}
