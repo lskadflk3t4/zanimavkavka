@@ -270,6 +270,18 @@ html.dp-eink.dp-night{filter:invert(1) grayscale(1) contrast(1.1);background:#ff
 /* e-ink and night always start from the light palette, whatever the phone's own theme */
 html.dp-eink .bk button[aria-pressed="true"]{border-width:3px!important;font-weight:800!important;color:var(--fg)!important}
 html.dp-eink{--bg:#f2f4f0;--bar:#ffffff;--fg:#1c2421;--muted:#3a4440;--line:#555;--accent:#2f7a5f;--accent-soft:#e2efe9;color-scheme:light}
+
+/* focus mode (phones): hide the menu bar so the drill has the whole screen; a slim tab at the bottom brings it back */
+.fcs,.fcs-tab{display:none}
+@media (max-width:640px){
+  .fcs{display:grid}
+  body.dp-focus header.bar,body.dp-focus .subbar{display:none!important}
+  body.dp-focus .fcs-tab{order:4;display:flex;align-items:flex-start;justify-content:center;flex:none;appearance:none;border:0;border-top:1px solid var(--line);
+    background:var(--bar);width:100%;height:calc(18px + env(safe-area-inset-bottom,0px));padding:6px 0 0;cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent}
+  .fcs-tab i{display:block;width:44px;height:5px;border-radius:3px;background:var(--muted);opacity:.55}
+  .fcs-tab:active i{opacity:1;background:var(--accent)}
+  .fcs-tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+}
 </style>
 </head>
 <body>
@@ -278,8 +290,10 @@ html.dp-eink{--bg:#f2f4f0;--bar:#ffffff;--fg:#1c2421;--muted:#3a4440;--line:#555
   <button id="lp" class="lp" type="button" aria-haspopup="dialog" aria-label="Choose a drill"><span class="ic" aria-hidden="true"></span><span class="lpt"></span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4-4 4 4"/></svg></button>
   <nav id="tabs" role="tablist" aria-label="Drills"></nav>
   <button id="rv" class="rv" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.8 1.8v3h-3"/></svg><span class="rvt">Revise mistakes</span><b class="rvn"></b></button>
+  <button id="fcsHide" class="menu fcs" type="button" aria-label="Hide the menu bar" title="Hide the menu bar: only the drill on screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></button>
   <button id="menu" class="menu" type="button" aria-label="Sync, backup and full screen" title="Sync, backup &amp; full screen"><span class="sy-dot" id="syDot" aria-hidden="true"></span><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.6"/><circle cx="8" cy="8" r="1.6"/><circle cx="8" cy="13" r="1.6"/></svg></button>
 </header>
+<button id="fcsShow" class="fcs-tab" type="button" aria-label="Show the menu bar" title="Show the menu bar"><i aria-hidden="true"></i></button>
 <div class="subbar" id="subbar" hidden><div class="seg2" role="group" aria-label="Exercise type">
   <button type="button" data-sub="drill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 4h10M3 8h10M3 12h6"/></svg><span>Grammar drill</span></button>
   <button type="button" data-sub="wf"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14V7M8 7L4 3M8 7l4-4M4 3H2.5M12 3h1.5"/></svg><span class="wfl">Word formation</span></button>
@@ -1736,6 +1750,22 @@ addEventListener('message',function(e){if(e.data&&e.data.dp==='theme'){apply();[
   function tell(){[].forEach.call(document.querySelectorAll('iframe'),function(f){try{f.contentWindow.postMessage({dp:'theme'},'*')}catch(e){}})}
   b.addEventListener('click',function(){try{localStorage.setItem('drillpack:shell:theme',on()?'classic':'sun')}catch(e){}if(window.__dpTheme)window.__dpTheme.apply();tell();paint()});
   paint()})();
+</script>
+<script>
+/* focus mode: ˅ in the bar hides it, the tab at the bottom (tap or swipe up) shows it again; remembered on this device */
+(function(){
+  var b=document.body,K='dp-focus',hide=document.getElementById('fcsHide'),show=document.getElementById('fcsShow');
+  if(!hide||!show)return;
+  function set(on){b.classList.toggle('dp-focus',on);try{on?localStorage.setItem(K,'1'):localStorage.removeItem(K)}catch(e){}
+    try{dispatchEvent(new Event('resize'))}catch(e){}}
+  try{if(localStorage.getItem(K)==='1')b.classList.add('dp-focus')}catch(e){}
+  hide.addEventListener('click',function(){set(true);show.focus({preventScroll:true})});
+  show.addEventListener('click',function(){set(false);hide.focus({preventScroll:true})});
+  var y0=null;
+  show.addEventListener('touchstart',function(e){y0=e.touches[0].clientY},{passive:true});
+  show.addEventListener('touchmove',function(e){if(y0!=null&&y0-e.touches[0].clientY>12){y0=null;set(false)}},{passive:true});
+  show.addEventListener('touchend',function(){y0=null},{passive:true});
+})();
 </script>
 </body>
 </html>
