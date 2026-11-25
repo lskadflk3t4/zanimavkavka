@@ -148,6 +148,9 @@ footer{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid va
 .zw-li .le{grid-column:1/-1;color:var(--muted);font-size:14px}
 .zw-li .lc{grid-column:1/-1;font-family:var(--f-read);font-style:italic;font-size:14px;color:var(--muted)}
 .zw-li .lc a{color:var(--jade)}
+.zw-sel{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:14px 0 2px}.zw-sel label{font-weight:600;font-size:14px}.zw-sel select{flex:1 1 220px;max-width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface,transparent);color:inherit;font:inherit;font-size:15px;padding:6px 10px}
+.zw-selnote{font-size:12.5px;color:var(--muted);margin:4px 0 6px}
+.zw-gh{padding:14px 0 4px;font-size:13px;font-weight:700;color:var(--jade);border-top:1px solid var(--line)}.zw-gh:first-child{border-top:0;padding-top:0}.zw-gh span{font-weight:400;color:var(--muted)}.zw-gh+.zw-li{border-top:0}
 .card{margin-top:12px;padding:22px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface);text-align:center}
 .card .f{font-family:var(--f-read);font-size:26px;font-weight:600}
 .card .b{margin-top:10px;font-size:16px}
@@ -436,7 +439,7 @@ function openSheet(el,ctx){closeSheet();selEl=el;el.classList.add('sel');
   document.body.appendChild(sheet);
   sheet.querySelector('.zw-x').onclick=closeSheet;
   sheet.querySelector('[data-z="play"]').onclick=()=>playSeg(ctx.pid,ctx.s,ctx.e);
-  sheet.querySelector('[data-z="mark"]').onclick=()=>{const W=wLoad();if(W[lem])delete W[lem];else W[lem]={w,h:head,g:g?g[1]:'',c:[{pid:ctx.pid,s:ctx.s,e:ctx.e,t:ctx.t,w}],t:Date.now(),b:0,d:today()};wSave(W);paintUnk();closeSheet()};
+  sheet.querySelector('[data-z="mark"]').onclick=()=>{const W=wLoad();if(W[lem])delete W[lem];else W[lem]={w,h:head,g:g?g[1]:'',c:[{pid:ctx.pid,s:ctx.s,e:ctx.e,t:ctx.t,w}],pid:ctx.pid,t:Date.now(),b:0,d:today()};wSave(W);paintUnk();closeSheet()};
 }
 function paintUnk(){const W=wLoad();document.querySelectorAll('#main .w').forEach(x=>x.classList.toggle('unk',!!W[lemmaOf(x.textContent)]))}
 /* ---------- mistakes view ---------- */
@@ -456,27 +459,40 @@ function showMiss(){au.pause();closeSheet();MODE='miss';head('Fehler wiederholen
 $('main').addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){e.preventDefault();show(g.dataset.go);scrollTo(0,0);return}
   if(e.target.closest('[data-v="back"]')){show(part?part.id:PARTS()[0].id);scrollTo(0,0)}});
 /* ---------- my words ---------- */
-$('wordsBtn').onclick=showWords;
+/* words are grouped by the recording they were marked in */
+const wPid=r=>(r&&(r.pid||((r.c||[])[0]||{}).pid))||'';
+let WSEL=ld('dh-wsel',null);
+function wSel(v){WSEL=v||null;sv('dh-wsel',WSEL)}
+function selKeys(W){const k=Object.keys(W);return WSEL?k.filter(x=>wPid(W[x])===WSEL):k}
+function pOrd(id){const i=DATA.parts.findIndex(p=>p.id===id);return i<0?1e6:i}
+function pLab(id){const p=pById(id);return p?`${p.ex||'Goethe-Zertifikat B2'} · ${pnum(p)}${p.group} — ${p.title}`:(id||'(ohne Aufnahme)')}
+$('wordsBtn').onclick=()=>{const W=wLoad(),here=MODE==='part'&&part&&part.id,has=id=>Object.keys(W).some(k=>wPid(W[k])===id);
+  if(here&&has(here))wSel(here);else if(WSEL&&!has(WSEL))wSel(null);showWords()};
 let wdir=ld('dh-wdir','de');
 function showWords(){au.pause();closeSheet();MODE='words';head('Meine Wörter','Wörter, die Sie beim Hören markiert haben');
-  const W=wLoad(),keys=Object.keys(W).sort((a,b)=>W[b].t-W[a].t),due=keys.filter(k=>(W[k].d||0)<=today()).length;
+  const W=wLoad(),all=Object.keys(W);if(WSEL&&!all.some(k=>wPid(W[k])===WSEL))wSel(null);
+  const keys=selKeys(W).sort((a,b)=>WSEL?W[b].t-W[a].t:(pOrd(wPid(W[a]))-pOrd(wPid(W[b])))||(W[b].t-W[a].t)),due=keys.filter(k=>(W[k].d||0)<=today()).length;
+  const G={};all.forEach(k=>{const p=wPid(W[k]);(G[p]=G[p]||[]).push(k)});const gp=Object.keys(G).sort((a,b)=>pOrd(a)-pOrd(b));
   let h=`<h2>Meine Wörter</h2><p class="sec-note">Tippen Sie im Transkript auf ein unbekanntes Wort und dann auf „★ Kenne ich nicht“. Gewusste Wörter kommen seltener wieder; mit ✓ entfernen Sie ein Wort.</p>`;
+  if(all.length)h+=`<div class="zw-sel"><label for="zwSel">Wörter aus</label><select id="zwSel"><option value="">Allen Aufnahmen · ${all.length} Wörter</option>${gp.map(p=>{const n=G[p].length,d=G[p].filter(k=>(W[k].d||0)<=today()).length;return `<option value="${esc(p)}"${p===WSEL?' selected':''}>${esc(pLab(p))} · ${n}${d?` (${d} fällig)`:''}</option>`}).join('')}</select>${WSEL?`<button class="mini" type="button" data-w="all">Alle zeigen</button>`:''}</div><p class="zw-selnote">${WSEL?'Karteikarten, „Im Kontext“ und der Anki-Export nehmen nur die Wörter aus dieser Aufnahme.':'Karteikarten, „Im Kontext“ und der Anki-Export nehmen die Wörter aus allen Aufnahmen; oben können Sie eine einzelne Aufnahme wählen.'}</p>`;
   if(keys.length)h+=FCS.picker(FCS_T);
   h+=`<div class="seg">${keys.length?`<button type="button" data-w="fc" aria-pressed="true">Karteikarten${due?` · ${due} fällig`:''}</button><button type="button" data-w="cx" aria-pressed="true">Im Kontext · hören und ergänzen</button>`:''}</div>${backBtn()}`;
   if(!keys.length)h+=`<p class="sec-note" style="margin-top:16px">Noch keine Wörter. Öffnen Sie einen Teil, tippen Sie auf ein Wort und markieren Sie es.</p>`;
-  else h+=`<div class="zw-list" style="margin-top:14px">${keys.map(k=>{const r=W[k],c=(r.c||[])[0];return `<div class="zw-li"><span class="lh" lang="de">${esc(r.h||k)}</span><span><button class="mini" type="button" data-w="pl" data-k="${esc(k)}" aria-label="Satz abspielen">▶</button><button class="mini" type="button" data-w="rm" data-k="${esc(k)}" title="Kenne ich jetzt · entfernen">✓</button></span><span class="le">${esc(r.g||'')}${r.b?` · Stufe ${r.b}`:` · neu · ${FCS.steps(r)}/${FCS.STEPS}`}</span>${c?`<span class="lc">${esc(c.t)} — <a href="#" data-go="${esc(c.pid)}">${esc(c.pid)}</a></span>`:''}</div>`}).join('')}</div>`;
-  if(keys.length)h+=ANKI.row('data-w="anki"','Für Anki exportieren (CSV)',"In Anki: Datei → Importieren, Datei wählen. Die Karten landen im Stapel „Deutsch::Hören“. Für beide Richtungen den Notiztyp „Einfach (beide Richtungen)“ wählen.");
-  $('main').innerHTML=h;FCS.bind($('main'));scrollTo(0,0)}
+  else h+=`<div class="zw-list" style="margin-top:14px">${keys.map((k,ix)=>{const r=W[k],c=(r.c||[])[0],gh=!WSEL&&(ix===0||wPid(W[keys[ix-1]])!==wPid(r))?`<div class="zw-gh">${esc(pLab(wPid(r)))} <span>· ${G[wPid(r)].length}</span></div>`:'';return gh+`<div class="zw-li"><span class="lh" lang="de">${esc(r.h||k)}</span><span><button class="mini" type="button" data-w="pl" data-k="${esc(k)}" aria-label="Satz abspielen">▶</button><button class="mini" type="button" data-w="rm" data-k="${esc(k)}" title="Kenne ich jetzt · entfernen">✓</button></span><span class="le">${esc(r.g||'')}${r.b?` · Stufe ${r.b}`:` · neu · ${FCS.steps(r)}/${FCS.STEPS}`}</span>${c?`<span class="lc">${esc(c.t)} — <a href="#" data-go="${esc(c.pid)}">${esc(c.pid)}</a></span>`:''}</div>`}).join('')}</div>`;
+  if(keys.length)h+=ANKI.row('data-w="anki"','Für Anki exportieren (CSV)',"In Anki: Datei → Importieren, Datei wählen. Die Karten landen im Stapel „Deutsch::Hören“, mit einem Unterstapel pro Aufnahme. Für beide Richtungen den Notiztyp „Einfach (beide Richtungen)“ wählen.");
+  $('main').innerHTML=h;FCS.bind($('main'));scrollTo(0,0);const zs=$('zwSel');if(zs)zs.onchange=()=>{wSel(zs.value);showWords()}}
 $('main').addEventListener('click',e=>{if(MODE!=='words')return;const b=e.target.closest('[data-w]');if(!b)return;const W=wLoad(),k=b.dataset.k;
+  if(b.dataset.w==='all'){wSel(null);showWords();return}
   if(b.dataset.w==='rm'){delete W[k];wSave(W);showWords()}
   else if(b.dataset.w==='pl'){const c=(W[k].c||[])[0];if(c)playSeg(c.pid,c.s,c.e)}
   else if(b.dataset.w==='anki')ankiMine();else if(b.dataset.w==='fc')practise('fc');else if(b.dataset.w==='cx')practise('cx')});
-function ankiMine(){const W=wLoad(),keys=Object.keys(W).sort((a,b)=>W[b].t-W[a].t),H=ANKI.h;
+const deckOf=r=>'Deutsch::Hören::'+pLab(wPid(r)).replace(/::/g,':');
+function ankiMine(){const W=wLoad(),keys=selKeys(W).sort((a,b)=>W[b].t-W[a].t),H=ANKI.h;
   const rows=keys.map(k=>{const r=W[k],cs=(r.c||[]).slice(0,2);let back=H(r.g||'');
     if(r.w&&r.w!==(r.h||k)&&(r.h||'').indexOf(r.w)<0)back+='<br><i>gehört als: '+H(r.w)+'</i>';
     cs.forEach(c=>{back+='<br><br>'+ANKI.mark(c.t||'',c.w||r.w||'')});
     return [H(r.h||k),back,['zanimavkavka','de_hoeren'].concat(cs[0]&&cs[0].pid?['teil_'+cs[0].pid]:[],r.b?['stufe_'+r.b]:['neu'])]});
-  ANKI.save('anki-deutsch-hoeren',ANKI.csv(rows,"Deutsch::Hören"))}
+  ANKI.save('anki-deutsch-hoeren'+(WSEL?'-'+WSEL:''),ANKI.csv(rows.map((r,i)=>r.concat([deckOf(W[keys[i]])])),"Deutsch::Hören"))}
 function shuf(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 /* ---------- flashcards: cards per round + learning steps (same in every card section) ----------
    New or forgotten cards must be answered "known" 3 times; they come back in the same round
@@ -489,8 +505,8 @@ var ANKI=(function(){
   function q(v){v=String(v==null?'':v).replace(/\r?\n/g,'<br>');return /[",\r\n]/.test(v)||/^\s|\s$/.test(v)||v.charAt(0)==='#'?'"'+v.replace(/"/g,'""')+'"':v}
   function tag(s){return String(s||'').trim().replace(/\s+/g,'_').replace(/[",]/g,'')}
   function mark(sent,word){sent=h(sent);if(!word)return sent;var w=h(word),i=sent.indexOf(w);return i<0?sent:sent.slice(0,i)+'<b>'+w+'</b>'+sent.slice(i+w.length)}
-  function csv(rows,deck){var L=['#separator:Comma','#html:true','#deck:'+deck,'#columns:Front,Back,Tags','#tags column:3'];
-    rows.forEach(function(r){L.push([r[0],r[1],(r[2]||[]).map(tag).filter(Boolean).join(' ')].map(q).join(','))});return L.join('\n')+'\n'}
+  function csv(rows,deck){var dc=rows.some(function(r){return r[3]});var L=['#separator:Comma','#html:true','#deck:'+deck,dc?'#columns:Front,Back,Tags,Deck':'#columns:Front,Back,Tags','#tags column:3'].concat(dc?['#deck column:4']:[]);
+    rows.forEach(function(r){var a=[r[0],r[1],(r[2]||[]).map(tag).filter(Boolean).join(' ')];if(dc)a.push(r[3]||deck);L.push(a.map(q).join(','))});return L.join('\n')+'\n'}
   function stamp(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
   function save(name,text){var blob=new Blob([text],{type:'text/csv;charset=utf-8'}),file=name.replace(/\.csv$/,'')+'-'+stamp()+'.csv';
     if(window.navigator&&navigator.msSaveBlob){navigator.msSaveBlob(blob,file);return}
@@ -552,7 +568,7 @@ var FCS=(function(){
 })();
 const FCS_T={lab:'Karten pro Runde',all:'Alle',custom:'eigene',note:'Neue Karten brauchen 3× „Gewusst“ (sie kommen in derselben Runde wieder); dann morgen, in 3 Tagen, 7, 14, 30 … Ein Fehler setzt die Karte zurück.'};
 function grade(k,ok){const W=wLoad(),r=W[k];if(!r)return false;const back=FCS.grade(r,ok,today());wSave(W);return back}
-function practise(mode){const W=wLoad();let ks=Object.keys(W);const d=ks.filter(k=>(W[k].d||0)<=today());ks=FCS.cut(shuf(d.length?d:ks));
+function practise(mode){const W=wLoad();let ks=selKeys(W);const d=ks.filter(k=>(W[k].d||0)<=today());ks=FCS.cut(shuf(d.length?d:ks));
   let i=0,ok=0,tot=0;MODE='words';
   head(mode==='fc'?'Karteikarten':'Im Kontext',mode==='fc'?'Ihre markierten Wörter':'Satz hören, fehlendes Wort schreiben');
   $('main').innerHTML=`<h2>${mode==='fc'?'Karteikarten':'Im Kontext'}</h2>${mode==='fc'?`<div class="seg" id="wd"><button type="button" data-d="de" aria-pressed="${wdir==='de'}">Deutsch → Bedeutung</button><button type="button" data-d="en" aria-pressed="${wdir==='en'}">Bedeutung → Deutsch</button></div>`:'<p class="sec-note">Der Satz wird aus der Aufnahme gespielt. Schreiben Sie das fehlende Wort so, wie es im Satz steht.</p>'}<div id="pz"></div><div style="margin-top:14px"><button class="mini" type="button" data-pz="list">‹ Zur Wortliste</button></div>`;
