@@ -2,7 +2,7 @@
    Raise VERSION (v44 -> v45 ...) when you upload changed files, so installed copies update.
    Several apps live on the same web address and share one cache store in the browser. This one only
    ever touches caches whose names start with "drills-", so the other apps keep their offline files. */
-const VERSION='v71';
+const VERSION='v72';
 const CORE='drills-core-'+VERSION, AUDIO='drills-audio-v1';
 const LEGACY_AUDIO='audio-v1';                          /* name used up to v43: its files are moved over, not downloaded again */
 const isOld=k=>(k.startsWith('drills-')&&k!==CORE&&k!==AUDIO)||/^core-v\d+$/.test(k);   /* only this app's own old caches */
@@ -13,6 +13,11 @@ const AUDIO_FILES=[
 "audio-ru/pertes-03.mp3",
 "audio-ru/nvidia-04.mp3",
 "audio-ru/hunger-05.mp3",
+"audio-ru/mif-sssr-06.mp3",
+"audio-ru/mif-oligarhi-07.mp3",
+"audio-ru/nomenklatura-08.mp3",
+"audio-ru/partii-09.mp3",
+"audio-ru/belarus-10.mp3",
 "audio-de/01.webm",
 "audio-de/02.webm",
 "audio-de/03.webm",

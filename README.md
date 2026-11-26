@@ -23,7 +23,7 @@ An installable web app (PWA) with Russian, German, Chinese (HSK), French and Eng
 ## Install on your phone
 
 1. Open that address in Chrome on Android while you're online.
-2. Leave it open for a moment. The audio (about 310 MB) downloads in the background.
+2. Leave it open for a moment. The audio (about 415 MB) downloads in the background.
 3. Use the menu **⋮ → Add to Home screen / Install app**.
 
 From then on it opens from the home screen and works with no connection.
@@ -61,7 +61,7 @@ Every flashcard section has a **⬇ Export for Anki (CSV)** button: 听力, 听�
 
 ## Russian listening (Русский → Аудирование)
 
-*Cours de russe — compréhension orale*: five long Russian recordings (communal flats, Gen Z protests, Rosstat's 720,000 deaths, the Nvidia CEO scandal, the history of “The Hunger Games”), with the transcript following the audio word by word, French translation, tap-a-word grammar and translation, gap-fill exercises, true / false / not-mentioned questions and a vocabulary list with Anki export. Its interface is in French. The audio is in `audio-ru/`.
+*Cours de russe — compréhension orale*: ten long Russian recordings (communal flats, Gen Z protests, Rosstat's 720,000 deaths, the Nvidia CEO scandal, the history of “The Hunger Games”, the myth that democrats destroyed the USSR, the myth that Putin defeated the oligarchs, the Soviet nomenklatura, the parties and State Duma of the early 20th century, Belarus and Lukashenko), with the transcript following the audio word by word, French translation, tap-a-word grammar and translation, gap-fill exercises (lessons 1–5 only), true / false / not-mentioned questions and a vocabulary list with Anki export. Its interface is in French. The audio is in `audio-ru/`.
 
 ## Custom sessions with your own words (Русский and Deutsch grammar drills)
 
