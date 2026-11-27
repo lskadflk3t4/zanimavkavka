@@ -2,7 +2,7 @@
    Raise VERSION (v44 -> v45 ...) when you upload changed files, so installed copies update.
    Several apps live on the same web address and share one cache store in the browser. This one only
    ever touches caches whose names start with "drills-", so the other apps keep their offline files. */
-const VERSION='v74';
+const VERSION='v75';
 const CORE='drills-core-'+VERSION, AUDIO='drills-audio-v1';
 const LEGACY_AUDIO='audio-v1';                          /* name used up to v43: its files are moved over, not downloaded again */
 const isOld=k=>(k.startsWith('drills-')&&k!==CORE&&k!==AUDIO)||/^core-v\d+$/.test(k);   /* only this app's own old caches */
@@ -43,7 +43,7 @@ const AUDIO_FILES=[
 "audio-de/15.webm",
 "audio-de/16.webm",
 "audio-de/17.webm", "audio-de/u01.webm", "audio-de/u02.webm", "audio-de/u03.webm", "audio-de/u04.webm", "audio-de/u05.webm", "audio-de/u06.webm", "audio-de/v01.webm", "audio-de/v02.webm", "audio-de/v03.webm", "audio-de/v04.webm", "audio-de/v05.webm", "audio-de/t02.webm", "audio-de/t03.webm", "audio-de/t04.webm", "audio-de/t05.webm", "audio-de/t06.webm", "audio-de/t07.webm", "audio-de/t08.webm", "audio-de/t09.webm", "audio-de/t10.webm", "audio-de/t11.webm", "audio-de/t12.webm", "audio-de/t13.webm", "audio-de/a02.webm", "audio-de/a05.webm", "audio-de/a08.webm", "audio-de/a09.webm", "audio-de/a10.webm", "audio-de/a13.webm", "audio-de/c12.webm", "audio-de/c14.webm", "audio-de/d06.webm", "audio-de/d26.webm", "audio-de/e17.webm", "audio-de/e23.webm", "audio-de/m11.webm", "audio-de/m12.webm", "audio-de/m13.webm", "audio-de/m14.webm", "audio-de/m31.webm", "audio-de/m32.webm", "audio-de/m33.webm", "audio-de/m34.webm", "audio-de/m51.webm", "audio-de/m52.webm", "audio-de/m53.webm", "audio-de/m54.webm",
-"audio-5/001.webm", "audio-5/002.webm", "audio-5/003.webm", "audio-5/004.webm", "audio-5/005.webm", "audio-5/006.webm", "audio-5/007.webm", "audio-5/008.webm", "audio-5/009.webm", "audio-5/010.webm", "audio-5/011.webm", "audio-5/012.webm", "audio-6/001.webm", "audio-6/002.webm", "audio-6/003.webm", "audio-6/004.webm", "audio-6/005.webm", "audio-6/006.webm", "audio-6/007.webm", "audio-6/008.webm", "audio-6/009.webm", "audio-6/010.webm", "audio-6/011.webm", "audio-6/012.webm", "audio-6/013.webm", "audio-6/014.webm", "audio-6/015.webm", "audio-6/016.webm", "audio-6/017.webm", "audio-6/018.webm", "audio-6/019.webm", "audio-6/020.webm", "audio-6/021.webm", "audio-6/022.webm", "audio-6/023.webm", "audio-6/024.webm", "audio-6/025.webm", 
+"audio-5/001.webm", "audio-5/002.webm", "audio-5/003.webm", "audio-5/004.webm", "audio-5/005.webm", "audio-5/006.webm", "audio-5/007.webm", "audio-5/008.webm", "audio-5/009.webm", "audio-5/010.webm", "audio-5/011.webm", "audio-5/012.webm", "audio-6/001.webm", "audio-6/002.webm", "audio-6/003.webm", "audio-6/004.webm", "audio-6/005.webm", "audio-6/006.webm", "audio-6/007.webm", "audio-6/008.webm", "audio-6/009.webm", "audio-6/010.webm", "audio-6/011.webm", "audio-6/012.webm", "audio-6/013.webm", "audio-6/014.webm", "audio-6/015.webm", "audio-6/016.webm", "audio-6/017.webm", "audio-6/018.webm", "audio-6/019.webm", "audio-6/020.webm", "audio-6/021.webm", "audio-6/022.webm", "audio-6/023.webm", "audio-6/024.webm", "audio-6/025.webm", "audio-6/026.webm", 
 "audio-1/001.webm",
 "audio-1/002.webm",
 "audio-1/003.webm",
